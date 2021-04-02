@@ -11,3 +11,11 @@
 <a href="hello-servlet">Hello Servlet</a>
 </body>
 </html>
+
+<!--
+Utente()
+Blog()
+Pagine()
+Commenti()
+UtentiBloccati()
+-->
