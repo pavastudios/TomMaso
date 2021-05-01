@@ -43,14 +43,6 @@ public class Messaggio {
         this.testo = testo;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Messaggio messaggio = (Messaggio) o;
-        return idMessaggio == messaggio.idMessaggio;
-    }
-
     public static Messaggio getMessaggio(ResultSet rs) throws SQLException {
         Messaggio m = new Messaggio();
         m.setIdMessaggio(rs.getInt("id_messaggio"));
@@ -58,5 +50,20 @@ public class Messaggio {
         m.setTesto(rs.getString("testo"));
         m.setMittente(Queries.findUserById(rs.getInt("mittente")));
         return m;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Messaggio messaggio = (Messaggio) o;
+
+        return idMessaggio == messaggio.idMessaggio;
+    }
+
+    @Override
+    public int hashCode() {
+        return idMessaggio;
     }
 }

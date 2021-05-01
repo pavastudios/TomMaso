@@ -44,14 +44,6 @@ public class Commento {
         this.testo = testo;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Commento commento = (Commento) o;
-        return idCommento == commento.idCommento;
-    }
-
     public static Commento getCommento(ResultSet rs) throws SQLException {
         Commento c = new Commento();
         c.setIdCommento(rs.getInt("id_commento"));
@@ -61,4 +53,18 @@ public class Commento {
         return c;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Commento commento = (Commento) o;
+
+        return idCommento == commento.idCommento;
+    }
+
+    @Override
+    public int hashCode() {
+        return idCommento;
+    }
 }

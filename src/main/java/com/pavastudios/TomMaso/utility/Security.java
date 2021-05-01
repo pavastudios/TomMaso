@@ -63,18 +63,6 @@ public class Security {
         return null;
     }
 
-    @Contract("null -> null;!null -> !null")
-    public static @Nullable String toHexString(byte[]bytes){
-        if(bytes==null)return null;
-        StringBuilder builder=new StringBuilder(bytes.length*2);
-        for(byte b:bytes){
-            int i=Byte.toUnsignedInt(b);
-            builder.append(Utility.HEX_CHARS[i>>4 ]);
-            builder.append(Utility.HEX_CHARS[i&0xF]);
-        }
-        return builder.toString();
-    }
-
     @Contract("!null->!null;null->null")
     public static @Nullable byte[] sha256(String text){
         if(text==null)return null;

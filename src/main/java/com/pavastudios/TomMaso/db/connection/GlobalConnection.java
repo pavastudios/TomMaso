@@ -1,5 +1,6 @@
 package com.pavastudios.TomMaso.db.connection;
 
+import com.pavastudios.TomMaso.db.queries.Queries;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
@@ -22,9 +23,9 @@ public class GlobalConnection {
         }
         CONNECTION = new MasterConnection(conn);
     }
-    public static void init(){
+    public static void init() throws SQLException{
         if(initialized)return;
-        //inizializza query preparate
+        Queries.initQueries();
         initialized=true;
     }
 

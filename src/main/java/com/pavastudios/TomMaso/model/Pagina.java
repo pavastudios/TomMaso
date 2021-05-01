@@ -34,14 +34,6 @@ public class Pagina {
         this.url = url;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pagina pagina = (Pagina) o;
-        return idPagina == pagina.idPagina;
-    }
-
     public static Pagina getPagina(ResultSet rs) throws SQLException {
         Pagina p = new Pagina();
         p.setIdPagina(rs.getInt("id_pagina"));
@@ -50,4 +42,18 @@ public class Pagina {
         return p;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Pagina pagina = (Pagina) o;
+
+        return idPagina == pagina.idPagina;
+    }
+
+    @Override
+    public int hashCode() {
+        return idPagina;
+    }
 }

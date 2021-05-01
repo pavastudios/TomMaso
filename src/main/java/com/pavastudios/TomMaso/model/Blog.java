@@ -34,13 +34,7 @@ public class Blog {
         this.nome = nome;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Blog blog = (Blog) o;
-        return idBlog == blog.idBlog;
-    }
+
 
     public static Blog getBlog(ResultSet rs) throws SQLException {
         Blog b = new Blog();
@@ -50,4 +44,18 @@ public class Blog {
         return b;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Blog blog = (Blog) o;
+
+        return idBlog == blog.idBlog;
+    }
+
+    @Override
+    public int hashCode() {
+        return idBlog;
+    }
 }

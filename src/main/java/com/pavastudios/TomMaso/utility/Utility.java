@@ -1,6 +1,8 @@
 package com.pavastudios.TomMaso.utility;
 
 import com.pavastudios.TomMaso.db.connection.MasterPreparedStatement;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Nullable;
 
 import java.security.SecureRandom;
 import java.sql.*;
@@ -35,5 +37,28 @@ public class Utility {
         return cal.getTime();
     }
 
+    @Contract("null -> null;!null -> !null")
+    public static @Nullable String toHexString(byte[]bytes){
+        if(bytes==null)return null;
+        StringBuilder builder=new StringBuilder(bytes.length*2);
+        for(byte b:bytes){
+            int i=Byte.toUnsignedInt(b);
+            builder.append(Utility.HEX_CHARS[i>>4 ]);
+            builder.append(Utility.HEX_CHARS[i&0xF]);
+        }
+        return builder.toString();
+    }
 
+    @Contract("null -> null;!null -> !null")
+    public static @Nullable byte[] fromHexString(String str){
+        if(str==null||str.length()%2==1)return null;
+        int len=str.length()/2;
+        byte[]bytes=new byte[len];
+        String s;
+        for(int i=0;i<len;i++){
+            s=""+str.charAt(i*2)+str.charAt(i*2+1);
+            bytes[i]= (byte) Short.parseShort(s,16);
+        }
+        return bytes;
+    }
 }

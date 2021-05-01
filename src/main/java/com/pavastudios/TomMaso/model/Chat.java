@@ -33,14 +33,6 @@ public class Chat {
         this.utente2 = utente2;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Chat chat = (Chat) o;
-        return idChat == chat.idChat;
-    }
-
     public static Chat getChat(ResultSet rs) throws SQLException {
         Chat c = new Chat();
         c.setIdChat(rs.getInt("id_chat"));
@@ -49,4 +41,18 @@ public class Chat {
         return c;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Chat chat = (Chat) o;
+
+        return idChat == chat.idChat;
+    }
+
+    @Override
+    public int hashCode() {
+        return idChat;
+    }
 }

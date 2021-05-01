@@ -1,17 +1,20 @@
 package com.pavastudios.TomMaso.listeners;
 
 import com.pavastudios.TomMaso.db.connection.GlobalConnection;
+import com.pavastudios.TomMaso.utility.Utility;
 import org.mariadb.jdbc.Driver;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 @WebListener
 public class MainListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+
         try {
             System.out.println("Connecting to DB...");
             Class.forName("org.mariadb.jdbc.Driver");
