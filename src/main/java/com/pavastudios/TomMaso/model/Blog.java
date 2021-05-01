@@ -1,5 +1,10 @@
 package com.pavastudios.TomMaso.model;
 
+import com.pavastudios.TomMaso.db.queries.Queries;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Blog {
     private int idBlog;
     private Utente proprietario;
@@ -35,6 +40,14 @@ public class Blog {
         if (o == null || getClass() != o.getClass()) return false;
         Blog blog = (Blog) o;
         return idBlog == blog.idBlog;
+    }
+
+    public static Blog getBlog(ResultSet rs) throws SQLException {
+        Blog b = new Blog();
+        b.setIdBlog(rs.getInt("id_blog"));
+        b.setNome(rs.getString("nome"));
+        b.setProprietario(Queries.findUserById(rs.getInt("proprietario")));
+        return b;
     }
 
 }

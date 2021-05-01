@@ -1,16 +1,21 @@
 package com.pavastudios.TomMaso.model;
 
+import com.pavastudios.TomMaso.db.queries.Queries;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Pagina {
-    private int id_pagina;
+    private int idPagina;
     private Blog blog;
     private String url;
 
-    public int getId_pagina() {
-        return id_pagina;
+    public int getIdPagina() {
+        return idPagina;
     }
 
-    public void setId_pagina(int id_pagina) {
-        this.id_pagina = id_pagina;
+    public void setIdPagina(int id_pagina) {
+        this.idPagina = id_pagina;
     }
 
     public Blog getBlog() {
@@ -34,7 +39,15 @@ public class Pagina {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pagina pagina = (Pagina) o;
-        return id_pagina == pagina.id_pagina;
+        return idPagina == pagina.idPagina;
+    }
+
+    public static Pagina getPagina(ResultSet rs) throws SQLException {
+        Pagina p = new Pagina();
+        p.setIdPagina(rs.getInt("id_pagina"));
+        p.setBlog(Queries.findBlogById(rs.getInt("blog")));
+        p.setUrl(rs.getString("url"));
+        return p;
     }
 
 }
