@@ -13,7 +13,7 @@ CREATE TABLE `Utente`(
     `salt` VARCHAR(20) NOT NULL,
     `data_iscrizione` TIMESTAMP NOT NULL,
     `propic_url` VARCHAR(255),
-    `is_admin` TINYINT(1),
+    `is_admin` BOOLEAN,
     `username` VARCHAR(255) UNIQUE
 );
 
@@ -62,5 +62,5 @@ CREATE TABLE `RememberMe`(
     `id_utente` INT NOT NULL,
     `scadenza` TIMESTAMP, -- 1 anno
     FOREIGN KEY (`id_utente`) REFERENCES `Utente`(`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE
-)
+);
 

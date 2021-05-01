@@ -19,22 +19,12 @@ public class GlobalConnection {
             conn = DriverManager.getConnection(JDBC_STRING);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.exit(1);
         }
         CONNECTION = new MasterConnection(conn);
     }
-    public static void init()throws SQLException{
+    public static void init(){
         if(initialized)return;
-        /*Queries.initQueries();
-        Utente.initQueries();
-        FileUpload.initQueries();
-        FileDownload.initQueries();
-        Chat.initQueries();
-        Media.initQueries();
-        MessaggioSistema.initQueries();
-        MessaggioUtente.initQueries();
-        Sessione.initQueries();
-        UtenteChat.initQueries();*/
+        //inizializza query preparate
         initialized=true;
     }
 
