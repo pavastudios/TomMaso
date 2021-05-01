@@ -79,4 +79,13 @@ public class Utente {
 
     public Utente() {
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Utente utente = (Utente) o;
+        return idUtente == utente.idUtente;
+    }
+
 }

@@ -37,4 +37,13 @@ public class Commento {
     public void setTesto(Text testo) {
         this.testo = testo;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Commento commento = (Commento) o;
+        return idCommento == commento.idCommento;
+    }
+
 }

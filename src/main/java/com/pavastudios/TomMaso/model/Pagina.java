@@ -28,4 +28,13 @@ public class Pagina {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pagina pagina = (Pagina) o;
+        return id_pagina == pagina.id_pagina;
+    }
+
 }

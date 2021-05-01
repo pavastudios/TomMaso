@@ -44,4 +44,12 @@ public class Messaggio {
     public void setTesto(String testo) {
         this.testo = testo;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Messaggio messaggio = (Messaggio) o;
+        return idMessaggio == messaggio.idMessaggio;
+    }
 }

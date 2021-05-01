@@ -1,5 +1,7 @@
 package com.pavastudios.TomMaso.model;
 
+import java.util.Objects;
+
 public class Chat {
     private int idChat;
     private Utente utente1,utente2;
@@ -27,4 +29,13 @@ public class Chat {
     public void setUtente2(Utente utente2) {
         this.utente2 = utente2;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Chat chat = (Chat) o;
+        return idChat == chat.idChat;
+    }
+
 }
