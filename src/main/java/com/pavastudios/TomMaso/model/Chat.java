@@ -1,7 +1,5 @@
 package com.pavastudios.TomMaso.model;
 
-import java.util.Objects;
-
 public class Chat {
     private int idChat;
     private Utente utente1,utente2;

@@ -1,13 +1,18 @@
 package com.pavastudios.TomMaso.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Utente {
     private int idUtente;
-    private short isAdmin;
+    private boolean isAdmin;
     private String email;
-    private String password;
+    private byte[] password;
     private String propicURL;
+    private String username;
+    private byte[] salt;
+    private Date dataIscrizione;
 
     public String getUsername() {
         return username;
@@ -17,15 +22,11 @@ public class Utente {
         this.username = username;
     }
 
-    private String username;
-    private static byte[] salt;
-    private Date dataIscrizione;
-
     public void setIdUtente(int idUtente) {
         this.idUtente = idUtente;
     }
 
-    public void setIsAdmin(short isAdmin) {
+    public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
 
@@ -33,7 +34,7 @@ public class Utente {
         this.email = email;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(byte[] password) {
         this.password = password;
     }
 
@@ -41,8 +42,8 @@ public class Utente {
         this.propicURL = propicURL;
     }
 
-    public static void setSalt(byte[] salt) {
-        Utente.salt = salt;
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
     }
 
     public void setDataIscrizione(Date dataIscrizione) {
@@ -53,7 +54,7 @@ public class Utente {
         return idUtente;
     }
 
-    public int getIsAdmin() {
+    public boolean getIsAdmin() {
         return isAdmin;
     }
 
@@ -61,7 +62,7 @@ public class Utente {
         return email;
     }
 
-    public String getPassword() {
+    public byte[] getPassword() {
         return password;
     }
 
@@ -69,7 +70,7 @@ public class Utente {
         return propicURL;
     }
 
-    public static byte[] getSalt() {
+    public byte[] getSalt() {
         return salt;
     }
 
@@ -78,6 +79,18 @@ public class Utente {
     }
 
     public Utente() {
+    }
+
+    public static Utente getUtente(ResultSet rs) throws SQLException {
+        Utente u = new Utente();
+        u.setIdUtente(rs.getInt("id_utente"));
+        u.setDataIscrizione(rs.getDate("data_iscrizione"));
+        u.setEmail(rs.getString("email"));
+        u.setPassword(rs.getBytes("password"));
+        u.setSalt(rs.getBytes("salt"));
+        u.setIsAdmin(rs.getBoolean("is_admin"));
+        u.setPropicURL(rs.getString("propic_url"));
+        return u;
     }
 
     @Override

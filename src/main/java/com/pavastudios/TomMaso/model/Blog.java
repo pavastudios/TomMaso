@@ -1,7 +1,5 @@
 package com.pavastudios.TomMaso.model;
 
-import java.util.Objects;
-
 public class Blog {
     private int idBlog;
     private Utente proprietario;
@@ -36,7 +34,7 @@ public class Blog {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Blog blog = (Blog) o;
-        return idBlog == blog.idBlog && Objects.equals(proprietario, blog.proprietario) && Objects.equals(nome, blog.nome);
+        return idBlog == blog.idBlog;
     }
 
 }
