@@ -47,6 +47,12 @@ public class Queries {
         DELETE_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `RememberMe` WHERE `cookie`=?");
     }
 
+    public static void removeCookie(String cookie) throws SQLException {
+        byte[] bytes = Utility.fromHexString(cookie);
+        DELETE_REMEMBER_ME.setBytes(1, bytes);
+        DELETE_REMEMBER_ME.executeUpdate();
+    }
+
     @SuppressWarnings("all")
     private static <T> @Nullable T resultSetToModel(Entities entity, ResultSet rs) {
         T result = null;
@@ -140,8 +146,9 @@ public class Queries {
     }
 
     //Query RememberMe
-    public static @Nullable Utente findUserByCookie(byte[] cookie) throws SQLException {
-        FIND_USER_BY_COOKIE.setBytes(1, cookie);
+    public static @Nullable Utente findUserByCookie(String cookie) throws SQLException {
+        byte[] bytes = Utility.fromHexString(cookie);
+        FIND_USER_BY_COOKIE.setBytes(1, bytes);
         ResultSet rs = FIND_USER_BY_COOKIE.executeQuery();
         int id = -1;
         if (rs.first())

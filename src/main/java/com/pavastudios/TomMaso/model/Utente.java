@@ -1,5 +1,7 @@
 package com.pavastudios.TomMaso.model;
 
+import com.pavastudios.TomMaso.utility.Security;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
