@@ -8,6 +8,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Queries {
@@ -34,24 +36,40 @@ public class Queries {
     }
 
     @SuppressWarnings("all")
-    private static <T> @Nullable T findSomethingById(Entities entity, int id) throws SQLException {
+    private static<T> @Nullable T resultSetToModel(Entities entity,ResultSet rs){
+        T result=null;
+        try {
+            result = (T) entity.entityClass.getMethod("fromResultSet", ResultSet.class).invoke(null, rs);
+        } catch (Exception ignore) { }
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> @Nullable T findById(Entities entity, int id) throws SQLException {
         entity.findByIdStmt.setInt(1, id);
         ResultSet rs = entity.findByIdStmt.executeQuery();
         Object result = null;
-        if (rs.first()) {
-            try {
-                result = entity.entityClass.getMethod("fromResultSet", ResultSet.class).invoke(null, rs);
-            } catch (Exception ignore) {
-            }
-        }
+        if (rs.first())
+            result=resultSetToModel(entity,rs);
         rs.close();
         return (T) result;
+    }
 
+    @SuppressWarnings("all")
+    public static<T> @NotNull List<T> resultSetToList(Entities entity, ResultSet rs) throws SQLException{
+        ArrayList<T> list=new ArrayList<>();
+        if(rs.first()){
+            do {
+                T result=resultSetToModel(entity,rs);
+                list.add(result);
+            }while (rs.next());
+        }
+        list.trimToSize();
+        return list;
     }
 
     //Query Utente
-    public static @Nullable
-    Utente findUserByUsername(@NotNull String username) throws SQLException {
+    public static @Nullable Utente findUserByUsername(@NotNull String username) throws SQLException {
         FIND_USER_BY_USERNAME.setString(1, username);
         ResultSet rs = FIND_USER_BY_USERNAME.executeQuery();
         Utente user = null;
@@ -61,43 +79,37 @@ public class Queries {
         return user;
     }
 
-    public static @Nullable
-    Utente findUserById(int idUtente) throws SQLException {
-        return findSomethingById(Entities.UTENTE, idUtente);
+    public static @Nullable Utente findUserById(int idUtente) throws SQLException {
+        return findById(Entities.UTENTE, idUtente);
     }
 
     //Query Pagina
-    public static Pagina findPageById(int idPagina) throws SQLException {
-        return findSomethingById(Entities.PAGINA, idPagina);
+    public static @Nullable Pagina findPageById(int idPagina) throws SQLException {
+        return findById(Entities.PAGINA, idPagina);
     }
 
     //Query Blog
-    public static @Nullable
-    Blog findBlogById(int idBlog) throws SQLException {
-        return findSomethingById(Entities.BLOG, idBlog);
+    public static @Nullable Blog findBlogById(int idBlog) throws SQLException {
+        return findById(Entities.BLOG, idBlog);
     }
 
     //Query Commento
-    public static @Nullable
-    Commento findCommentById(int idCommento) throws SQLException {
-        return findSomethingById(Entities.COMMENTO, idCommento);
+    public static @Nullable Commento findCommentById(int idCommento) throws SQLException {
+        return findById(Entities.COMMENTO, idCommento);
     }
 
     //Query Messaggio
-    public static @Nullable
-    Messaggio findMessageById(int idMessaggio) throws SQLException {
-        return findSomethingById(Entities.MESSAGGIO, idMessaggio);
+    public static @Nullable Messaggio findMessageById(int idMessaggio) throws SQLException {
+        return findById(Entities.MESSAGGIO, idMessaggio);
     }
 
     //Query Chat
-    public static @Nullable
-    Chat findChatById(int idChat) throws SQLException {
-        return findSomethingById(Entities.CHAT, idChat);
+    public static @Nullable Chat findChatById(int idChat) throws SQLException {
+        return findById(Entities.CHAT, idChat);
     }
 
     //Query RememberMe
-    public static @Nullable
-    Utente findUserByCookie(byte[] cookie) throws SQLException {
+    public static @Nullable Utente findUserByCookie(byte[] cookie) throws SQLException {
         FIND_USER_BY_COOKIE.setBytes(1, cookie);
         ResultSet rs = FIND_USER_BY_COOKIE.executeQuery();
         int id = -1;

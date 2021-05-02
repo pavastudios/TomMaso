@@ -14,21 +14,21 @@ CREATE TABLE `Utente`(
     `salt` BINARY(20) NOT NULL,
     `data_iscrizione` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `propic_url` VARCHAR(255),
-    `is_admin` BOOLEAN,
-    `username` VARCHAR(255) UNIQUE
+    `is_admin` BOOLEAN DEFAULT 0,
+    `username` VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE `Blog`(
     `id_blog` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `proprietario` INT NOT NULL,
-    `nome` VARCHAR(255) UNIQUE,
+    `nome` VARCHAR(255) NOT NULL UNIQUE,
     FOREIGN KEY (`proprietario`) REFERENCES `Utente`(`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE `Pagina`(
     `id_pagina` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `blog` INT NOT NULL,
-    `url` VARCHAR(255),
+    `url` VARCHAR(255) NOT NULL,
     FOREIGN KEY (`blog`) REFERENCES `Blog`(`id_blog`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -61,7 +61,7 @@ CREATE TABLE `Messaggio`(
 CREATE TABLE `RememberMe`(
     `cookie` BINARY(32) PRIMARY KEY, -- UNHEX(SHA2(UUID(),256))
     `id_utente` INT NOT NULL,
-    `scadenza` TIMESTAMP, -- 1 anno
+    `scadenza` TIMESTAMP NOT NULL, -- 1 anno
     FOREIGN KEY (`id_utente`) REFERENCES `Utente`(`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
