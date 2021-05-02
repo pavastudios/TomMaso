@@ -1,3 +1,4 @@
+-- Creazione tabelle
 DROP TABLE IF EXISTS `RememberMe`;
 DROP TABLE IF EXISTS `Messaggio`;
 DROP TABLE IF EXISTS `Chat`;
@@ -8,10 +9,10 @@ DROP TABLE IF EXISTS `Utente`;
 
 CREATE TABLE `Utente`(
     `id_utente` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `email` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL UNIQUE,
     `password` BINARY(64) NOT NULL,
-    `salt` VARCHAR(20) NOT NULL,
-    `data_iscrizione` TIMESTAMP NOT NULL,
+    `salt` BINARY(20) NOT NULL,
+    `data_iscrizione` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `propic_url` VARCHAR(255),
     `is_admin` BOOLEAN,
     `username` VARCHAR(255) UNIQUE
@@ -58,9 +59,31 @@ CREATE TABLE `Messaggio`(
 );
 
 CREATE TABLE `RememberMe`(
-    `cookie` BINARY(32), -- UNHEX(SHA2(UUID(),256))
+    `cookie` BINARY(32) PRIMARY KEY, -- UNHEX(SHA2(UUID(),256))
     `id_utente` INT NOT NULL,
     `scadenza` TIMESTAMP, -- 1 anno
     FOREIGN KEY (`id_utente`) REFERENCES `Utente`(`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+-- Creazione eventi
+
+DROP EVENT IF EXISTS `removed_expired_tokens`;
+
+-- Elimina i cookie scaduti
+CREATE EVENT `removed_expired_tokens` ON SCHEDULE EVERY 1 WEEK ON COMPLETION NOT PRESERVE ENABLE DO
+    DELETE FROM `RememberMe` WHERE `scadenza`<CURRENT_TIMESTAMP;
+
+SET GLOBAL event_scheduler="ON";
+
+-- Creazione trigger
+
+DROP TRIGGER IF EXISTS `update_expire_date`;
+
+DELIMITER $$
+
+-- Imposta la data di scadenza del cookie un anno nel futuro
+CREATE TRIGGER `update_expire_date` BEFORE INSERT ON `RememberMe` FOR EACH ROW BEGIN
+    SET NEW.`scadenza`=DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 1 YEAR);
+END $$
+
+DELIMITER ;
