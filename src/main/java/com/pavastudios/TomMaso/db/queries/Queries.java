@@ -3,11 +3,14 @@ package com.pavastudios.TomMaso.db.queries;
 import com.pavastudios.TomMaso.db.connection.GlobalConnection;
 import com.pavastudios.TomMaso.db.connection.MasterPreparedStatement;
 import com.pavastudios.TomMaso.model.*;
+import com.pavastudios.TomMaso.utility.Security;
+import com.pavastudios.TomMaso.utility.Utility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,10 @@ public class Queries {
     static MasterPreparedStatement FIND_MESSAGE_BY_ID;
     static MasterPreparedStatement FIND_CHAT_BY_ID;
     static MasterPreparedStatement FIND_USER_BY_COOKIE;
+    static MasterPreparedStatement REGISTER_USER;
+    static MasterPreparedStatement USER_VERIFY_LOGIN;
+    static MasterPreparedStatement REGISTER_REMEMBER_ME;
+    static MasterPreparedStatement DELETE_REMEMBER_ME;
 
 
     public static void initQueries() throws SQLException {
@@ -33,14 +40,20 @@ public class Queries {
         FIND_MESSAGE_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_messaggio`=?");
         FIND_CHAT_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Chat` WHERE `id_chat`=?");
         FIND_USER_BY_COOKIE = GlobalConnection.CONNECTION.prepareStatement("SELECT `id_utente` FROM `RememberMe` WHERE `cookie`=?");
+        REGISTER_USER = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Utente`(`email`,`password`,`salt`,`username`) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+        REGISTER_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `RememberMe`(`id_utente`,`cookie`) VALUES (?,?)");
+
+
+        DELETE_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `RememberMe` WHERE `cookie`=?");
     }
 
     @SuppressWarnings("all")
-    private static<T> @Nullable T resultSetToModel(Entities entity,ResultSet rs){
-        T result=null;
+    private static <T> @Nullable T resultSetToModel(Entities entity, ResultSet rs) {
+        T result = null;
         try {
             result = (T) entity.entityClass.getMethod("fromResultSet", ResultSet.class).invoke(null, rs);
-        } catch (Exception ignore) { }
+        } catch (Exception ignore) {
+        }
         return result;
     }
 
@@ -50,19 +63,19 @@ public class Queries {
         ResultSet rs = entity.findByIdStmt.executeQuery();
         Object result = null;
         if (rs.first())
-            result=resultSetToModel(entity,rs);
+            result = resultSetToModel(entity, rs);
         rs.close();
         return (T) result;
     }
 
     @SuppressWarnings("all")
-    public static<T> @NotNull List<T> resultSetToList(Entities entity, ResultSet rs) throws SQLException{
-        ArrayList<T> list=new ArrayList<>();
-        if(rs.first()){
+    public static <T> @NotNull List<T> resultSetToList(Entities entity, ResultSet rs) throws SQLException {
+        ArrayList<T> list = new ArrayList<>();
+        if (rs.first()) {
             do {
-                T result=resultSetToModel(entity,rs);
+                T result = resultSetToModel(entity, rs);
                 list.add(result);
-            }while (rs.next());
+            } while (rs.next());
         }
         list.trimToSize();
         return list;
@@ -81,6 +94,24 @@ public class Queries {
 
     public static @Nullable Utente findUserById(int idUtente) throws SQLException {
         return findById(Entities.UTENTE, idUtente);
+    }
+
+    public static @Nullable Utente registerUser(String email, String password, String username) throws SQLException {
+        byte[] salt = Security.generateSalt();
+        byte[] pwd = Security.sha512(password, salt);
+        REGISTER_USER.setString(1, email);
+        REGISTER_USER.setBytes(2, pwd);
+        REGISTER_USER.setBytes(3, salt);
+        REGISTER_USER.setString(4, username);
+        REGISTER_USER.executeUpdate();
+        int newId = Utility.getIdFromGeneratedKeys(REGISTER_USER);
+        return findUserById(newId);
+    }
+
+    public static @Nullable Utente login(String username, String password) throws SQLException {
+        Utente u = findUserByUsername(username);
+        if (u == null) return null;
+        return u.userVerifyLogin(password);
     }
 
     //Query Pagina
@@ -118,4 +149,13 @@ public class Queries {
         rs.close();
         return id == -1 ? null : findUserById(id);
     }
+
+    public static @Nullable byte[] registerRememberMe(Utente u) throws SQLException {
+        byte[] cookie = Utility.generateRememberMeCookie();
+        REGISTER_REMEMBER_ME.setInt(1, u.getIdUtente());
+        REGISTER_REMEMBER_ME.setBytes(2, cookie);
+        REGISTER_REMEMBER_ME.executeUpdate();
+        return cookie;
+    }
+
 }

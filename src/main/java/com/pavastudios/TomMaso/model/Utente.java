@@ -27,6 +27,7 @@ public class Utente {
         u.setSalt(rs.getBytes("salt"));
         u.setIsAdmin(rs.getBoolean("is_admin"));
         u.setPropicURL(rs.getString("propic_url"));
+        u.setUsername(rs.getString("username"));
         return u;
     }
 
@@ -121,5 +122,10 @@ public class Utente {
                 ", salt=" + Arrays.toString(salt) +
                 ", dataIscrizione=" + dataIscrizione +
                 '}';
+    }
+
+    public Utente userVerifyLogin(String password) {
+        if (Arrays.equals(Security.sha512(password, salt), this.password)) return this;
+        return null;
     }
 }
