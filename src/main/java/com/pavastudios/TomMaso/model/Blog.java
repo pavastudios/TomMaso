@@ -10,6 +10,14 @@ public class Blog {
     private Utente proprietario;
     private String nome;
 
+    public static Blog fromResultSet(ResultSet rs) throws SQLException {
+        Blog b = new Blog();
+        b.setIdBlog(rs.getInt("id_blog"));
+        b.setNome(rs.getString("nome"));
+        b.setProprietario(Queries.findUserById(rs.getInt("proprietario")));
+        return b;
+    }
+
     public int getIdBlog() {
         return idBlog;
     }
@@ -34,16 +42,6 @@ public class Blog {
         this.nome = nome;
     }
 
-
-
-    public static Blog getBlog(ResultSet rs) throws SQLException {
-        Blog b = new Blog();
-        b.setIdBlog(rs.getInt("id_blog"));
-        b.setNome(rs.getString("nome"));
-        b.setProprietario(Queries.findUserById(rs.getInt("proprietario")));
-        return b;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,5 +55,14 @@ public class Blog {
     @Override
     public int hashCode() {
         return idBlog;
+    }
+
+    @Override
+    public String toString() {
+        return "Blog{" +
+                "idBlog=" + idBlog +
+                ", proprietario=" + proprietario +
+                ", nome='" + nome + '\'' +
+                '}';
     }
 }

@@ -7,7 +7,15 @@ import java.sql.SQLException;
 
 public class Chat {
     private int idChat;
-    private Utente utente1,utente2;
+    private Utente utente1, utente2;
+
+    public static Chat fromResultSet(ResultSet rs) throws SQLException {
+        Chat c = new Chat();
+        c.setIdChat(rs.getInt("id_chat"));
+        c.setUtente1(Queries.findUserById(rs.getInt("utente1")));
+        c.setUtente2(Queries.findUserById(rs.getInt("utente2")));
+        return c;
+    }
 
     public int getIdChat() {
         return idChat;
@@ -33,14 +41,6 @@ public class Chat {
         this.utente2 = utente2;
     }
 
-    public static Chat getChat(ResultSet rs) throws SQLException {
-        Chat c = new Chat();
-        c.setIdChat(rs.getInt("id_chat"));
-        c.setUtente1(Queries.findUserById(rs.getInt("utente1")));
-        c.setUtente2(Queries.findUserById(rs.getInt("utente2")));
-        return c;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,5 +54,14 @@ public class Chat {
     @Override
     public int hashCode() {
         return idChat;
+    }
+
+    @Override
+    public String toString() {
+        return "Chat{" +
+                "idChat=" + idChat +
+                ", utente1=" + utente1 +
+                ", utente2=" + utente2 +
+                '}';
     }
 }

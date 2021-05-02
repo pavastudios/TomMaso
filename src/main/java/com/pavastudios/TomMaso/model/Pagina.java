@@ -10,6 +10,14 @@ public class Pagina {
     private Blog blog;
     private String url;
 
+    public static Pagina fromResultSet(ResultSet rs) throws SQLException {
+        Pagina p = new Pagina();
+        p.setIdPagina(rs.getInt("id_pagina"));
+        p.setBlog(Queries.findBlogById(rs.getInt("blog")));
+        p.setUrl(rs.getString("url"));
+        return p;
+    }
+
     public int getIdPagina() {
         return idPagina;
     }
@@ -34,14 +42,6 @@ public class Pagina {
         this.url = url;
     }
 
-    public static Pagina getPagina(ResultSet rs) throws SQLException {
-        Pagina p = new Pagina();
-        p.setIdPagina(rs.getInt("id_pagina"));
-        p.setBlog(Queries.findBlogById(rs.getInt("blog")));
-        p.setUrl(rs.getString("url"));
-        return p;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -55,5 +55,14 @@ public class Pagina {
     @Override
     public int hashCode() {
         return idPagina;
+    }
+
+    @Override
+    public String toString() {
+        return "Pagina{" +
+                "idPagina=" + idPagina +
+                ", blog=" + blog +
+                ", url='" + url + '\'' +
+                '}';
     }
 }

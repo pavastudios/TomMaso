@@ -11,6 +11,15 @@ public class Messaggio {
     private String testo;
     private Chat idChat;
 
+    public static Messaggio fromResultSet(ResultSet rs) throws SQLException {
+        Messaggio m = new Messaggio();
+        m.setIdMessaggio(rs.getInt("id_messaggio"));
+        m.setIdChat(Queries.findChatById(rs.getInt("id_chat")));
+        m.setTesto(rs.getString("testo"));
+        m.setMittente(Queries.findUserById(rs.getInt("mittente")));
+        return m;
+    }
+
     public int getIdMessaggio() {
         return idMessaggio;
     }
@@ -43,15 +52,6 @@ public class Messaggio {
         this.testo = testo;
     }
 
-    public static Messaggio getMessaggio(ResultSet rs) throws SQLException {
-        Messaggio m = new Messaggio();
-        m.setIdMessaggio(rs.getInt("id_messaggio"));
-        m.setIdChat(Queries.findChatById(rs.getInt("id_chat")));
-        m.setTesto(rs.getString("testo"));
-        m.setMittente(Queries.findUserById(rs.getInt("mittente")));
-        return m;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,5 +65,15 @@ public class Messaggio {
     @Override
     public int hashCode() {
         return idMessaggio;
+    }
+
+    @Override
+    public String toString() {
+        return "Messaggio{" +
+                "idMessaggio=" + idMessaggio +
+                ", mittente=" + mittente +
+                ", testo='" + testo + '\'' +
+                ", idChat=" + idChat +
+                '}';
     }
 }

@@ -1,7 +1,6 @@
 package com.pavastudios.TomMaso.model;
 
 import com.pavastudios.TomMaso.db.queries.Queries;
-import org.w3c.dom.Text;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +10,15 @@ public class Commento {
     private Utente mittente;
     private Pagina pagina;
     private String testo;
+
+    public static Commento fromResultSet(ResultSet rs) throws SQLException {
+        Commento c = new Commento();
+        c.setIdCommento(rs.getInt("id_commento"));
+        c.setMittente(Queries.findUserById(rs.getInt("mittente")));
+        c.setPagina(Queries.findPageById(rs.getInt("pagina")));
+        c.setTesto(rs.getString("testo"));
+        return c;
+    }
 
     public int getIdCommento() {
         return idCommento;
@@ -44,15 +52,6 @@ public class Commento {
         this.testo = testo;
     }
 
-    public static Commento getCommento(ResultSet rs) throws SQLException {
-        Commento c = new Commento();
-        c.setIdCommento(rs.getInt("id_commento"));
-        c.setMittente(Queries.findUserById(rs.getInt("mittente")));
-        c.setPagina(Queries.findPageById(rs.getInt("pagina")));
-        c.setTesto(rs.getString("testo"));
-        return c;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -66,5 +65,15 @@ public class Commento {
     @Override
     public int hashCode() {
         return idCommento;
+    }
+
+    @Override
+    public String toString() {
+        return "Commento{" +
+                "idCommento=" + idCommento +
+                ", mittente=" + mittente +
+                ", pagina=" + pagina +
+                ", testo='" + testo + '\'' +
+                '}';
     }
 }

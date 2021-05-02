@@ -13,25 +13,26 @@ public class MasterConnection {
     }
 
     public MasterPreparedStatement prepareStatement(@Language("sql") String sql, int returnGeneratedKeys) throws SQLException {
-        return new MasterPreparedStatement(connection,sql,returnGeneratedKeys);
+        return new MasterPreparedStatement(connection, sql, returnGeneratedKeys);
     }
 
     public MasterPreparedStatement prepareStatement(@Language("sql") String sql) throws SQLException {
-        return new MasterPreparedStatement(connection,sql);
+        return new MasterPreparedStatement(connection, sql);
     }
 
-    public void close() throws SQLException{
+    public void close() throws SQLException {
         this.connection.close();
     }
 
-    public void setAutoCommit(boolean autoCommit) throws SQLException{
+    public void setAutoCommit(boolean autoCommit) throws SQLException {
         this.connection.setAutoCommit(autoCommit);
     }
 
-    public void rollback() throws SQLException{
+    public void rollback() throws SQLException {
         this.connection.rollback();
     }
-    public void commit() throws SQLException{
+
+    public void commit() throws SQLException {
         this.connection.commit();
     }
 }
