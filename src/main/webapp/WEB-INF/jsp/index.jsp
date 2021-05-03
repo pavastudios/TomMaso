@@ -1,43 +1,17 @@
 <%@ page import="com.pavastudios.TomMaso.utility.RememberMeUtility" %>
 <%@ page import="com.pavastudios.TomMaso.model.Utente" %>
-<%@ page import="java.sql.SQLException" %>
-<%@ page import="com.pavastudios.TomMaso.db.queries.Queries" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%
-    if (session.isNew()) {
-        Cookie[] cookies = request.getCookies();
-        for (Cookie c : cookies) {
-            if (RememberMeUtility.COOKIE_REMEMBER_ME.equals(c.getName())) {
-                Utente u = Queries.findUserByCookie(c.getValue());
-                if (u != null)
-                    session.setAttribute(RememberMeUtility.SESSION_USER, u);
-                break;
-            }
-        }
-    }
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
+    <%@include file="headTags.jsp"%>
     <title>TomMASO Homepage</title>
-    <meta charset="utf-8"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"
-            integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw=="
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
-          integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ=="
-          crossorigin="anonymous"/>
-    <script href="./script/marked.min.js"></script>
-    <script href="./script/purify.js"></script>
-    <link rel="stylesheet" href="./styles/materialdesignicons.min.css"/>
-    <link rel="icon" href="./images/logo.ico" type="image/x-icon"/>
 </head>
 <body>
 <!-- Navbar -->
 <div class="ui teal inverted menu">
     <a href="#" class="header item">
-        <img src="./images/logo.png" alt="Logo" srcset="">
+        <img src="${pageContext.request.contextPath}/images/logo.png" alt="Logo" srcset="">
         TomMASO
     </a>
     <a href="#" class="item">Chi siamo</a>
@@ -47,9 +21,10 @@
         <% Utente u = (Utente) session.getAttribute(RememberMeUtility.SESSION_USER);
             if (u != null) { %>
         <%=u.getUsername()%>
+        <a href="${pageContext.request.contextPath}/logout" class="item">Logout</a>
         <% } else { %>
-        <a href="./login.jsp" class="item">Login</a>
-        <a href="./register.jsp" class="item">Register</a>
+        <a href="${pageContext.request.contextPath}/login" class="item">Login</a>
+        <a href="${pageContext.request.contextPath}/sign-up" class="item">Register</a>
         <%}%>
     </div>
 </div>
@@ -72,7 +47,7 @@
                 </p>
             </div>
             <div class="six wide right floated column">
-                <img src="./images/logo.png" alt="" class="hidden content">
+                <img src="${pageContext.request.contextPath}/images/logo.png" alt="" class="hidden content">
             </div>
         </div>
         <div class="row">

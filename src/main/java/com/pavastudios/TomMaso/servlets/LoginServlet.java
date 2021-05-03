@@ -18,6 +18,11 @@ import java.sql.SQLException;
 public class LoginServlet extends MasterServlet {
 
     @Override
+    protected void doGet(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req,resp);
+    }
+
+    @Override
     protected void doPost(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         Utente u = Queries.findUserByUsername(req.getParameter("username"));
         if (u != null) {

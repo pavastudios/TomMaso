@@ -147,6 +147,7 @@ public class Queries {
 
     //Query RememberMe
     public static @Nullable Utente findUserByCookie(String cookie) throws SQLException {
+        if(cookie==null)return null;
         byte[] bytes = Utility.fromHexString(cookie);
         FIND_USER_BY_COOKIE.setBytes(1, bytes);
         ResultSet rs = FIND_USER_BY_COOKIE.executeQuery();

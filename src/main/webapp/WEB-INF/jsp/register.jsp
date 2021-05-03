@@ -1,11 +1,11 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
+    <%@ include file="headTags.jsp"%>
     <title>JSP - Hello World</title>
 </head>
 <body>
-<form action="./sign-up" method="POST">
+<form action="${pageContext.request.contextPath}/sign-up" method="POST">
 
     <label for="mail">Email:</label>
     <input type="email" id="mail" name="mail"/><br/>

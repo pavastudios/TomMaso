@@ -17,6 +17,11 @@ import java.sql.SQLException;
 public class RegisterServlet extends MasterServlet {
 
     @Override
+    protected void doGet(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(req,resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         String username = req.getParameter("username");

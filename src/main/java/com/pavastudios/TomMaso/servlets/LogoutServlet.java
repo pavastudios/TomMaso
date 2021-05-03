@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 
 @WebServlet(name = "Logout", value = "/logout")
-public class Logout extends MasterServlet {
+public class LogoutServlet extends MasterServlet {
     @Override
     protected void doGet(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException {
         session.invalidate();
