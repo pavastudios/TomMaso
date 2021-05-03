@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class Messaggio {
+public class Messaggio implements GenericModel {
     private int idMessaggio;
     private Utente mittente;
     private String testo;
@@ -91,8 +91,10 @@ public class Messaggio {
                 '}';
     }
 
+    @Override
     public void writeJson(JsonWriter writer) throws IOException {
         writer.beginObject();
+        writer.name("id").value(idMessaggio);
         writer.name("mittente");
         mittente.writeJson(writer);
         writer.name("testo").value(testo);

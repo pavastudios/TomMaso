@@ -6,6 +6,7 @@ public class ApiParam {
     private final Type type;
     private final String defValue;
     private final String[] defValueArray;
+
     public ApiParam(String name, Type type, Object[] defValue) {
         this.name = name;
         this.type = type;

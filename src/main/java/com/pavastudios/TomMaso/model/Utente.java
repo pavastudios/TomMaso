@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Date;
 
-public class Utente {
+public class Utente implements GenericModel {
     private int idUtente;
     private boolean isAdmin;
     private String email;
@@ -128,8 +128,10 @@ public class Utente {
                 '}';
     }
 
+    @Override
     public void writeJson(JsonWriter writer) throws IOException {
         writer.beginObject();
+        writer.name("id").value(idUtente);
         writer.name("isAdmin").value(isAdmin);
         writer.name("username").value(username);
         writer.name("data_iscrizione").value(dataIscrizione.getTime());

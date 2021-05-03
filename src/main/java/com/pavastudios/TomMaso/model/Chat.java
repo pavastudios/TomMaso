@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Chat {
+public class Chat implements GenericModel {
     private int idChat;
     private Utente utente1, utente2;
 
@@ -67,8 +67,10 @@ public class Chat {
                 '}';
     }
 
+    @Override
     public void writeJson(JsonWriter writer) throws IOException {
         writer.beginObject();
+        writer.name("id").value(idChat);
         writer.name("user1");
         utente1.writeJson(writer);
         writer.name("user2");

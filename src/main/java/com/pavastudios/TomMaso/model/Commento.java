@@ -1,11 +1,13 @@
 package com.pavastudios.TomMaso.model;
 
+import com.google.gson.stream.JsonWriter;
 import com.pavastudios.TomMaso.db.queries.Queries;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Commento {
+public class Commento implements GenericModel {
     private int idCommento;
     private Utente mittente;
     private Pagina pagina;
@@ -75,5 +77,17 @@ public class Commento {
                 ", pagina=" + pagina +
                 ", testo='" + testo + '\'' +
                 '}';
+    }
+
+    @Override
+    public void writeJson(JsonWriter writer) throws IOException {
+        writer.beginObject();
+        writer.name("id").value(idCommento);
+        writer.name("mittente");
+        mittente.writeJson(writer);
+        writer.name("pagina");
+        pagina.writeJson(writer);
+        writer.name("pagina").value(testo);
+        writer.endObject();
     }
 }
