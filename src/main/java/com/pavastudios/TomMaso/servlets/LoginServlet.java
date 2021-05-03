@@ -20,14 +20,14 @@ public class LoginServlet extends MasterServlet {
 
     @Override
     protected void doGet(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req,resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        String username=req.getParameter("username");
-        String password=req.getParameter("password");
-        boolean remember="on".equals(req.getParameter("remember"));
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        boolean remember = "on".equals(req.getParameter("remember"));
 
         Utente u = Queries.findUserByUsername(username);
         if (u != null) {
@@ -39,7 +39,7 @@ public class LoginServlet extends MasterServlet {
                     Cookie c = RememberMeUtility.createRememberMeCookie(u);
                     resp.addCookie(c);
                 }
-                Utility.returnHome(req,resp);
+                Utility.returnHome(req, resp);
             }
         } else {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //username non trovato

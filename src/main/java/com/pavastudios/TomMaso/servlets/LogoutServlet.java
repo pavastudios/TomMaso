@@ -9,7 +9,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet(name = "Logout", value = "/logout")
@@ -27,7 +26,7 @@ public class LogoutServlet extends MasterServlet {
                 break;
             }
         }
-        Utility.returnHome(req,resp);
+        Utility.returnHome(req, resp);
     }
 
     @Override

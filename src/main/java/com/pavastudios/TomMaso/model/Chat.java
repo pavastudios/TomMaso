@@ -1,7 +1,9 @@
 package com.pavastudios.TomMaso.model;
 
+import com.google.gson.stream.JsonWriter;
 import com.pavastudios.TomMaso.db.queries.Queries;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -63,5 +65,14 @@ public class Chat {
                 ", utente1=" + utente1 +
                 ", utente2=" + utente2 +
                 '}';
+    }
+
+    public void writeJson(JsonWriter writer) throws IOException {
+        writer.beginObject();
+        writer.name("user1");
+        utente1.writeJson(writer);
+        writer.name("user2");
+        utente2.writeJson(writer);
+        writer.endObject();
     }
 }

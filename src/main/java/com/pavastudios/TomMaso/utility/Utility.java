@@ -65,11 +65,27 @@ public class Utility {
         return bytes;
     }
 
-    public static void returnHome(HttpServletRequest req, HttpServletResponse resp){
+    public static void returnHome(HttpServletRequest req, HttpServletResponse resp) {
         try {
             resp.sendRedirect(req.getContextPath());
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static int tryParseInt(String str, int defValue, int radix) {
+        try {
+            return Integer.parseInt(str, radix);
+        } catch (NumberFormatException ignore) {
+            return defValue;
+        }
+    }
+
+    public static int tryParseInt(String str, int defValue) {
+        try {
+            return Integer.parseInt(str);
+        } catch (NumberFormatException ignore) {
+            return defValue;
         }
     }
 }

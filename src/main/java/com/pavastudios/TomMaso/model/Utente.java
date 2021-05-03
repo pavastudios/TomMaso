@@ -1,7 +1,9 @@
 package com.pavastudios.TomMaso.model;
 
+import com.google.gson.stream.JsonWriter;
 import com.pavastudios.TomMaso.utility.Security;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -124,6 +126,15 @@ public class Utente {
                 ", salt=" + Arrays.toString(salt) +
                 ", dataIscrizione=" + dataIscrizione +
                 '}';
+    }
+
+    public void writeJson(JsonWriter writer) throws IOException {
+        writer.beginObject();
+        writer.name("isAdmin").value(isAdmin);
+        writer.name("username").value(username);
+        writer.name("data_iscrizione").value(dataIscrizione.getTime());
+        writer.name("propic_url").value(propicURL);
+        writer.endObject();
     }
 
     public Utente userVerifyLogin(String password) {

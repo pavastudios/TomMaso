@@ -19,7 +19,7 @@ public class RegisterServlet extends MasterServlet {
 
     @Override
     protected void doGet(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(req,resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(req, resp);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class RegisterServlet extends MasterServlet {
             if (remember) {
                 resp.addCookie(RememberMeUtility.createRememberMeCookie(utente));
             }
-            Utility.returnHome(req,resp);
+            Utility.returnHome(req, resp);
         } catch (SQLException throwables) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, throwables.getErrorCode() + ": " + throwables.getLocalizedMessage());
 

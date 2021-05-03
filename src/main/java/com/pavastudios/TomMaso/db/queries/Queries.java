@@ -50,40 +50,40 @@ public class Queries {
         DELETE_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `RememberMe` WHERE `cookie`=?");
     }
 
-    public List<Messaggio>fetchMessages(Chat chat,int amount,int offset) throws SQLException {
-        FETCH_CHAT_MESSAGE.setInt(1,chat.getIdChat());
-        FETCH_CHAT_MESSAGE.setInt(2,amount);
-        FETCH_CHAT_MESSAGE.setInt(3,offset);
-        ResultSet rs=FETCH_CHAT_MESSAGE.executeQuery();
-        List<Messaggio>messages=resultSetToList(Entities.MESSAGGIO,rs);
+    public static List<Messaggio> fetchMessages(Chat chat, int amount, int offset) throws SQLException {
+        FETCH_CHAT_MESSAGE.setInt(1, chat.getIdChat());
+        FETCH_CHAT_MESSAGE.setInt(2, amount);
+        FETCH_CHAT_MESSAGE.setInt(3, offset);
+        ResultSet rs = FETCH_CHAT_MESSAGE.executeQuery();
+        List<Messaggio> messages = resultSetToList(Entities.MESSAGGIO, rs);
         rs.close();
         return messages;
     }
 
-    public static @Nullable Messaggio sendTextToChat(Chat chat,Utente mittente,String testo) throws SQLException {
-        if(chat==null||mittente==null||testo==null)return null;
-        SEND_MESSAGE.setInt(1,chat.getIdChat());
-        SEND_MESSAGE.setInt(2,mittente.getIdUtente());
-        SEND_MESSAGE.setString(3,testo);
+    public static @Nullable Messaggio sendTextToChat(Chat chat, Utente mittente, String testo) throws SQLException {
+        if (chat == null || mittente == null || testo == null) return null;
+        SEND_MESSAGE.setInt(1, chat.getIdChat());
+        SEND_MESSAGE.setInt(2, mittente.getIdUtente());
+        SEND_MESSAGE.setString(3, testo);
         SEND_MESSAGE.executeUpdate();
-        int id=Utility.getIdFromGeneratedKeys(SEND_MESSAGE);
+        int id = Utility.getIdFromGeneratedKeys(SEND_MESSAGE);
         return findMessageById(id);
     }
 
-    public static Chat createChat(Utente u1,Utente u2) throws SQLException {
+    public static Chat createChat(Utente u1, Utente u2) throws SQLException {
         Utente tmp;
-        if(u1==null||u2==null)return null;
+        if (u1 == null || u2 == null) return null;
 
-        if(u1.getIdUtente()>u2.getIdUtente()){//in ordine di id
-            tmp=u1;
-            u1=u2;
-            u2=tmp;
+        if (u1.getIdUtente() > u2.getIdUtente()) {//in ordine di id
+            tmp = u1;
+            u1 = u2;
+            u2 = tmp;
         }
 
-        CREATE_CHAT.setInt(1,u1.getIdUtente());
-        CREATE_CHAT.setInt(2,u2.getIdUtente());
+        CREATE_CHAT.setInt(1, u1.getIdUtente());
+        CREATE_CHAT.setInt(2, u2.getIdUtente());
         CREATE_CHAT.executeUpdate();
-        int id=Utility.getIdFromGeneratedKeys(CREATE_CHAT);
+        int id = Utility.getIdFromGeneratedKeys(CREATE_CHAT);
         return findChatById(id);
     }
 
@@ -187,7 +187,7 @@ public class Queries {
 
     //Query RememberMe
     public static @Nullable Utente findUserByCookie(String cookie) throws SQLException {
-        if(cookie==null)return null;
+        if (cookie == null) return null;
         byte[] bytes = Utility.fromHexString(cookie);
         FIND_USER_BY_COOKIE.setBytes(1, bytes);
         ResultSet rs = FIND_USER_BY_COOKIE.executeQuery();
