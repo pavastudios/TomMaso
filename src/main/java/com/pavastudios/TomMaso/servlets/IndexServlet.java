@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "Index", value = "/")
+@WebServlet(name = "Index", value = "")
 public class IndexServlet extends MasterServlet {
     @Override
     protected void doGet(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {

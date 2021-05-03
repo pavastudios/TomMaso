@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/materialdesignicons.min.css" type="text/css"/>
     <link rel="icon" href="${pageContext.request.contextPath}/images/logo.ico" type="image/x-icon"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/uikit@latest/dist/css/uikit.min.css">
-
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.6.20/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.6.20/dist/js/uikit-icons.min.js"></script>
 
 

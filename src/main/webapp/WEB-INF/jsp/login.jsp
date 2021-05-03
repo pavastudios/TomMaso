@@ -5,7 +5,7 @@
 		<title>TomMASO - Login</title>
 		<%@ include file="headTags.jsp"%>
 	</head>
-	<body class="login uk-cover-container uk-background-secondary uk-flex uk-flex-center uk-flex-middle uk-height-viewport uk-overflow-hidden uk-light" style="background-image: url(./bg.jpg);"   data-uk-height-viewport>
+	<body class="login uk-cover-container uk-background-secondary uk-flex uk-flex-center uk-flex-middle uk-height-viewport uk-overflow-hidden uk-light" style="background-image: url(${pageContext.request.contextPath}/images/bg.jpg);"   data-uk-height-viewport>
 		<!-- Overlay -->
 		<div class="uk-position-cover uk-overlay-primary"></div>
 
@@ -15,7 +15,7 @@
 		<div class="uk-width-medium uk-padding-small uk-position-z-index" uk-scrollspy="cls: uk-animation-fade">
 			
 			<div class="uk-text-center uk-margin">
-				<img src="logo.png" style="max-width: 50px;" alt="Logo">
+				<img src="${pageContext.request.contextPath}/images/logo.png" style="max-width: 50px;" alt="Logo">
 			</div>
 
 			<!-- Login -->
@@ -43,7 +43,7 @@
 			</form>
 
 			<!-- Recupero Password -->
-			<form class="toggle-class" action="login-dark.html" hidden>
+			<form class="toggle-class" action="${pageContext.request.contextPath}/login" hidden>
 				<div class="uk-margin-small">
 					<div class="uk-inline uk-width-1-1">
 						<span class="uk-form-icon uk-form-icon-flip" data-uk-icon="icon: mail"></span>
@@ -63,9 +63,5 @@
 				</div>
 			</div>
 		</div>
-		
-		<!-- JS FILES -->
-		<script src="https://cdn.jsdelivr.net/npm/uikit@latest/dist/js/uikit.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/uikit@latest/dist/js/uikit-icons.min.js"></script>
 	</body>
 </html>

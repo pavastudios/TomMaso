@@ -1,3 +1,5 @@
+<%@ page import="com.pavastudios.TomMaso.utility.RememberMeUtility" %>
+<%@ page import="com.pavastudios.TomMaso.model.Utente" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +14,7 @@
 		<div class="uk-navbar-left">
 	
 			<ul class="uk-navbar-nav">
-				<li class="uk-active"><a href="#"><img src="logo.png" style="max-width: 50px;" srcset=""></a></li>
+				<li class="uk-active"><a href="#"><img src="${pageContext.request.contextPath}/images/logo.png" style="max-width: 50px;" srcset=""></a></li>
 				<li><a href="#">Home</a></li>
 				<li><a href="#">Chi Siamo</a></li>
 				<li><a href="#">Top Blog</a></li>
@@ -23,8 +25,15 @@
 		<div class="uk-navbar-right">
 	
 			<ul class="uk-navbar-nav">
-				<li><a href="#">Sign Up</a></li>
-				<li><a href="#">Login</a></li>
+				<% Utente u= (Utente) session.getAttribute(RememberMeUtility.SESSION_USER);
+					if(u==null){
+				%>
+					<li><a href="${pageContext.request.contextPath}/sign-up">Sign Up</a></li>
+					<li><a href="${pageContext.request.contextPath}/login">Login</a></li>
+				<%}else{%>
+					<li><%=u.getUsername()%></li>
+					<li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
+				<%}%>
 			</ul>
 	
 		</div>
@@ -32,7 +41,7 @@
 	</nav>
 	
 	<!-- Sezione Hero-->
-	<section class="uk-section uk-section-large uk-section-secondary uk-background-fixed uk-background-center-center" style="background-image: url(bg.jpg);">
+	<section class="uk-section uk-section-large uk-section-secondary uk-background-fixed uk-background-center-center" style="background-image: url(${pageContext.request.contextPath}/images/bg.jpg);">
 		<div class="uk-container uk-container-small uk-text-center">
 			<h1>Lorem</h1>
 			<p class="uk-text-large">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio, aut!</p>
@@ -231,9 +240,5 @@
 			<span class="uk-text-small uk-text-muted">© 2021 TomMASO - <a href="#">Creato da P.A.V.A. Studios</a></span>
 		</div>
 	</footer>
-
-	<!-- UIkit JS -->
-	<script src="https://cdn.jsdelivr.net/npm/uikit@3.6.20/dist/js/uikit.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/uikit@3.6.20/dist/js/uikit-icons.min.js"></script>
 </body>
 </html>
