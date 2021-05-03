@@ -25,13 +25,17 @@ public class LoginServlet extends MasterServlet {
 
     @Override
     protected void doPost(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        Utente u = Queries.findUserByUsername(req.getParameter("username"));
+        String username=req.getParameter("username");
+        String password=req.getParameter("password");
+        boolean remember="on".equals(req.getParameter("remember"));
+
+        Utente u = Queries.findUserByUsername(username);
         if (u != null) {
             if (u.userVerifyLogin(password) == null) {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //password errata
             } else {
-                session.setAttribute("utente", u);
-                if ("on".equals(req.getParameter("remember"))) {
+                session.setAttribute(RememberMeUtility.SESSION_USER, u);
+                if (remember) {
                     Cookie c = RememberMeUtility.createRememberMeCookie(u);
                     resp.addCookie(c);
                 }

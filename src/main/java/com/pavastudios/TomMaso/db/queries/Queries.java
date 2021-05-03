@@ -26,12 +26,15 @@ public class Queries {
     static MasterPreparedStatement FIND_CHAT_BY_ID;
     static MasterPreparedStatement FIND_USER_BY_COOKIE;
     static MasterPreparedStatement REGISTER_USER;
-    static MasterPreparedStatement USER_VERIFY_LOGIN;
     static MasterPreparedStatement REGISTER_REMEMBER_ME;
     static MasterPreparedStatement DELETE_REMEMBER_ME;
+    static MasterPreparedStatement CREATE_CHAT;
+    static MasterPreparedStatement SEND_MESSAGE;
+    static MasterPreparedStatement FETCH_CHAT_MESSAGE;
 
 
     public static void initQueries() throws SQLException {
+        FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? ORDER BY `data_invio` DESC LIMIT ? OFFSET ?");
         FIND_USER_BY_USERNAME = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `username`=?");
         FIND_USER_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=?");
         FIND_PAGE_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Pagina` WHERE `id_pagina`=?");
@@ -42,9 +45,46 @@ public class Queries {
         FIND_USER_BY_COOKIE = GlobalConnection.CONNECTION.prepareStatement("SELECT `id_utente` FROM `RememberMe` WHERE `cookie`=?");
         REGISTER_USER = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Utente`(`email`,`password`,`salt`,`username`) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
         REGISTER_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `RememberMe`(`id_utente`,`cookie`) VALUES (?,?)");
-
-
+        CREATE_CHAT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Chat`(`utente1`,`utente2`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
+        SEND_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Messaggio`(`id_chat`,`mittente`,`testo`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
         DELETE_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `RememberMe` WHERE `cookie`=?");
+    }
+
+    public List<Messaggio>fetchMessages(Chat chat,int amount,int offset) throws SQLException {
+        FETCH_CHAT_MESSAGE.setInt(1,chat.getIdChat());
+        FETCH_CHAT_MESSAGE.setInt(2,amount);
+        FETCH_CHAT_MESSAGE.setInt(3,offset);
+        ResultSet rs=FETCH_CHAT_MESSAGE.executeQuery();
+        List<Messaggio>messages=resultSetToList(Entities.MESSAGGIO,rs);
+        rs.close();
+        return messages;
+    }
+
+    public static @Nullable Messaggio sendTextToChat(Chat chat,Utente mittente,String testo) throws SQLException {
+        if(chat==null||mittente==null||testo==null)return null;
+        SEND_MESSAGE.setInt(1,chat.getIdChat());
+        SEND_MESSAGE.setInt(2,mittente.getIdUtente());
+        SEND_MESSAGE.setString(3,testo);
+        SEND_MESSAGE.executeUpdate();
+        int id=Utility.getIdFromGeneratedKeys(SEND_MESSAGE);
+        return findMessageById(id);
+    }
+
+    public static Chat createChat(Utente u1,Utente u2) throws SQLException {
+        Utente tmp;
+        if(u1==null||u2==null)return null;
+
+        if(u1.getIdUtente()>u2.getIdUtente()){//in ordine di id
+            tmp=u1;
+            u1=u2;
+            u2=tmp;
+        }
+
+        CREATE_CHAT.setInt(1,u1.getIdUtente());
+        CREATE_CHAT.setInt(2,u2.getIdUtente());
+        CREATE_CHAT.executeUpdate();
+        int id=Utility.getIdFromGeneratedKeys(CREATE_CHAT);
+        return findChatById(id);
     }
 
     public static void removeCookie(String cookie) throws SQLException {

@@ -54,6 +54,7 @@ CREATE TABLE `Messaggio`(
     `id_chat` INT NOT NULL,
     `mittente` INT NOT NULL,
     `testo` TEXT NOT NULL,
+    `data_invio` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`id_chat`) REFERENCES `Chat`(`id_chat`) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (`mittente`) REFERENCES `Utente`(`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE
 );
