@@ -4,6 +4,9 @@ import com.pavastudios.TomMaso.db.connection.MasterPreparedStatement;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -60,5 +63,13 @@ public class Utility {
             bytes[i] = (byte) Short.parseShort(s, 16);
         }
         return bytes;
+    }
+
+    public static void returnHome(HttpServletRequest req, HttpServletResponse resp){
+        try {
+            resp.sendRedirect(req.getContextPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

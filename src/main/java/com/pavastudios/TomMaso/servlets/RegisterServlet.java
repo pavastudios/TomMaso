@@ -3,6 +3,7 @@ package com.pavastudios.TomMaso.servlets;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.RememberMeUtility;
+import com.pavastudios.TomMaso.utility.Utility;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,6 +44,7 @@ public class RegisterServlet extends MasterServlet {
             if (remember) {
                 resp.addCookie(RememberMeUtility.createRememberMeCookie(utente));
             }
+            Utility.returnHome(req,resp);
         } catch (SQLException throwables) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, throwables.getErrorCode() + ": " + throwables.getLocalizedMessage());
 

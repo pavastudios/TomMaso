@@ -2,12 +2,14 @@ package com.pavastudios.TomMaso.servlets;
 
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.utility.RememberMeUtility;
+import com.pavastudios.TomMaso.utility.Utility;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet(name = "Logout", value = "/logout")
@@ -25,6 +27,7 @@ public class LogoutServlet extends MasterServlet {
                 break;
             }
         }
+        Utility.returnHome(req,resp);
     }
 
     @Override

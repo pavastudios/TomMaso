@@ -3,6 +3,7 @@ package com.pavastudios.TomMaso.servlets;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.RememberMeUtility;
+import com.pavastudios.TomMaso.utility.Utility;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +27,7 @@ public class LoginServlet extends MasterServlet {
     protected void doPost(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         Utente u = Queries.findUserByUsername(req.getParameter("username"));
         if (u != null) {
-            if (u.userVerifyLogin(req.getParameter("password")) == null) {
+            if (u.userVerifyLogin(password) == null) {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //password errata
             } else {
                 session.setAttribute("utente", u);
@@ -34,6 +35,7 @@ public class LoginServlet extends MasterServlet {
                     Cookie c = RememberMeUtility.createRememberMeCookie(u);
                     resp.addCookie(c);
                 }
+                Utility.returnHome(req,resp);
             }
         } else {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //username non trovato

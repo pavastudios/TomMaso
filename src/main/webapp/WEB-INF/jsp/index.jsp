@@ -11,7 +11,7 @@
 <!-- Navbar -->
 <div class="ui teal inverted menu">
     <a href="#" class="header item">
-        <img src="${pageContext.request.contextPath}/images/logo.png" alt="Logo" srcset="">
+        <img src="${pageContext.request.contextPath}/images/logo.png" alt="Logo">
         TomMASO
     </a>
     <a href="#" class="item">Chi siamo</a>
