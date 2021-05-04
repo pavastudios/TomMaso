@@ -14,10 +14,13 @@
     <title><%= u.getUsername() %> - Profilo</title>
 </head>
 <body>
-<% if (u != null) {%>
+
 <h1><%= u.getUsername() + "\n" + u.getEmail()%>
 </h1>
 <img src="<%= u.getPropicURL()%>" alt="No picture."/>
-<% } %>
+<form action="/create-blog" method="POST">
+    <input type="text" name="blogname"/>
+    <input type="submit" value="Crea"/>
+</form>
 </body>
 </html>

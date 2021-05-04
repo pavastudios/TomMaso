@@ -25,12 +25,11 @@ public class ApiServlet extends MasterServlet {
     protected void doPost(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         resp.setContentType("text/json");
 
-        Utente user = (Utente) session.getAttribute(RememberMeUtility.SESSION_USER);
         JsonWriter writer = new JsonWriter(resp.getWriter());
 
         writer.beginObject();
 
-        ApiManager.manageEndpoint(req, writer, user);
+        ApiManager.manageEndpoint(req, writer);
 
         writer.endObject();
         writer.flush();

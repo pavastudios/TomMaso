@@ -2,6 +2,7 @@ package com.pavastudios.TomMaso.servlets;
 
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Utente;
+import com.pavastudios.TomMaso.utility.RememberMeUtility;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +18,11 @@ public class ProfileServlet extends MasterServlet {
     @Override
     protected void doGet(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         String username = req.getParameter("username");
-        Utente u = Queries.findUserByUsername(username);
+        if(username==null){
+            Utente u= (Utente) session.getAttribute(RememberMeUtility.SESSION_USER);
+            username=u==null?null:u.getUsername();
+        }
+        Utente u = username!=null?Queries.findUserByUsername(username):null;
         if (u != null) {
             req.setAttribute("user", u);
             getServletContext().getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);

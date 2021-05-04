@@ -16,6 +16,7 @@ public class Utente implements GenericModel {
     private byte[] password;
     private String propicURL;
     private String username;
+    private String bio;
     private byte[] salt;
     private Date dataIscrizione;
 
@@ -32,6 +33,7 @@ public class Utente implements GenericModel {
         u.setIsAdmin(rs.getBoolean("is_admin"));
         u.setPropicURL(rs.getString("propic_url"));
         u.setUsername(rs.getString("username"));
+        u.setUsername(rs.getString("bio"));
         return u;
     }
 
@@ -97,6 +99,15 @@ public class Utente implements GenericModel {
 
     public void setDataIscrizione(Date dataIscrizione) {
         this.dataIscrizione = dataIscrizione;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public Utente setBio(String bio) {
+        this.bio = bio;
+        return this;
     }
 
     @Override

@@ -3,11 +3,14 @@ package com.pavastudios.TomMaso.servlets;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.RememberMeUtility;
+import com.pavastudios.TomMaso.utility.Security;
+import com.pavastudios.TomMaso.utility.Utility;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public abstract class MasterServlet extends HttpServlet {
@@ -24,6 +27,11 @@ public abstract class MasterServlet extends HttpServlet {
     private HttpSession loadSession(HttpServletRequest req) throws SQLException {
         HttpSession session = req.getSession(true);
         if (session.isNew()) {
+            //aggiunta lista CSRF
+            ArrayList<String> tokens = new ArrayList<>();
+            session.setAttribute("token",tokens);
+
+            //aggiunta login se c'è il cookie
             Cookie[] cookies = req.getCookies();
             for (Cookie c : cookies) {
                 if (RememberMeUtility.COOKIE_REMEMBER_ME.equals(c.getName())) {
@@ -75,6 +83,8 @@ public abstract class MasterServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
+
 
     private void setDefaultHeader(HttpServletResponse resp) {
         resp.setHeader("Content-Type", "text/html; charset=UTF-8");

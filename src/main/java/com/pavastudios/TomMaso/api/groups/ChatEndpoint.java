@@ -8,27 +8,26 @@ import com.pavastudios.TomMaso.api.*;
 import java.util.List;
 
 public class ChatEndpoint {
-        public static final String GROUP_NAME="chat";
-        private static final String FETCH_ENDPOINT_NAME = "fetch-chat";
+    public static final String GROUP_NAME="chat";
+    private static final String FETCH_ENDPOINT_NAME = "fetch-chat";
+    private static final ApiEndpoint.Manage FETCH_ACTION= (parser, writer, user) -> {
+        int chatId = parser.getValueInt("chat_id");
+        int count = parser.getValueInt("count");
+        int offset = parser.getValueInt("offset");
 
-        private static final ApiEndpoint.Manage FETCH_ACTION= (parser, writer, user) -> {
-            int chatId = parser.getValueInt("chat_id");
-            int count = parser.getValueInt("count");
-            int offset = parser.getValueInt("offset");
+        Chat chat = Queries.findChatById(chatId);
+        if (chat==null||!chat.hasAccess(user)){
+            writer.name(ApiManager.ERROR_PROP).value("invalid chat_id");
+            return;
+        }
 
-            Chat chat = Queries.findChatById(chatId);
-            if (chat==null||!chat.hasAccess(user)){
-                writer.name(ApiManager.ERROR_PROP).value("invalid chat_id");
-                return;
-            }
-
-            List<Messaggio> messaggi = Queries.fetchMessages(chat, count, offset);
-            writer.name("response");
-            writer.beginArray();
-            for (Messaggio m : messaggi)
-                m.writeJson(writer);
-            writer.endArray();
-        };
+        List<Messaggio> messaggi = Queries.fetchMessages(chat, count, offset);
+        writer.name("response");
+        writer.beginArray();
+        for (Messaggio m : messaggi)
+            m.writeJson(writer);
+        writer.endArray();
+    };
 
     public static final ApiGroup ENDPOINTS=new ApiGroup(GROUP_NAME,
                 new ApiEndpoint(FETCH_ENDPOINT_NAME, true,FETCH_ACTION,

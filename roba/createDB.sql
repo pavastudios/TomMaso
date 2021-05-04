@@ -15,7 +15,8 @@ CREATE TABLE `Utente`(
     `data_iscrizione` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `propic_url` VARCHAR(255),
     `is_admin` BOOLEAN DEFAULT 0,
-    `username` VARCHAR(255) NOT NULL UNIQUE
+    `username` VARCHAR(255) NOT NULL UNIQUE,
+    `bio` TEXT NOT NULL
 );
 
 CREATE TABLE `Blog`(

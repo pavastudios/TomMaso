@@ -1,8 +1,10 @@
 package com.pavastudios.TomMaso.api;
 
 import com.google.gson.stream.JsonWriter;
+import com.pavastudios.TomMaso.api.groups.BlogEndpoint;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.api.groups.ChatEndpoint;
+import com.pavastudios.TomMaso.utility.RememberMeUtility;
 import org.jetbrains.annotations.Nullable;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,16 +26,20 @@ public class ApiManager {
         return group.getEndpoint(path[2]);
     }
 
-    public static void manageEndpoint(HttpServletRequest req, JsonWriter writer, Utente user) throws IOException, SQLException {
+    public static void manageEndpoint(HttpServletRequest req, JsonWriter writer) throws IOException, SQLException {
+        //Controlla esistenza endpoint
         ApiEndpoint endpoint=getEndpoint(req);
         if (endpoint == null) {
             writer.name(ERROR_PROP).value("method not implemented");
             return;
         }
+        //Controlla se l'utente è loggato
+        Utente user = (Utente) req.getSession().getAttribute(RememberMeUtility.SESSION_USER);
         if (endpoint.requireLogin() && user == null) {
             writer.name(ERROR_PROP).value("user not authenticated");
             return;
         }
+        //Controlla i parametri passati
         ApiParser parser = new ApiParser(endpoint, req);
         parser.parse();
         if (parser.hasError()) {
@@ -42,11 +48,15 @@ public class ApiManager {
             writer.name(ERROR_PROP).value(errorString);
             return;
         }
+
+        //Richieta valida
+
         endpoint.manage(parser,writer,user);
     }
 
 
     static{
         apiGroup.put(ChatEndpoint.GROUP_NAME,ChatEndpoint.ENDPOINTS);
+        apiGroup.put(BlogEndpoint.GROUP_NAME,BlogEndpoint.ENDPOINTS);
     }
 }

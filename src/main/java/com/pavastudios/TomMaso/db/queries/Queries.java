@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -29,11 +30,13 @@ public class Queries {
     static MasterPreparedStatement REGISTER_REMEMBER_ME;
     static MasterPreparedStatement DELETE_REMEMBER_ME;
     static MasterPreparedStatement CREATE_CHAT;
+    static MasterPreparedStatement CREATE_BLOG;
     static MasterPreparedStatement SEND_MESSAGE;
     static MasterPreparedStatement FETCH_CHAT_MESSAGE;
 
 
     public static void initQueries() throws SQLException {
+        //FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente` IN ((SELECT `utente2` FROM 'Chat' WHERE `utente1`=?) UNION (SELECT `utente1` FROM 'Chat' WHERE `utente2`=?))");
         FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? ORDER BY `data_invio` DESC LIMIT ? OFFSET ?");
         FIND_USER_BY_USERNAME = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `username`=?");
         FIND_USER_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=?");
@@ -48,14 +51,26 @@ public class Queries {
         CREATE_CHAT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Chat`(`utente1`,`utente2`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
         SEND_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Messaggio`(`id_chat`,`mittente`,`testo`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
         DELETE_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `RememberMe` WHERE `cookie`=?");
+        CREATE_BLOG = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Blog`(`proprietario`,`nome`) VALUES (?,?)",Statement.RETURN_GENERATED_KEYS);
     }
 
+    public static Blog createBlog(Utente utente,String nome) throws SQLException{
+        CREATE_BLOG.setInt(1,utente.getIdUtente());
+        CREATE_BLOG.setString(2,nome);
+        CREATE_BLOG.executeUpdate();
+        int idBlog=Utility.getIdFromGeneratedKeys(CREATE_BLOG);
+        return findBlogById(idBlog);
+    }
+    public static List<Messaggio> fetchMessages(Chat chat) throws SQLException {
+        return fetchMessages(chat,Integer.MAX_VALUE,0);
+    }
     public static List<Messaggio> fetchMessages(Chat chat, int amount, int offset) throws SQLException {
         FETCH_CHAT_MESSAGE.setInt(1, chat.getIdChat());
         FETCH_CHAT_MESSAGE.setInt(2, amount);
         FETCH_CHAT_MESSAGE.setInt(3, offset);
         ResultSet rs = FETCH_CHAT_MESSAGE.executeQuery();
         List<Messaggio> messages = resultSetToList(Entities.MESSAGGIO, rs);
+        Collections.reverse(messages);
         rs.close();
         return messages;
     }
