@@ -10,16 +10,11 @@ import java.util.List;
 
 public class ApiEndpoint {
 
-    public interface Manage{
-        void executeEndpoint(ApiParser parser, JsonWriter writer, Utente user) throws SQLException, IOException;
-    }
-
     private final Manage action;
     private final List<ApiParam> params;
     private final boolean requireLogin;
     private final String endpoint;
-
-    public ApiEndpoint(String endpoint, boolean requireLogin,Manage action, ApiParam... params) {
+    public ApiEndpoint(String endpoint, boolean requireLogin, Manage action, ApiParam... params) {
         this.endpoint = endpoint;
         this.action = action;
         this.requireLogin = requireLogin;
@@ -45,6 +40,10 @@ public class ApiEndpoint {
 
     public void manage(ApiParser parser, JsonWriter writer, Utente user) throws SQLException, IOException {
         action.executeEndpoint(parser, writer, user);
+    }
+
+    public interface Manage {
+        void executeEndpoint(ApiParser parser, JsonWriter writer, Utente user) throws SQLException, IOException;
     }
 
 }

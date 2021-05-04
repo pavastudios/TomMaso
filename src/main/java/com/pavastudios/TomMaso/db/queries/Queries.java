@@ -35,6 +35,7 @@ public class Queries {
     static MasterPreparedStatement FETCH_CHAT_MESSAGE;
     static MasterPreparedStatement FIND_USER_CHAT;
     static MasterPreparedStatement FIND_CHAT_BY_USERS;
+    static MasterPreparedStatement FIND_BLOGS_OWNED_BY;
 
     public static void initQueries() throws SQLException {
         //FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente` IN ((SELECT `utente2` FROM 'Chat' WHERE `utente1`=?) UNION (SELECT `utente1` FROM 'Chat' WHERE `utente2`=?))");
@@ -43,6 +44,7 @@ public class Queries {
         FIND_USER_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=?");
         FIND_PAGE_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Pagina` WHERE `id_pagina`=?");
         FIND_BLOG_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` WHERE `id_blog`=?");
+        FIND_BLOGS_OWNED_BY = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` WHERE `proprietario`=?");
         FIND_COMMENT_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Commento` WHERE `id_commento`=?");
         FIND_USER_CHAT = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Chat` WHERE `utente1`=? OR `utente2`=?");
         FIND_MESSAGE_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_messaggio`=?");
@@ -54,19 +56,29 @@ public class Queries {
         CREATE_CHAT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Chat`(`utente1`,`utente2`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
         SEND_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Messaggio`(`id_chat`,`mittente`,`testo`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
         DELETE_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `RememberMe` WHERE `cookie`=?");
-        CREATE_BLOG = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Blog`(`proprietario`,`nome`) VALUES (?,?)",Statement.RETURN_GENERATED_KEYS);
+        CREATE_BLOG = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Blog`(`proprietario`,`nome`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
     }
 
-    public static Blog createBlog(Utente utente,String nome) throws SQLException{
-        CREATE_BLOG.setInt(1,utente.getIdUtente());
-        CREATE_BLOG.setString(2,nome);
+    public static List<Blog> getBlogsUser(Utente u) throws SQLException {
+        FIND_BLOGS_OWNED_BY.setInt(1, u.getIdUtente());
+        ResultSet rs = FIND_BLOGS_OWNED_BY.executeQuery();
+        List<Blog> blogList = resultSetToList(Entities.BLOG, rs);
+        rs.close();
+        return blogList;
+    }
+
+    public static Blog createBlog(Utente utente, String nome) throws SQLException {
+        CREATE_BLOG.setInt(1, utente.getIdUtente());
+        CREATE_BLOG.setString(2, nome);
         CREATE_BLOG.executeUpdate();
-        int idBlog=Utility.getIdFromGeneratedKeys(CREATE_BLOG);
+        int idBlog = Utility.getIdFromGeneratedKeys(CREATE_BLOG);
         return findBlogById(idBlog);
     }
+
     public static List<Messaggio> fetchMessages(Chat chat) throws SQLException {
-        return fetchMessages(chat,Integer.MAX_VALUE,0);
+        return fetchMessages(chat, Integer.MAX_VALUE, 0);
     }
+
     public static List<Messaggio> fetchMessages(Chat chat, int amount, int offset) throws SQLException {
         FETCH_CHAT_MESSAGE.setInt(1, chat.getIdChat());
         FETCH_CHAT_MESSAGE.setInt(2, amount);
@@ -227,22 +239,22 @@ public class Queries {
     public static @Nullable List<Chat> findUserChat(Utente u1) throws SQLException {
         FIND_USER_CHAT.setInt(1, u1.getIdUtente());
         FIND_USER_CHAT.setInt(2, u1.getIdUtente());
-        ResultSet rs= FIND_USER_CHAT.executeQuery();
-        List<Chat>chats=Queries.resultSetToList(Entities.CHAT,rs);
+        ResultSet rs = FIND_USER_CHAT.executeQuery();
+        List<Chat> chats = Queries.resultSetToList(Entities.CHAT, rs);
         rs.close();
         return chats;
     }
 
-    public static @Nullable Chat findChatByUsers(Utente u1,Utente u2) throws SQLException {
-        if(u1.getIdUtente()>u2.getIdUtente()){
-            Utente temp=u1;
-            u1=u2;
-            u2=u1;
+    public static @Nullable Chat findChatByUsers(Utente u1, Utente u2) throws SQLException {
+        if (u1.getIdUtente() > u2.getIdUtente()) {
+            Utente temp = u1;
+            u1 = u2;
+            u2 = u1;
         }
         FIND_CHAT_BY_USERS.setInt(1, u1.getIdUtente());
         FIND_CHAT_BY_USERS.setInt(2, u2.getIdUtente());
-        ResultSet rs= FIND_USER_CHAT.executeQuery();
-        Chat chat=Queries.findChatById(rs.getInt(1));
+        ResultSet rs = FIND_USER_CHAT.executeQuery();
+        Chat chat = Queries.findChatById(rs.getInt(1));
         rs.close();
         return chat;
     }

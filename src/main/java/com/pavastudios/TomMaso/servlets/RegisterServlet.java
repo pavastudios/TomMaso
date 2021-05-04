@@ -3,13 +3,13 @@ package com.pavastudios.TomMaso.servlets;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.RememberMeUtility;
+import com.pavastudios.TomMaso.utility.Session;
 import com.pavastudios.TomMaso.utility.Utility;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -18,29 +18,33 @@ import java.sql.SQLException;
 public class RegisterServlet extends MasterServlet {
 
     @Override
-    protected void doGet(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession(true);
+    protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        String email = req.getParameter("mail");
+        String password1 = req.getParameter("password1");
+        String password2 = req.getParameter("password1");
+        String email = req.getParameter("email");
         boolean remember = "on".equals(req.getParameter("remember"));
-        if (username == null || password == null || email == null) {
+        if (username == null || password1 == null || password2 == null || email == null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+        if (!password1.equals(password2)) {
+            resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Password non uguali");
             return;
         }
         Utente utente;
         try {
-            utente = Queries.registerUser(email, password, username);
+            utente = Queries.registerUser(email, password1, username);
             if (utente == null) {
                 resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Email o username già esistenti");
                 return;
             }
-            session.setAttribute(RememberMeUtility.SESSION_USER, utente);
+            session.setUtente(utente);
             if (remember) {
                 resp.addCookie(RememberMeUtility.createRememberMeCookie(utente));
             }

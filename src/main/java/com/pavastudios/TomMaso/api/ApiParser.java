@@ -98,6 +98,7 @@ public class ApiParser {
     public Object getValue(ApiParam param) {
         return params.get(param);
     }
+
     public String getValueString(String s) {
         return getValueFromName(s).toString();
     }

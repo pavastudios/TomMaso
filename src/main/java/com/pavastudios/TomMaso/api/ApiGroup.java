@@ -4,12 +4,12 @@ import java.util.HashMap;
 
 public class ApiGroup {
     private final String groupName;
-    private final HashMap<String,ApiEndpoint> endpoints;
+    private final HashMap<String, ApiEndpoint> endpoints;
 
-    public ApiGroup(String groupName,ApiEndpoint... endpointList) {
-        endpoints=new HashMap<>(endpointList.length);
+    public ApiGroup(String groupName, ApiEndpoint... endpointList) {
+        endpoints = new HashMap<>(endpointList.length);
         this.groupName = groupName;
-        for(ApiEndpoint point:endpointList)endpoints.put(point.getEndpoint(),point);
+        for (ApiEndpoint point : endpointList) endpoints.put(point.getEndpoint(), point);
     }
 
     public String getGroupName() {

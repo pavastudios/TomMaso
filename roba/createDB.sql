@@ -16,7 +16,7 @@ CREATE TABLE `Utente`(
     `propic_url` VARCHAR(255),
     `is_admin` BOOLEAN DEFAULT 0,
     `username` VARCHAR(255) NOT NULL UNIQUE,
-    `bio` TEXT NOT NULL
+    `bio` VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 CREATE TABLE `Blog`(

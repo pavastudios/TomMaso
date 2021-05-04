@@ -1,16 +1,13 @@
 package com.pavastudios.TomMaso.servlets;
 
-import com.pavastudios.TomMaso.db.queries.Queries;
-import com.pavastudios.TomMaso.model.Utente;
-import com.pavastudios.TomMaso.utility.RememberMeUtility;
-import com.pavastudios.TomMaso.utility.Security;
-import com.pavastudios.TomMaso.utility.Utility;
+import com.pavastudios.TomMaso.utility.Session;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Locale;
 
 public abstract class MasterServlet extends HttpServlet {
@@ -23,37 +20,6 @@ public abstract class MasterServlet extends HttpServlet {
     private static final String METHOD_PUT = "PUT";
     private static final String METHOD_TRACE = "TRACE";
 
-    private String getToken(){
-        byte[] token = Security.generateRandomBytes(20);
-        return Utility.toHexString(token);
-    }
-    private void addCsrfToken(HttpServletRequest request) {
-        ArrayList<String> list = (ArrayList<String>) request.getSession().getAttribute("token");
-        String token=getToken();
-        list.add(token);
-        request.setAttribute("actualToken",token);
-        if(list.size()>20)list.remove(0);
-    }
-    private HttpSession loadSession(HttpServletRequest req) throws SQLException {
-        HttpSession session = req.getSession(true);
-        if (session.isNew()) {
-            //aggiunta lista CSRF
-            ArrayList<String> tokens = new ArrayList<>();
-            session.setAttribute("token",tokens);
-
-            //aggiunta login se c'è il cookie
-            Cookie[] cookies = req.getCookies();
-            for (Cookie c : cookies) {
-                if (RememberMeUtility.COOKIE_REMEMBER_ME.equals(c.getName())) {
-                    Utente u = Queries.findUserByCookie(c.getValue());
-                    if (u != null)
-                        session.setAttribute(RememberMeUtility.SESSION_USER, u);
-                    break;
-                }
-            }
-        }
-        return session;
-    }
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -61,8 +27,7 @@ public abstract class MasterServlet extends HttpServlet {
         setDefaultHeader(resp);
 
         try {
-            HttpSession session = loadSession(req);
-            addCsrfToken(req);
+            Session session = Session.loadSession(req);
 
             switch (method) {
                 case METHOD_GET:
@@ -97,36 +62,35 @@ public abstract class MasterServlet extends HttpServlet {
     }
 
 
-
     private void setDefaultHeader(HttpServletResponse resp) {
         resp.setHeader("Content-Type", "text/html; charset=UTF-8");
     }
 
-    protected void doTrace(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    protected void doTrace(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         doTrace(req, resp);
     }
 
-    protected void doOptions(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    protected void doOptions(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         doOptions(req, resp);
     }
 
-    protected void doDelete(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    protected void doDelete(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         doDelete(req, resp);
     }
 
-    protected void doHead(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    protected void doHead(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         doHead(req, resp);
     }
 
-    protected void doPut(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    protected void doPut(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         doPut(req, resp);
     }
 
-    protected void doGet(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         doGet(req, resp);
     }
 
-    protected void doPost(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         doPost(req, resp);
     }
 

@@ -1,10 +1,8 @@
-<%@ page import="com.pavastudios.TomMaso.utility.RememberMeUtility" %>
 <%@ page import="com.pavastudios.TomMaso.model.Utente" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<title>TomMASO</title>
-
 	<%@ include file="headTags.jsp"%>
 </head>
 <body>
@@ -25,13 +23,13 @@
 		<div class="uk-navbar-right">
 	
 			<ul class="uk-navbar-nav">
-				<% Utente u= (Utente) session.getAttribute(RememberMeUtility.SESSION_USER);
+				<% Utente u= ses.getUtente();
 					if(u==null){
 				%>
 					<li><a href="${pageContext.request.contextPath}/sign-up">Sign Up</a></li>
 					<li><a href="${pageContext.request.contextPath}/login">Login</a></li>
 				<%}else{%>
-					<li><%=u.getUsername()%></li>
+					<li><a href="${pageContext.request.contextPath}/profile"><%=u.getUsername()%></a></li>
 					<li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
 				<%}%>
 			</ul>
@@ -202,6 +200,7 @@
 				</div>
 				
 			</div>
+		</div>
 	</section>
 
 	<!-- Footer -->

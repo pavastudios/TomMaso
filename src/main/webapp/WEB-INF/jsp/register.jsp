@@ -5,7 +5,7 @@
 		<title>TomMASO - Login</title>
 		<%@ include file="headTags.jsp"%>
 	</head>
-	<body class="login uk-cover-container uk-background-secondary uk-flex uk-flex-center uk-flex-middle uk-height-viewport uk-overflow-hidden uk-light" style="background-image: url(./bg.jpg);"   data-uk-height-viewport>
+	<body class="login uk-cover-container uk-background-secondary uk-flex uk-flex-center uk-flex-middle uk-height-viewport uk-overflow-hidden uk-light" style="background-image: url(${pageContext.request.contextPath}/bg.jpg);"   data-uk-height-viewport>
 		<!-- Overlay -->
 		<div class="uk-position-cover uk-overlay-primary"></div>
 
@@ -19,7 +19,7 @@
 			</div>
 
 			<!-- Login -->
-			<form class="toggle-class" method="POST" action="${pageContext.request.contextPath}/login">
+			<form class="toggle-class" method="POST" action="${pageContext.request.contextPath}/sign-up">
 				<fieldset class="uk-fieldset">
 					<div class="uk-margin-small">
 						<div class="uk-inline uk-width-1-1">
@@ -50,9 +50,6 @@
 					</div>
 				</fieldset>
 			</form>
-		
-		<!-- JS FILES -->
-		<script src="https://cdn.jsdelivr.net/npm/uikit@latest/dist/js/uikit.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/uikit@latest/dist/js/uikit-icons.min.js"></script>
+		</div>
 	</body>
 </html>

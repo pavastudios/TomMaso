@@ -2,9 +2,9 @@ package com.pavastudios.TomMaso.api;
 
 import com.google.gson.stream.JsonWriter;
 import com.pavastudios.TomMaso.api.groups.BlogEndpoint;
-import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.api.groups.ChatEndpoint;
-import com.pavastudios.TomMaso.utility.RememberMeUtility;
+import com.pavastudios.TomMaso.model.Utente;
+import com.pavastudios.TomMaso.utility.Session;
 import org.jetbrains.annotations.Nullable;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,25 +16,30 @@ import java.util.Locale;
 public class ApiManager {
     public static final String ERROR_PROP = "error";
 
-    public static HashMap<String,ApiGroup>apiGroup=new HashMap<>();
+    public static HashMap<String, ApiGroup> apiGroup = new HashMap<>();
+
+    static {
+        apiGroup.put(ChatEndpoint.GROUP_NAME, ChatEndpoint.ENDPOINTS);
+        apiGroup.put(BlogEndpoint.GROUP_NAME, BlogEndpoint.ENDPOINTS);
+    }
 
     public static @Nullable ApiEndpoint getEndpoint(HttpServletRequest req) {
-        String[]path=req.getPathInfo().split("/");
-        if(path.length!=3)return null;
-        ApiGroup group=apiGroup.get(path[1]);
-        if(group==null)return null;
+        String[] path = req.getPathInfo().split("/");
+        if (path.length != 3) return null;
+        ApiGroup group = apiGroup.get(path[1]);
+        if (group == null) return null;
         return group.getEndpoint(path[2]);
     }
 
-    public static void manageEndpoint(HttpServletRequest req, JsonWriter writer) throws IOException, SQLException {
+    public static void manageEndpoint(Session session, HttpServletRequest req, JsonWriter writer) throws IOException, SQLException {
         //Controlla esistenza endpoint
-        ApiEndpoint endpoint=getEndpoint(req);
+        ApiEndpoint endpoint = getEndpoint(req);
         if (endpoint == null) {
             writer.name(ERROR_PROP).value("method not implemented");
             return;
         }
         //Controlla se l'utente è loggato
-        Utente user = (Utente) req.getSession().getAttribute(RememberMeUtility.SESSION_USER);
+        Utente user = session.getUtente();
         if (endpoint.requireLogin() && user == null) {
             writer.name(ERROR_PROP).value("user not authenticated");
             return;
@@ -50,13 +55,11 @@ public class ApiManager {
         }
 
         //Richieta valida
+        try {
+            endpoint.manage(parser, writer, user);
+        } catch (SQLException e) {
+            writer.name(ERROR_PROP).value(e.getLocalizedMessage());
+        }
 
-        endpoint.manage(parser,writer,user);
-    }
-
-
-    static{
-        apiGroup.put(ChatEndpoint.GROUP_NAME,ChatEndpoint.ENDPOINTS);
-        apiGroup.put(BlogEndpoint.GROUP_NAME,BlogEndpoint.ENDPOINTS);
     }
 }

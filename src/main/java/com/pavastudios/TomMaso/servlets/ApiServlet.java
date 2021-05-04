@@ -1,35 +1,33 @@
 package com.pavastudios.TomMaso.servlets;
 
 import com.google.gson.stream.JsonWriter;
-import com.pavastudios.TomMaso.model.Utente;
-import com.pavastudios.TomMaso.utility.RememberMeUtility;
-import com.pavastudios.TomMaso.api.*;
+import com.pavastudios.TomMaso.api.ApiManager;
+import com.pavastudios.TomMaso.utility.Session;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "ChatAPI",urlPatterns = {"/api/*"})
+@WebServlet(name = "ChatAPI", urlPatterns = {"/api/*"})
 public class ApiServlet extends MasterServlet {
 
     @Override
-    protected void doGet(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         doPost(session, req, resp);
     }
 
     @Override
-    protected void doPost(HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         resp.setContentType("text/json");
 
         JsonWriter writer = new JsonWriter(resp.getWriter());
 
         writer.beginObject();
 
-        ApiManager.manageEndpoint(req, writer);
+        ApiManager.manageEndpoint(session, req, writer);
 
         writer.endObject();
         writer.flush();

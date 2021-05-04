@@ -33,7 +33,7 @@ public class Utente implements GenericModel {
         u.setIsAdmin(rs.getBoolean("is_admin"));
         u.setPropicURL(rs.getString("propic_url"));
         u.setUsername(rs.getString("username"));
-        u.setUsername(rs.getString("bio"));
+        u.setBio(rs.getString("bio"));
         return u;
     }
 
