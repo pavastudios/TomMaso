@@ -58,6 +58,10 @@ public class Chat implements GenericModel {
         return idChat;
     }
 
+    public boolean hasAccess(Utente user) {
+        return utente1.equals(user) || utente2.equals(user);
+    }
+
     @Override
     public String toString() {
         return "Chat{" +

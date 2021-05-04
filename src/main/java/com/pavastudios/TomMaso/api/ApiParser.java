@@ -1,15 +1,15 @@
-package com.pavastudios.TomMaso.utility.api;
+package com.pavastudios.TomMaso.api;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
-public class Parser {
-    private final Endpoint endpoint;
+public class ApiParser {
+    private final ApiEndpoint endpoint;
     private final HttpServletRequest req;
     private final HashMap<ApiParam, Object> params = new HashMap<>();
     private ApiParam error;
 
-    public Parser(Endpoint endpoint, HttpServletRequest req) {
+    public ApiParser(ApiEndpoint endpoint, HttpServletRequest req) {
         this.endpoint = endpoint;
         this.req = req;
     }
