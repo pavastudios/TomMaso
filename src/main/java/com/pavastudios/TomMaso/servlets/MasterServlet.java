@@ -23,7 +23,17 @@ public abstract class MasterServlet extends HttpServlet {
     private static final String METHOD_PUT = "PUT";
     private static final String METHOD_TRACE = "TRACE";
 
-
+    private String getToken(){
+        byte[] token = Security.generateRandomBytes(20);
+        return Utility.toHexString(token);
+    }
+    private void addCsrfToken(HttpServletRequest request) {
+        ArrayList<String> list = (ArrayList<String>) request.getSession().getAttribute("token");
+        String token=getToken();
+        list.add(token);
+        request.setAttribute("actualToken",token);
+        if(list.size()>20)list.remove(0);
+    }
     private HttpSession loadSession(HttpServletRequest req) throws SQLException {
         HttpSession session = req.getSession(true);
         if (session.isNew()) {
@@ -52,6 +62,8 @@ public abstract class MasterServlet extends HttpServlet {
 
         try {
             HttpSession session = loadSession(req);
+            addCsrfToken(req);
+
             switch (method) {
                 case METHOD_GET:
                     doGet(session, req, resp);
