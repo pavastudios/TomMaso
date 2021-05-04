@@ -33,7 +33,8 @@ public class Queries {
     static MasterPreparedStatement CREATE_BLOG;
     static MasterPreparedStatement SEND_MESSAGE;
     static MasterPreparedStatement FETCH_CHAT_MESSAGE;
-
+    static MasterPreparedStatement FIND_USER_CHAT;
+    static MasterPreparedStatement FIND_CHAT_BY_USERS;
 
     public static void initQueries() throws SQLException {
         //FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente` IN ((SELECT `utente2` FROM 'Chat' WHERE `utente1`=?) UNION (SELECT `utente1` FROM 'Chat' WHERE `utente2`=?))");
@@ -43,8 +44,10 @@ public class Queries {
         FIND_PAGE_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Pagina` WHERE `id_pagina`=?");
         FIND_BLOG_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` WHERE `id_blog`=?");
         FIND_COMMENT_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Commento` WHERE `id_commento`=?");
+        FIND_USER_CHAT = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Chat` WHERE `utente1`=? OR `utente2`=?");
         FIND_MESSAGE_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_messaggio`=?");
         FIND_CHAT_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Chat` WHERE `id_chat`=?");
+        FIND_CHAT_BY_USERS = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Chat` WHERE `utente1`=? AND `utente2`=? ");
         FIND_USER_BY_COOKIE = GlobalConnection.CONNECTION.prepareStatement("SELECT `id_utente` FROM `RememberMe` WHERE `cookie`=?");
         REGISTER_USER = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Utente`(`email`,`password`,`salt`,`username`) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
         REGISTER_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `RememberMe`(`id_utente`,`cookie`) VALUES (?,?)");
@@ -219,6 +222,29 @@ public class Queries {
         REGISTER_REMEMBER_ME.setBytes(2, cookie);
         REGISTER_REMEMBER_ME.executeUpdate();
         return cookie;
+    }
+
+    public static @Nullable List<Chat> findUserChat(Utente u1) throws SQLException {
+        FIND_USER_CHAT.setInt(1, u1.getIdUtente());
+        FIND_USER_CHAT.setInt(2, u1.getIdUtente());
+        ResultSet rs= FIND_USER_CHAT.executeQuery();
+        List<Chat>chats=Queries.resultSetToList(Entities.CHAT,rs);
+        rs.close();
+        return chats;
+    }
+
+    public static @Nullable Chat findChatByUsers(Utente u1,Utente u2) throws SQLException {
+        if(u1.getIdUtente()>u2.getIdUtente()){
+            Utente temp=u1;
+            u1=u2;
+            u2=u1;
+        }
+        FIND_CHAT_BY_USERS.setInt(1, u1.getIdUtente());
+        FIND_CHAT_BY_USERS.setInt(2, u2.getIdUtente());
+        ResultSet rs= FIND_USER_CHAT.executeQuery();
+        Chat chat=Queries.findChatById(rs.getInt(1));
+        rs.close();
+        return chat;
     }
 
 }
