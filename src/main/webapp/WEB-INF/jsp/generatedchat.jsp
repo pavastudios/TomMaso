@@ -6,13 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.pavastudios.TomMaso.model.Chat" %>
+<%@ page import="java.util.*" %>
+<%@ page import="com.pavastudios.TomMaso.model.Messaggio" %>
 <%@ page import="com.pavastudios.TomMaso.model.Utente" %>
-<%@ page import="com.pavastudios.TomMaso.db.queries.Queries" %>
-<%@ page import="com.pavastudios.TomMaso.utility.RememberMeUtility" %>
-<%@ page import="java.sql.SQLException" %>
 <%
-    Chat c= (Chat) request.getAttribute("chat");
+    List<Messaggio> mess= (List<Messaggio>) request.getAttribute("messaggi");
+    Utente loggato = (Utente) request.getAttribute("loggato");
+    Utente altro = (Utente) request.getAttribute("altro");
 %>
 
 <html>
@@ -21,8 +21,12 @@
 </head>
 <body>
 <div id="chat">
-    <% for(Utente u: lista) %>
-
+    <% for(Messaggio m: mess) {%>
+        <% if (m.getMittente().equals(loggato)) {%>
+            <p style="background-color: aqua" align="right"><%=m%></p>
+        <% }else{ %>
+            <p style="background-color: darksalmon" align="left"><%=m%></p>
+    <% }} %>
 </div>
 </body>
 
