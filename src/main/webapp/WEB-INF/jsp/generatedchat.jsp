@@ -10,7 +10,7 @@
 <%@ page import="com.pavastudios.TomMaso.model.Messaggio" %>
 <%@ page import="com.pavastudios.TomMaso.model.Utente" %>
 <%
-    List<Messaggio> mess= (List<Messaggio>) request.getAttribute("messaggi");
+    List<Messaggio> mess = (List<Messaggio>) request.getAttribute("messaggi");
     Utente loggato = (Utente) request.getAttribute("loggato");
     Utente altro = (Utente) request.getAttribute("altro");
 %>
@@ -21,12 +21,15 @@
 </head>
 <body>
 <div id="chat">
-    <% for(Messaggio m: mess) {%>
-        <% if (m.getMittente().equals(loggato)) {%>
-            <p style="background-color: aqua" align="right"><%=m%></p>
-        <% }else{ %>
-            <p style="background-color: darksalmon" align="left"><%=m%></p>
-    <% }} %>
+    <% for (Messaggio m : mess) {%>
+    <% if (m.getMittente().equals(loggato)) {%>
+    <p style="background-color: aqua" align="right"><%=m%>
+    </p>
+    <% } else { %>
+    <p style="background-color: darksalmon" align="left"><%=m%>
+    </p>
+    <% }
+    } %>
 </div>
 </body>
 
