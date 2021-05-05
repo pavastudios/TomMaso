@@ -240,6 +240,7 @@
 				</div>
 				<!-- /Card Nuovo Blog/-->
 
+<<<<<<< HEAD
 			</div>
 		</div>
 	</div>
@@ -278,5 +279,20 @@
 			<span class="uk-text-small uk-text-muted">© 2021 TomMASO - <a href="#">Creato da P.A.V.A. Studios</a></span>
 		</div>
 	</footer>
+=======
+<h1><%= u.getUsername() + "\n" + u.getEmail()%>
+</h1>
+<img src="<%= u.getPropicURL()%>" alt="No picture."/>
+<form action="${pageContext.request.contextPath}/api/blog/create" method="POST">
+    <input type="text" name="name"/>
+    <input type="submit" value="Crea"/>
+</form>
+<ul>
+    <% for (Blog b : blogs) { %>
+    <li><%=b.getNome()%>
+    </li>
+    <%}%>
+</ul>
+>>>>>>> 81226263f1c627fcb3595ab20287350bf38c600e
 </body>
 </html>

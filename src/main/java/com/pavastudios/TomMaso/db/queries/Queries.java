@@ -36,11 +36,17 @@ public class Queries {
     static MasterPreparedStatement FIND_USER_CHAT;
     static MasterPreparedStatement FIND_CHAT_BY_USERS;
     static MasterPreparedStatement FIND_BLOGS_OWNED_BY;
+    static MasterPreparedStatement CREATE_FORGET_COOKIE;
+    static MasterPreparedStatement FIND_USER_BY_EMAIL;
+    static MasterPreparedStatement FIND_USER_FROM_FORGOT;
+    static MasterPreparedStatement CHANGE_PASSWORD;
+    static MasterPreparedStatement DELETE_FORGET;
 
     public static void initQueries() throws SQLException {
         //FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente` IN ((SELECT `utente2` FROM 'Chat' WHERE `utente1`=?) UNION (SELECT `utente1` FROM 'Chat' WHERE `utente2`=?))");
         FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? ORDER BY `data_invio` DESC LIMIT ? OFFSET ?");
         FIND_USER_BY_USERNAME = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `username`=?");
+        FIND_USER_BY_EMAIL = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `email`=?");
         FIND_USER_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=?");
         FIND_PAGE_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Pagina` WHERE `id_pagina`=?");
         FIND_BLOG_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` WHERE `id_blog`=?");
@@ -57,6 +63,34 @@ public class Queries {
         SEND_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Messaggio`(`id_chat`,`mittente`,`testo`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
         DELETE_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `RememberMe` WHERE `cookie`=?");
         CREATE_BLOG = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Blog`(`proprietario`,`nome`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
+        CHANGE_PASSWORD = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `password`=?,`salt`=? WHERE `id_utente`=?");
+        CREATE_FORGET_COOKIE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `PasswordReset`(`codice`,`id_utente`) VALUES (?,?)");
+        FIND_USER_FROM_FORGOT = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=(SELECT `id_utente` FROM `PasswordReset` WHERE `codice`=?)");
+        DELETE_FORGET = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `PasswordReset` WHERE `codice`=?");
+    }
+
+    public static Utente findUserFromForgot(String code) throws SQLException {
+        byte[] bytes = Utility.fromHexString(code);
+        FIND_USER_FROM_FORGOT.setBytes(1, bytes);
+        ResultSet rs = FIND_USER_FROM_FORGOT.executeQuery();
+        Utente u = null;
+        if (rs.first()) {
+            u = resultSetToModel(Entities.UTENTE, rs);
+        }
+        rs.close();
+        return u;
+
+    }
+
+    public static String forgetPassword(String email) throws SQLException {
+        Utente user = findUserByEmail(email);
+        if (user == null) return null;
+        byte[] code = Security.generateRandomBytes(32);
+        String codice = Utility.toHexString(code);
+        CREATE_FORGET_COOKIE.setBytes(1, code);
+        CREATE_FORGET_COOKIE.setInt(2, user.getIdUtente());
+        CREATE_FORGET_COOKIE.executeUpdate();
+        return codice;
     }
 
     public static List<Blog> getBlogsUser(Utente u) throws SQLException {
@@ -168,6 +202,17 @@ public class Queries {
         return user;
     }
 
+    //Query Utente
+    public static @Nullable Utente findUserByEmail(@NotNull String email) throws SQLException {
+        FIND_USER_BY_EMAIL.setString(1, email);
+        ResultSet rs = FIND_USER_BY_EMAIL.executeQuery();
+        Utente user = null;
+        if (rs.first())
+            user = Utente.fromResultSet(rs);
+        rs.close();
+        return user;
+    }
+
     public static @Nullable Utente findUserById(int idUtente) throws SQLException {
         return findById(Entities.UTENTE, idUtente);
     }
@@ -259,4 +304,18 @@ public class Queries {
         return chat;
     }
 
+    public static void changePassword(Utente user, String password) throws SQLException {
+        byte[] salt = Security.generateSalt();
+        byte[] pwd = Security.sha512(password, salt);
+        CHANGE_PASSWORD.setBytes(1, pwd);
+        CHANGE_PASSWORD.setBytes(2, salt);
+        CHANGE_PASSWORD.setInt(3, user.getIdUtente());
+        CHANGE_PASSWORD.executeUpdate();
+    }
+
+    public static void deleteForget(String code) throws SQLException {
+        byte[] bytes = Utility.fromHexString(code);
+        DELETE_FORGET.setBytes(1, bytes);
+        DELETE_FORGET.executeUpdate();
+    }
 }

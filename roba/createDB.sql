@@ -67,25 +67,41 @@ CREATE TABLE `RememberMe`(
     FOREIGN KEY (`id_utente`) REFERENCES `Utente`(`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+CREATE TABLE `PasswordReset`(
+    `codice` BINARY(32) PRIMARY KEY, -- UNHEX(SHA2(UUID(),256))
+    `id_utente` INT NOT NULL,
+    `scadenza` TIMESTAMP NOT NULL, -- 1 ora
+    FOREIGN KEY (`id_utente`) REFERENCES `Utente`(`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 -- Creazione eventi
 
-DROP EVENT IF EXISTS `removed_expired_tokens`;
+DROP EVENT IF EXISTS `removed_expired_tokens_remember`;
+DROP EVENT IF EXISTS `removed_expired_tokens_forgot`;
 
 -- Elimina i cookie scaduti
-CREATE EVENT `removed_expired_tokens` ON SCHEDULE EVERY 1 WEEK ON COMPLETION NOT PRESERVE ENABLE DO
+CREATE EVENT `removed_expired_tokens_remember` ON SCHEDULE EVERY 1 WEEK ON COMPLETION NOT PRESERVE ENABLE DO
     DELETE FROM `RememberMe` WHERE `scadenza`<CURRENT_TIMESTAMP;
+
+CREATE EVENT `removed_expired_tokens_forgot` ON SCHEDULE EVERY 1 HOUR ON COMPLETION NOT PRESERVE ENABLE DO
+    DELETE FROM `PasswordReset` WHERE `scadenza`<CURRENT_TIMESTAMP;
 
 SET GLOBAL event_scheduler="ON";
 
 -- Creazione trigger
 
-DROP TRIGGER IF EXISTS `update_expire_date`;
+DROP TRIGGER IF EXISTS `update_expire_date_remember`;
+DROP TRIGGER IF EXISTS `update_expire_date_forgot`;
 
 DELIMITER $$
 
 -- Imposta la data di scadenza del cookie un anno nel futuro
-CREATE TRIGGER `update_expire_date` BEFORE INSERT ON `RememberMe` FOR EACH ROW BEGIN
+CREATE TRIGGER `update_expire_date_remember` BEFORE INSERT ON `RememberMe` FOR EACH ROW BEGIN
     SET NEW.`scadenza`=DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 1 YEAR);
+END $$
+
+CREATE TRIGGER `update_expire_date_forgot` BEFORE INSERT ON `PasswordReset` FOR EACH ROW BEGIN
+    SET NEW.`scadenza`=DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 1 HOUR);
 END $$
 
 DELIMITER ;
