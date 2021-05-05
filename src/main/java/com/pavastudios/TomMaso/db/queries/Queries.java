@@ -99,30 +99,6 @@ public class Queries {
         return codice;
     }
 
-    public static Utente findUserFromForgot(String code) throws SQLException {
-        byte[] bytes = Utility.fromHexString(code);
-        FIND_USER_FROM_FORGOT.setBytes(1, bytes);
-        ResultSet rs = FIND_USER_FROM_FORGOT.executeQuery();
-        Utente u = null;
-        if (rs.first()) {
-            u = resultSetToModel(Entities.UTENTE, rs);
-        }
-        rs.close();
-        return u;
-
-    }
-
-    public static String forgetPassword(String email) throws SQLException {
-        Utente user = findUserByEmail(email);
-        if (user == null) return null;
-        byte[] code = Security.generateRandomBytes(32);
-        String codice = Utility.toHexString(code);
-        CREATE_FORGET_COOKIE.setBytes(1, code);
-        CREATE_FORGET_COOKIE.setInt(2, user.getIdUtente());
-        CREATE_FORGET_COOKIE.executeUpdate();
-        return codice;
-    }
-
     public static List<Blog> getBlogsUser(Utente u) throws SQLException {
         FIND_BLOGS_OWNED_BY.setInt(1, u.getIdUtente());
         ResultSet rs = FIND_BLOGS_OWNED_BY.executeQuery();
@@ -225,17 +201,6 @@ public class Queries {
     public static @Nullable Utente findUserByUsername(@NotNull String username) throws SQLException {
         FIND_USER_BY_USERNAME.setString(1, username);
         ResultSet rs = FIND_USER_BY_USERNAME.executeQuery();
-        Utente user = null;
-        if (rs.first())
-            user = Utente.fromResultSet(rs);
-        rs.close();
-        return user;
-    }
-
-    //Query Utente
-    public static @Nullable Utente findUserByEmail(@NotNull String email) throws SQLException {
-        FIND_USER_BY_EMAIL.setString(1, email);
-        ResultSet rs = FIND_USER_BY_EMAIL.executeQuery();
         Utente user = null;
         if (rs.first())
             user = Utente.fromResultSet(rs);
