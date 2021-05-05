@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>TomMASO - Login</title>
+    <title>TomMASO - Forgot password</title>
     <%@ include file="headTags.jsp" %>
 </head>
 <body class="login uk-cover-container uk-background-secondary uk-flex uk-flex-center uk-flex-middle uk-height-viewport uk-overflow-hidden uk-light"
@@ -19,20 +19,9 @@
     </div>
 
     <!-- Login -->
-    <form class="toggle-class" method="POST" action="${pageContext.request.contextPath}/sign-up">
+    <form class="toggle-class" method="POST" action="${pageContext.request.contextPath}/forgot">
         <fieldset class="uk-fieldset">
-            <div class="uk-margin-small">
-                <div class="uk-inline uk-width-1-1">
-                    <span class="uk-form-icon uk-form-icon-flip" data-uk-icon="icon: user"></span>
-                    <input class="uk-input uk-border-pill" required placeholder="Username" type="text" name="username">
-                </div>
-            </div>
-            <div class="uk-margin-small">
-                <div class="uk-inline uk-width-1-1">
-                    <span class="uk-form-icon uk-form-icon-flip" data-uk-icon="icon: mail"></span>
-                    <input class="uk-input uk-border-pill" required placeholder="Email" type="email" name="email">
-                </div>
-            </div>
+
             <div class="uk-margin-small">
                 <div class="uk-inline uk-width-1-1">
                     <span class="uk-form-icon uk-form-icon-flip" data-uk-icon="icon: lock"></span>
@@ -47,8 +36,9 @@
                            name="password2">
                 </div>
             </div>
+            <input hidden type=text" name="code" value="<%= request.getParameter("code") %>"/>
             <div class="uk-margin-bottom">
-                <button type="submit" class="uk-button uk-button-primary uk-border-pill uk-width-1-1">Registrati
+                <button type="submit" class="uk-button uk-button-primary uk-border-pill uk-width-1-1">Cambia password
                 </button>
             </div>
         </fieldset>

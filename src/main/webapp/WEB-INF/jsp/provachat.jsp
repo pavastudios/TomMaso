@@ -15,10 +15,10 @@
 </head>
 <body>
 <form method="POST" action="/genera-chat">
-<% for(Utente u:lista){%>
+    <% for (Utente u : lista) {%>
     <input type="text" name="unto" value="<%=u.getUsername()%>" hidden>
-    <input type="submit"  value="<%=u.getUsername()%>">
-<% } %>
+    <input type="submit" value="<%=u.getUsername()%>">
+    <% } %>
 </form>
 </body>
 </html>

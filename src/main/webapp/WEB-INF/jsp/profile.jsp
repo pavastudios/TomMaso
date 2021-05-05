@@ -27,9 +27,10 @@
     <input type="submit" value="Crea"/>
 </form>
 <ul>
-<% for(Blog b:blogs){ %>
-    <li><%=b.getNome()%></li>
-<%}%>
+    <% for (Blog b : blogs) { %>
+    <li><%=b.getNome()%>
+    </li>
+    <%}%>
 </ul>
 </body>
 </html>

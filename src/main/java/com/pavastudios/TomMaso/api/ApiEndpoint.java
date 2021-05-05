@@ -14,6 +14,7 @@ public class ApiEndpoint {
     private final List<ApiParam> params;
     private final boolean requireLogin;
     private final String endpoint;
+
     public ApiEndpoint(String endpoint, boolean requireLogin, Manage action, ApiParam... params) {
         this.endpoint = endpoint;
         this.action = action;
