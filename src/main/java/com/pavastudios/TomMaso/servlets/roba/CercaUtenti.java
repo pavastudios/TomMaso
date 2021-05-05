@@ -24,7 +24,7 @@ public class CercaUtenti extends MasterServlet {
 
         req.setAttribute("utente",user);
 
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/cercautenti.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/chat/cercautenti.jsp").forward(req, resp);
     }
 
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {

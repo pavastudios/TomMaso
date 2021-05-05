@@ -30,7 +30,7 @@ public class ForgotServlet extends MasterServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid 'code' parameter");
             return;
         }
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/forgot.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/login/forgot.jsp").forward(req, resp);
 
 
     }

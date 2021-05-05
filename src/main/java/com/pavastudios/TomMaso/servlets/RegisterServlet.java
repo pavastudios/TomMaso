@@ -19,7 +19,7 @@ public class RegisterServlet extends MasterServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/login/register.jsp").forward(req, resp);
     }
 
     @Override

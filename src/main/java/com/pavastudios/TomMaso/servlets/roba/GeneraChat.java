@@ -30,7 +30,7 @@ public class GeneraChat extends MasterServlet {
         req.setAttribute("messaggi", messaggi);
         req.setAttribute("loggato", session.getUtente());
         req.setAttribute("altro", u2);
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/generatedchat.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/chat/generatedchat.jsp").forward(req, resp);
 
     }
 

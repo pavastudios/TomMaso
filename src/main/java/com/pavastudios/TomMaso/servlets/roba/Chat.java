@@ -32,6 +32,6 @@ public class Chat extends MasterServlet {
         req.setAttribute("listaContattati", list);
 
 
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/provachat.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/chat/provachat.jsp").forward(req, resp);
     }
 }
