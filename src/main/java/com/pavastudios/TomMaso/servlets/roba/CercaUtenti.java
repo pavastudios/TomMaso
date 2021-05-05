@@ -14,24 +14,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "Chat", value = "/chat")
-public class Chat extends MasterServlet {
+@WebServlet(name = "CercaUtenti", value = "/cerca-utenti")
+
+public class CercaUtenti extends MasterServlet {
 
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        Utente u1 = session.getUtente();
-        List<Utente> list = new ArrayList<>();
-        List<com.pavastudios.TomMaso.model.Chat> chats = Queries.findUserChat(u1);
-        for (com.pavastudios.TomMaso.model.Chat c : chats) {
-            Utente nome;
-            if (c.getUtente1().equals(u1))
-                nome = c.getUtente2();
-            else
-                nome = c.getUtente1();
-            list.add(nome);
-        }
-        req.setAttribute("listaContattati", list);
+        String nome=req.getParameter("nome");
+        Utente user= Queries.findUserByUsername(nome);
 
+        req.setAttribute("utente",user);
 
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/provachat.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/cercautenti.jsp").forward(req, resp);
+    }
+
+    protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+        doGet(session,req,resp);
     }
 }

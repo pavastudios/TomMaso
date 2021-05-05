@@ -14,11 +14,42 @@
     <title>Title</title>
 </head>
 <body>
-<form method="POST" action="/genera-chat">
-    <% for (Utente u : lista) {%>
-    <input type="text" name="unto" value="<%=u.getUsername()%>" hidden>
-    <input type="submit" value="<%=u.getUsername()%>">
+<div>
+    <form method="POST" action="/TomMaso_war_exploded/genera-chat">
+    <% for(Utente u:lista){%>
+        <input type="text" name="unto" value="<%=u.getUsername()%>" hidden>
+        <input type="submit"  value="<%=u.getUsername()%>">
     <% } %>
-</form>
+    </form>
+</div>
+
+<div id="ricerca">
+    <div id="input">
+        <input type="text" name="nickname" placeholder="Nome utente" id="nome">
+        <button id="cerca">Cerca</button>
+    </div>
+    <div id="elenco">
+
+    </div>
+</div>
+<script>
+
+    var button = document.getElementById("cerca");
+
+    button.addEventListener("click",function (){
+        var richiesta = new XMLHttpRequest();
+        var name= document.getElementById("nome");
+
+        richiesta.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("elenco").innerHTML =
+                    this.responseText;
+            }
+        };
+
+        richiesta.open("get","/TomMaso_war_exploded/cerca-utenti?nome="+name.value);
+        richiesta.send();
+    });
+</script>
 </body>
 </html>

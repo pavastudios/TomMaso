@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-@WebServlet(name = "ChatList", value = "/chat-list")
+@WebServlet(name = "GeneraChat", value = "/genera-chat")
 public class GeneraChat extends MasterServlet {
 
     @Override
@@ -30,7 +30,7 @@ public class GeneraChat extends MasterServlet {
         req.setAttribute("messaggi", messaggi);
         req.setAttribute("loggato", session.getUtente());
         req.setAttribute("altro", u2);
-        getServletContext().getRequestDispatcher("/WEB-INF/jps/generatedchat.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/generatedchat.jsp").forward(req, resp);
 
     }
 
