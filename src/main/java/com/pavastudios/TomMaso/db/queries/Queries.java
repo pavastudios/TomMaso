@@ -64,11 +64,39 @@ public class Queries {
         SEND_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Messaggio`(`id_chat`,`mittente`,`testo`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
         DELETE_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `RememberMe` WHERE `cookie`=?");
         CREATE_BLOG = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Blog`(`proprietario`,`nome`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
+        CHANGE_PASSWORD = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `password`=?,`salt`=? WHERE `id_utente`=?");
+        CREATE_FORGET_COOKIE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `PasswordReset`(`codice`,`id_utente`) VALUES (?,?)");
+        FIND_USER_FROM_FORGOT = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=(SELECT `id_utente` FROM `PasswordReset` WHERE `codice`=?)");
+        DELETE_FORGET = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `PasswordReset` WHERE `codice`=?");
         FIND_BLOG_BY_NAME = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` WHERE `nome`=?");
         CHANGE_PASSWORD = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `password`=?,`salt`=? WHERE `id_utente`=?");
         CREATE_FORGET_COOKIE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `PasswordReset`(`codice`,`id_utente`) VALUES (?,?)");
         FIND_USER_FROM_FORGOT = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=(SELECT `id_utente` FROM `PasswordReset` WHERE `codice`=?)");
         DELETE_FORGET = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `PasswordReset` WHERE `codice`=?");
+    }
+
+    public static Utente findUserFromForgot(String code) throws SQLException {
+        byte[] bytes = Utility.fromHexString(code);
+        FIND_USER_FROM_FORGOT.setBytes(1, bytes);
+        ResultSet rs = FIND_USER_FROM_FORGOT.executeQuery();
+        Utente u = null;
+        if (rs.first()) {
+            u = resultSetToModel(Entities.UTENTE, rs);
+        }
+        rs.close();
+        return u;
+
+    }
+
+    public static String forgetPassword(String email) throws SQLException {
+        Utente user = findUserByEmail(email);
+        if (user == null) return null;
+        byte[] code = Security.generateRandomBytes(32);
+        String codice = Utility.toHexString(code);
+        CREATE_FORGET_COOKIE.setBytes(1, code);
+        CREATE_FORGET_COOKIE.setInt(2, user.getIdUtente());
+        CREATE_FORGET_COOKIE.executeUpdate();
+        return codice;
     }
 
     public static Utente findUserFromForgot(String code) throws SQLException {
@@ -197,6 +225,17 @@ public class Queries {
     public static @Nullable Utente findUserByUsername(@NotNull String username) throws SQLException {
         FIND_USER_BY_USERNAME.setString(1, username);
         ResultSet rs = FIND_USER_BY_USERNAME.executeQuery();
+        Utente user = null;
+        if (rs.first())
+            user = Utente.fromResultSet(rs);
+        rs.close();
+        return user;
+    }
+
+    //Query Utente
+    public static @Nullable Utente findUserByEmail(@NotNull String email) throws SQLException {
+        FIND_USER_BY_EMAIL.setString(1, email);
+        ResultSet rs = FIND_USER_BY_EMAIL.executeQuery();
         Utente user = null;
         if (rs.first())
             user = Utente.fromResultSet(rs);
