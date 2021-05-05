@@ -36,6 +36,7 @@ public class Queries {
     static MasterPreparedStatement FIND_USER_CHAT;
     static MasterPreparedStatement FIND_CHAT_BY_USERS;
     static MasterPreparedStatement FIND_BLOGS_OWNED_BY;
+    static MasterPreparedStatement FIND_BLOG_BY_NAME;
 
     public static void initQueries() throws SQLException {
         //FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente` IN ((SELECT `utente2` FROM 'Chat' WHERE `utente1`=?) UNION (SELECT `utente1` FROM 'Chat' WHERE `utente2`=?))");
@@ -57,6 +58,7 @@ public class Queries {
         SEND_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Messaggio`(`id_chat`,`mittente`,`testo`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
         DELETE_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `RememberMe` WHERE `cookie`=?");
         CREATE_BLOG = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Blog`(`proprietario`,`nome`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
+        FIND_BLOG_BY_NAME = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` WHERE `nome`=?");
     }
 
     public static List<Blog> getBlogsUser(Utente u) throws SQLException {
@@ -200,6 +202,16 @@ public class Queries {
         return findById(Entities.BLOG, idBlog);
     }
 
+    public static @Nullable Blog findBlogByName(@NotNull String name) throws SQLException {
+        FIND_BLOG_BY_NAME.setString(1, name);
+        ResultSet rs = FIND_BLOG_BY_NAME.executeQuery();
+        Blog blog = null;
+        if (rs.first())
+            blog = Blog.fromResultSet(rs);
+        rs.close();
+        return blog;
+    }
+
     //Query Commento
     public static @Nullable Commento findCommentById(int idCommento) throws SQLException {
         return findById(Entities.COMMENTO, idCommento);
@@ -249,7 +261,7 @@ public class Queries {
         if (u1.getIdUtente() > u2.getIdUtente()) {
             Utente temp = u1;
             u1 = u2;
-            u2 = u1;
+            u2 = temp;
         }
         FIND_CHAT_BY_USERS.setInt(1, u1.getIdUtente());
         FIND_CHAT_BY_USERS.setInt(2, u2.getIdUtente());
