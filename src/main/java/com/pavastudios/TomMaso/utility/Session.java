@@ -25,11 +25,10 @@ public class Session {
 
     public static Session loadSession(HttpServletRequest req) {
         HttpSession session = req.getSession(true);
-
-        Session s;
+        Session s=null;
         if (!session.isNew())//restore from httpsession
             s = (Session) session.getAttribute(SESSION_FIELD);
-        else //create new session
+        if(s==null) //create new session
             s = createSession(req);
         session.setAttribute(SESSION_FIELD, s);
         s.initRequestAttributes(req); //inizializza roba come attributi nella request

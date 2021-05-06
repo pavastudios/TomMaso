@@ -187,5 +187,6 @@
 </section>
 
 <%@include file="general/footer.jsp"%>
+<%@include file="general/tailTag.jsp"%>
 </body>
 </html>

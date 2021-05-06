@@ -206,6 +206,8 @@
 	</div>
 
 	<%@include file="general/footer.jsp"%>
+	<%@include file="general/tailTag.jsp"%>
+
 	<script>
 		$( "#createBlog" ).click(function() {
 			var blogname=$("#blogname").first().val();

@@ -9,17 +9,10 @@
 <% Session ses = (Session) session.getAttribute(Session.SESSION_FIELD); %>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script href="${pageContext.request.contextPath}/js/marked.min.js"></script>
 <script href="${pageContext.request.contextPath}/js/purify.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/materialdesignicons.min.css" type="text/css"/>
 <link rel="icon" href="${pageContext.request.contextPath}/images/logo.ico" type="image/x-icon"/>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/uikit@latest/dist/css/uikit.min.css">
-<!-- UIkit JS -->
-<script src="https://cdn.jsdelivr.net/npm/uikit@3.6.20/dist/js/uikit.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/uikit@3.6.20/dist/js/uikit-icons.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/jdenticon@3.1.0/dist/jdenticon.min.js" async
-        integrity="sha384-VngWWnG9GS4jDgsGEUNaoRQtfBGiIKZTiXwm9KpgAeaRn6Y/1tAFiyXqSzqC8Ga/"
-        crossorigin="anonymous">
-</script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/uikit.min.css">
+<script src="${pageContext.request.contextPath}/js/jdenticon.min.js"></script>
