@@ -334,4 +334,15 @@ public class Queries {
         DELETE_FORGET.setBytes(1, bytes);
         DELETE_FORGET.executeUpdate();
     }
+
+    public static void inviaMessaggio(Utente mittente,Utente destinatario,String messaggio) throws SQLException{
+        if(Queries.findChatByUsers(mittente,destinatario)==null)
+            Queries.createChat(mittente,destinatario);
+
+        Chat chat=Queries.findChatByUsers(mittente,destinatario);
+        SEND_MESSAGE.setInt(1,chat.getIdChat());
+        SEND_MESSAGE.setInt(2,mittente.getIdUtente());
+        SEND_MESSAGE.setString(3,messaggio);
+        SEND_MESSAGE.executeUpdate();
+    }
 }
