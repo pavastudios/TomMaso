@@ -22,7 +22,7 @@ public class RememberMeUtility {
 
     public static Utente getUserFromCookies(HttpServletRequest req) throws SQLException {
         Cookie[] cookies = req.getCookies();
-        if(cookies==null)return null;
+        if (cookies == null) return null;
         for (Cookie c : cookies) {
             if (COOKIE_REMEMBER_ME.equals(c.getName())) {
                 return Queries.findUserByCookie(c.getValue());

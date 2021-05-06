@@ -37,6 +37,10 @@ public class RegisterServlet extends MasterServlet {
             resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Password non uguali");
             return;
         }
+        if (username.length() < Utente.MINIMUM_USERNAME_LENGTH || !Utility.useOnlyNormalChars(username)) {
+            resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Nome utente non valido");
+            return;
+        }
         Utente utente;
         try {
             utente = Queries.registerUser(email, password1, username);

@@ -14,9 +14,12 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("unused")
 public class Utility {
+    public static final Pattern NORMAL_CHARS = Pattern.compile("^[a-zA-Z0-9-._]*$");
     public static final Random RANDOM = new Random(System.nanoTime());
     public static final SecureRandom SECURE_RANDOM = new SecureRandom();
     public static final char[] HEX_CHARS = "0123456789ABCDEF".toCharArray();
@@ -32,6 +35,12 @@ public class Utility {
     public static byte[] generateRememberMeCookie() {
         String uuid = UUID.randomUUID().toString();
         return Security.sha256(uuid);
+    }
+
+    public static boolean useOnlyNormalChars(String str) {
+        if (str == null) return false;
+        Matcher matcher = NORMAL_CHARS.matcher(str);
+        return matcher.matches();
     }
 
     public static java.util.Date generateRememberMeExpireDate() {
@@ -82,10 +91,6 @@ public class Utility {
     }
 
     public static int tryParseInt(String str, int defValue) {
-        try {
-            return Integer.parseInt(str);
-        } catch (NumberFormatException ignore) {
-            return defValue;
-        }
+        return tryParseInt(str, defValue, 10);
     }
 }

@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "Profilo", urlPatterns = {"/user", "/user/*","/profile"})
+@WebServlet(name = "Profilo", urlPatterns = {"/user", "/user/*", "/profile"})
 public class ProfileServlet extends MasterServlet {
 
     private Utente fetchUser(Session session, HttpServletRequest req) throws SQLException {
@@ -29,7 +29,7 @@ public class ProfileServlet extends MasterServlet {
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         Utente u = fetchUser(session, req);
         if (u == null) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //username non trovato
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "username non trovato"); //username non trovato
             return;
         }
         List<Blog> blogs = Queries.getBlogsUser(u);

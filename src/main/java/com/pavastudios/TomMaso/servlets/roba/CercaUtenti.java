@@ -11,23 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet(name = "CercaUtenti", value = "/cerca-utenti")
 
 public class CercaUtenti extends MasterServlet {
 
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        String nome=req.getParameter("nome");
-        Utente user= Queries.findUserByUsername(nome);
+        String nome = req.getParameter("nome");
+        Utente user = Queries.findUserByUsername(nome);
 
-        req.setAttribute("utente",user);
+        req.setAttribute("utente", user);
 
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/chat/cercautenti.jsp").forward(req, resp);
     }
 
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        doGet(session,req,resp);
+        doGet(session, req, resp);
     }
 }

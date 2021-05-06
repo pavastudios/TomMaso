@@ -1,6 +1,7 @@
 package com.pavastudios.TomMaso.listeners;
 
 import com.pavastudios.TomMaso.db.connection.GlobalConnection;
+import com.pavastudios.TomMaso.utility.FileUtility;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 public class MainListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-
+        FileUtility.BLOG_FILES_FOLDER.mkdirs();
         try {
             System.out.println("Connecting to DB...");
             Class.forName("org.mariadb.jdbc.Driver");

@@ -3,9 +3,25 @@
 <html>
 <head>
     <%@ include file="general/headTags.jsp"%>
+    <%!
+        private String iconFromFile(ServletContext cont, File f){
+
+            if(f.isDirectory())return "folder";
+            String mime=cont.getMimeType(f.getAbsolutePath());
+            System.out.println(f+": "+mime);
+            if(mime==null)return "file-text";
+            if(mime.startsWith("image/"))return "image";
+            if(mime.startsWith("video/"))return "video-camera";
+            if(mime.startsWith("audio/"))return "microphone";
+            if(mime.startsWith("text/"))return "file-text";
+            return "file";
+        }
+    %>
     <%
         String url = (String) request.getAttribute("url");
         File[] files = (File[])request.getAttribute("files");
+        String parent = (String)request.getAttribute("parentUrl");
+        boolean root = (boolean)request.getAttribute("root");
     %>
 
     <title>Roba</title>
@@ -15,10 +31,9 @@
 
 <div class="uk-width-1-1">
     <div id="app" class="uk-grid-small uk-animation-fade uk-flex-middle uk-child-width-1-9 uk-child-width-1-3@m uk-child-width-1-4@l uk-padding-small" uk-grid uk-height-match="target: > div > .uk-card">
-        <% if(url.substring(url.lastIndexOf("/blog/")+6).length()<2){ %>
         <div>
             <div class="uk-card uk-card-hover uk-height-expand uk-flex uk-flex-center uk-flex-middle">
-                <a href="<%=url.substring(0,url.lastIndexOf("/", url.length()-2))%>">
+                <a href="<%=root?request.getContextPath()+"/profile":parent%>">
                     <div class="uk-card-body">
                         <div class="uk-width-1-1 uk-text-center">
                             <span uk-icon="icon: reply; ratio: 5;" class="plus uk-text-secondary"></span>
@@ -27,7 +42,6 @@
                 </a>
             </div>
         </div>
-        <%}%>
         <!--CARD-->
         <% for (File f: files) {%>
         <div>
@@ -37,7 +51,7 @@
                     <div class="uk-card-header">
                         <div class="uk-grid-small uk-flex-middle uk-text-center" uk-grid>
                             <div class="uk-card-media-top uk-flex uk-flex-center uk-width-1-1">
-                                <span href="#" class="uk-icon-link uk-width-1-1" uk-icon="icon: image; ratio: 5"></span>
+                                <span href="#" class="uk-icon-link uk-width-1-1" uk-icon="icon: <%=iconFromFile(request.getServletContext(),f)%>; ratio: 5"></span>
                             </div>
                             <div class="uk-width-1-1 uk-card-title uk-text-truncate">
                                 <%=f.getName()%>

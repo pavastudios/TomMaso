@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Blog implements GenericModel {
+    public static final int MINIMUM_NAME_LENGTH = 4;
     private int idBlog;
     private Utente proprietario;
     private String nome;

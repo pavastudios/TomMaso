@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class Utente implements GenericModel {
+    public static final int MINIMUM_USERNAME_LENGTH = 4;
     private int idUtente;
     private boolean isAdmin;
     private String email;
