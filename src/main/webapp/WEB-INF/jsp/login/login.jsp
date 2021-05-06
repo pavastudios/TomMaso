@@ -2,10 +2,11 @@
 <html>
 <head>
     <title>TomMASO - Login</title>
-    <%@ include file="headTags.jsp" %>
+    <%@ include file="../general/headTags.jsp" %>
 </head>
 <body class="login uk-cover-container uk-background-secondary uk-flex uk-flex-center uk-flex-middle uk-height-viewport uk-overflow-hidden uk-light"
       style="background-image: url(${pageContext.request.contextPath}/images/bg.jpg);" data-uk-height-viewport>
+<!--%@include file="../general/navbar.jsp"%-->
 <!-- Overlay -->
 <div class="uk-position-cover uk-overlay-primary"></div>
 
@@ -67,5 +68,6 @@
         </div>
     </div>
 </div>
+<!--%@include file="../general/footer.jsp"%-->
 </body>
 </html>

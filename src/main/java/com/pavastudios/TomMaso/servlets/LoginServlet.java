@@ -20,7 +20,7 @@ public class LoginServlet extends MasterServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(req, resp);
     }
 
     @Override
