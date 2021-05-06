@@ -81,12 +81,12 @@ public class BlogViewerServlet extends MasterServlet {
         Utente owner = blog==null?null:blog.getProprietario();
         if(!session.isLogged()||!session.getUtente().equals(owner)){
             System.out.println("Crasho qui invece");
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //utente non loggato o non proprietario
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"utente non loggato o non proprietario");
             return;
         }
-        if (files == null) {
+        if (file == null) {
             System.out.println("Crasho qui");
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //file non trovato
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"File non trovato");
             return;
         }
 
