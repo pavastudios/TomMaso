@@ -10,6 +10,7 @@
 <head>
     <%@ include file="general/headTags.jsp" %>
     <%
+        String url = (String) request.getAttribute("url");
         File[] files = (File[])request.getAttribute("files");
     %>
     <title>Gestione blogs</title>
@@ -17,7 +18,7 @@
 <body>
 <ul>
 <% for (File f: files) {%>
-    <li><a href="./<%=f.getName()%>"><%=f.getName()%></a></li><br/>
+    <li><a href="<%=url+"/"+f.getName()%>"><%=f.getName()%></a></li><br/>
 <%}%>
 </ul>
 </body>
