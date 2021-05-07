@@ -1,5 +1,7 @@
 package com.pavastudios.TomMaso.utility;
 
+import com.pavastudios.TomMaso.test.BlogsDirectoryUrl;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
