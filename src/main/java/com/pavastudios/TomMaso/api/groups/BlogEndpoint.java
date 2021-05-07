@@ -1,21 +1,31 @@
 package com.pavastudios.TomMaso.api.groups;
 
-import com.pavastudios.TomMaso.api.ApiEndpoint;
-import com.pavastudios.TomMaso.api.ApiGroup;
-import com.pavastudios.TomMaso.api.ApiManager;
-import com.pavastudios.TomMaso.api.ApiParam;
+import com.google.gson.stream.JsonWriter;
+import com.pavastudios.TomMaso.api.*;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Blog;
+import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.FileUtility;
 import com.pavastudios.TomMaso.utility.Utility;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 
 public class BlogEndpoint {
     public static final String GROUP_NAME = "blog";
     private static final String CREATE_ENDPOINT_NAME = "create";
+    private static final String DELETE_ENDPOINT_NAME = "delete-blog";
+
+    private static final ApiEndpoint.Manage DELETE_ACTION = (parser, writer, user) -> {
+        int id = parser.getValueInt("id");
+        writer.name("deleted").value("OK");
+        Blog blog = Queries.findBlogById(id);
+        Queries.deleteBlog(blog, user);
+        File blogDir = new File(FileUtility.BLOG_FILES_FOLDER,blog.getNome());
+        FileUtility.deleteDir(blogDir);
+    };
 
     private static final ApiEndpoint.Manage FETCH_ACTION = (parser, writer, user) -> {
         String name = parser.getValueString("name");
@@ -37,6 +47,11 @@ public class BlogEndpoint {
     public static final ApiGroup ENDPOINTS = new ApiGroup(GROUP_NAME,
             new ApiEndpoint(CREATE_ENDPOINT_NAME, true, FETCH_ACTION,
                     new ApiParam("name", ApiParam.Type.STRING)
+            ),
+            new ApiEndpoint(DELETE_ENDPOINT_NAME, true, DELETE_ACTION,
+                    new ApiParam("id", ApiParam.Type.INT)
             )
     );
+
+
 }

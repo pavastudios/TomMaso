@@ -156,7 +156,7 @@
 									<ul class="uk-nav uk-dropdown-nav">
 										<li><a href="#" style="color: #41b3a3;"><span uk-icon="code"></span> Gestisci</a></li>
 										<li><a href="#" style="color: #e8a87c"><span uk-icon="pencil"></span> Rinomina</a></li>
-										<li><a href="#" style="color: #c38d9e;"><span uk-icon="trash"></span> Elimina</a></li>
+										<li><a href="#delete-blog" style="color: #c38d9e;" class="blog-<%=blog.getIdBlog()%> finder" uk-toggle><span uk-icon="trash"></span> Elimina</a></li>
 									</ul>
 								</div>
 							</div>
@@ -198,7 +198,19 @@
 						</div>
 					</div>
 				</div>
-				<!-- /Card Nuovo Blog/-->
+
+				<!-- Modale eliminazione -->
+				<div id="delete-blog" uk-modal>
+					<div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+						<h2 class="uk-modal-title">Eliminare definitivamente?</h2>
+						<form class="uk-form-stacked uk-grid" method="POST" action="#" uk-grid>
+							<div class="uk-text-right uk-margin-right uk-margin-auto-left">
+								<button class="uk-button uk-button-default uk-modal-close" type="button">Esci</button>
+								<input class="uk-button uk-button-primary confirm-delete" value="Elimina" id="" type="button"></button>
+							</div>
+						</form>
+					</div>
+				</div>
 
 
 			</div>
@@ -221,6 +233,23 @@
 				}
 			});
 		});
+		$(".finder").click(
+				function(){
+					var classes = $(this).attr("class");
+					var id = classes.substring(classes.indexOf("-")+1, classes.indexOf(" "));
+					$(".confirm-delete").click(
+						function (){
+							$.ajax({
+								type: 'POST',
+								url: '${pageContext.request.contextPath}/api/blog/delete-blog',
+								data: { id: id },
+								success: function (data) {
+									console.log(data);
+									location.reload();
+								}
+							});
+						})
+				});
 	</script>
 </body>
 </html>

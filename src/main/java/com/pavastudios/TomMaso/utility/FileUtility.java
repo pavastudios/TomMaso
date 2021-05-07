@@ -6,8 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class FileUtility {
-    public static final File BLOG_FILES_FOLDER = new File("PERCORSO ASSOLUTO ALLA CARTELLA CHE VOLETE CONTENGA I FILE DEI BLOG")
-            .getAbsoluteFile();
+    public static final File BLOG_FILES_FOLDER = new File(BlogsDirectoryUrl.BLOGS_DIR_PERSONAL_PATH).getAbsoluteFile();
     private static final int PATH_LENGTH = BLOG_FILES_FOLDER.getAbsolutePath().length();
 
     public static void writeFile(InputStream input, OutputStream output) throws IOException {
@@ -22,6 +21,17 @@ public class FileUtility {
         String name = file.getAbsolutePath();
         name = name.replace('\\', '/');//c'è gente che non conosce linux
         return name.substring(PATH_LENGTH);
+    }
+
+    public static void deleteDir(File file){
+        if(file.isDirectory()){
+            File[] children = file.listFiles();
+            if(children!=null)
+                for(File f : children){
+                    deleteDir(f);
+                }
+        }
+        file.delete();
     }
 
 }
