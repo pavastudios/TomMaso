@@ -78,4 +78,11 @@ public class Blog implements GenericModel {
         writer.name("nome").value(nome);
         writer.endObject();
     }
+
+    public static Blog fromUrl(String url) throws SQLException {
+        if(url==null)return null;
+        String[]parts=url.split("/");
+        if(parts.length<2)return null;
+        return Queries.findBlogByName(parts[1]);
+    }
 }

@@ -48,8 +48,10 @@
 <body>
 	<%@include file="general/navbar.jsp"%>
 	<%
+		Utente login=ses.getUtente();
 		Utente user= (Utente) request.getAttribute("user");
 		List<Blog> blogs= (List<Blog>) request.getAttribute("blogs");
+		boolean owner=user.equals(login);
 	%>
 	<!-- Pagina -->
 	<div class="uk-grid uk-grid-small uk-flex">
@@ -139,7 +141,6 @@
 						<div class="uk-card-header">
 							<div class="uk-grid-small uk-flex-middle" uk-grid>
 								<div class="uk-card-media-top uk-flex uk-flex-center ">
-									<!--img src="${pageContext.request.contextPath}/images/logo.png" class="blogpic" alt="" uk-img-->
 									<svg class="blogpic" data-jdenticon-value="<%=blog.getNome()%>>" uk-img></svg>
 								</div>							
 							<div class="uk-width-expand">
@@ -149,18 +150,20 @@
 							</div>
 							</div>
 						</div>
+						<%if(owner){%>
 						<div class="uk-card-footer boundary<%=blog.getIdBlog()%>">
 							<div class="uk-inline">
 								<a href="#" class="uk-button uk-button-text" type="button">Impostazioni</a>
 								<div uk-dropdown="offset: 0; mode: click; pos: bottom-left; boundary: .boundary<%=blog.getIdBlog()%>; boundary-align: true; animation: uk-animation-slide-top">
 									<ul class="uk-nav uk-dropdown-nav">
-										<li><a href="#" style="color: #41b3a3;"><span uk-icon="code"></span> Gestisci</a></li>
-										<li><a href="#" style="color: #e8a87c"><span uk-icon="pencil"></span> Rinomina</a></li>
-										<li><a href="#delete-blog" style="color: #c38d9e;" class="blog-<%=blog.getIdBlog()%> finder" uk-toggle><span uk-icon="trash"></span> Elimina</a></li>
+										<li><a href="${pageContext.request.contextPath}/blog-manage/<%=blog.getNome()%>" style="color: #41b3a3;"><span uk-icon="code"></span> Gestisci</a></li>
+										<li><a href="#rename-blog" blog-name="<%=blog.getNome()%>" class="rename-link" style="color: #e8a87c" uk-toggle><span uk-icon="pencil"></span> Rinomina</a></li>
+										<li><a href="#delete-blog" style="color: #c38d9e;" blog-name="<%=blog.getNome()%>" class="finder" uk-toggle><span uk-icon="trash"></span> Elimina</a></li>
 									</ul>
 								</div>
 							</div>
 						</div>
+						<%}%>
 					</div>
 				</div>
 				<%}%>
@@ -178,7 +181,29 @@
 							</div>
 						</div>
 					</div>
-					
+
+					<!-- Modale rinomina blog -->
+					<div id="rename-blog" uk-modal>
+						<div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+							<h2 class="uk-modal-title">Rinomina blog</h2>
+							<form class="uk-form-stacked uk-grid" method="POST" action="#" uk-grid>
+								<div class="uk-width-1-1 uk-margin-top uk-inline">
+									<div class="uk-form-controls">
+										<span class="uk-form-icon uk-margin-medium-left" uk-icon="icon: pencil"></span>
+										<input type="text" id="renameFormHid" name="from-name" hidden>
+										<input class="uk-input uk-border-pill" id="renameForm" name="to-name" type="text" placeholder="Nuovo nome del blog" name="blogname">
+
+									</div>
+								</div>
+								<div class="uk-text-right uk-margin-right uk-margin-auto-left">
+									<button class="uk-button uk-button-default uk-modal-close" type="button">Esci</button>
+									<input class="uk-button uk-button-primary" value="Crea" id="rename-blog-ok" type="button">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
 					<!-- Modale nuovo blog -->
 					<div id="new-blog" uk-modal>
 						<div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
@@ -202,11 +227,12 @@
 				<!-- Modale eliminazione -->
 				<div id="delete-blog" uk-modal>
 					<div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-						<h2 class="uk-modal-title">Eliminare definitivamente?</h2>
+						<h2 class="uk-modal-title">Eliminare definitivamente '<span id="deleteName"></span>'?</h2>
 						<form class="uk-form-stacked uk-grid" method="POST" action="#" uk-grid>
 							<div class="uk-text-right uk-margin-right uk-margin-auto-left">
 								<button class="uk-button uk-button-default uk-modal-close" type="button">Esci</button>
-								<input class="uk-button uk-button-primary confirm-delete" value="Elimina" id="" type="button"></button>
+								<input type="text" id="confirm-delete-hid" hidden>
+								<input class="uk-button uk-button-primary" value="Elimina" id="confirm-delete" type="button">
 							</div>
 						</form>
 					</div>
@@ -221,6 +247,27 @@
 	<%@include file="general/tailTag.jsp"%>
 
 	<script>
+		$(".rename-link").click(function () {
+			$("#renameFormHid").val($(this).attr("blog-name"));
+			$("#renameForm").val("");
+		});
+		$( "#rename-blog-ok" ).click(function() {
+			var oldname=$("#renameFormHid").val();
+			var newname=$("#renameForm").val();
+			$.ajax({
+				type: 'POST',
+				url: '${pageContext.request.contextPath}/api/blog/rename',
+				data: {
+					"from-name": oldname,
+					"to-name": newname
+				},
+				success: function (data) {
+					console.log(data);
+					if(data["error"]===undefined)
+						location.reload();
+				}
+			});
+		});
 		$( "#createBlog" ).click(function() {
 			var blogname=$("#blogname").first().val();
 			$.ajax({
@@ -229,27 +276,28 @@
 				data: { name: blogname },
 				success: function (data) {
 					console.log(data);
-					location.reload();
+					if(data["error"]===undefined)
+						location.reload();
 				}
 			});
 		});
-		$(".finder").click(
-				function(){
-					var classes = $(this).attr("class");
-					var id = classes.substring(classes.indexOf("-")+1, classes.indexOf(" "));
-					$(".confirm-delete").click(
-						function (){
-							$.ajax({
-								type: 'POST',
-								url: '${pageContext.request.contextPath}/api/blog/delete-blog',
-								data: { id: id },
-								success: function (data) {
-									console.log(data);
-									location.reload();
-								}
-							});
-						})
-				});
+		$(".finder").click(function(){
+			$("#deleteName").text($(this).attr("blog-name"))
+			$("#confirm-delete-hid").text($(this).attr("blog-name"))
+		});
+		$("#confirm-delete").click(function (){
+
+			$.ajax({
+				type: 'POST',
+				url: '${pageContext.request.contextPath}/api/blog/delete-blog',
+				data: { "blog-name": $("#confirm-delete-hid").text() },
+				success: function (data) {
+					console.log(data);
+					if(data["error"]===undefined)
+						location.reload();
+				}
+			});
+		});
 	</script>
 </body>
 </html>

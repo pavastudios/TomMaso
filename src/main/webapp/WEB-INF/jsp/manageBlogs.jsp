@@ -1,4 +1,5 @@
 <%@ page import="java.io.File" %>
+<%@ page import="com.pavastudios.TomMaso.utility.FileUtility" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -18,7 +19,6 @@
         }
     %>
     <%
-        String url = (String) request.getAttribute("url");
         File[] files = (File[])request.getAttribute("files");
         String parent = (String)request.getAttribute("parentUrl");
         boolean root = (boolean)request.getAttribute("root");
@@ -43,11 +43,18 @@
             </div>
         </div>
         <!--CARD-->
-        <% for (File f: files) {%>
+        <% for (File f: files) {
+            String relUrl=FileUtility.relativeUrl(f);
+        %>
         <div>
 
             <div class="uk-card uk-card-default uk-card-hover card">
-                <a class="uk-link-heading" href="<%=url+"/"+f.getName()%>">
+                    <%if(f.isFile()){%>
+
+                        <a class="uk-link-heading" href="<%=request.getContextPath()+"/blogs"+relUrl%>">
+                    <%}else{%>
+                        <a class="uk-link-heading" href="<%=request.getContextPath()+"/blog-manage"+relUrl%>">
+                    <%}%>
                     <div class="uk-card-header">
                         <div class="uk-grid-small uk-flex-middle uk-text-center" uk-grid>
                             <div class="uk-card-media-top uk-flex uk-flex-center uk-width-1-1">
@@ -62,8 +69,8 @@
                 <div class="uk-card-footer">
                     <div class="uk-button-group uk-width-1-1 uk-text-center">
                         <a href="#" class="uk-icon-link uk-width-1-3 uk-text-primary" uk-icon="icon: pencil; ratio: 2"></a>
-                        <a href="#" class="uk-icon-link uk-width-1-3 uk-text-warning" uk-icon="icon: move; ratio: 2"></a>
-                        <a href="#delete-file" class="uk-icon-link uk-width-1-3 uk-text-danger" uk-icon="icon: trash; ratio: 2" uk-toggle></a>
+                        <a href="#move-blog" uk-toggle rel-url="<%=relUrl%>" class="move-blog uk-icon-link uk-width-1-3 uk-text-warning" uk-icon="icon: move; ratio: 2"></a>
+                        <a href="#delete-file" uk-toggle rel-url="<%=relUrl%>" class="delete-blog uk-icon-link uk-width-1-3 uk-text-danger" uk-icon="icon: trash; ratio: 2"></a>
                     </div>
                 </div>
             </div>
@@ -85,6 +92,26 @@
             </div>
 
         </div>
+        <!--Modale muovi blog-->
+        <div id="move-blog" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+                <h2 class="uk-modal-title">Muovi in</h2>
+                <form class="uk-form-stacked uk-grid" method="POST" action="#" uk-grid>
+                    <div class="uk-width-1-1 uk-margin-top uk-inline">
+                        <div class="uk-form-controls">
+                            <span class="uk-form-icon uk-margin-medium-left" uk-icon="icon: pencil"></span>
+                            <input id="moveBlogHid" name="from-path" hidden>
+                            <input class="uk-input uk-border-pill" id="moveBlog" type="text" placeholder="Muovi in" name="to-path">
+                        </div>
+                    </div>
+                    <div class="uk-text-right uk-margin-right uk-margin-auto-left">
+                        <button class="uk-button uk-button-default uk-modal-close" type="button">Esci</button>
+                        <input class="uk-button uk-button-primary" value="Sposta"  type="button" id="moveConfirm">
+                    </div>
+                </form>
+            </div>
+        </div>
+
 
         <!-- Modale nuovo blog -->
         <div id="new-blog" uk-modal>
@@ -108,11 +135,12 @@
         <!-- Modale eliminazione -->
         <div id="delete-file" uk-modal>
             <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-                <h2 class="uk-modal-title">Eliminare definitivamente?</h2>
+                <h2 id="deleteBlogTitle" class="uk-modal-title"></h2>
                 <form class="uk-form-stacked uk-grid" method="POST" action="#" uk-grid>
                     <div class="uk-text-right uk-margin-right uk-margin-auto-left">
                         <button class="uk-button uk-button-default uk-modal-close" type="button">Esci</button>
-                        <input class="uk-button uk-button-primary" value="Elimina" id="" type="button"></button>
+                        <input id="deleteBlogHid" type="text" hidden>
+                        <input class="uk-button uk-button-primary" id="deleteBlog" type="button" value="Elimina">
                     </div>
                 </form>
             </div>
@@ -127,5 +155,48 @@
 
 <%@include file="general/footer.jsp"%>
 <%@include file="general/tailTag.jsp"%>
+<script>
+    $(".move-blog").click(function(){
+        $("#moveBlogHid").val($(this).attr("rel-url"));
+        $("#moveBlog").val($(this).attr("rel-url"));
+    });
+    $(".delete-blog").click(function(){
+        $("#deleteBlogTitle").text("Eliminare definitivamente '"+$(this).attr("rel-url")+"'?");
+        $("#deleteBlogHid").val($(this).attr("rel-url"));
+    });
+    $("#deleteBlog").click(function () {
+        const url = $("#deleteBlogHid").val();
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/api/blog/delete',
+            data: {
+                "url": url,
+            },
+            success: function (data) {
+                console.log(data);
+                if(data["error"]===undefined)
+                    location.reload();
+            }
+        });
+    });
+    $("#moveConfirm").click(function(){
+        var fromUrl=$("#moveBlogHid").val();
+        var toUrl=$("#moveBlog").val();
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/api/blog/move',
+            data: {
+                "from-url": fromUrl,
+                "to-url": toUrl
+            },
+            success: function (data) {
+                console.log(data);
+                if(data["error"]===undefined)
+                    location.reload();
+            }
+        });
+    });
+
+</script>
 </body>
 </html>

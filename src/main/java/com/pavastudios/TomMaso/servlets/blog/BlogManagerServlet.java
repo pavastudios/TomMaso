@@ -1,8 +1,9 @@
-package com.pavastudios.TomMaso.servlets;
+package com.pavastudios.TomMaso.servlets.blog;
 
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Blog;
 import com.pavastudios.TomMaso.model.Utente;
+import com.pavastudios.TomMaso.servlets.MasterServlet;
 import com.pavastudios.TomMaso.utility.FileUtility;
 import com.pavastudios.TomMaso.utility.Session;
 
@@ -17,40 +18,11 @@ import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.Arrays;
 
-@WebServlet(name = "Blog", urlPatterns = {"/blog/*"})
-public class BlogViewerServlet extends MasterServlet {
+@WebServlet(name = "BlogManager", urlPatterns = {"/blog-manage/*"})
+public class BlogManagerServlet extends MasterServlet {
 
-    private Blog resolveBlog(HttpServletRequest req) throws SQLException {
-        String pathInfo = req.getPathInfo();
-        if (pathInfo == null) return null;
-        String[] parts = pathInfo.split("/");
-        if (parts.length < 2) return null;
-        return Queries.findBlogByName(parts[1]);
-    }
 
-    private File resolveFile(HttpServletRequest req) {
-        String pathInfo = req.getPathInfo();
-        if (pathInfo == null) return null;
-        String[] parts = pathInfo.split("/");
-        File file = FileUtility.BLOG_FILES_FOLDER;
-        for (int i = 1; i < parts.length; i++) {
-            if (parts[i].equals("..")) return null;
-            if (parts[i].isEmpty()) continue;
-            file = new File(file, parts[i]);
-        }
-        file = file.getAbsoluteFile();
-        if (!file.exists() || !file.getAbsolutePath().startsWith(FileUtility.BLOG_FILES_FOLDER.getAbsolutePath()))
-            return null;
-        return file;
-    }
 
-    private void manageFile(HttpServletRequest req, HttpServletResponse resp, File file) throws IOException {
-        OutputStream out = resp.getOutputStream();
-        FileInputStream fr = new FileInputStream(file);
-        resp.setContentType(getServletContext().getMimeType(file.getAbsolutePath()));
-        //resp.setHeader("Content-Disposition", "attachment;filename="+file.getName());
-        FileUtility.writeFile(fr, out);
-    }
 
     private void manageFolder(HttpServletRequest req, HttpServletResponse resp, File file) throws SQLException, ServletException, IOException {
         File[] files = file.listFiles();
@@ -62,7 +34,7 @@ public class BlogViewerServlet extends MasterServlet {
         });
         File parent = file.getParentFile();
         String uri = FileUtility.relativeUrl(parent);
-        String urlParent = req.getContextPath() + "/blog" + uri;
+        String urlParent = req.getContextPath() + "/blog-manage" + uri;
 
         String url = req.getRequestURI();
         req.setAttribute("url", url);
@@ -70,30 +42,26 @@ public class BlogViewerServlet extends MasterServlet {
         req.setAttribute("root", parent.equals(FileUtility.BLOG_FILES_FOLDER));
         req.setAttribute("parentUrl", urlParent);
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/manageBlogs.jsp").forward(req, resp);
-
     }
 
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        Blog blog = resolveBlog(req);
-        File file = resolveFile(req);
+        Blog blog = Blog.fromUrl(req.getPathInfo());
+        File file = FileUtility.blogPathToFile(req.getPathInfo());
         Utente owner = blog == null ? null : blog.getProprietario();
         if (!session.isLogged() || !session.getUtente().equals(owner)) {
-            System.out.println("Crasho qui invece");
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "utente non loggato o non proprietario");
             return;
         }
         if (file == null) {
-            System.out.println("Crasho qui");
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "File non trovato");
             return;
         }
-
-        if (file.isDirectory()) {
-            manageFolder(req, resp, file);
-        } else if (file.isFile()) {
-            manageFile(req, resp, file);
+        if(file.isFile()){
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Impossibile gestire un file");
+            return;
         }
+        manageFolder(req, resp, file);
     }
 
 

@@ -43,6 +43,7 @@ public class Queries {
     static MasterPreparedStatement DELETE_FORGET;
     static MasterPreparedStatement FIND_BLOG_BY_NAME;
     static MasterPreparedStatement DELETE_BLOG;
+    static MasterPreparedStatement UPDATE_BLOG_NAME;
 
     public static void initQueries() throws SQLException {
         //FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente` IN ((SELECT `utente2` FROM 'Chat' WHERE `utente1`=?) UNION (SELECT `utente1` FROM 'Chat' WHERE `utente2`=?))");
@@ -52,7 +53,7 @@ public class Queries {
         FIND_USER_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=?");
         FIND_PAGE_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Pagina` WHERE `id_pagina`=?");
         FIND_BLOG_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` WHERE `id_blog`=?");
-        FIND_BLOGS_OWNED_BY = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` WHERE `proprietario`=?");
+        FIND_BLOGS_OWNED_BY = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` WHERE `proprietario`=? ORDER BY `nome`");
         FIND_COMMENT_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Commento` WHERE `id_commento`=?");
         FIND_USER_CHAT = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Chat` WHERE `utente1`=? OR `utente2`=?");
         FIND_MESSAGE_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_messaggio`=?");
@@ -74,7 +75,8 @@ public class Queries {
         CREATE_FORGET_COOKIE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `PasswordReset`(`codice`,`id_utente`) VALUES (?,?)");
         FIND_USER_FROM_FORGOT = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=(SELECT `id_utente` FROM `PasswordReset` WHERE `codice`=?)");
         DELETE_FORGET = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `PasswordReset` WHERE `codice`=?");
-        DELETE_BLOG = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `Blog` WHERE `id_blog`=? AND `proprietario`=?");
+        DELETE_BLOG = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `Blog` WHERE `id_blog`=?");
+        UPDATE_BLOG_NAME = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Blog` SET `nome`=? WHERE `id_blog`=?");
     }
 
     public static Utente findUserFromForgot(String code) throws SQLException {
@@ -337,10 +339,9 @@ public class Queries {
         DELETE_FORGET.executeUpdate();
     }
 
-    public static void deleteBlog(Blog blog, Utente owner) throws SQLException {
+    public static void deleteBlog(Blog blog) throws SQLException {
         DELETE_BLOG.setInt(1,blog.getIdBlog());
-        DELETE_BLOG.setInt(2,owner.getIdUtente());
-        DELETE_FORGET.executeUpdate();
+        DELETE_BLOG.executeUpdate();
     }
 
     public static void inviaMessaggio(Utente mittente, Utente destinatario, String messaggio) throws SQLException {
@@ -352,5 +353,11 @@ public class Queries {
         SEND_MESSAGE.setInt(2, mittente.getIdUtente());
         SEND_MESSAGE.setString(3, messaggio);
         SEND_MESSAGE.executeUpdate();
+    }
+
+    public static void renameBlog(Blog fromBlog, String toName) throws SQLException{
+        UPDATE_BLOG_NAME.setString(1,toName);
+        UPDATE_BLOG_NAME.setInt(2,fromBlog.getIdBlog());
+        UPDATE_BLOG_NAME.executeUpdate();
     }
 }
