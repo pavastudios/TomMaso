@@ -17,6 +17,7 @@
 
 <html>
 <head>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/tempchat.css" type="text/css"/>
     <title>Title</title>
 </head>
 <body>
