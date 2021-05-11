@@ -44,6 +44,7 @@ public class Queries {
     static MasterPreparedStatement FIND_BLOG_BY_NAME;
     static MasterPreparedStatement DELETE_BLOG;
     static MasterPreparedStatement UPDATE_BLOG_NAME;
+    static MasterPreparedStatement UPDATE_USER_DATA;
 
     public static void initQueries() throws SQLException {
         //FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente` IN ((SELECT `utente2` FROM 'Chat' WHERE `utente1`=?) UNION (SELECT `utente1` FROM 'Chat' WHERE `utente2`=?))");
@@ -77,6 +78,7 @@ public class Queries {
         DELETE_FORGET = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `PasswordReset` WHERE `codice`=?");
         DELETE_BLOG = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `Blog` WHERE `id_blog`=?");
         UPDATE_BLOG_NAME = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Blog` SET `nome`=? WHERE `id_blog`=?");
+        UPDATE_USER_DATA = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `username`=?,`bio`=? WHERE `id_utente`=?");
     }
 
     public static Utente findUserFromForgot(String code) throws SQLException {
@@ -242,7 +244,7 @@ public class Queries {
     public static @Nullable Utente login(String username, String password) throws SQLException {
         Utente u = findUserByUsername(username);
         if (u == null) return null;
-        return u.userVerifyLogin(password);
+        return u.userVerifyLogin(password)?u:null;
     }
 
     //Query Pagina
@@ -359,5 +361,12 @@ public class Queries {
         UPDATE_BLOG_NAME.setString(1,toName);
         UPDATE_BLOG_NAME.setInt(2,fromBlog.getIdBlog());
         UPDATE_BLOG_NAME.executeUpdate();
+    }
+
+    public static void updateUser(Utente user, String newUsername, String bio) throws SQLException {
+        UPDATE_USER_DATA.setString(1,newUsername.isEmpty()?user.getUsername():newUsername);
+        UPDATE_USER_DATA.setString(2,bio.isEmpty()?user.getBio():bio);
+        UPDATE_USER_DATA.setInt(3,user.getIdUtente());
+        UPDATE_USER_DATA.executeUpdate();
     }
 }

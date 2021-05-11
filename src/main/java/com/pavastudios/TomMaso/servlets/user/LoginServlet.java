@@ -1,7 +1,8 @@
-package com.pavastudios.TomMaso.servlets;
+package com.pavastudios.TomMaso.servlets.user;
 
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Utente;
+import com.pavastudios.TomMaso.servlets.MasterServlet;
 import com.pavastudios.TomMaso.utility.RememberMeUtility;
 import com.pavastudios.TomMaso.utility.Session;
 import com.pavastudios.TomMaso.utility.Utility;
@@ -31,7 +32,7 @@ public class LoginServlet extends MasterServlet {
 
         Utente u = Queries.findUserByUsername(username);
         if (u != null) {
-            if (u.userVerifyLogin(password) == null) {
+            if (!u.userVerifyLogin(password)) {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //password errata
             } else {
                 session.setUtente(u);

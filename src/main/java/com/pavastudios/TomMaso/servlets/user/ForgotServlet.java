@@ -1,8 +1,9 @@
-package com.pavastudios.TomMaso.servlets;
+package com.pavastudios.TomMaso.servlets.user;
 
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.mail.MailSender;
 import com.pavastudios.TomMaso.model.Utente;
+import com.pavastudios.TomMaso.servlets.MasterServlet;
 import com.pavastudios.TomMaso.utility.Session;
 import com.pavastudios.TomMaso.utility.Utility;
 

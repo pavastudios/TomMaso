@@ -78,7 +78,7 @@
 				<div class="uk-modal-header">
 					<h2 class="uk-modal-title">Modifica Profilo</h2>
 				</div>
-				<form action="#" method="POST" class="uk-form-stacked uk-grid-small" uk-grid>
+				<form action="${pageContext.request.contextPath}/user-update" method="POST" enctype="multipart/form-data" class="uk-form-stacked uk-grid-small" uk-grid>
 					<!-- Username -->
 					<div class="uk-width-1-1 uk-margin-left uk-margin-right uk-margin-top uk-inline">
 						<div class="uk-form-controls">
@@ -90,14 +90,14 @@
 					<div class="uk-width-1-1 uk-margin-left uk-margin-right uk-margin-top">
 						<div class="uk-form-controls">
 							<label class="uk-form-label uk-text-muted" for="bio-text">Bio</label>
-							<textarea id="bio-text" class="uk-textarea bio-text"><%=user.getBio()%></textarea>
+							<textarea id="bio-text" name="bio" class="uk-textarea bio-text"><%=user.getBio()%></textarea>
 						</div>
 					</div>
 					<!-- Foto profilo -->
 					<div class="uk-width-1-1 uk-margin-left uk-margin-right uk-margin-top">
 						<div uk-form-custom>
 							<label for="pro-pic" class="uk-text-muted uk-form-label">Seleziona l'immagine</label>
-							<input accept="image/*" type="file" id="pro-pic">
+							<input accept="image/*" type="file" name="propic" id="pro-pic">
 							<button class="uk-button uk-button-default" type="button" tabindex="-1">...</button>
 						</div>
 					</div>

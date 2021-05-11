@@ -12,7 +12,9 @@ import java.sql.SQLException;
 public class MainListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        FileUtility.BLOG_FILES_FOLDER.mkdirs();
+        FileUtility.USER_FILES_FOLDER.mkdirs();
+        FileUtility.BLOG_FILES_FOLDER.mkdir();
+        FileUtility.TMP_FOLDER.mkdir();
         try {
             System.out.println("Connecting to DB...");
             Class.forName("org.mariadb.jdbc.Driver");

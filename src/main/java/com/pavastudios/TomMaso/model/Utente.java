@@ -1,8 +1,10 @@
 package com.pavastudios.TomMaso.model;
 
 import com.google.gson.stream.JsonWriter;
+import com.pavastudios.TomMaso.utility.FileUtility;
 import com.pavastudios.TomMaso.utility.Security;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -151,8 +153,13 @@ public class Utente implements GenericModel {
         writer.endObject();
     }
 
-    public Utente userVerifyLogin(String password) {
-        if (Arrays.equals(Security.sha512(password, salt), this.password)) return this;
-        return null;
+    public boolean userVerifyLogin(String password) {
+        return Arrays.equals(Security.sha512(password, salt), this.password);
+    }
+    public File getUserFolder(){
+        return new File(FileUtility.USER_FILES_FOLDER,username);
+    }
+    public File getPropicFile(){
+        return new File(getUserFolder(),"propic.png");
     }
 }

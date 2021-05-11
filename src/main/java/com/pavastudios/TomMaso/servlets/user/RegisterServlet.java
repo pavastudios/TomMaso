@@ -1,7 +1,8 @@
-package com.pavastudios.TomMaso.servlets;
+package com.pavastudios.TomMaso.servlets.user;
 
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Utente;
+import com.pavastudios.TomMaso.servlets.MasterServlet;
 import com.pavastudios.TomMaso.utility.RememberMeUtility;
 import com.pavastudios.TomMaso.utility.Session;
 import com.pavastudios.TomMaso.utility.Utility;
@@ -10,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -48,6 +50,7 @@ public class RegisterServlet extends MasterServlet {
                 resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Email o username già esistenti");
                 return;
             }
+            utente.getUserFolder().mkdir();//crea cartella per l'utente
             session.setUtente(utente);
             if (remember) {
                 resp.addCookie(RememberMeUtility.createRememberMeCookie(utente));
