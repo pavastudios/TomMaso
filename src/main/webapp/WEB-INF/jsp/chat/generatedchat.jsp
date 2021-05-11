@@ -24,10 +24,10 @@
 <div id="chat">
     <% for (Messaggio m : mess) {%>
     <% if (m.getMittente().equals(loggato)) {%>
-    <p style="background-color: aqua" align="right"><%=m%>
+    <p style="background-color: aqua" align="right"><%=m.getTesto()%>
     </p>
     <% } else { %>
-    <p style="background-color: darksalmon" align="left"><%=m%>
+    <p style="background-color: darksalmon" align="left"><%=m.getTesto()%>
     </p>
     <% }
     } %>

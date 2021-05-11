@@ -21,13 +21,13 @@ public class CreaChat extends MasterServlet {
 
     @Override
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        String nome = req.getParameter("unto");
-        Utente u=Queries.findUserByUsername(nome);
-        req.getAttribute("loggato");
+
+        Utente u=Queries.findUserByUsername(req.getParameter("unto"));
 
         req.setAttribute("loggato", session.getUtente());
         req.setAttribute("altro", u);
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/chat/chat.jsp").forward(req, resp);
+
 
     }
 

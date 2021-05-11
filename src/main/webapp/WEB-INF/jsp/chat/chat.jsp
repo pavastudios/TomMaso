@@ -21,22 +21,21 @@
 </head>
 <body>
 
-<iframe id="chat" class="chat">
-</iframe>
+<div id="chat" class="chat">
+</div>
 
-<form id="mesage" method="POST" action="${pageContext.request.contextPath}/invia-messaggio" class="inviomessaggio">
-  <input type="text" placeholder="Invia messaggio" name="messaggio">
-  <input type="text" name="loggato" value="<%=loggato.getUsername()%>" hidden required readonly>
-  <input type="text" name="altro" value="<%=altro.getUsername()%>" hidden required readonly>
-  <input type="submit" value="Invia" id="invia">
-</form>
+<div class="inviomessaggio">
+  <input type="text" placeholder="Invia messaggio" id="messaggio">
+  <input type="text" name="loggato" value="<%=loggato.getUsername()%>" id="loggato" hidden required readonly>
+  <input type="text" name="altro" value="<%=altro.getUsername()%>" id="altro" hidden required readonly>
+  <button id="invia">Invia</button>
+</div>
 </body>
 
 <script>
 
   setInterval(function() {
     var richiesta = new XMLHttpRequest();
-    var mex= document.getElementById("messaggio");
 
     richiesta.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
@@ -47,19 +46,21 @@
     richiesta.send();
   }, 1000); //1 second
 
+  var invia=document.getElementById("invia");
 
-  var button = document.getElementById("invia");
-
-  button.addEventListener("click",function (){
+  invia.addEventListener("click", function (){
     var richiesta = new XMLHttpRequest();
-    var mex= document.getElementById("messaggio");
 
     richiesta.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("chat").innerHTML=this.responseText;
+        document.getElementById("messaggio").innerHTML="";
       }
     };
-    richiesta.open("get","/TomMaso_war_exploded/genera-chat?unto="+document.getElementById("altro").value);
+    richiesta.open("get","/TomMaso_war_exploded/invia-messaggio?" +
+            "loggato="+document.getElementById("loggato").value+
+            "&altro="+document.getElementById("altro").value+
+            "&mex="+document.getElementById("messaggio").value
+    );
     richiesta.send();
   });
 </script>

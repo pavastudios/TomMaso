@@ -29,9 +29,9 @@
         <input type="text" name="nickname" placeholder="Nome utente" id="nome">
         <button id="cerca">Cerca</button>
     </div>
-    <iframe id="elenco">
+    <div id="elenco">
 
-    </iframe>
+    </div>
 </div>
 <script>
 
