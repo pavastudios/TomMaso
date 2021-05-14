@@ -17,16 +17,17 @@
 
 <html>
 <head>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/tempchat.css" type="text/css"/>
     <title>Title</title>
 </head>
 <body>
 <div id="chat">
     <% for (Messaggio m : mess) {%>
     <% if (m.getMittente().equals(loggato)) {%>
-    <p style="background-color: aqua" align="right"><%=m%>
+    <p style="background-color: aqua" align="right"><%=m.getTesto()%>
     </p>
     <% } else { %>
-    <p style="background-color: darksalmon" align="left"><%=m%>
+    <p style="background-color: darksalmon" align="left"><%=m.getTesto()%>
     </p>
     <% }
     } %>

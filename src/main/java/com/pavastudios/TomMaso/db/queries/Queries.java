@@ -321,7 +321,9 @@ public class Queries {
         FIND_CHAT_BY_USERS.setInt(1, u1.getIdUtente());
         FIND_CHAT_BY_USERS.setInt(2, u2.getIdUtente());
         ResultSet rs = FIND_USER_CHAT.executeQuery();
-        Chat chat = Queries.findChatById(rs.getInt(1));
+        Chat chat = null;
+        if(rs.next())
+             chat = Queries.findChatById(rs.getInt(1));
         rs.close();
         return chat;
     }
@@ -346,7 +348,7 @@ public class Queries {
         DELETE_BLOG.executeUpdate();
     }
 
-    public static void inviaMessaggio(Utente mittente, Utente destinatario, String messaggio) throws SQLException {
+    public static boolean inviaMessaggio(Utente mittente, Utente destinatario, String messaggio) throws SQLException {
         if (Queries.findChatByUsers(mittente, destinatario) == null)
             Queries.createChat(mittente, destinatario);
 
@@ -355,6 +357,7 @@ public class Queries {
         SEND_MESSAGE.setInt(2, mittente.getIdUtente());
         SEND_MESSAGE.setString(3, messaggio);
         SEND_MESSAGE.executeUpdate();
+        return true;
     }
 
     public static void renameBlog(Blog fromBlog, String toName) throws SQLException{

@@ -22,6 +22,7 @@ public class InviaMessaggio extends MasterServlet {
         Utente altro = Queries.findUserByUsername(req.getParameter("altro"));
 
         Queries.inviaMessaggio(loggato, altro, mex);
+
     }
 
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {

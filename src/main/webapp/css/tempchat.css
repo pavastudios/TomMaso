@@ -1,0 +1,20 @@
+.scritti{
+    width: 30%;
+    border: solid;
+}
+
+.ricerca{
+    whidth: 50%;
+    border: solid;
+}
+
+.inviomessaggio{
+    width:60%;
+    border: solid;
+}
+
+.chat{
+    width:60%;
+    height: 50%;
+    border: solid;
+}

@@ -11,19 +11,20 @@
 <% List<Utente> lista = (List<Utente>) request.getAttribute("listaContattati"); %>
 <html>
 <head>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/tempchat.css" type="text/css"/>
     <title>Title</title>
 </head>
 <body>
-<div>
-    <form method="POST" action="/TomMaso_war_exploded/genera-chat">
+<div   class="scritti">
+    <form method="POST" action="/TomMaso_war_exploded/crea-chat">
     <% for(Utente u:lista){%>
-        <input type="text" name="unto" value="<%=u.getUsername()%>" hidden>
+        <input type="text" name="unto" value="<%=u.getUsername()%>" hidden readonly required>
         <input type="submit"  value="<%=u.getUsername()%>">
     <% } %>
     </form>
 </div>
 
-<div id="ricerca">
+<div id="ricerca"  class="ricerca">
     <div id="input">
         <input type="text" name="nickname" placeholder="Nome utente" id="nome">
         <button id="cerca">Cerca</button>

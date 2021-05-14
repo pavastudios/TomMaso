@@ -13,10 +13,11 @@
 %>
 <html>
 <head>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/tempchat.css" type="text/css"/>
     <title>Title</title>
 </head>
 <body>
-<form method="POST" action="/TomMaso_war_exploded/genera-chat">
+<form method="POST" action="/TomMaso_war_exploded/crea-chat">
   <input type="text" name="unto" value="<%=u.getUsername()%>" hidden>
   <input type="submit"  value="<%=u.getUsername()%>">
 </form>
