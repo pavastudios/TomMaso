@@ -126,7 +126,7 @@
                     </div>
                     <div class="uk-text-right uk-margin-right uk-margin-auto-left">
                         <button class="uk-button uk-button-default uk-modal-close" type="button">Esci</button>
-                        <input class="uk-button uk-button-primary" value="Crea" id="createBlog" type="button"></button>
+                        <input class="uk-button uk-button-primary" value="Crea" id="createBlog" type="button">
                     </div>
                 </form>
             </div>
