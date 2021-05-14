@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/fontawesome.min.css">
+    <style>
+        .mdi::before {
+    font-size: 24px;
+    line-height: 14px;
+}
+.btn .mdi::before {
+    position: relative;
+    top: 4px;
+}
+.btn-xs .mdi::before {
+    font-size: 18px;
+    top: 3px;
+}
+.btn-sm .mdi::before {
+    font-size: 18px;
+    top: 3px;
+}
+.dropdown-menu .mdi {
+    width: 18px;
+}
+.dropdown-menu .mdi::before {
+    position: relative;
+    top: 4px;
+    left: -8px;
+}
+.nav .mdi::before {
+    position: relative;
+    top: 4px;
+}
+.navbar .navbar-toggle .mdi::before {
+    position: relative;
+    top: 4px;
+    color: #FFF;
+}
+.breadcrumb .mdi::before {
+    position: relative;
+    top: 4px;
+}
+.breadcrumb a:hover {
+    text-decoration: none;
+}
+.breadcrumb a:hover span {
+    text-decoration: underline;
+}
+.alert .mdi::before {
+    position: relative;
+    top: 4px;
+    margin-right: 2px;
+}
+.input-group-addon .mdi::before {
+    position: relative;
+    top: 3px;
+}
+.navbar-brand .mdi::before {
+    position: relative;
+    top: 2px;
+    margin-right: 2px;
+}
+.list-group-item .mdi::before {
+    position: relative;
+    top: 3px;
+    left: -3px
+}
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="./images/logo.png" alt="" width="30" height="30">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Chi siamo</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Top blog</a>
+                  </li>
+                </ul>
+                
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Login</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Registrati</a>
+                    </li>
+                  </ul>
+
+              </div>
+        </div>
+      </nav>
+    <div class="container">
+        <div class="row"></div>
+        <div class="row row-cols-4">
+            
+            <div class="col">
+                <div class="card border-dark">
+                    <div class="card-header text-center">
+                        <i class="fas fa-folder fa-10x"></i>
+                        <h5 class="card-title text-truncate">Card title</h5>
+                    </div>
+                        
+                    <div class="card-footer d-grid w-100">
+                        <div class="row gap-0">
+                            <button type="button" class="col-4 btn btn-outline-primary"><i class="fas fa-pen"></i></button>
+                            <button type="button" class="col-4 btn btn-outline-success"><i class="fas fa-clone"></i></button>
+                            <button type="button" class="col-4 btn btn-outline-danger" ><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-dark h-100 align-middle">
+                    <div class="card-body text-center">
+                        <i class="fas fa-folder fa-10x"></i>
+                    </div>
+                    
+                
+                </div>
+            </div>
+          </div>
+    </div>
+
+    <footer class="bd-footer py-5 mt-5 bg-light">
+        <div class="container py-5">
+         
+        </div>
+      </footer>
+    <script src="./js/bootstrap.bundle.js"></script>
+    <script src="./js/fontawesome.min.js"></script>
+</body>
+</html>

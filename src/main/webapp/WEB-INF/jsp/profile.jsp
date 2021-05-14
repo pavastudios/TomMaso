@@ -58,7 +58,7 @@
 		<!-- Side bar-->
 		<div class="uk-width-expand uk-box-shadow-small profileside" uk-height-viewport="expand: true;">
 			<div class="uk-section uk-flex uk-flex-center uk-flex-middle uk-flex-column">
-				<svg class="profilepic" data-jdenticon-value="<%=user.getUsername()%>>"></svg>
+				<svg class="profilepic" data-jdenticon-value="<%=user.getUsername()%>"></svg>
 				<div class="uk-text-large uk-margin-top">
 					<%=user.getUsername()%>
 				</div>

@@ -1,15 +1,13 @@
 package com.pavastudios.TomMaso.api.groups;
 
-import com.google.gson.stream.JsonWriter;
 import com.pavastudios.TomMaso.api.*;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Blog;
-import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.FileUtility;
 import com.pavastudios.TomMaso.utility.Utility;
 
 import java.io.File;
-import java.io.IOException;
+import java.nio.file.Path;
 import java.sql.SQLException;
 
 

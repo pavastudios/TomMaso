@@ -28,7 +28,7 @@ public class RegisterServlet extends MasterServlet {
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password1 = req.getParameter("password1");
-        String password2 = req.getParameter("password1");
+        String password2 = req.getParameter("password2");
         String email = req.getParameter("email");
         boolean remember = "on".equals(req.getParameter("remember"));
         if (username == null || password1 == null || password2 == null || email == null) {
