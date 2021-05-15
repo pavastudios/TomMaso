@@ -12,21 +12,45 @@
             document.getElementById("propic-svg-"+id).removeAttribute("hidden");
         }
     </script>
-    <title>Document</title>
+
+    <style>
+        @media screen and (max-device-width: 576px){
+            .modify-button {
+                margin-bottom: 20px;
+            }
+            .carta {
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+        }
+        @media screen and (max-device-width: 768px){
+            .modify-button {
+                margin-bottom: 20px;
+            }
+            .carta {
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+        }
+    </style>
+
+    <%
+        Utente login=ses.getUtente();
+        Utente user= (Utente) request.getAttribute("user");
+        List<Blog> blogs= (List<Blog>) request.getAttribute("blogs");
+        boolean owner=user.equals(login);
+    %>
+
+    <title>TomMASO - Profilo di <%= user.getUsername() %></title>
 </head>
 <body>
 
 <%@include file="general/navbar.jsp"%>
-<%
-    Utente login=ses.getUtente();
-    Utente user= (Utente) request.getAttribute("user");
-    List<Blog> blogs= (List<Blog>) request.getAttribute("blogs");
-    boolean owner=user.equals(login);
-%>
 <div class="container-fluid">
 
     <div class="row py-5">
-        <div class="col-3 text-center">
+        <!-- Sidebaby -->
+        <div class="col-lg-3 col-sm-12 text-center h-100">
             <div class="row">
                 <img id="propic-user" class="rounded-circle" src="${pageContext.request.contextPath}/users/<%=user.getUsername()%>/propic.png" onerror="useJidenticon('user')">
                 <svg id="propic-svg-user" class="rounded-circle" data-jdenticon-value="<%=user.getUsername()%>" hidden></svg>
@@ -44,13 +68,14 @@
                 <p>'<%=user.getBio()%>'</p>
             </div>
             <div class="row d-flex justify-content-center ">
-                <button type="button" class="col-9 btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#updateProfile">Modifica utente</button>
+                <button type="button" class="col-9 btn btn-outline-dark modify-button" data-bs-toggle="modal" data-bs-target="#updateProfile">Modifica utente</button>
             </div>
         </div>
-        <div class="col-9">
+        <div class="col-lg-9 col-md-12 col-sm-12">
             <div class="row">
+                <!-- Blogs -->
                 <%for(Blog blog:blogs){%>
-                <div class="col-4">
+                <div class="carta col-lg-4 col-sm-12 col-md-12 pb-lg-4">
                     <div class="card border-dark">
                         <div class="card-header text-center">
                             <img id="propic-b<%=blog.getNome()%>" class="rounded-circle w-100" src="${pageContext.request.contextPath}/blogs/<%=blog.getNome()%>/propic.png" onerror="useJidenticon('b<%=blog.getNome()%>')">
@@ -59,8 +84,8 @@
                         </div>
 
                         <div class="card-footer d-grid w-100">
-                            <div class="row gap-0">
-                                <a class="col-4" href="${pageContext.request.contextPath}/blog-manage/<%=blog.getNome()%>"><button type="button" class="col-12 btn btn-outline-primary"><i class="fas fa-code"></i></button></a>
+                            <div class="row">
+                                <a class="col-4 px-0" href="${pageContext.request.contextPath}/blog-manage/<%=blog.getNome()%>"><button type="button" class="col-12 btn btn-outline-primary"><i class="fas fa-code"></i></button></a>
                                 <button data-bs-toggle="modal" data-bs-target="#renameBlogModal" type="button" class="ren-btn col-4 btn btn-outline-warning" blog-name="<%=blog.getNome()%>"><i class="fas fa-pen"></i></button>
                                 <button data-bs-toggle="modal" data-bs-target="#deleteModal" type="button" class="del-btn col-4 btn btn-outline-danger" blog-name="<%=blog.getNome()%>"><i class="fas fa-trash"></i></button>
                             </div>
@@ -68,7 +93,8 @@
                     </div>
                 </div>
                 <%}%>
-                <div class="col-4">
+                <!-- + Button -->
+                <div class="pb-lg-4 col-lg-4 col-md-12 col-sm-12">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#createBlogModal">
                     <div class="card border-dark h-100 align-middle">
                         <div class="card-body d-flex align-items-center justify-content-center">
@@ -88,12 +114,16 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel1">Spostare il file</h5>
+                <h5 class="modal-title" id="exampleModalLabel1">Crea nuovo blog</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
-                    <input type="text" name="name" id="blogname">
+                <div class="row mb-3">
+                    <label for="blogname" class="col-sm-2 col-form-label">Nome</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="name" id="blogname">
+                    </div>
+                </div>
 
             </div>
             <div class="modal-footer">
@@ -104,7 +134,7 @@
     </div>
 </div>
 <!-- rename blog Modal -->
-<div class="modal fade" id="renameBlogModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal modal-fullscreen-md-down fade" id="renameBlogModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
