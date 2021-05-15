@@ -10,15 +10,15 @@
     <%!
         private String iconFromFile(ServletContext cont, File f){
 
-            if(f.isDirectory())return "folder";
+            if(f.isDirectory())return "fa-folder";
             String mime=cont.getMimeType(f.getAbsolutePath());
             System.out.println(f+": "+mime);
-            if(mime==null)return "fas-file-alt";
-            if(mime.startsWith("image/"))return "fas-image";
-            if(mime.startsWith("video/"))return "fas-video";
-            if(mime.startsWith("audio/"))return "fas-music";
-            if(mime.startsWith("text/"))return "fas-file-alt";
-            return "fas-file";
+            if(mime==null)return "fa-file-alt";
+            if(mime.startsWith("image/"))return "fa-image";
+            if(mime.startsWith("video/"))return "fa-video";
+            if(mime.startsWith("audio/"))return "fa-music";
+            if(mime.startsWith("text/"))return "fa-file-alt";
+            return "fa-file";
         }
     %>
     <%
@@ -41,6 +41,18 @@
 
         <div class="col-12">
             <div class="row">
+
+                <!--back button-->
+                <div class="col-3">
+                    <a href="<%=root?request.getContextPath()+"/profile":parent%>">
+                    <div class="card border-dark h-100 align-middle">
+                        <div class="card-body d-flex align-items-center justify-content-center">
+                            <i class="fas fa-reply fa-10x"></i>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+
                 <% for (File f: files) {
                     String relUrl= FileUtility.relativeUrl(f);
                 %>
@@ -53,7 +65,7 @@
                             <a class="uk-link-heading" href="<%=request.getContextPath()+"/blog-manage"+relUrl%>">
                                     <%}%>
                         <div class="card-header text-center">
-                            <i class="fas <%=iconFromFile(request.getServletContext(),f)%>"></i>
+                            <i class="fa-10x fas <%=iconFromFile(request.getServletContext(),f)%>"></i>
                             <h5 class="card-title text-truncate"><%=f.getName()%></h5>
                         </div>
                             </a>
@@ -68,6 +80,7 @@
                     </div>
                 </div>
                 <%}%>
+                <!--Add button-->
                 <div class="col-4">
                     <div class="card border-dark h-100 align-middle">
                         <div class="card-body d-flex align-items-center justify-content-center">

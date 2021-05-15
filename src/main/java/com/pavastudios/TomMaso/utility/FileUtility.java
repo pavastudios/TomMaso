@@ -30,13 +30,27 @@ public class FileUtility {
         return name.substring(PATH_LENGTH);
     }
 
+    public static File userPathToFile(String pathInfo) {
+        if (pathInfo == null) return null;
+        String[] parts = pathInfo.split("/");
+        File file = FileUtility.USER_FILES_FOLDER;
+        for (int i = 1; i < parts.length; i++) {
+            if (parts[i].equals("..")) return null;
+            if (parts[i].isEmpty()) return null;
+            file = new File(file, parts[i]);
+        }
+        file = file.getAbsoluteFile();
+        if (!file.getAbsolutePath().startsWith(FileUtility.USER_FILES_FOLDER.getAbsolutePath()))
+            return null;
+        return file;
+    }
     public static File blogPathToFile(String pathInfo) {
         if (pathInfo == null) return null;
         String[] parts = pathInfo.split("/");
         File file = FileUtility.BLOG_FILES_FOLDER;
         for (int i = 1; i < parts.length; i++) {
             if (parts[i].equals("..")) return null;
-            if (parts[i].isEmpty()) continue;
+            if (parts[i].isEmpty()) return null;
             file = new File(file, parts[i]);
         }
         file = file.getAbsoluteFile();

@@ -74,7 +74,7 @@ public class UpdateUserServlet extends MasterServlet {
         session.setUtente(updatedUser);
         if(!user.getUsername().equals(updatedUser.getUsername()))//cambia cartella per l'utente
             user.getUserFolder().renameTo(updatedUser.getUserFolder());
-        resp.sendRedirect(req.getServletPath()+"/profile");
+        resp.sendRedirect(req.getServletContext().getContextPath()+"/profile");
     }
     /**
      * @return true if handled without errors, false otherwise

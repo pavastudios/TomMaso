@@ -1,4 +1,4 @@
-package com.pavastudios.TomMaso.servlets.blog;
+package com.pavastudios.TomMaso.servlets;
 
 import com.pavastudios.TomMaso.servlets.MasterServlet;
 import com.pavastudios.TomMaso.utility.FileUtility;
@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
 
-@WebServlet(name = "BlogViewer", urlPatterns = {"/blogs/*"})
-public class BlogViewerServlet extends MasterServlet {
+@WebServlet(name = "Viewer", urlPatterns = {"/blogs/*","/users/*"})
+public class ViewerServlet extends MasterServlet {
     private void manageFile(HttpServletRequest req, HttpServletResponse resp, File file) throws IOException {
         OutputStream out = resp.getOutputStream();
         FileInputStream fr = new FileInputStream(file);
@@ -25,9 +25,26 @@ public class BlogViewerServlet extends MasterServlet {
     }
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        File file=FileUtility.blogPathToFile(req.getPathInfo());
+        File file=null;
+        switch(req.getServletPath()){
+            case "/users":
+                file=FileUtility.userPathToFile(req.getPathInfo());
+                break;
+            case "/blogs":
+                file=FileUtility.blogPathToFile(req.getPathInfo());
+                break;
+        }
+
         if(file==null){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"File invalido");
+            return;
+        }
+        if(!file.exists()){
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND,"File non trovato");
+            return;
+        }
+        if(file.isDirectory()){
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN,"Impossibile aprire cartelle");
             return;
         }
         manageFile(req,resp,file);
