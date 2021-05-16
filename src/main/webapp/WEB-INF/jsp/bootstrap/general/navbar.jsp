@@ -1,4 +1,11 @@
 <%@ page import="com.pavastudios.TomMaso.model.Utente" %>
+<script>
+    //no propic code
+    function useJidenticonNav(id){
+        document.getElementById("nav-"+id).setAttribute("hidden","");
+        document.getElementById("nav-svg-"+id).removeAttribute("hidden");
+    }
+</script>
 
 <!-- Barra di navigazione -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -23,12 +30,27 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Registrati</a>
-                </li>
+                <%if(user == null) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Registrati</a>
+                    </li>
+                <% } else {%>
+                    <div class="flex-shrink-0 dropdown">
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img id="nav-user" class="rounded-circle" src="${pageContext.request.contextPath}/users/<%=user.getUsername()%>/propic.png" alt="<%=user.getUsername()%>" width="32" height="32" class="rounded-circle" onerror="useJidenticonNav('user')">
+                            <svg width="50" height="50" id="nav-svg-user" class="propic rounded-circle" data-jdenticon-value="<%=user.getUsername()%>" hidden></svg>
+                        </a>
+                        <ul class="dropdown-propic-nav dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                            <li><a class="dropdown-item" href="#">Nuovo blog...</a></li>
+                            <li><a class="dropdown-item" href="#">Profilo</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </div>
+                <% }%>
             </ul>
         </div>
     </div>

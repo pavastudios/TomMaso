@@ -18,5 +18,5 @@
     .no-dec {text-decoration: none !important;}
     .no-dec:hover {text-decoration: none !important;}
     .no-dec:link {text-decoration: none !important;}
+    .dropdown-propic-nav {position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(-110px, 0px);}
 </style>
-
