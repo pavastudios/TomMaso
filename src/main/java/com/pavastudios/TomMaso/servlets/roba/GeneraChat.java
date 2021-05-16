@@ -26,6 +26,7 @@ public class GeneraChat extends MasterServlet {
         Chat c = Queries.findChatByUsers(session.getUtente(), u2);
 
         List<Messaggio> messaggi = Queries.fetchMessages(c);
+        messaggi=messaggi.subList(messaggi.size()-5,messaggi.size());
 
         req.setAttribute("messaggi", messaggi);
         req.setAttribute("loggato", session.getUtente());

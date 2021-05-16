@@ -16,11 +16,12 @@
 
 <html>
 <head>
+  <%@ include file="../general/headTags.jsp" %>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/tempchat.css" type="text/css"/>
   <title>Title</title>
 </head>
 <body>
-
+<%@ include file="../general/navbar.jsp" %>
 <div id="chat" class="chat">
 </div>
 
@@ -30,6 +31,8 @@
   <input type="text" name="altro" value="<%=altro.getUsername()%>" id="altro" hidden required readonly>
   <button id="invia">Invia</button>
 </div>
+<%@include file="../general/footer.jsp"%>
+<%@include file="../general/tailTag.jsp"%>
 </body>
 
 <script>

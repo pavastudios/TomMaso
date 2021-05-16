@@ -11,15 +11,17 @@
 <% List<Utente> lista = (List<Utente>) request.getAttribute("listaContattati"); %>
 <html>
 <head>
+    <%@ include file="../general/headTags.jsp" %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/tempchat.css" type="text/css"/>
     <title>Title</title>
 </head>
 <body>
+<%@ include file="../general/navbar.jsp" %>
 <div   class="scritti">
     <form method="POST" action="/TomMaso_war_exploded/crea-chat">
-    <% for(Utente u:lista){%>
-        <input type="text" name="unto" value="<%=u.getUsername()%>" hidden readonly required>
-        <input type="submit"  value="<%=u.getUsername()%>">
+    <% for(Utente utente:lista){%>
+        <input type="text" name="unto" value="<%=utente.getUsername()%>" hidden readonly required>
+        <input type="submit"  value="<%=utente.getUsername()%>">
     <% } %>
     </form>
 </div>
@@ -52,5 +54,9 @@
         richiesta.send();
     });
 </script>
+
+<%@include file="../general/footer.jsp"%>
+<%@include file="../general/tailTag.jsp"%>
+
 </body>
 </html>
