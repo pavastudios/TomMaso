@@ -9,6 +9,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.pavastudios.TomMaso.model.Messaggio" %>
 <%@ page import="com.pavastudios.TomMaso.model.Utente" %>
+<%@ page import="com.pavastudios.TomMaso.db.queries.Entities" %>
 <%
     List<Messaggio> mess = (List<Messaggio>) request.getAttribute("messaggi");
     Utente loggato = (Utente) request.getAttribute("loggato");
@@ -24,10 +25,10 @@
 <div id="chat">
     <% for (Messaggio m : mess) {%>
     <% if (m.getMittente().equals(loggato)) {%>
-    <p style="background-color: aqua" align="right"><%=m.getTesto()%>
+    <p style="background-color: aqua" align="right"readonly><%=org.jsoup.nodes.Entities.escape(m.getTesto())%>
     </p>
     <% } else { %>
-    <p style="background-color: darksalmon" align="left"><%=m.getTesto()%>
+    <p style="background-color: darksalmon" align="left" readonly><%=org.jsoup.nodes.Entities.escape(m.getTesto())%>
     </p>
     <% }
     } %>
