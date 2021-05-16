@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
 
-@WebServlet(name = "Viewer", urlPatterns = {"/explorer/*","/users/*"})
+@WebServlet(name = "NewViewer", urlPatterns = {"/blogs/*","/users/*"})
 public class ViewerServlet extends MasterServlet {
     private void manageFile(HttpServletRequest req, HttpServletResponse resp, File file) throws IOException {
         OutputStream out = resp.getOutputStream();
