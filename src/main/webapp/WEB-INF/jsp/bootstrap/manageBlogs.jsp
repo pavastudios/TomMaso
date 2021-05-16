@@ -82,12 +82,37 @@
                 <%}%>
                 <!--Add button-->
                 <div class="col-4">
-                    <div class="card border-dark h-100 align-middle">
-                        <div class="card-body d-flex align-items-center justify-content-center">
-                            <i class="fas fa-plus fa-10x"></i>
+                    <a data-bs-toggle="modal" data-bs-target="#uploadModal">
+                        <div class="card border-dark h-100 align-middle">
+                            <div class="card-body d-flex align-items-center justify-content-center">
+                                <i class="fas fa-plus fa-10x"></i>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upload Modal -->
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalUpload">Scegliere il file da caricare:</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <%
+                    String url = (String) request.getAttribute("javax.servlet.forward.request_uri");
+                    url = url.split("/",4)[3];
+                %>
+                <form action="<%=request.getContextPath()+"/upload-file/"+url%>" method="post" enctype="multipart/form-data">
+                    <input type="file" name="file" id="file">
+                    <input type="text" value="<%=url%>" name="url" hidden>
+                    <input type="submit" class="btn btn-primary" value="Conferma">
+                </form>
             </div>
         </div>
     </div>
