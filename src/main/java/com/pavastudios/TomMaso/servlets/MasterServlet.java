@@ -63,6 +63,7 @@ public abstract class MasterServlet extends HttpServlet {
 
 
     private void setDefaultHeader(HttpServletResponse resp) {
+        resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Content-Type", "text/html; charset=UTF-8");
     }
 
