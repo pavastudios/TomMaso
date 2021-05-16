@@ -14,23 +14,20 @@
     </script>
 
     <style>
-        @media screen and (max-device-width: 576px){
-            .modify-button {
-                margin-bottom: 20px;
-            }
-            .carta {
-                padding-top: 20px;
-                padding-bottom: 20px;
-            }
+        .input-text {
+            width: 100%;
         }
-        @media screen and (max-device-width: 768px){
+
+        @media screen and (max-device-width: 576px){
+            .modify-button { margin-bottom: 20px; }
+            .carta { padding: 20px; }
+            .add_button { padding: 20px; }
+        }
+        @media screen and (min-device-width: 768px){
             .modify-button {
                 margin-bottom: 20px;
             }
-            .carta {
-                padding-top: 20px;
-                padding-bottom: 20px;
-            }
+            .propic { max-width: 80%; padding-bottom: 20px; }
         }
     </style>
 
@@ -50,10 +47,10 @@
 
     <div class="row py-5">
         <!-- Sidebaby -->
-        <div class="col-lg-3 col-sm-12 text-center h-100">
-            <div class="row">
-                <img id="propic-user" class="rounded-circle" src="${pageContext.request.contextPath}/users/<%=user.getUsername()%>/propic.png" onerror="useJidenticon('user')">
-                <svg id="propic-svg-user" class="rounded-circle" data-jdenticon-value="<%=user.getUsername()%>" hidden></svg>
+        <div class="col-lg-3 col-sm-12 col-md-12 text-center h-100">
+            <div class="row d-flex justify-content-center">
+                <img id="propic-user" class="propic rounded-circle" src="${pageContext.request.contextPath}/users/<%=user.getUsername()%>/propic.png" onerror="useJidenticon('user')">
+                <svg id="propic-svg-user" class="propic rounded-circle" data-jdenticon-value="<%=user.getUsername()%>" hidden></svg>
             </div>
             <div class="row">
                 <h4><%=user.getUsername()%></h4>
@@ -71,16 +68,16 @@
                 <button type="button" class="col-9 btn btn-outline-dark modify-button" data-bs-toggle="modal" data-bs-target="#updateProfile">Modifica utente</button>
             </div>
         </div>
-        <div class="col-lg-9 col-md-12 col-sm-12">
+        <div class="col-lg-9 col-sm-12">
             <div class="row">
                 <!-- Blogs -->
                 <%for(Blog blog:blogs){%>
-                <div class="carta col-lg-4 col-sm-12 col-md-12 pb-lg-4">
+                <div class="carta col-lg-4 col-sm-12 col-md-6 pb-lg-4 pt-sm-4 pt-md-4">
                     <div class="card border-dark">
                         <div class="card-header text-center">
                             <img id="propic-b<%=blog.getNome()%>" class="rounded-circle w-100" src="${pageContext.request.contextPath}/blogs/<%=blog.getNome()%>/propic.png" onerror="useJidenticon('b<%=blog.getNome()%>')">
                             <svg id="propic-svg-b<%=blog.getNome()%>" class="rounded-circle" data-jdenticon-value="<%=blog.getNome()%>" hidden></svg>
-                            <h5 class="card-title text-truncate"><%=blog.getNome()%></h5>
+                            <h5 class="card-title"><%=blog.getNome()%></h5>
                         </div>
 
                         <div class="card-footer d-grid w-100">
@@ -94,7 +91,7 @@
                 </div>
                 <%}%>
                 <!-- + Button -->
-                <div class="pb-lg-4 col-lg-4 col-md-12 col-sm-12">
+                <div class="add_button pb-lg-4 pt-sm-4 pt-md-4 col-lg-4 col-md-6 col-sm-12" id="add_button">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#createBlogModal">
                     <div class="card border-dark h-100 align-middle">
                         <div class="card-body d-flex align-items-center justify-content-center">
@@ -119,7 +116,7 @@
             </div>
             <div class="modal-body">
                 <div class="row mb-3">
-                    <label for="blogname" class="col-sm-2 col-form-label">Nome</label>
+                    <label for="blogname" class="col-sm-2 col-form-label lead">Nome</label>
                     <div class="col-sm-10">
                         <input type="text" name="name" id="blogname">
                     </div>
@@ -138,18 +135,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Spostare il file</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Rinomina blog</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
+                <p class="lead">Inserisci il nuovo nome:</p>
                 <input type="text" name="name" id="renameFormHid" hidden>
-                <input type="text" name="name" id="renameForm">
+                <input type="text" name="name" id="renameForm" class="input-text">
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="rename-blog-ok">Create</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                <button type="button" class="btn btn-primary" id="rename-blog-ok">Rinomina</button>
             </div>
         </div>
     </div>
@@ -159,15 +156,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteBlogTitle">Eliminare</h5>
+                <h5 class="modal-title" id="deleteBlogTitle">Elimina blog</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                Eliminare il blog?
+            <div class="modal-body lead">
+                Eliminare il blog selezionato?
                 <input type="text" id="deleteBlogHid" value="" hidden/>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
                 <button type="button" class="btn btn-danger" id="confirm-delete">Elimina</button>
             </div>
         </div>
@@ -184,12 +181,27 @@
             </div>
             <div class="modal-body">
                 <form id="formUpdateUser" action="${pageContext.request.contextPath}/user-update" method="POST" enctype="multipart/form-data">
-                <input type="text" name="username" placeholder="username" value="<%=user.getUsername()%>">
-                <textarea name="bio" ><%=user.getBio()%></textarea>
-                <input type="password" name="oldpsw"  placeholder="old password">
-                <input type="password" name="newpsw1"  placeholder="new password">
-                <input type="password" name="newpsw2"  placeholder="repeat new password">
-                <input type="file" name="propic" >
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="addon-user">@</span>
+                        <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-user">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="addon-bio">Aggiorna bio</span>
+                        <textarea name="bio" class="form-control" aria-label="Aggiorna bio"></textarea>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input name="oldpsw" type="password" class="form-control" placeholder="Vecchia password" aria-label="Vecchia password">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input name="newpsw1" type="password" class="form-control" placeholder="Nuova password" aria-label="Nuova password">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input name="newpsw2" type="password" class="form-control" placeholder="Ripeti nuova password" aria-label="Ripeti nuova password">
+                    </div>
+                    <p class="lead">Carica foto profilo:</p>
+                    <div class="input-group mb-3">
+                        <input name="propic" accept="image/*" type="file" class="form-control" placeholder="Nuova foto profilo">
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -203,6 +215,19 @@
 <%@include file="general/footer.jsp"%>
 <%@include file="general/tailTag.jsp"%>
 <script>
+
+    //set add button height
+    var card = $(".carta:first");
+    var add_button = $("#add_button");
+
+    function update() {
+        add_button.height(card.height());
+    }
+    $(function (){
+        update();
+        setInterval(update, 500);
+    });
+
     //update user code
     $( "#ok-update" ).click(function() {
         $("#formUpdateUser").submit();
