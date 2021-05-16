@@ -1,7 +1,8 @@
 package com.pavastudios.TomMaso.servlets;
 
 import com.pavastudios.TomMaso.servlets.MasterServlet;
-import com.pavastudios.TomMaso.utility.FileUtility;
+
+import com.pavastudios.TomMaso.utility.*;
 import com.pavastudios.TomMaso.utility.Session;
 
 import javax.servlet.ServletException;
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
 
-@WebServlet(name = "Viewer", urlPatterns = {"/blogs/*","/users/*"})
+@WebServlet(name = "NewViewer", urlPatterns = {"/blogs/*","/users/*"})
 public class ViewerServlet extends MasterServlet {
     private void manageFile(HttpServletRequest req, HttpServletResponse resp, File file) throws IOException {
         OutputStream out = resp.getOutputStream();
