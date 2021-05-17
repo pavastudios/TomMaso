@@ -21,26 +21,39 @@ import java.sql.SQLException;
 @MultipartConfig()
 public class UserFileUploader extends MasterServlet {
 
-    private void createFileOnServer(Part part, String url) throws IOException {
-        File file = new File(FileUtility.BLOG_FILES_FOLDER,url);
-        file = new File(file,part.getSubmittedFileName());
+    private boolean createFileOnServer(Part part, String url) throws IOException {
+        String submitted=part.getSubmittedFileName();
+        if(submitted.contains("/")||submitted.contains("\\")) //l'utente è brutto e cattivo
+            return false;
+        File file = FileUtility.blogPathToFile(url);
+        if(file==null)return false;
+        file = new File(file,submitted);
         FileOutputStream out = new FileOutputStream(file);
         FileUtility.writeFile(part.getInputStream(),out);
         out.close();
+        return true;
     }
 
 
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         Utente user=session.getUtente();
         Part part = req.getPart("file");
-        String url = req.getParameter("url");
-        Blog blog = Queries.findBlogByName(url.split("/")[0]);
-        if(!blog.getProprietario().equals(session.getUtente())){
-            resp.sendError(HttpServletResponse.SC_FORBIDDEN,"Utente non autorizzato!");
-            return ;
+        String url = req.getPathInfo();
+        if(url==null||part==null){
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"Parametri mancanti");
+            return;
         }
-        createFileOnServer(part,url);
-        resp.sendRedirect(req.getServletContext().getContextPath()+"/blog-manage/"+url);
+        Blog blog = Queries.findBlogByName(url.split("/",2)[1]);
+        if(blog==null||!blog.getProprietario().equals(user)){
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN,"Utente non autorizzato!");
+            return;
+        }
+
+        if(!createFileOnServer(part,url)){
+            resp.sendError(HttpServletResponse.SC_EXPECTATION_FAILED,"Path traversal rilevato");
+            return;
+        }
+        resp.sendRedirect(req.getServletContext().getContextPath()+"/blog-manage/"+url.substring(1));
     }
 }
 
