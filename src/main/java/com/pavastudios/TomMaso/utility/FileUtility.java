@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 
 public class FileUtility {
     public enum FileType{TEXT,MARKDOWN,AUDIO,DIRECTORY,VIDEO,IMAGE,UNKNOWN}
@@ -32,6 +33,7 @@ public class FileUtility {
     }
 
     public static FileType getFileType(ServletContext cont, File file){
+        if(file==null||cont==null)return null;
         if(file.isDirectory())return FileType.DIRECTORY;
         String mime=cont.getMimeType(file.getAbsolutePath());
         System.out.println(file+": "+mime);
@@ -43,44 +45,39 @@ public class FileUtility {
         if(mime.startsWith("text/"))return FileType.TEXT;
         return FileType.UNKNOWN;
     }
-
-    public static File userPathToFile(String pathInfo) {
+    /**
+     * Converte un pathInfo in un file, non controlla l'esistenza del file
+     * */
+    private static File pathToFile(File base,String pathInfo){
         if (pathInfo == null) return null;
         String[] parts = pathInfo.split("/");
-        File file = FileUtility.USER_FILES_FOLDER;
+        File file = base;
         for (int i = 1; i < parts.length; i++) {
             if (parts[i].equals("..")) return null;
             if (parts[i].isEmpty()) return null;
             file = new File(file, parts[i]);
         }
         file = file.getAbsoluteFile();
-        if (!file.getAbsolutePath().startsWith(FileUtility.USER_FILES_FOLDER.getAbsolutePath()))
+        if (!file.getAbsolutePath().startsWith(base.getAbsolutePath()))
             return null;
         return file;
+    }
+    public static File userPathToFile(String pathInfo) {
+        return pathToFile(FileUtility.USER_FILES_FOLDER,pathInfo);
     }
     public static File blogPathToFile(String pathInfo) {
-        if (pathInfo == null) return null;
-        String[] parts = pathInfo.split("/");
-        File file = FileUtility.BLOG_FILES_FOLDER;
-        for (int i = 1; i < parts.length; i++) {
-            if (parts[i].equals("..")) return null;
-            if (parts[i].isEmpty()) return null;
-            file = new File(file, parts[i]);
-        }
-        file = file.getAbsoluteFile();
-        if (!file.getAbsolutePath().startsWith(FileUtility.BLOG_FILES_FOLDER.getAbsolutePath()))
-            return null;
-        return file;
+        return pathToFile(FileUtility.BLOG_FILES_FOLDER,pathInfo);
     }
 
-    public static void deleteDir(File file){
-        if(file.isDirectory()){
-            File[] children = file.listFiles();
-            if(children!=null)
-                for(File f : children){
-                    deleteDir(f);
-                }
+    public static void recursiveDelete(File file){
+        if(file.isFile()){
+            file.delete();
+            return;
         }
-        file.delete();
+        File[] children = file.listFiles();
+        if(children==null)return;
+        for(File f : children){
+            recursiveDelete(f);
+        }
     }
 }

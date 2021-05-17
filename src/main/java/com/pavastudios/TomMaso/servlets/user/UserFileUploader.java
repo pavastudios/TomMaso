@@ -43,7 +43,7 @@ public class UserFileUploader extends MasterServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"Parametri mancanti");
             return;
         }
-        Blog blog = Queries.findBlogByName(url.split("/",2)[1]);
+        Blog blog = Blog.fromPathInfo(url);
         if(blog==null||!blog.getProprietario().equals(user)){
             resp.sendError(HttpServletResponse.SC_FORBIDDEN,"Utente non autorizzato!");
             return;

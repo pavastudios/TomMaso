@@ -27,12 +27,13 @@
 <%@include file="general/navbar.jsp"%>
 <div id="content">
 </div>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
 <%@include file="general/footer.jsp"%>
-<!--<%@include file="general/tailTag.jsp"%>!-->
+<%@include file="general/tailTag.jsp"%>
 
 <script>
-    document.getElementById('content').innerHTML = marked("<%=content.toString().replace("\r\n","\\\n").replace("\"","\\\"")%>");
+
+    document.getElementById('content').innerHTML = marked("<%=content.toString().replace("\\","\\\\").replace("\n","\\n").replace("\"","\\\"")%>");
 </script>
 </body>
 </html>

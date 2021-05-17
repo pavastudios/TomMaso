@@ -79,10 +79,10 @@ public class Blog implements GenericModel {
         writer.endObject();
     }
 
-    public static Blog fromUrl(String url) throws SQLException {
-        if(url==null)return null;
-        String[]parts=url.split("/");
-        if(parts.length<2)return null;
+    public static Blog fromPathInfo(String pathInfo) throws SQLException {
+        if(pathInfo==null)return null;
+        String[]parts=pathInfo.split("/",3);
+        if(parts.length<2||!parts[0].isEmpty())return null;
         return Queries.findBlogByName(parts[1]);
     }
 }

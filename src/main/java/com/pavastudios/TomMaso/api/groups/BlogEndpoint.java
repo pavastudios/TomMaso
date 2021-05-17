@@ -30,8 +30,8 @@ public class BlogEndpoint {
             writer.name(ApiManager.ERROR_PROP).value("Invalid paths");
             return;
         }
-        Blog fromBlog=Blog.fromUrl(from);
-        Blog toBlog=Blog.fromUrl(to);
+        Blog fromBlog=Blog.fromPathInfo(from);
+        Blog toBlog=Blog.fromPathInfo(to);
         if(fromBlog==null||toBlog==null||!fromBlog.getProprietario().equals(user)||!toBlog.getProprietario().equals(user)){
             writer.name(ApiManager.ERROR_PROP).value("Blog invalidi");
             return;
@@ -49,7 +49,7 @@ public class BlogEndpoint {
         }
         Queries.deleteBlog(blog);
         File rootBlog=new File(FileUtility.BLOG_FILES_FOLDER,blog.getNome());
-        FileUtility.deleteDir(rootBlog);
+        FileUtility.recursiveDelete(rootBlog);
         writer.name("response").value("ok");
     };
 
@@ -79,7 +79,7 @@ public class BlogEndpoint {
 
     private static final ApiEndpoint.Manage DELETE_ACTION = (parser, writer, user) -> {
         String url=parser.getValueString("url");
-        Blog blog=Blog.fromUrl(url);
+        Blog blog=Blog.fromPathInfo(url);
 
         if(blog==null||!blog.getProprietario().equals(user)){
             writer.name(ApiManager.ERROR_PROP).value("Blog invalido");
@@ -91,7 +91,7 @@ public class BlogEndpoint {
             writer.name(ApiManager.ERROR_PROP).value("File invalido");
             return;
         }
-        FileUtility.deleteDir(file);
+        FileUtility.recursiveDelete(file);
         writer.name("response").value("ok");
     };
 

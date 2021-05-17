@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fontawesome.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/easymde.min.css">
+
 <style>
     .no-dec {text-decoration: none !important;}
     .no-dec:hover {text-decoration: none !important;}

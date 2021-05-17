@@ -1,6 +1,5 @@
 package com.pavastudios.TomMaso.servlets.blog;
 
-import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Blog;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.servlets.MasterServlet;
@@ -12,9 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.Arrays;
 
@@ -46,7 +43,7 @@ public class BlogManagerServlet extends MasterServlet {
 
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        Blog blog = Blog.fromUrl(req.getPathInfo());
+        Blog blog = Blog.fromPathInfo(req.getPathInfo());
         File file = FileUtility.blogPathToFile(req.getPathInfo());
         Utente owner = blog == null ? null : blog.getProprietario();
         if (!session.isLogged() || !session.getUtente().equals(owner)) {
