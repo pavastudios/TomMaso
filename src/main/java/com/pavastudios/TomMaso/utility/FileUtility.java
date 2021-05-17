@@ -2,13 +2,14 @@ package com.pavastudios.TomMaso.utility;
 
 import com.pavastudios.TomMaso.test.PersonalFileDir;
 
+import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 public class FileUtility {
-
+    public enum FileType{TEXT,MARKDOWN,AUDIO,DIRECTORY,VIDEO,IMAGE,UNKNOWN}
     private static final File TOMMASO_FOLDER = new File(PersonalFileDir.TOMMASO_DATA_FOLDER).getAbsoluteFile();
     public static final File BLOG_FILES_FOLDER = new File(TOMMASO_FOLDER,"blogs").getAbsoluteFile();
     public static final File USER_FILES_FOLDER = new File(TOMMASO_FOLDER,"users").getAbsoluteFile();
@@ -28,6 +29,19 @@ public class FileUtility {
         String name = file.getAbsolutePath();
         name = name.replace('\\', '/');//c'è gente che non conosce linux
         return name.substring(PATH_LENGTH);
+    }
+
+    public static FileType getFileType(ServletContext cont, File file){
+        if(file.isDirectory())return FileType.DIRECTORY;
+        String mime=cont.getMimeType(file.getAbsolutePath());
+        System.out.println(file+": "+mime);
+        if(mime==null)return FileType.UNKNOWN;
+        if(mime.startsWith("image/"))return FileType.IMAGE;
+        if(mime.startsWith("video/"))return FileType.VIDEO;
+        if(mime.startsWith("audio/"))return FileType.AUDIO;
+        if(mime.startsWith("text/markdown"))return FileType.MARKDOWN;
+        if(mime.startsWith("text/"))return FileType.TEXT;
+        return FileType.UNKNOWN;
     }
 
     public static File userPathToFile(String pathInfo) {

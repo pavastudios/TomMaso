@@ -2,6 +2,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.io.File" %>
 <%@ page import="com.pavastudios.TomMaso.utility.FileUtility" %>
+<%@ page import="com.sun.xml.internal.txw2.output.CharacterEscapeHandler" %>
+<%@ page import="org.jsoup.nodes.Entities" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,15 +11,15 @@
     <%@include file="general/headTags.jsp"%>
     <%!
         private String iconFromFile(ServletContext cont, File f){
-
-            if(f.isDirectory())return "fa-folder";
-            String mime=cont.getMimeType(f.getAbsolutePath());
-            System.out.println(f+": "+mime);
-            if(mime==null)return "fa-file-alt";
-            if(mime.startsWith("image/"))return "fa-image";
-            if(mime.startsWith("video/"))return "fa-video";
-            if(mime.startsWith("audio/"))return "fa-music";
-            if(mime.startsWith("text/"))return "fa-file-alt";
+            FileUtility.FileType type=FileUtility.getFileType(cont,f);
+            switch(type){
+                case DIRECTORY:return "fa-folder";
+                case AUDIO:return "fa-music";
+                case MARKDOWN:return "fa-code";
+                case TEXT:return "fa-file-alt";
+                case VIDEO:return "fa-video";
+                case IMAGE:return "fa-image";
+            }
             return "fa-file";
         }
     %>
@@ -66,7 +68,7 @@
                                     <%}%>
                         <div class="card-header text-center">
                             <i class="fa-10x fas <%=iconFromFile(request.getServletContext(),f)%>"></i>
-                            <h5 class="card-title text-truncate"><%=f.getName()%></h5>
+                            <h5 class="card-title text-truncate"><%=Entities.escape(f.getName())%></h5>
                         </div>
                             </a>
 

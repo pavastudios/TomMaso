@@ -8,7 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.pavastudios.TomMaso.model.Utente" %>
 <%@ page import="java.util.*" %>
-<% List<Utente> lista = (List<Utente>) request.getAttribute("listaContattati"); %>
+<%@ page import="com.pavastudios.TomMaso.model.Chat" %>
+<%
+    List<Utente> lista = (List<Utente>) request.getAttribute("listaContattati");
+    List<Chat> chats = (List<Chat>) request.getAttribute("listaChat");
+%>
 <html>
 <head>
     <%@ include file="../general/headTags.jsp" %>
@@ -18,12 +22,13 @@
 <body>
 <%@ include file="../general/navbar.jsp" %>
 <div   class="scritti">
-    <form method="POST" action="/TomMaso_war_exploded/crea-chat">
-    <% for(Utente utente:lista){%>
-        <input type="text" name="unto" value="<%=utente.getUsername()%>" hidden readonly required>
-        <input type="submit"  value="<%=utente.getUsername()%>">
+    <% for(Chat chat:chats){
+        Utente other=chat.otherUser(ses.getUtente());
+    %>
+        <a href="${pageContext.request.contextPath}/crea-chat?id=<%=chat.getIdChat()%>">
+            <button><%=other.getUsername()%></button>
+        </a>
     <% } %>
-    </form>
 </div>
 
 <div id="ricerca"  class="ricerca">
@@ -32,26 +37,46 @@
         <button id="cerca">Cerca</button>
     </div>
     <div id="elenco">
-
+        <button id="found-username"></button>
     </div>
 </div>
 <script>
 
-    var button = document.getElementById("cerca");
-
-    button.addEventListener("click",function (){
-        var richiesta = new XMLHttpRequest();
-        var name= document.getElementById("nome");
-
-        richiesta.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("elenco").innerHTML =
-                    this.responseText;
+    const foundBtn = $("#found-username");
+    $(function () {
+        foundBtn.hide();
+    });
+    $("#cerca").click(function(){
+        foundBtn.hide();
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/api/user/find-user',
+            data: {
+                "username": $("#nome").val(),
+            },
+            success: function (data) {
+                console.log(data);
+                if(data["error"]!==undefined)
+                    return;
+                foundBtn.text(data["response"]["username"]);
+                foundBtn.show();
             }
-        };
-
-        richiesta.open("get","/TomMaso_war_exploded/cerca-utenti?nome="+name.value);
-        richiesta.send();
+        });
+    });
+    foundBtn.click(function () {
+        foundBtn.hide();
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/api/chat/create-chat',
+            data: {
+                "with": foundBtn.text(),
+            },
+            success: function (data) {
+                console.log(data);
+                if(data["error"]===undefined)
+                    location.reload();
+            }
+        });
     });
 </script>
 

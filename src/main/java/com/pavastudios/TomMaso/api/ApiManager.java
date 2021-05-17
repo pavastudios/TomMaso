@@ -3,6 +3,7 @@ package com.pavastudios.TomMaso.api;
 import com.google.gson.stream.JsonWriter;
 import com.pavastudios.TomMaso.api.groups.BlogEndpoint;
 import com.pavastudios.TomMaso.api.groups.ChatEndpoint;
+import com.pavastudios.TomMaso.api.groups.UserEndpoint;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.Session;
 import org.jetbrains.annotations.Nullable;
@@ -21,6 +22,7 @@ public class ApiManager {
     static {
         apiGroup.put(ChatEndpoint.GROUP_NAME, ChatEndpoint.ENDPOINTS);
         apiGroup.put(BlogEndpoint.GROUP_NAME, BlogEndpoint.ENDPOINTS);
+        apiGroup.put(UserEndpoint.GROUP_NAME, UserEndpoint.ENDPOINTS);
     }
 
     public static @Nullable ApiEndpoint getEndpoint(HttpServletRequest req) {

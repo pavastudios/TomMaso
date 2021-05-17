@@ -45,10 +45,12 @@ public class Queries {
     static MasterPreparedStatement DELETE_BLOG;
     static MasterPreparedStatement UPDATE_BLOG_NAME;
     static MasterPreparedStatement UPDATE_USER_DATA;
+    static MasterPreparedStatement FETCH_MESSAGE_FROM_ID;
 
     public static void initQueries() throws SQLException {
         //FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente` IN ((SELECT `utente2` FROM 'Chat' WHERE `utente1`=?) UNION (SELECT `utente1` FROM 'Chat' WHERE `utente2`=?))");
         FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? ORDER BY `data_invio` DESC LIMIT ? OFFSET ?");
+        FETCH_MESSAGE_FROM_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? AND `id_messaggio`>? ORDER BY `data_invio`");
         FIND_USER_BY_USERNAME = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `username`=?");
         FIND_USER_BY_EMAIL = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `email`=?");
         FIND_USER_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=?");
@@ -303,7 +305,7 @@ public class Queries {
         return cookie;
     }
 
-    public static @Nullable List<Chat> findUserChat(Utente u1) throws SQLException {
+    public static @NotNull List<Chat> findUserChat(Utente u1) throws SQLException {
         FIND_USER_CHAT.setInt(1, u1.getIdUtente());
         FIND_USER_CHAT.setInt(2, u1.getIdUtente());
         ResultSet rs = FIND_USER_CHAT.executeQuery();
@@ -371,5 +373,14 @@ public class Queries {
         UPDATE_USER_DATA.setString(2,bio.isEmpty()?user.getBio():bio);
         UPDATE_USER_DATA.setInt(3,user.getIdUtente());
         UPDATE_USER_DATA.executeUpdate();
+    }
+
+    public static List<Messaggio> fetchMessageFromId(Chat chat, int fromId) throws SQLException {
+        FETCH_MESSAGE_FROM_ID.setInt(1,chat.getIdChat());
+        FETCH_MESSAGE_FROM_ID.setInt(2,fromId);
+        ResultSet set= FETCH_MESSAGE_FROM_ID.executeQuery();
+        List<Messaggio>messages=resultSetToList(Entities.MESSAGGIO,set);
+        set.close();
+        return messages;
     }
 }

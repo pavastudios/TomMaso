@@ -5,6 +5,7 @@ import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.servlets.MasterServlet;
 import com.pavastudios.TomMaso.utility.FileUtility;
 import com.pavastudios.TomMaso.utility.Session;
+import com.pavastudios.TomMaso.utility.Utility;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -17,6 +18,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 
 @WebServlet(name = "UpdateUser", urlPatterns = {"/user-update"})
@@ -47,9 +51,9 @@ public class UpdateUserServlet extends MasterServlet {
             written = ImageIO.write(image, "png", propicFile);
         }catch(IllegalArgumentException ignore){ }
         if(written){
-            propicFile.renameTo(user.getPropicFile());
+            File oldPropic=user.getPropicFile();
+            Files.move(propicFile.toPath(),oldPropic.toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
-        propicFile.delete();
     }
     @Override
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
@@ -64,6 +68,12 @@ public class UpdateUserServlet extends MasterServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"Parametri mancanti");
             return;
         }
+
+        if(!Utility.useOnlyNormalChars(newUsername)){
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"Nuovo username invalido");
+            return;
+        }
+
         if(!updatePassword(user,oldPassword,newPassword1,newPassword2)){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"Impossibile cambiare password");
             return;
@@ -73,7 +83,7 @@ public class UpdateUserServlet extends MasterServlet {
         Utente updatedUser=Queries.findUserById(user.getIdUtente());
         session.setUtente(updatedUser);
         if(!user.getUsername().equals(updatedUser.getUsername()))//cambia cartella per l'utente
-            user.getUserFolder().renameTo(updatedUser.getUserFolder());
+            Files.move(user.getUserFolder().toPath(),updatedUser.getUserFolder().toPath(), StandardCopyOption.REPLACE_EXISTING);
         resp.sendRedirect(req.getServletContext().getContextPath()+"/profile");
     }
     /**

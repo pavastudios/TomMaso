@@ -105,3 +105,5 @@ CREATE TRIGGER `update_expire_date_forgot` BEFORE INSERT ON `PasswordReset` FOR 
 END $$
 
 DELIMITER ;
+
+SET GLOBAL time_zone = '+2:00'; -- Orario giusto, almeno per ora

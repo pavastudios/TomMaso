@@ -83,6 +83,7 @@ public class Utility {
     }
 
     public static int tryParseInt(String str, int defValue, int radix) {
+        if(str==null)return defValue;
         try {
             return Integer.parseInt(str, radix);
         } catch (NumberFormatException ignore) {

@@ -2,6 +2,7 @@ package com.pavastudios.TomMaso.model;
 
 import com.google.gson.stream.JsonWriter;
 import com.pavastudios.TomMaso.db.queries.Queries;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -80,5 +81,11 @@ public class Chat implements GenericModel {
         writer.name("user2");
         utente2.writeJson(writer);
         writer.endObject();
+    }
+
+
+    public Utente otherUser(@Nullable Utente user){
+        if(utente1.equals(user))return utente2;
+        return utente1;
     }
 }

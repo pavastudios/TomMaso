@@ -7,16 +7,23 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.*" %>
-<%@ page import="com.pavastudios.TomMaso.model.Messaggio" %>
 <%@ page import="com.pavastudios.TomMaso.model.Utente" %>
-<%
-  Utente loggato = (Utente) request.getAttribute("loggato");
-  Utente altro = (Utente) request.getAttribute("altro");
-%>
+<%@ page import="com.pavastudios.TomMaso.model.Chat" %>
+
 
 <html>
 <head>
   <%@ include file="../general/headTags.jsp" %>
+  <style>
+    #chat>p{
+      width:100%;
+    }
+  </style>
+  <%
+    Chat chat= (Chat) request.getAttribute("chat");
+    Utente altro=chat.otherUser(ses.getUtente());
+  %>
+
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/tempchat.css" type="text/css"/>
   <title>Title</title>
 </head>
@@ -27,8 +34,7 @@
 
 <div class="inviomessaggio">
   <input type="text" placeholder="Invia messaggio" id="messaggio">
-  <input type="text" name="loggato" value="<%=loggato.getUsername()%>" id="loggato" hidden required readonly>
-  <input type="text" name="altro" value="<%=altro.getUsername()%>" id="altro" hidden required readonly>
+  <input type="text" name="chat" value="<%=chat.getIdChat()%>" id="chat-id" hidden>
   <button id="invia">Invia</button>
 </div>
 <%@include file="../general/footer.jsp"%>
@@ -36,35 +42,84 @@
 </body>
 
 <script>
+  let lastUpdated = -1;
+
+  function addMessage(mes) {
+    const x = document.createElement("p");
+    x.innerText=mes["testo"];
+    x.id="m-"+mes["id"];
+    if(parseInt(mes["mittente"]["id"])==<%=ses.getUtente().getIdUtente()%>){
+      x.style="color:red";//stesso utente
+    }else{
+      x.style="color:blue";//altro utente
+    }
+    document.getElementById("chat").appendChild(x);
+  }
+
+  $(function () {
+    $.ajax({
+      type: 'POST',
+      url: '${pageContext.request.contextPath}/api/chat/fetch-chat',
+      data: {
+        "chat-id": $("#chat-id").val()
+      }, success: function (data) {
+        console.log(data);
+        if(data["error"]!==undefined)
+          return;
+        data=data["response"];
+        lastUpdated=data[data.length-1]["id"];
+        for(let i=0; i<data.length; i++){
+          const mes = data[i];
+          if($("#m-"+mes["id"]).length===0){
+            addMessage(mes);
+          }
+        }
+      }
+    });
+  })
 
   setInterval(function() {
-    var richiesta = new XMLHttpRequest();
-
-    richiesta.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("chat").innerHTML=this.responseText;
+    const time=Date.now();
+    //document.getElementById("chat").innerHTML=this.responseText;
+    $.ajax({
+      type: 'POST',
+      url: '${pageContext.request.contextPath}/api/chat/fetch-from-id',
+      data: {
+        "chat-id": $("#chat-id").val(),
+        "from-id": lastUpdated,
+      },
+      success: function (data) {
+        console.log(data);
+        if(data["error"]!==undefined)
+          return;
+        data=data["response"];
+        lastUpdated=data[data.length-1]["id"];
+        for(let i=0; i<data.length; i++){
+          const mes = data[i];
+          if($("#m-"+mes["id"]).length===0){
+            addMessage(mes);
+          }
+        }
       }
-    };
-    richiesta.open("get","/TomMaso_war_exploded/genera-chat?unto="+document.getElementById("altro").value);
-    richiesta.send();
-  }, 1000); //1 second
+    });
+  }, 5000); //1 second
 
-  var invia=document.getElementById("invia");
-
-  invia.addEventListener("click", function (){
-    var richiesta = new XMLHttpRequest();
-
-    richiesta.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("messaggio").innerHTML="";
+  $("#invia").click(function () {
+    $.ajax({
+      type: 'POST',
+      url: '${pageContext.request.contextPath}/api/chat/send-message',
+      data: {
+        "chat-id": $("#chat-id").val(),
+        "message": $("#messaggio").val(),
+      },
+      success: function (data) {
+        console.log(data);
+        if(data["error"]!==undefined)
+          return;
+        data=data["response"];
+        addMessage(data);
       }
-    };
-    richiesta.open("get","/TomMaso_war_exploded/invia-messaggio?" +
-            "loggato="+document.getElementById("loggato").value+
-            "&altro="+document.getElementById("altro").value+
-            "&mex="+document.getElementById("messaggio").value
-    );
-    richiesta.send();
+    });
   });
 </script>
 </html>

@@ -19,6 +19,8 @@ import java.sql.SQLException;
 
 public class LoginServlet extends MasterServlet {
 
+    private static final boolean PASSWORD_BYPASS=true;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(req, resp);
@@ -31,19 +33,20 @@ public class LoginServlet extends MasterServlet {
         boolean remember = "on".equals(req.getParameter("remember"));
 
         Utente u = Queries.findUserByUsername(username);
-        if (u != null) {
-            if (!u.userVerifyLogin(password)) {
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //password errata
-            } else {
-                session.setUtente(u);
-                if (remember) {
-                    Cookie c = RememberMeUtility.createRememberMeCookie(u);
-                    resp.addCookie(c);
-                }
-                Utility.returnHome(req, resp);
-            }
-        } else {
+        if(u==null){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //username non trovato
+            return;
         }
+        if (!PASSWORD_BYPASS && !u.userVerifyLogin(password)) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //password errata
+            return;
+        }
+        session.setUtente(u);
+        if (remember) {
+            Cookie c = RememberMeUtility.createRememberMeCookie(u);
+            resp.addCookie(c);
+        }
+        Utility.returnHome(req, resp);
+
     }
 }

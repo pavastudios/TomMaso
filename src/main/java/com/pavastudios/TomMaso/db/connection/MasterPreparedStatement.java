@@ -3,6 +3,7 @@ package com.pavastudios.TomMaso.db.connection;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -30,6 +31,12 @@ public class MasterPreparedStatement {
     public void setString(int parameterIndex, String x) throws SQLException {
         parameters.put(parameterIndex, x);
         this.stmt.setString(parameterIndex, x);
+    }
+
+    public void setDate(int parameterIndex, Date x) throws SQLException {
+        java.sql.Date date=new java.sql.Date(x.getTime());
+        parameters.put(parameterIndex, date.toString());
+        this.stmt.setDate(parameterIndex, date);
     }
 
     public void setBytes(int parameterIndex, byte[] x) throws SQLException {

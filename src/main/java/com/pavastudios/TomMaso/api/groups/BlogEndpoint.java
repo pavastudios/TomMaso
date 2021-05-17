@@ -7,7 +7,8 @@ import com.pavastudios.TomMaso.utility.FileUtility;
 import com.pavastudios.TomMaso.utility.Utility;
 
 import java.io.File;
-import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 
 
@@ -29,17 +30,13 @@ public class BlogEndpoint {
             writer.name(ApiManager.ERROR_PROP).value("Invalid paths");
             return;
         }
-
         Blog fromBlog=Blog.fromUrl(from);
         Blog toBlog=Blog.fromUrl(to);
         if(fromBlog==null||toBlog==null||!fromBlog.getProprietario().equals(user)||!toBlog.getProprietario().equals(user)){
             writer.name(ApiManager.ERROR_PROP).value("Blog invalidi");
             return;
         }
-        if(!fromFile.renameTo(toFile)){
-            writer.name(ApiManager.ERROR_PROP).value("Impossibile spostare");
-            return;
-        }
+        Files.move(fromFile.toPath(),toFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         writer.name("response").value("ok");
     };
 
@@ -59,6 +56,10 @@ public class BlogEndpoint {
     private static final ApiEndpoint.Manage RENAME_ACTION = (parser, writer, user) -> {
         String fromName=parser.getValueString("from-name");
         String toName=parser.getValueString("to-name");
+        if(!Utility.useOnlyNormalChars(toName)){
+            writer.name(ApiManager.ERROR_PROP).value("Nuovo nome invalido");
+            return;
+        }
         Blog fromBlog=Queries.findBlogByName(fromName);
         Blog toBlog=Queries.findBlogByName(toName);
         if(toBlog!=null){
@@ -72,7 +73,7 @@ public class BlogEndpoint {
         File newRootBlog=new File(FileUtility.BLOG_FILES_FOLDER,toName);
         File oldRootBlog=new File(FileUtility.BLOG_FILES_FOLDER,fromName);
         Queries.renameBlog(fromBlog,toName);
-        oldRootBlog.renameTo(newRootBlog);
+        Files.move(oldRootBlog.toPath(),newRootBlog.toPath(), StandardCopyOption.REPLACE_EXISTING);
         writer.name("response").value("ok");
     };
 
