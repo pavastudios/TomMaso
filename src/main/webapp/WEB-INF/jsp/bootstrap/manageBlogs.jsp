@@ -112,7 +112,6 @@
                 %>
                 <form action="<%=request.getContextPath()+"/upload-file/"+url%>" method="post" enctype="multipart/form-data">
                     <input type="file" name="file" id="file">
-                    <input type="text" value="<%=url%>" name="url" hidden>
                     <input type="submit" class="btn btn-primary" value="Conferma">
                 </form>
             </div>
