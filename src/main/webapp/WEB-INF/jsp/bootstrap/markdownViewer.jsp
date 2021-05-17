@@ -1,5 +1,6 @@
 <%@ page import="java.io.File" %>
-<%@ page import="java.io.FileInputStream" %><%--
+<%@ page import="java.io.FileInputStream" %>
+<%@ page import="java.io.BufferedInputStream" %><%--
   Created by IntelliJ IDEA.
   User: pasqu
   Date: 17/05/2021
@@ -11,13 +12,18 @@
 <head>
     <%@include file="general/headTags.jsp"%>
     <%
-        Utente user = ses.getUtente();
         File file = (File) request.getAttribute("file");
-        FileInputStream fis = new FileInputStream(file);
+        BufferedInputStream fis = new BufferedInputStream(new FileInputStream(file));
         StringBuilder content = new StringBuilder();
         int readChar;
         while((readChar = fis.read()) != -1) {
-            content.append((char)readChar);
+            switch(readChar){
+                case '\n':content.append("\\n");break;
+                case '\\':content.append("\\\\");break;
+                case '"':content.append("\\\"");break;
+                default:content.append((char)readChar);break;
+            }
+
         }
     %>
 
@@ -33,7 +39,7 @@
 
 <script>
 
-    document.getElementById('content').innerHTML = marked("<%=content.toString().replace("\\","\\\\").replace("\n","\\n").replace("\"","\\\"")%>");
+    document.getElementById('content').innerHTML = marked("<%=content.toString()%>");
 </script>
 </body>
 </html>
