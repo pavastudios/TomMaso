@@ -18,6 +18,7 @@
         int readChar;
         while((readChar = fis.read()) != -1) {
             switch(readChar){
+                case '\r':break;
                 case '\n':content.append("\\n");break;
                 case '\\':content.append("\\\\");break;
                 case '"':content.append("\\\"");break;

@@ -13,32 +13,43 @@
 
 <html>
 <head>
-  <%@ include file="../general/headTags.jsp" %>
-  <style>
-    #chat>p{
-      width:100%;
-    }
-  </style>
+  <%@ include file="../bootstrap/general/headTags.jsp" %>
   <%
     Chat chat= (Chat) request.getAttribute("chat");
     Utente altro=chat.otherUser(ses.getUtente());
   %>
-
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/tempchat.css" type="text/css"/>
   <title>Title</title>
 </head>
 <body>
-<%@ include file="../general/navbar.jsp" %>
-<div id="chat" class="chat">
-</div>
+<style>
+  .chat{
+    max-height: 500px;
+    overflow: scroll;
+  }
 
-<div class="inviomessaggio">
-  <input type="text" placeholder="Invia messaggio" id="messaggio">
-  <input type="text" name="chat" value="<%=chat.getIdChat()%>" id="chat-id" hidden>
-  <button id="invia">Invia</button>
+</style>
+<%@ include file="../bootstrap/general/navbar.jsp" %>
+
+<div class="container bg-dark text-white">
+  <div class="row justify-content-center">
+
+    <div id="chat" class=" col-12 col-md-8 chat">
+    </div>
+
+  </div>
+
+  <div class="row justify-content-center">
+
+    <div class=" col-12 col-md-8">
+      <input type="text" placeholder="Invia messaggio" id="messaggio">
+      <input type="text" name="chat" value="<%=chat.getIdChat()%>" id="chat-id" hidden>
+      <button id="invia">Invia</button>
+    </div>
+
+  </div>
 </div>
-<%@include file="../general/footer.jsp"%>
-<%@include file="../general/tailTag.jsp"%>
+<%@include file="../bootstrap/general/footer.jsp"%>
+<%@include file="../bootstrap/general/tailTag.jsp"%>
 </body>
 
 <script>
@@ -53,6 +64,7 @@
     }else{
       x.style="color:blue";//altro utente
     }
+    x.className="col-12 col-md-8";
     document.getElementById("chat").appendChild(x);
   }
 
