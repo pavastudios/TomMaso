@@ -30,6 +30,7 @@ CREATE TABLE `Pagina`(
     `id_pagina` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `blog` INT NOT NULL,
     `url` VARCHAR(255) NOT NULL,
+    `data_invio` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`blog`) REFERENCES `Blog`(`id_blog`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -37,9 +38,8 @@ CREATE TABLE `Commento`(
     `id_commento` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `mittente` INT,
     `testo` TEXT NOT NULL,
-    `pagina` INT NOT NULL,
-    FOREIGN KEY (`mittente`) REFERENCES `Utente`(`id_utente`) ON UPDATE CASCADE ON DELETE SET NULL,
-    FOREIGN KEY (`pagina`) REFERENCES `Pagina`(`id_pagina`) ON UPDATE CASCADE ON DELETE CASCADE
+    `urlPagina` VARCHAR(255) NOT NULL,
+    FOREIGN KEY (`mittente`) REFERENCES `Utente`(`id_utente`) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 CREATE TABLE `Chat`(

@@ -1,4 +1,4 @@
-package com.pavastudios.TomMaso.api;
+package com.pavastudios.TomMaso.api.components;
 
 import com.google.gson.stream.JsonWriter;
 import com.pavastudios.TomMaso.model.Utente;
@@ -39,12 +39,12 @@ public class ApiEndpoint {
         return null;
     }
 
-    public void manage(ApiParser parser, JsonWriter writer, Utente user) throws SQLException, IOException {
+    public void manage(ApiParser parser, ApiWriter writer, Utente user) throws SQLException, IOException {
         action.executeEndpoint(parser, writer, user);
     }
 
     public interface Manage {
-        void executeEndpoint(ApiParser parser, JsonWriter writer, Utente user) throws SQLException, IOException;
+        void executeEndpoint(ApiParser parser, ApiWriter writer, Utente user) throws SQLException, IOException;
     }
 
 }

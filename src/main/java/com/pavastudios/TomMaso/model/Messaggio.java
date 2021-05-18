@@ -20,7 +20,7 @@ public class Messaggio implements GenericModel {
         m.setIdMessaggio(rs.getInt("id_messaggio"));
         m.setChat(Queries.findChatById(rs.getInt("id_chat")));
         m.setTesto(rs.getString("testo"));
-        m.setDataInvio(rs.getDate("data_invio"));
+        m.setDataInvio(rs.getTimestamp("data_invio"));
         m.setMittente(Queries.findUserById(rs.getInt("mittente")));
         return m;
     }

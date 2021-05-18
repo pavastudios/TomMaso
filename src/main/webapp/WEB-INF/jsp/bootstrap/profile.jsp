@@ -49,8 +49,7 @@
         <!-- Sidebaby -->
         <div class="col-lg-3 col-sm-12 col-md-12 text-center h-100">
             <div class="row d-flex justify-content-center">
-                <img id="propic-user" class="propic rounded-circle" src="${pageContext.request.contextPath}/users/<%=user.getUsername()%>/propic.png" onerror="useJidenticon('user')">
-                <svg id="propic-svg-user" class="propic rounded-circle" data-jdenticon-value="<%=user.getUsername()%>" hidden></svg>
+                <%=user.propicHtml(request.getServletContext())%>
             </div>
             <div class="row">
                 <h4><%=user.getUsername()%></h4>

@@ -34,6 +34,7 @@ public class FileUtility {
 
     public static FileType getFileType(ServletContext cont, File file){
         if(file==null||cont==null)return null;
+        if(!file.exists())return null;
         if(file.isDirectory())return FileType.DIRECTORY;
         String mime=cont.getMimeType(file.getAbsolutePath());
         System.out.println(file+": "+mime);

@@ -6,20 +6,30 @@ import com.pavastudios.TomMaso.db.queries.Queries;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class Commento implements GenericModel {
     private int idCommento;
     private Utente mittente;
-    private Pagina pagina;
+    private String pagina;
     private String testo;
-
+    private Date dataInvio;
     public static Commento fromResultSet(ResultSet rs) throws SQLException {
         Commento c = new Commento();
         c.setIdCommento(rs.getInt("id_commento"));
         c.setMittente(Queries.findUserById(rs.getInt("mittente")));
-        c.setPagina(Queries.findPageById(rs.getInt("pagina")));
+        c.setPagina(rs.getString("pagina"));
         c.setTesto(rs.getString("testo"));
+        c.setDataInvio(rs.getTimestamp("data_invio"));
         return c;
+    }
+
+    public void setDataInvio(Date dataInvio) {
+        this.dataInvio = dataInvio;
+    }
+
+    public Date getDataInvio() {
+        return dataInvio;
     }
 
     public int getIdCommento() {
@@ -38,11 +48,11 @@ public class Commento implements GenericModel {
         this.mittente = mittente;
     }
 
-    public Pagina getPagina() {
+    public String getPagina() {
         return pagina;
     }
 
-    public void setPagina(Pagina pagina) {
+    public void setPagina(String pagina) {
         this.pagina = pagina;
     }
 
@@ -85,8 +95,7 @@ public class Commento implements GenericModel {
         writer.name("id").value(idCommento);
         writer.name("mittente");
         mittente.writeJson(writer);
-        writer.name("pagina");
-        pagina.writeJson(writer);
+        writer.name("pagina").value(pagina);
         writer.name("pagina").value(testo);
         writer.endObject();
     }

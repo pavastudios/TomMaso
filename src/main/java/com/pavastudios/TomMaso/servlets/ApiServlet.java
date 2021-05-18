@@ -1,7 +1,8 @@
 package com.pavastudios.TomMaso.servlets;
 
 import com.google.gson.stream.JsonWriter;
-import com.pavastudios.TomMaso.api.ApiManager;
+import com.pavastudios.TomMaso.api.components.ApiManager;
+import com.pavastudios.TomMaso.api.components.ApiWriter;
 import com.pavastudios.TomMaso.utility.Session;
 
 import javax.servlet.ServletException;
@@ -23,7 +24,7 @@ public class ApiServlet extends MasterServlet {
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         resp.setContentType("text/json");
 
-        JsonWriter writer = new JsonWriter(resp.getWriter());
+        ApiWriter writer = new ApiWriter(resp.getWriter());
 
         writer.beginObject();
 
@@ -31,6 +32,8 @@ public class ApiServlet extends MasterServlet {
 
         writer.endObject();
         writer.flush();
+        if(writer.isErrorWritten())
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
 
 

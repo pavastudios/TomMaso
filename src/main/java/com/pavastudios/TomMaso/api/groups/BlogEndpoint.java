@@ -1,6 +1,9 @@
 package com.pavastudios.TomMaso.api.groups;
 
-import com.pavastudios.TomMaso.api.*;
+import com.pavastudios.TomMaso.api.components.ApiEndpoint;
+import com.pavastudios.TomMaso.api.components.ApiGroup;
+import com.pavastudios.TomMaso.api.components.ApiManager;
+import com.pavastudios.TomMaso.api.components.ApiParam;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Blog;
 import com.pavastudios.TomMaso.utility.FileUtility;
@@ -37,7 +40,7 @@ public class BlogEndpoint {
             return;
         }
         Files.move(fromFile.toPath(),toFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        writer.name("response").value("ok");
+        writer.name(ApiManager.OK_PROP).value("ok");
     };
 
     private static final ApiEndpoint.Manage DELETE_BLOG_ACTION= (parser, writer, user) -> {
@@ -50,7 +53,7 @@ public class BlogEndpoint {
         Queries.deleteBlog(blog);
         File rootBlog=new File(FileUtility.BLOG_FILES_FOLDER,blog.getNome());
         FileUtility.recursiveDelete(rootBlog);
-        writer.name("response").value("ok");
+        writer.name(ApiManager.OK_PROP).value("ok");
     };
 
     private static final ApiEndpoint.Manage RENAME_ACTION = (parser, writer, user) -> {
@@ -74,7 +77,7 @@ public class BlogEndpoint {
         File oldRootBlog=new File(FileUtility.BLOG_FILES_FOLDER,fromName);
         Queries.renameBlog(fromBlog,toName);
         Files.move(oldRootBlog.toPath(),newRootBlog.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        writer.name("response").value("ok");
+        writer.name(ApiManager.OK_PROP).value("ok");
     };
 
     private static final ApiEndpoint.Manage DELETE_ACTION = (parser, writer, user) -> {
@@ -92,7 +95,7 @@ public class BlogEndpoint {
             return;
         }
         FileUtility.recursiveDelete(file);
-        writer.name("response").value("ok");
+        writer.name(ApiManager.OK_PROP).value("ok");
     };
 
     private static final ApiEndpoint.Manage FETCH_ACTION = (parser, writer, user) -> {
@@ -103,7 +106,7 @@ public class BlogEndpoint {
         }
         try {
             Blog blog = Queries.createBlog(user, name);
-            writer.name("response");
+            writer.name(ApiManager.OK_PROP);
             blog.writeJson(writer);
             File file = new File(FileUtility.BLOG_FILES_FOLDER, blog.getNome());
             file.mkdir();

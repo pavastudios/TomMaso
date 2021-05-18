@@ -1,12 +1,11 @@
 package com.pavastudios.TomMaso.api.groups;
 
-import com.google.gson.stream.JsonWriter;
-import com.pavastudios.TomMaso.api.*;
+import com.pavastudios.TomMaso.api.components.ApiEndpoint;
+import com.pavastudios.TomMaso.api.components.ApiGroup;
+import com.pavastudios.TomMaso.api.components.ApiManager;
+import com.pavastudios.TomMaso.api.components.ApiParam;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Utente;
-
-import java.io.IOException;
-import java.sql.SQLException;
 
 public class UserEndpoint {
     public static final String GROUP_NAME = "user";
@@ -18,7 +17,7 @@ public class UserEndpoint {
             writer.name(ApiManager.ERROR_PROP).value("username non trovato");
             return;
         }
-        writer.name("response");
+        writer.name(ApiManager.OK_PROP);
         u.writeJson(writer);
     };
     public static final ApiGroup ENDPOINTS = new ApiGroup(GROUP_NAME,

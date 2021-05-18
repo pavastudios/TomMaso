@@ -1,6 +1,9 @@
 package com.pavastudios.TomMaso.api.groups;
 
-import com.pavastudios.TomMaso.api.*;
+import com.pavastudios.TomMaso.api.components.ApiEndpoint;
+import com.pavastudios.TomMaso.api.components.ApiGroup;
+import com.pavastudios.TomMaso.api.components.ApiManager;
+import com.pavastudios.TomMaso.api.components.ApiParam;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Chat;
 import com.pavastudios.TomMaso.model.Messaggio;
@@ -28,7 +31,7 @@ public class ChatEndpoint {
             writer.name(ApiManager.ERROR_PROP).value("impossibile inviare messaggio");
             return;
         }
-        writer.name("response");
+        writer.name(ApiManager.OK_PROP);
         m.writeJson(writer);
     };
     private static final ApiEndpoint.Manage CREATE_ACTION = (parser, writer, user) -> {
@@ -45,7 +48,7 @@ public class ChatEndpoint {
             writer.name(ApiManager.ERROR_PROP).value("Chat già esistente");
             return;
         }
-        writer.name("response");
+        writer.name(ApiManager.OK_PROP);
         chat.writeJson(writer);
     };
     private static final ApiEndpoint.Manage FETCH_FROM_ID_ACTION = (parser, writer, user) -> {
@@ -58,7 +61,7 @@ public class ChatEndpoint {
         }
 
         List<Messaggio> messaggi = Queries.fetchMessageFromId(chat, fromId);
-        writer.name("response");
+        writer.name(ApiManager.OK_PROP);
         writer.beginArray();
         for (Messaggio m : messaggi)
             m.writeJson(writer);
@@ -76,7 +79,7 @@ public class ChatEndpoint {
         }
 
         List<Messaggio> messaggi = Queries.fetchMessages(chat, count, offset);
-        writer.name("response");
+        writer.name(ApiManager.OK_PROP);
         writer.beginArray();
         for (Messaggio m : messaggi)
             m.writeJson(writer);

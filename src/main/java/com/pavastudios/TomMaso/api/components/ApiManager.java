@@ -1,8 +1,9 @@
-package com.pavastudios.TomMaso.api;
+package com.pavastudios.TomMaso.api.components;
 
 import com.google.gson.stream.JsonWriter;
 import com.pavastudios.TomMaso.api.groups.BlogEndpoint;
 import com.pavastudios.TomMaso.api.groups.ChatEndpoint;
+import com.pavastudios.TomMaso.api.groups.CommentEndpoint;
 import com.pavastudios.TomMaso.api.groups.UserEndpoint;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.Session;
@@ -16,6 +17,7 @@ import java.util.Locale;
 
 public class ApiManager {
     public static final String ERROR_PROP = "error";
+    public static final String OK_PROP = "response";
 
     public static HashMap<String, ApiGroup> apiGroup = new HashMap<>();
 
@@ -23,6 +25,7 @@ public class ApiManager {
         apiGroup.put(ChatEndpoint.GROUP_NAME, ChatEndpoint.ENDPOINTS);
         apiGroup.put(BlogEndpoint.GROUP_NAME, BlogEndpoint.ENDPOINTS);
         apiGroup.put(UserEndpoint.GROUP_NAME, UserEndpoint.ENDPOINTS);
+        apiGroup.put(CommentEndpoint.GROUP_NAME, CommentEndpoint.ENDPOINTS);
     }
 
     public static @Nullable ApiEndpoint getEndpoint(HttpServletRequest req) {
@@ -33,7 +36,7 @@ public class ApiManager {
         return group.getEndpoint(path[2]);
     }
 
-    public static void manageEndpoint(Session session, HttpServletRequest req, JsonWriter writer) throws IOException, SQLException {
+    public static void manageEndpoint(Session session, HttpServletRequest req, ApiWriter writer) throws IOException, SQLException {
         //Controlla esistenza endpoint
         ApiEndpoint endpoint = getEndpoint(req);
         if (endpoint == null) {

@@ -1,5 +1,6 @@
 package com.pavastudios.TomMaso.servlets;
 
+import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.servlets.MasterServlet;
 
 import com.pavastudios.TomMaso.utility.*;
@@ -21,12 +22,15 @@ import static com.pavastudios.TomMaso.utility.FileUtility.getFileType;
 
 @WebServlet(name = "NewViewer", urlPatterns = {"/blogs/*","/users/*"})
 public class ViewerServlet extends MasterServlet {
+
+    private void manageMarkdown(HttpServletRequest req, HttpServletResponse resp, File file) throws IOException, ServletException, SQLException {
+        req.setAttribute("file",file);
+        req.setAttribute("comments", Queries.fetchCommentsFromPage(req.getPathInfo()));
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/markdownViewer.jsp").forward(req,resp);
+    }
+
     private void manageFile(HttpServletRequest req, HttpServletResponse resp, File file) throws IOException, ServletException {
-        if(getFileType(getServletContext(), file)== FileUtility.FileType.MARKDOWN){
-            req.setAttribute("file",file);
-            getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/markdownViewer.jsp").forward(req,resp);
-            return ;
-        }
+
         OutputStream out = resp.getOutputStream();
         FileInputStream fr = new FileInputStream(file);
         resp.setContentType(getServletContext().getMimeType(file.getAbsolutePath()));
@@ -58,7 +62,11 @@ public class ViewerServlet extends MasterServlet {
             resp.sendError(HttpServletResponse.SC_FORBIDDEN,"Impossibile aprire cartelle");
             return;
         }
-        manageFile(req,resp,file);
+        FileUtility.FileType type=FileUtility.getFileType(getServletContext(),file);
+        if(type== FileUtility.FileType.MARKDOWN)
+            manageMarkdown(req,resp,file);
+        else
+            manageFile(req,resp,file);
     }
 
 }

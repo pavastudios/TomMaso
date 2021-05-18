@@ -46,9 +46,12 @@ public class Queries {
     static MasterPreparedStatement UPDATE_BLOG_NAME;
     static MasterPreparedStatement UPDATE_USER_DATA;
     static MasterPreparedStatement FETCH_MESSAGE_FROM_ID;
+    static MasterPreparedStatement FETCH_COMMENT_FOR_PAGE;
+    static MasterPreparedStatement SEND_COMMENT;
 
     public static void initQueries() throws SQLException {
         //FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente` IN ((SELECT `utente2` FROM 'Chat' WHERE `utente1`=?) UNION (SELECT `utente1` FROM 'Chat' WHERE `utente2`=?))");
+        FETCH_COMMENT_FOR_PAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Commento` WHERE `pagina`=? ORDER BY `data_invio`");
         FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? ORDER BY `data_invio` DESC LIMIT ? OFFSET ?");
         FETCH_MESSAGE_FROM_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? AND `id_messaggio`>? ORDER BY `data_invio`");
         FIND_USER_BY_USERNAME = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `username`=?");
@@ -67,6 +70,7 @@ public class Queries {
         REGISTER_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `RememberMe`(`id_utente`,`cookie`) VALUES (?,?)");
         CREATE_CHAT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Chat`(`utente1`,`utente2`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
         SEND_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Messaggio`(`id_chat`,`mittente`,`testo`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+        SEND_COMMENT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Commento`(`mittente`,`testo`,`pagina`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
         DELETE_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `RememberMe` WHERE `cookie`=?");
         CREATE_BLOG = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Blog`(`proprietario`,`nome`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
         CHANGE_PASSWORD = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `password`=?,`salt`=? WHERE `id_utente`=?");
@@ -81,6 +85,14 @@ public class Queries {
         DELETE_BLOG = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `Blog` WHERE `id_blog`=?");
         UPDATE_BLOG_NAME = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Blog` SET `nome`=? WHERE `id_blog`=?");
         UPDATE_USER_DATA = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `username`=?,`bio`=? WHERE `id_utente`=?");
+    }
+
+    public static List<Commento>fetchCommentsFromPage(String page) throws SQLException {
+        FETCH_COMMENT_FOR_PAGE.setString(1,page);
+        ResultSet rs=FETCH_COMMENT_FOR_PAGE.executeQuery();
+        List<Commento>comments=resultSetToList(Entities.COMMENTO,rs);
+        rs.close();
+        return comments;
     }
 
     public static Utente findUserFromForgot(String code) throws SQLException {
@@ -136,6 +148,16 @@ public class Queries {
         Collections.reverse(messages);
         rs.close();
         return messages;
+    }
+
+    public static @Nullable Commento sendComment(Utente utente, String messaggio, String pagina) throws SQLException {
+        if (utente == null || messaggio == null || pagina == null) return null;
+        SEND_COMMENT.setInt(1, utente.getIdUtente());
+        SEND_COMMENT.setString(2, messaggio);
+        SEND_COMMENT.setString(3, pagina);
+        SEND_COMMENT.executeUpdate();
+        int id = Utility.getIdFromGeneratedKeys(SEND_COMMENT);
+        return findCommentById(id);
     }
 
     public static @Nullable Messaggio sendTextToChat(Chat chat, Utente mittente, String testo) throws SQLException {

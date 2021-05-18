@@ -1,4 +1,4 @@
-package com.pavastudios.TomMaso.api;
+package com.pavastudios.TomMaso.api.components;
 
 import java.util.HashMap;
 

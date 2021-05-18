@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Random;
@@ -19,10 +20,12 @@ import java.util.regex.Pattern;
 
 @SuppressWarnings("unused")
 public class Utility {
+    public static final SimpleDateFormat DATE_FORMAT=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     public static final Pattern NORMAL_CHARS = Pattern.compile("^[a-zA-Z0-9-._]*$");
     public static final Random RANDOM = new Random(System.nanoTime());
     public static final SecureRandom SECURE_RANDOM = new SecureRandom();
     public static final char[] HEX_CHARS = "0123456789ABCDEF".toCharArray();
+
 
     public static int getIdFromGeneratedKeys(MasterPreparedStatement stmt) throws SQLException {
         ResultSet rs = stmt.getGeneratedKeys();

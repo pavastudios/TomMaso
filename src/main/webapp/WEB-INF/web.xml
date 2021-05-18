@@ -3,6 +3,14 @@
          xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    <servlet>
+        <servlet-name>Edit</servlet-name>
+        <servlet-class>com.pavastudios.TomMaso.servlets.MDEditorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Edit</servlet-name>
+        <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
     <mime-mapping>
         <extension>md</extension>
         <mime-type>text/markdown;charset=UTF-8</mime-type>

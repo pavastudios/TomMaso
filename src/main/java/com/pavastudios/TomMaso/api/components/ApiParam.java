@@ -1,4 +1,4 @@
-package com.pavastudios.TomMaso.api;
+package com.pavastudios.TomMaso.api.components;
 
 public class ApiParam {
     private final String name;

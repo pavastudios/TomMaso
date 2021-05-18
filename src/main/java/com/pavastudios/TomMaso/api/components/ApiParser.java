@@ -1,4 +1,4 @@
-package com.pavastudios.TomMaso.api;
+package com.pavastudios.TomMaso.api.components;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;

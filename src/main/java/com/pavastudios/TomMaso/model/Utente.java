@@ -4,12 +4,14 @@ import com.google.gson.stream.JsonWriter;
 import com.pavastudios.TomMaso.utility.FileUtility;
 import com.pavastudios.TomMaso.utility.Security;
 
+import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
 
 public class Utente implements GenericModel {
     public static final int MINIMUM_USERNAME_LENGTH = 4;
@@ -29,7 +31,7 @@ public class Utente implements GenericModel {
     public static Utente fromResultSet(ResultSet rs) throws SQLException {
         Utente u = new Utente();
         u.setIdUtente(rs.getInt("id_utente"));
-        u.setDataIscrizione(rs.getDate("data_iscrizione"));
+        u.setDataIscrizione(rs.getTimestamp("data_iscrizione"));
         u.setEmail(rs.getString("email"));
         u.setPassword(rs.getBytes("password"));
         u.setSalt(rs.getBytes("salt"));
@@ -162,4 +164,20 @@ public class Utente implements GenericModel {
     public File getPropicFile(){
         return new File(getUserFolder(),"propic.png");
     }
+
+    public String propicHtml(ServletContext context){
+        return propicHtml(context,"");
+    }
+
+    public String propicHtml(ServletContext context,String additional){
+        File propic=getPropicFile();
+
+        if(propic.exists()){
+            return String.format(Locale.US,"<img class=\"w-100 propic rounded-circle\" src=\"%s/users/%s/propic.png\" %s >",
+                    context.getContextPath(),getUsername(),additional);
+        }
+        return String.format(Locale.US,"<svg class=\"w-100 propic rounded-circle\" data-jdenticon-value=\"%s\" %s ></svg>",
+                getUsername(),additional);
+    }
+
 }
