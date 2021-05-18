@@ -10,7 +10,7 @@ import java.io.IOException;
 public class IndexServlet extends MasterServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/index.jsp").forward(req, resp);
     }
 
     @Override
