@@ -66,7 +66,7 @@ public class Queries {
         FIND_CHAT_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Chat` WHERE `id_chat`=?");
         FIND_CHAT_BY_USERS = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Chat` WHERE `utente1`=? AND `utente2`=? ");
         FIND_USER_BY_COOKIE = GlobalConnection.CONNECTION.prepareStatement("SELECT `id_utente` FROM `RememberMe` WHERE `cookie`=?");
-        REGISTER_USER = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Utente`(`email`,`password`,`salt`,`username`) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+        REGISTER_USER = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Utente`(`email`,`password`,`username`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
         REGISTER_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `RememberMe`(`id_utente`,`cookie`) VALUES (?,?)");
         CREATE_CHAT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Chat`(`utente1`,`utente2`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
         SEND_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Messaggio`(`id_chat`,`mittente`,`testo`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -254,12 +254,9 @@ public class Queries {
     }
 
     public static @Nullable Utente registerUser(String email, String password, String username) throws SQLException {
-        byte[] salt = Security.generateSalt();
-        byte[] pwd = Security.sha512(password, salt);
         REGISTER_USER.setString(1, email);
-        REGISTER_USER.setBytes(2, pwd);
-        REGISTER_USER.setBytes(3, salt);
-        REGISTER_USER.setString(4, username);
+        REGISTER_USER.setString(2, Security.crypt(password));
+        REGISTER_USER.setString(3, username);
         REGISTER_USER.executeUpdate();
         int newId = Utility.getIdFromGeneratedKeys(REGISTER_USER);
         return findUserById(newId);
