@@ -74,8 +74,11 @@
 
                         <div class="card-footer d-grid w-100">
                             <div class="row gap-0">
-                                <% if(FileUtility.getFileType(request.getServletContext(), f)==FileUtility.FileType.MARKDOWN){ %>
-                                <a class="col-4" rel-url="<%=relUrl%>" href="<%=request.getContextPath()%>/edit-md"><button type="button" class="col-12 btn btn-outline-primary"><i class="fas fa-pen"></i></button></a>
+                                <%
+                                    if(FileUtility.getFileType(request.getServletContext(), f)==FileUtility.FileType.MARKDOWN){
+                                        String path = f.getAbsolutePath();
+                                %>
+                                <a class="col-4" rel-url="<%=relUrl%>" href="<%=request.getContextPath()%>/edit-md/<%=path.substring(path.indexOf("blogs")+6)%>"><button type="button" class="col-12 btn btn-outline-primary"><i class="fas fa-pen"></i></button></a>
                                 <%}%>
                                 <a class="col-4 move-blog" rel-url="<%=relUrl%>" data-bs-toggle="modal" data-bs-target="#moveModal" href="#"><button type="button" class="col-12 btn btn-outline-warning"><i class="fas fa-copy"></i></button></a>
                                 <a class="col-4 delete-blog" rel-url="<%=relUrl%>" data-bs-toggle="modal" data-bs-target="#deleteModal" href="#"><button type="button" class="col-12 btn btn-outline-danger" ><i class="fas fa-trash"></i></button></a>
