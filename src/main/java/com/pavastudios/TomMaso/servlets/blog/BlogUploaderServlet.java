@@ -1,6 +1,5 @@
-package com.pavastudios.TomMaso.servlets.user;
+package com.pavastudios.TomMaso.servlets.blog;
 
-import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Blog;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.servlets.MasterServlet;
@@ -17,9 +16,8 @@ import java.io.*;
 import java.sql.SQLException;
 
 
-@WebServlet(name = "BlogFileUpload", urlPatterns = {"/upload-file/*"})
 @MultipartConfig()
-public class UserFileUploader extends MasterServlet {
+public class BlogUploaderServlet extends MasterServlet {
 
     private boolean createFileOnServer(Part part, String url) throws IOException {
         String submitted=part.getSubmittedFileName();

@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "Login", value = "/login")
-
 public class LoginServlet extends MasterServlet {
 
     private static final boolean PASSWORD_BYPASS=true;

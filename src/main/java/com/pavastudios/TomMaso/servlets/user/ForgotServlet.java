@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "ForgotPassword", value = "/forgot")
 public class ForgotServlet extends MasterServlet {
 
     @Override

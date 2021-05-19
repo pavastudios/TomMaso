@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "Profilo", urlPatterns = {"/user", "/user/*", "/profile"})
 public class ProfileServlet extends MasterServlet {
 
     private Utente fetchUser(Session session, HttpServletRequest req) throws SQLException {

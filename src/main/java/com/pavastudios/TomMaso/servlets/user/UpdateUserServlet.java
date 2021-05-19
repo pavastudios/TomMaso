@@ -23,7 +23,6 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 
-@WebServlet(name = "UpdateUser", urlPatterns = {"/user-update"})
 @MultipartConfig(
         maxFileSize = UpdateUserServlet.MAX_PROPIC_SIZE,
         maxRequestSize = UpdateUserServlet.MAX_REQUEST_SIZE

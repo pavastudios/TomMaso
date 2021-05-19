@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "MarkdownEditor", value="/edit")
 public class MDEditorServlet extends MasterServlet{
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 
-@WebServlet(name = "MarkdownEditor", value = "/upload-md")
 public class MarkdownFileServlet extends MasterServlet{
 
     private void convertToFile(Session session, HttpServletRequest req){

@@ -15,11 +15,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 
-@WebServlet(name = "BlogManager", urlPatterns = {"/blog-manage/*"})
 public class BlogManagerServlet extends MasterServlet {
-
-
-
 
     private void manageFolder(HttpServletRequest req, HttpServletResponse resp, File file) throws SQLException, ServletException, IOException {
         File[] files = file.listFiles();

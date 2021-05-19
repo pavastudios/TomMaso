@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "ChatAPI", urlPatterns = {"/api/*"})
 public class ApiServlet extends MasterServlet {
 
     @Override

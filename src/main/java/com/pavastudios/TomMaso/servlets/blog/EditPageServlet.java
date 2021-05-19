@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "BlogFileUpload", urlPatterns = {"/edit-page/*"})
 public class EditPageServlet extends MasterServlet {
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {

@@ -20,7 +20,6 @@ import java.sql.SQLException;
 
 import static com.pavastudios.TomMaso.utility.FileUtility.getFileType;
 
-@WebServlet(name = "NewViewer", urlPatterns = {"/blogs/*","/users/*"})
 public class ViewerServlet extends MasterServlet {
 
     private void manageMarkdown(HttpServletRequest req, HttpServletResponse resp, File file) throws IOException, ServletException, SQLException {
