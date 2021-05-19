@@ -107,7 +107,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalUpload">Scegliere il file da caricare:</h5>
+                <h5 class="modal-title" id="exampleModalUpload">Nuovo File</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -115,10 +115,24 @@
                     String url = (String) request.getAttribute("javax.servlet.forward.request_uri");
                     url = url.split("/",4)[3];
                 %>
-                <form action="<%=request.getContextPath()+"/upload-file/"+url%>" method="post" enctype="multipart/form-data">
-                    <input type="file" name="file" id="file">
-                    <input type="submit" class="btn btn-primary" value="Conferma">
-                </form>
+                <fieldset>
+                    <legend>Carica file</legend>
+                    <form action="<%=request.getContextPath()+"/upload-file/"+url%>" method="post" enctype="multipart/form-data">
+                        <div class="input-group mb-3">
+                            <input name="file" type="file" class="form-control" id="file" placeholder="Carica file">
+                        </div>
+                    </form>
+                </fieldset>
+                <div class="separatore">oppure</div>
+                <fieldset>
+                    <legend>Nuova pagina</legend>
+                    <form action="<%=request.getContextPath()+"/edit-md/"+url%>" method="post" id="createMD">
+                        <div class="input-group mb-3">
+                            <input type="text" id="titleMD" class="form-control" placeholder="Inserisci titolo" aria-label="Inserisci titolo" aria-describedby="insert_title">
+                            <input class="btn btn-primary" type="submit" value="Crea"></input>
+                        </div>
+                    </form>
+                </fieldset>
             </div>
         </div>
     </div>
@@ -207,6 +221,12 @@
                     location.reload();
             }
         });
+    });
+
+    $("#titleMD").change(function(){
+        const original ="<%=request.getContextPath()+"/edit-md/"+url+"/"%>";
+        console.log($("#titleMD").val());
+        $("#createMD").attr("action",original+$("#titleMD").val());
     });
 
 </script>

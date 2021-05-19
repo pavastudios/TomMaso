@@ -3,7 +3,9 @@
 <%@ page import="java.io.BufferedInputStream" %>
 <%@ page import="com.pavastudios.TomMaso.model.Commento" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.pavastudios.TomMaso.utility.Utility" %><%--
+<%@ page import="com.pavastudios.TomMaso.utility.Utility" %>
+<%@ page import="com.pavastudios.TomMaso.utility.FileUtility" %>
+<%@ page import="org.jsoup.nodes.Entities" %><%--
   Created by IntelliJ IDEA.
   User: pasqu
   Date: 17/05/2021
@@ -17,19 +19,7 @@
     <%
         File file = (File) request.getAttribute("file");
         List<Commento> comments = (List<Commento>) request.getAttribute("comments");
-        BufferedInputStream fis = new BufferedInputStream(new FileInputStream(file));
-        StringBuilder content = new StringBuilder();
-        int readChar;
-        while((readChar = fis.read()) != -1) {
-            switch(readChar){
-                case '\r':break;
-                case '\n':content.append("\\n");break;
-                case '\\':content.append("\\\\");break;
-                case '"':content.append("\\\"");break;
-                default:content.append((char)readChar);break;
-            }
-
-        }
+        String content = FileUtility.escapeMDFile(file);
     %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/comments.css">
     <title><%=file.getName()%></title>
@@ -91,7 +81,7 @@
 
 <script>
 
-    document.getElementById('content').innerHTML = marked("<%=content.toString()%>");
+    document.getElementById('content').innerHTML = marked("<%=content%>");
 </script>
 </body>
 </html>

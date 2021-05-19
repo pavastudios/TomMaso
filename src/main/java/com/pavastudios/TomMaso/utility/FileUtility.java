@@ -4,10 +4,7 @@ import com.pavastudios.TomMaso.model.Blog;
 import com.pavastudios.TomMaso.test.PersonalFileDir;
 
 import javax.servlet.ServletContext;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
@@ -142,5 +139,22 @@ public class FileUtility {
             recursiveDelete(f);
         }
         file.delete();
+    }
+
+    public static String escapeMDFile(File file) throws IOException {
+        BufferedInputStream fis = new BufferedInputStream(new FileInputStream(file));
+        StringBuilder content = new StringBuilder();
+        int readChar;
+        while((readChar = fis.read()) != -1) {
+            switch(readChar){
+                case '\r':break;
+                case '\n':content.append("\\n");break;
+                case '\\':content.append("\\\\");break;
+                case '"':content.append("\\\"");break;
+                default:content.append((char)readChar);break;
+            }
+
+        }
+        return content.toString();
     }
 }

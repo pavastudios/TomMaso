@@ -71,4 +71,8 @@ public class ViewerServlet extends MasterServlet {
             manageFile(req,resp,file);
     }
 
+    @Override
+    protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+        doGet(session,req,resp);
+    }
 }

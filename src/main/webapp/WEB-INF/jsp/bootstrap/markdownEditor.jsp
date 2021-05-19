@@ -1,4 +1,8 @@
-<%--
+<%@ page import="com.pavastudios.TomMaso.utility.FileUtility" %>
+<%@ page import="com.pavastudios.TomMaso.test.PersonalFileDir" %>
+<%@ page import="java.io.File" %>
+<%@ page import="org.jsoup.nodes.Entities" %>
+<%@ page import="java.nio.file.Files" %><%--
   Created by IntelliJ IDEA.
   User: pasqu
   Date: 18/05/2021
@@ -14,12 +18,21 @@
 </head>
 <body>
 <%@include file="general/navbar.jsp"%>
-<form action="" method="post">
-    <textarea id="my-text-area" style="width: 100%;" required></textarea>
-    <label for="title">Inserire titolo: </label>
-    <input type="text" name="title" id="title" class="form-control" placeholder="Titolo" required/><br/>
+<%
+    File file = (File) request.getAttribute("file");
+    String path = (String) request.getAttribute("path");
+    String escaped;
+    if (file.exists()) {
+        String content = String.join("\n",Files.readAllLines(file.toPath()));
+        escaped = Entities.escape(content);
+    }else{
+        escaped="";
+    }
+%>
+<form action="<%=request.getContextPath()%>/upload-md<%=path%>" method="post">
+    <textarea id="my-text-area" style="width: 100%;" name="content"><%=escaped%></textarea>
     <div class="text-center">
-        <input type="submit" value="Carica" class="btn btn-dark"/>
+        <input type="submit" value="Carica" class="btn btn-primary"/>
     </div>
 </form>
 
