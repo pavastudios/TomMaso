@@ -14,13 +14,24 @@ public class Blog implements GenericModel {
     private int idBlog;
     private Utente proprietario;
     private String nome;
+    private int visite;
 
     public static Blog fromResultSet(ResultSet rs) throws SQLException {
         Blog b = new Blog();
         b.setIdBlog(rs.getInt("id_blog"));
         b.setNome(rs.getString("nome"));
+        b.setVisite(rs.getInt("visite"));
         b.setProprietario(Queries.findUserById(rs.getInt("proprietario")));
         return b;
+    }
+
+    public int getVisite() {
+        return visite;
+    }
+
+    public Blog setVisite(int visite) {
+        this.visite = visite;
+        return this;
     }
 
     public int getIdBlog() {

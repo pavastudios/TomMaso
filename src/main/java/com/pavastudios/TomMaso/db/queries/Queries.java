@@ -48,9 +48,12 @@ public class Queries {
     static MasterPreparedStatement FETCH_MESSAGE_FROM_ID;
     static MasterPreparedStatement FETCH_COMMENT_FOR_PAGE;
     static MasterPreparedStatement SEND_COMMENT;
+    static MasterPreparedStatement BLOG_INCREMENT;
+    static MasterPreparedStatement TOP_BLOG;
 
     public static void initQueries() throws SQLException {
         //FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente` IN ((SELECT `utente2` FROM 'Chat' WHERE `utente1`=?) UNION (SELECT `utente1` FROM 'Chat' WHERE `utente2`=?))");
+        TOP_BLOG = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` ORDER BY `visite` DESC LIMIT ?");
         FETCH_COMMENT_FOR_PAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Commento` WHERE `url_pagina`=? ORDER BY `data_invio`");
         FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? ORDER BY `data_invio` DESC LIMIT ? OFFSET ?");
         FETCH_MESSAGE_FROM_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? AND `id_messaggio`>? ORDER BY `data_invio`");
@@ -73,12 +76,12 @@ public class Queries {
         SEND_COMMENT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Commento`(`mittente`,`testo`,`url_pagina`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
         DELETE_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `RememberMe` WHERE `cookie`=?");
         CREATE_BLOG = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Blog`(`proprietario`,`nome`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
-        CHANGE_PASSWORD = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `password`=?,`salt`=? WHERE `id_utente`=?");
+        CHANGE_PASSWORD = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `password`=? WHERE `id_utente`=?");
+        BLOG_INCREMENT = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Blog` SET `visite`=`visite`+1 WHERE `id_blog`=?");
         CREATE_FORGET_COOKIE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `PasswordReset`(`codice`,`id_utente`) VALUES (?,?)");
         FIND_USER_FROM_FORGOT = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=(SELECT `id_utente` FROM `PasswordReset` WHERE `codice`=?)");
         DELETE_FORGET = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `PasswordReset` WHERE `codice`=?");
         FIND_BLOG_BY_NAME = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` WHERE `nome`=?");
-        CHANGE_PASSWORD = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `password`=?,`salt`=? WHERE `id_utente`=?");
         CREATE_FORGET_COOKIE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `PasswordReset`(`codice`,`id_utente`) VALUES (?,?)");
         FIND_USER_FROM_FORGOT = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=(SELECT `id_utente` FROM `PasswordReset` WHERE `codice`=?)");
         DELETE_FORGET = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `PasswordReset` WHERE `codice`=?");
@@ -93,6 +96,14 @@ public class Queries {
         List<Commento>comments=resultSetToList(Entities.COMMENTO,rs);
         rs.close();
         return comments;
+    }
+
+    public static List<Blog>topBlogs(int count) throws SQLException {
+        TOP_BLOG.setInt(1,count);
+        ResultSet rs=TOP_BLOG.executeQuery();
+        List<Blog>blogs=resultSetToList(Entities.BLOG,rs);
+        rs.close();
+        return blogs;
     }
 
     public static Utente findUserFromForgot(String code) throws SQLException {
@@ -278,6 +289,12 @@ public class Queries {
         return findById(Entities.BLOG, idBlog);
     }
 
+    public static void incrementVisit(Blog blog) throws SQLException{
+        if(blog==null)return;
+        BLOG_INCREMENT.setInt(1,blog.getIdBlog());
+        BLOG_INCREMENT.executeUpdate();
+    }
+
     public static @Nullable Blog findBlogByName(@NotNull String name) throws SQLException {
         FIND_BLOG_BY_NAME.setString(1, name);
         ResultSet rs = FIND_BLOG_BY_NAME.executeQuery();
@@ -350,11 +367,9 @@ public class Queries {
     }
 
     public static void changePassword(Utente user, String password) throws SQLException {
-        byte[] salt = Security.generateSalt();
-        byte[] pwd = Security.sha512(password, salt);
-        CHANGE_PASSWORD.setBytes(1, pwd);
-        CHANGE_PASSWORD.setBytes(2, salt);
-        CHANGE_PASSWORD.setInt(3, user.getIdUtente());
+        String hashed=Security.crypt(password);
+        CHANGE_PASSWORD.setString(1, hashed);
+        CHANGE_PASSWORD.setInt(2, user.getIdUtente());
         CHANGE_PASSWORD.executeUpdate();
     }
 

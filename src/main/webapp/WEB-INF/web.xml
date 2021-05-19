@@ -6,6 +6,14 @@
 
     <!--Blog-->
     <servlet>
+        <servlet-name>TopBlogServlet</servlet-name>
+        <servlet-class>com.pavastudios.TomMaso.servlets.blog.TopBlogServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TopBlogServlet</servlet-name>
+        <url-pattern>/top</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>HomeBlogServlet</servlet-name>
         <servlet-class>com.pavastudios.TomMaso.servlets.blog.HomeBlogServlet</servlet-class>
     </servlet>

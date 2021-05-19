@@ -23,6 +23,7 @@ CREATE TABLE `Blog`(
     `id_blog` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `proprietario` INT NOT NULL,
     `nome` VARCHAR(255) NOT NULL UNIQUE,
+    `visite` INT NOT NULL DEFAULT 0,
     FOREIGN KEY (`proprietario`) REFERENCES `Utente`(`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 

@@ -1,11 +1,14 @@
 package com.pavastudios.TomMaso.utility;
 
+import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.model.Blog;
 import com.pavastudios.TomMaso.model.Utente;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Session {
@@ -19,6 +22,7 @@ public class Session {
     private static final int CSRF_TOKEN_LENGTH = 20;
     private final List<String> csrfTokens = new ArrayList<>(MAX_TOKENS_COUNT);
     private Utente utente = null;
+    private HashSet<Integer> blogs = new HashSet<>();
 
     private Session() {
     }
@@ -33,6 +37,19 @@ public class Session {
         session.setAttribute(SESSION_FIELD, s);
         s.initRequestAttributes(req); //inizializza roba come attributi nella request
         return s;
+    }
+
+
+    public boolean hasVisitedBlog(Blog blog) {
+        if(blog==null)return false;
+        return blogs.contains(blog.getIdBlog());
+    }
+
+    public void visitedBlog(Blog blog) throws SQLException {
+        if(blog==null)return;
+        if(!hasVisitedBlog(blog))
+            Queries.incrementVisit(blog);
+        blogs.add(blog.getIdBlog());
     }
 
     private static Session createSession(HttpServletRequest req) {

@@ -1,6 +1,7 @@
 package com.pavastudios.TomMaso.servlets;
 
 import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.model.Blog;
 import com.pavastudios.TomMaso.servlets.MasterServlet;
 
 import com.pavastudios.TomMaso.utility.*;
@@ -22,7 +23,8 @@ import static com.pavastudios.TomMaso.utility.FileUtility.getFileType;
 
 public class ViewerServlet extends MasterServlet {
 
-    private void manageMarkdown(HttpServletRequest req, HttpServletResponse resp, File file) throws IOException, ServletException, SQLException {
+    private void manageMarkdown(Session session, HttpServletRequest req, HttpServletResponse resp, File file) throws IOException, ServletException, SQLException {
+        session.visitedBlog(Blog.fromPathInfo(req.getPathInfo()));
         req.setAttribute("file",file);
         req.setAttribute("comments", Queries.fetchCommentsFromPage(req.getPathInfo()));
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/markdownViewer.jsp").forward(req,resp);
@@ -40,12 +42,13 @@ public class ViewerServlet extends MasterServlet {
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         File file=null;
+        String pathInfo=req.getPathInfo();
         switch(req.getServletPath()){
             case "/users":
-                file=FileUtility.userPathToFile(req.getPathInfo());
+                file=FileUtility.userPathToFile(pathInfo);
                 break;
             case "/blogs":
-                file=FileUtility.blogPathToFile(req.getPathInfo());
+                file=FileUtility.blogPathToFile(pathInfo);
                 break;
         }
 
@@ -63,7 +66,7 @@ public class ViewerServlet extends MasterServlet {
         }
         FileUtility.FileType type=FileUtility.getFileType(getServletContext(),file);
         if(type== FileUtility.FileType.MARKDOWN)
-            manageMarkdown(req,resp,file);
+            manageMarkdown(session,req,resp,file);
         else
             manageFile(req,resp,file);
     }
