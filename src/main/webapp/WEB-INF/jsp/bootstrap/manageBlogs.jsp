@@ -107,7 +107,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalUpload">Aggiungi file:</h5>
+                <h5 class="modal-title" id="exampleModalUpload">Nuovo File</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -118,15 +118,19 @@
                 <fieldset>
                     <legend>Carica file</legend>
                     <form action="<%=request.getContextPath()+"/upload-file/"+url%>" method="post" enctype="multipart/form-data">
-                        <input type="file" name="file" id="file"/>
-                        <input type="submit" class="btn btn-primary" value="Conferma"/>
+                        <div class="input-group mb-3">
+                            <input name="file" type="file" class="form-control" id="file" placeholder="Carica file">
+                        </div>
                     </form>
                 </fieldset>
+                <div class="separatore">oppure</div>
                 <fieldset>
                     <legend>Nuova pagina</legend>
                     <form action="<%=request.getContextPath()+"/edit-md/"+url%>" method="post" id="createMD">
-                        <input type="text" name="titleMD" id="titleMD" placeholder="Inserire titolo" required/>
-                        <input type="submit" class="btn btn-primary" value="Conferma"/>
+                        <div class="input-group mb-3">
+                            <input type="text" id="titleMD" class="form-control" placeholder="Inserisci titolo" aria-label="Inserisci titolo" aria-describedby="insert_title">
+                            <input class="btn btn-primary" type="submit" value="Crea"></input>
+                        </div>
                     </form>
                 </fieldset>
             </div>
