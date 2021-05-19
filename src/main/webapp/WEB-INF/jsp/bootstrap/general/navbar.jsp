@@ -32,10 +32,10 @@
             <ul class="navbar-nav ml-auto">
                 <%if(ses.getUtente() == null) { %>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/login">Login</a>
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#navbarLogin">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/sign-up">Registrati</a>
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#navbarRegister">Registrati</a>
                     </li>
                 <% } else {
                     Utente xUser=ses.getUtente();
@@ -44,7 +44,7 @@
                     <div class="flex-shrink-0 dropdown">
                         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                             <img id="nav-user" class="rounded-circle" src="${pageContext.request.contextPath}/users/<%=xUser.getUsername()%>/propic.png" alt="<%=xUser.getUsername()%>" width="32" height="32" onerror="useJidenticonNav('user')">
-                            <svg width="50" height="50" id="nav-svg-user" class="propic rounded-circle" data-jdenticon-value="<%=xUser.getUsername()%>" hidden></svg>
+                            <svg width="50" height="50" id="nav-svg-user" class="rounded-circle" data-jdenticon-value="<%=xUser.getUsername()%>" hidden></svg>
                         </a>
                         <ul class="dropdown-propic-nav dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
                             <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createBlogModalNavbar">Nuovo blog...</a></li>
@@ -57,6 +57,80 @@
             </ul>
         </div>
     </div>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="navbarLogin" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="navbarLoginTitle">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNavbarLogin" action="${pageContext.request.contextPath}/user-update" method="POST" enctype="multipart/form-data">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="addon-user">@</span>
+                            <input id="username-login" name="username" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-user">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input id="password-login" name="password" type="password" class="form-control" placeholder="Password" aria-label="Password">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" id="remember-login" type="checkbox" value="" name="remember" id="remember">
+                            <label class="form-check-label" for="remember">
+                                Ricorda accesso
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                    <button type="button" class="btn btn-primary" id="navbarLoginSubmit">Entra</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div class="modal fade" id="navbarRegister" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="navbarRegisterTitle">Registrazione</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNavbarRegister" action="${pageContext.request.contextPath}/user-update" method="POST" enctype="multipart/form-data">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="addon-user-register">@</span>
+                            <input id="username-register" name="username-register" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-user">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input id="email-register" name="email-register" type="email" class="form-control" placeholder="Email" aria-label="Email">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input id="password1-register" name="psw1-register" type="password" class="form-control" placeholder="Password" aria-label="Password1">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input id="password2-register" name="psw2-register" type="password" class="form-control" placeholder="Ripeti password" aria-label="Password2">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" id="remember-register" type="checkbox" value="" name="remember">
+                            <label class="form-check-label" for="remember">
+                                Ricorda accesso
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                    <button type="button" class="btn btn-primary" id="navbarRegisterSubmit">Registrati</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- create blog Modal -->
     <div class="modal fade" id="createBlogModalNavbar" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
         <div class="modal-dialog">
