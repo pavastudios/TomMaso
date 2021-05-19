@@ -18,11 +18,10 @@ public class Utente implements GenericModel {
     private int idUtente;
     private boolean isAdmin;
     private String email;
-    private byte[] password;
+    private String password;
     private String propicURL;
     private String username;
     private String bio;
-    private byte[] salt;
     private Date dataIscrizione;
 
     public Utente() {
@@ -33,8 +32,7 @@ public class Utente implements GenericModel {
         u.setIdUtente(rs.getInt("id_utente"));
         u.setDataIscrizione(rs.getTimestamp("data_iscrizione"));
         u.setEmail(rs.getString("email"));
-        u.setPassword(rs.getBytes("password"));
-        u.setSalt(rs.getBytes("salt"));
+        u.setPassword(rs.getString("password"));
         u.setIsAdmin(rs.getBoolean("is_admin"));
         u.setPropicURL(rs.getString("propic_url"));
         u.setUsername(rs.getString("username"));
@@ -74,11 +72,7 @@ public class Utente implements GenericModel {
         this.email = email;
     }
 
-    public byte[] getPassword() {
-        return password;
-    }
-
-    public void setPassword(byte[] password) {
+    private void setPassword(String password) {
         this.password = password;
     }
 
@@ -88,14 +82,6 @@ public class Utente implements GenericModel {
 
     public void setPropicURL(String propicURL) {
         this.propicURL = propicURL;
-    }
-
-    public byte[] getSalt() {
-        return salt;
-    }
-
-    public void setSalt(byte[] salt) {
-        this.salt = salt;
     }
 
     public Date getDataIscrizione() {
@@ -136,10 +122,9 @@ public class Utente implements GenericModel {
                 "idUtente=" + idUtente +
                 ", isAdmin=" + isAdmin +
                 ", email='" + email + '\'' +
-                ", password=" + Arrays.toString(password) +
+                ", password=" + password +
                 ", propicURL='" + propicURL + '\'' +
                 ", username='" + username + '\'' +
-                ", salt=" + Arrays.toString(salt) +
                 ", dataIscrizione=" + dataIscrizione +
                 '}';
     }
@@ -156,7 +141,7 @@ public class Utente implements GenericModel {
     }
 
     public boolean userVerifyLogin(String password) {
-        return Arrays.equals(Security.sha512(password, salt), this.password);
+        return Security.verify(this.password,password);
     }
     public File getUserFolder(){
         return new File(FileUtility.USER_FILES_FOLDER,username);
