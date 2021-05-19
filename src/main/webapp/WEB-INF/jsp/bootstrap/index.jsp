@@ -75,7 +75,7 @@
 
         <main>
             <div class="row row-cols-1 row-cols-md-3 mb-3 text-center mb-5">
-                <div class="col">
+                <div class="col" data-aos="zoom-in">
                     <div class="card mb-4 rounded-3 shadow-sm">
                         <div class="card-header py-3">
                             <h4 class="my-0 fw-normal">Gratis</h4>
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col" data-aos="zoom-in">
                     <div class="card mb-4 rounded-3 shadow-sm">
                         <div class="card-header py-3">
                             <h4 class="my-0 fw-normal">Professionale</h4>
@@ -109,7 +109,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col" data-aos="zoom-in">
                     <div class="card mb-4 rounded-3 shadow-sm border-primary">
                         <div class="card-header py-3 text-white bg-primary border-primary">
                             <h4 class="my-0 fw-normal">Aziendale</h4>
@@ -130,5 +130,6 @@
         </main>    
     </div>
     <%@ include file="general/footer.jsp"%>
+    <%@ include file="general/tailTag.jsp"%>
 </body>
 </html>
