@@ -107,7 +107,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalUpload">Scegliere il file da caricare:</h5>
+                <h5 class="modal-title" id="exampleModalUpload">Aggiungi file:</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -115,10 +115,20 @@
                     String url = (String) request.getAttribute("javax.servlet.forward.request_uri");
                     url = url.split("/",4)[3];
                 %>
-                <form action="<%=request.getContextPath()+"/upload-file/"+url%>" method="post" enctype="multipart/form-data">
-                    <input type="file" name="file" id="file">
-                    <input type="submit" class="btn btn-primary" value="Conferma">
-                </form>
+                <fieldset>
+                    <legend>Carica file</legend>
+                    <form action="<%=request.getContextPath()+"/upload-file/"+url%>" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file" id="file"/>
+                        <input type="submit" class="btn btn-primary" value="Conferma"/>
+                    </form>
+                </fieldset>
+                <fieldset>
+                    <legend>Nuova pagina</legend>
+                    <form action="<%=request.getContextPath()+"/edit-md/"+url%>" method="post" id="createMD">
+                        <input type="text" name="titleMD" id="titleMD" placeholder="Inserire titolo" required/>
+                        <input type="submit" class="btn btn-primary" value="Conferma"/>
+                    </form>
+                </fieldset>
             </div>
         </div>
     </div>
@@ -207,6 +217,12 @@
                     location.reload();
             }
         });
+    });
+
+    $("#titleMD").change(function(){
+        const original ="<%=request.getContextPath()+"/edit-md/"+url+"/"%>";
+        console.log($("#titleMD").val());
+        $("#createMD").attr("action",original+$("#titleMD").val());
     });
 
 </script>

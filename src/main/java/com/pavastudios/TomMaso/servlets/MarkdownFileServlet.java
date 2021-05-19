@@ -50,7 +50,11 @@ public class MarkdownFileServlet extends MasterServlet{
     @Override
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
         convertToFile(session,req,resp);
-        resp.sendRedirect(getServletContext().getContextPath()+"/blogs"+req.getPathInfo());
+        String path = req.getPathInfo();
+        if(!path.endsWith(".md")){
+            path+=".md";
+        }
+        resp.sendRedirect(getServletContext().getContextPath()+"/blogs"+path);
         return ;
     }
 
