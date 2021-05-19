@@ -1,4 +1,4 @@
-<footer class="container-fluid py-5 border-top">
+<footer class="container-fluid py-5 mt-3 border-top">
     <div class="row">
         <div class="col-12 col-md d-flex flex-column justify-content-center align-items-center">
             <img src="${pageContext.request.contextPath}/images/logo.png" width="30" heigth="30">

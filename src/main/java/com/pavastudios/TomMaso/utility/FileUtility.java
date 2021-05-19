@@ -1,5 +1,6 @@
 package com.pavastudios.TomMaso.utility;
 
+import com.pavastudios.TomMaso.model.Blog;
 import com.pavastudios.TomMaso.test.PersonalFileDir;
 
 import javax.servlet.ServletContext;
@@ -7,7 +8,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.function.BiPredicate;
 
 public class FileUtility {
     public enum FileType{TEXT,MARKDOWN,AUDIO,DIRECTORY,VIDEO,IMAGE,UNKNOWN}
@@ -31,6 +41,57 @@ public class FileUtility {
         name = name.replace('\\', '/');//c'è gente che non conosce linux
         return name.substring(PATH_LENGTH);
     }
+
+    public static String escapeForMarked(String s){
+        return s.replace("\\","\\\\")
+                .replace("\n","\\n")
+                .replace("\r","")
+                .replace("\"","\\\"");
+    }
+    public static String headFile(File file,int numRows) throws IOException {
+        List<String>lines= Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
+        if(lines.size()>=numRows){
+            lines=lines.subList(0,numRows);
+        }
+        StringBuilder builder=new StringBuilder();
+        for(String s:lines)builder.append(s).append('\n');
+        return builder.toString();
+    }
+
+    public static List<File>getPages(ServletContext context, Blog blog){
+        if(blog==null)return null;
+        File main=blog.getRootPath();
+        ArrayList<File>files=new ArrayList<>();
+        if(main.exists())
+            findMarkdownFiles(files,context,main);
+        files.trimToSize();
+        //Ordina per data di creazione
+        files.sort((o1, o2) -> {
+            try {
+                BasicFileAttributes a1 = Files.readAttributes(o1.toPath(), BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
+                BasicFileAttributes a2 = Files.readAttributes(o2.toPath(), BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
+                return a2.creationTime().compareTo(a1.creationTime());//Al contrario
+            }catch(IOException ignore){ }
+            return 0;
+        });
+        return files;
+    }
+
+    private static void findMarkdownFiles(ArrayList<File> list, ServletContext context, File file){
+        if(file.isFile()){
+            if(getFileType(context,file)==FileType.MARKDOWN){
+                list.add(file);
+            }
+            return;
+        }
+        File[]listFiles=file.listFiles();
+        if(listFiles==null)return;
+        for(File f:listFiles)
+            findMarkdownFiles(list,context,f);
+    }
+
+
+
 
     public static FileType getFileType(ServletContext cont, File file){
         if(file==null||cont==null)return null;
@@ -80,5 +141,6 @@ public class FileUtility {
         for(File f : children){
             recursiveDelete(f);
         }
+        file.delete();
     }
 }

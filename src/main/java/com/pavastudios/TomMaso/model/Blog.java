@@ -2,7 +2,9 @@ package com.pavastudios.TomMaso.model;
 
 import com.google.gson.stream.JsonWriter;
 import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.utility.FileUtility;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -84,5 +86,8 @@ public class Blog implements GenericModel {
         String[]parts=pathInfo.split("/",3);
         if(parts.length<2||!parts[0].isEmpty())return null;
         return Queries.findBlogByName(parts[1]);
+    }
+    public File getRootPath(){
+        return new File(FileUtility.BLOG_FILES_FOLDER,getNome());
     }
 }
