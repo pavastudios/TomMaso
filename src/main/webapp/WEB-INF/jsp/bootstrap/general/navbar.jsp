@@ -66,7 +66,7 @@
                     <h5 class="modal-title" id="navbarLoginTitle">Login</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body pb-0">
                     <form id="formNavbarLogin" action="${pageContext.request.contextPath}/user-update" method="POST" enctype="multipart/form-data">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="addon-user">@</span>
@@ -80,6 +80,9 @@
                             <label class="form-check-label" for="remember">
                                 Ricorda accesso
                             </label>
+                            <div class="float-end">
+                                <a class="pt-3 link-primary" href="#" data-bs-toggle="modal" data-bs-target="#navInsertMail">Password dimenticata?</a>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -129,6 +132,49 @@
             </div>
         </div>
     </div>
+
+    <!-- Password Dimenticata -->
+    <div class="modal fade" id="navInsertMail" aria-hidden="true" aria-labelledby="navInsertMail" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="navInsertMailTitle">Inserisci l'email di recupero</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="mt-3 mb-3 ms-3 me-3">
+                    <input id="recover-mail" name="recover-mail" type="email" class="form-control" placeholder="Email di recupero" aria-label="Email di recupero">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="recoverPsw">Invia</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade mt-5" id="navRecuperaPsw" aria-hidden="true" aria-labelledby="navRecuperaPsw" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="navRecuperaPswTitle">Cambia password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-3 mb-3 ms-3 me-3">
+                        <input id="code" name="recover-code" type="text" class="form-control" placeholder="Codice" aria-label="Email di recupero">
+                    </div>
+                    <div class="mt-3 mb-3 ms-3 me-3">
+                        <input id="password1" name="recover-psw1" type="password" class="form-control" placeholder="Nuova password" aria-label="Nuova password">
+                    </div>
+                    <div class="mt-3 mb-3 ms-3 me-3">
+                        <input id="password2" name="recover-psw2" type="password" class="form-control" placeholder="Ripeti nuova password" aria-label="Ripeti nuova password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="sendMail">Back to first</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <!-- create blog Modal -->

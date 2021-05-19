@@ -46,4 +46,8 @@
     .separatore::after {
         margin-left: var(--text-divider-gap);
     }
+
+    .add-file {
+        cursor: pointer;
+    }
 </style>

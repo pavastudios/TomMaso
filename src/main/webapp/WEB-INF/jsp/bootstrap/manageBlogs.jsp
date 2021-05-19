@@ -88,7 +88,7 @@
                 </div>
                 <%}%>
                 <!--Add button-->
-                <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                <div class="add-file col-lg-3 col-md-6 col-sm-12 mb-3">
                     <a data-bs-toggle="modal" data-bs-target="#uploadModal">
                         <div class="card border-dark h-100 align-middle">
                             <div class="card-body d-flex align-items-center justify-content-center">
@@ -120,6 +120,7 @@
                     <form action="<%=request.getContextPath()+"/upload-file/"+url%>" method="post" enctype="multipart/form-data">
                         <div class="input-group mb-3">
                             <input name="file" type="file" class="form-control" id="file" placeholder="Carica file">
+                            <input class="btn btn-primary" type="submit" value="Carica"></input>
                         </div>
                     </form>
                 </fieldset>

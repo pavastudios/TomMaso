@@ -61,13 +61,50 @@
                 username: username,
                 password1: password1,
                 password2: password2 ,
-                email: email , remember:
-                remember
+                email: email ,
+                remember: remember
             },
             success: function (data) {
                 console.log(data);
                 navbarRegister.hide();
                 location.reload();
+            }
+        });
+    });
+
+    const navbarRecover = new bootstrap.Modal(document.getElementById('navInsertMail'));
+    $("#recoverPsw").click(function () {
+        const email = $("#recover-mail").val();
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/forgot',
+            data: {
+                email: email,
+            },
+            success: function (data) {
+                console.log(data);
+                navbarRecover.hide();
+                navRecuperaPsw.show();
+            }
+        });
+    });
+
+    const navRecuperaPsw = new bootstrap.Modal(document.getElementById('navRecuperaPsw'));
+    $("#sendMail").click(function () {
+        const code = $("#code").val();
+        const psw1 = $("password1").val();
+        const psw2 = $("password2").val();
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/forgot',
+            data: {
+                password1: psw1,
+                password2: psw2,
+                code: code,
+            },
+            success: function (data) {
+                console.log(data);
+                navRecuperaPsw.hide();
             }
         });
     });
