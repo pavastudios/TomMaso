@@ -45,7 +45,7 @@
             <div class="row">
 
                 <!--back button-->
-                <div class="col-3">
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
                     <a href="<%=root?request.getContextPath()+"/profile":parent%>">
                     <div class="card border-dark h-100 align-middle">
                         <div class="card-body d-flex align-items-center justify-content-center">
@@ -58,7 +58,7 @@
                 <% for (File f: files) {
                     String relUrl= FileUtility.relativeUrl(f);
                 %>
-                <div class="col-3">
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
                     <div class="card border-dark">
                         <%if(f.isFile()){%>
 
@@ -88,7 +88,7 @@
                 </div>
                 <%}%>
                 <!--Add button-->
-                <div class="col-4">
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
                     <a data-bs-toggle="modal" data-bs-target="#uploadModal">
                         <div class="card border-dark h-100 align-middle">
                             <div class="card-body d-flex align-items-center justify-content-center">

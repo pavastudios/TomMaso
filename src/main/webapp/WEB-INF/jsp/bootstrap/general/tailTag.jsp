@@ -28,7 +28,7 @@
     $( "#navbarLoginSubmit" ).click(function() {
         const username = $("#username-login").val();
         const password = $("#password-login").val();
-        const remember = $("#remember-login").val();
+        const remember = $("#remember-login").is(":checked") ? "on" : ""
         $.ajax({
             type: 'POST',
             url: '${pageContext.request.contextPath}/login',
