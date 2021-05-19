@@ -51,7 +51,7 @@ public class Queries {
 
     public static void initQueries() throws SQLException {
         //FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente` IN ((SELECT `utente2` FROM 'Chat' WHERE `utente1`=?) UNION (SELECT `utente1` FROM 'Chat' WHERE `utente2`=?))");
-        FETCH_COMMENT_FOR_PAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Commento` WHERE `pagina`=? ORDER BY `data_invio`");
+        FETCH_COMMENT_FOR_PAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Commento` WHERE `url_pagina`=? ORDER BY `data_invio`");
         FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? ORDER BY `data_invio` DESC LIMIT ? OFFSET ?");
         FETCH_MESSAGE_FROM_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? AND `id_messaggio`>? ORDER BY `data_invio`");
         FIND_USER_BY_USERNAME = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `username`=?");
@@ -70,7 +70,7 @@ public class Queries {
         REGISTER_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `RememberMe`(`id_utente`,`cookie`) VALUES (?,?)");
         CREATE_CHAT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Chat`(`utente1`,`utente2`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
         SEND_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Messaggio`(`id_chat`,`mittente`,`testo`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
-        SEND_COMMENT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Commento`(`mittente`,`testo`,`pagina`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+        SEND_COMMENT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Commento`(`mittente`,`testo`,`url_pagina`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
         DELETE_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `RememberMe` WHERE `cookie`=?");
         CREATE_BLOG = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Blog`(`proprietario`,`nome`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
         CHANGE_PASSWORD = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `password`=?,`salt`=? WHERE `id_utente`=?");

@@ -38,7 +38,8 @@ CREATE TABLE `Commento`(
     `id_commento` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `mittente` INT,
     `testo` TEXT NOT NULL,
-    `urlPagina` VARCHAR(255) NOT NULL,
+    `url_pagina` VARCHAR(255) NOT NULL,
+    `data_invio` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`mittente`) REFERENCES `Utente`(`id_utente`) ON UPDATE CASCADE ON DELETE SET NULL
 );
 

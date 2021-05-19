@@ -18,7 +18,7 @@ public class Commento implements GenericModel {
         Commento c = new Commento();
         c.setIdCommento(rs.getInt("id_commento"));
         c.setMittente(Queries.findUserById(rs.getInt("mittente")));
-        c.setPagina(rs.getString("pagina"));
+        c.setPagina(rs.getString("url_pagina"));
         c.setTesto(rs.getString("testo"));
         c.setDataInvio(rs.getTimestamp("data_invio"));
         return c;
