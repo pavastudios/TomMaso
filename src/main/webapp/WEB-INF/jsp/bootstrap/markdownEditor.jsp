@@ -38,9 +38,16 @@
 
 <%@include file="general/footer.jsp"%>
 <%@include file="general/tailTag.jsp"%>
-<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 <script>
-    var easyMDE = new EasyMDE({element: $('#my-text-area')[0]});
+    const easyMDE = new EasyMDE({
+        element: $('#my-text-area')[0],
+        renderingConfig: {
+            codeSyntaxHighlighting: true,
+            sanitizerFunction: function(renderedHTML) {
+                return DOMPurify.sanitize(renderedHTML);
+            },
+        },
+    });
 </script>
 </body>
 </html>

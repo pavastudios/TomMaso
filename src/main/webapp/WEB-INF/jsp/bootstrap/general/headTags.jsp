@@ -14,7 +14,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fontawesome.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/easymde.min.css">
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/highlightjs.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/aos.css">
 
 <style>
     .no-dec {text-decoration: none !important;}

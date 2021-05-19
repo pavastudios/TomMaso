@@ -80,8 +80,9 @@
 
 
 <script>
-
-    document.getElementById('content').innerHTML = marked("<%=content%>");
+    let cont = marked("<%=content%>");
+    cont = DOMPurify.sanitize(cont)
+    document.getElementById('content').innerHTML = cont;
 </script>
 </body>
 </html>
