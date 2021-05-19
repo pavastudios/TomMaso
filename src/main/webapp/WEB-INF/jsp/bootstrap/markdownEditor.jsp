@@ -14,7 +14,6 @@
 </head>
 <body>
 <%@include file="general/navbar.jsp"%>
-<%= request.getPathInfo()%>
 <form action="" method="post">
     <textarea id="my-text-area" style="width: 100%;" required></textarea>
     <label for="title">Inserire titolo: </label>

@@ -114,7 +114,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>MDEditorServlet</servlet-name>
-        <url-pattern>/edit</url-pattern>
+        <url-pattern>/edit-md</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>ViewerServlet</servlet-name>
