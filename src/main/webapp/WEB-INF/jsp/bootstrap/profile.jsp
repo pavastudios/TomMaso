@@ -68,6 +68,13 @@
             <div class="row d-flex justify-content-center ">
                 <button type="button" class="col-9 btn btn-outline-dark modify-button" data-bs-toggle="modal" data-bs-target="#updateProfile">Modifica utente</button>
             </div>
+            <%}else{%>
+            <div class="row d-flex justify-content-center ">
+                <form action="${pageContext.request.contextPath}/new-chat" method="post">
+                    <input type="text" name="receiver" value="<%=user.getIdUtente()%>" hidden/>
+                    <input type="submit" class="col-9 btn btn-outline-dark modify-button" value="Contatta"/>
+                </form>
+            </div>
             <%}%>
         </div>
         <div class="col-lg-9 col-sm-12">

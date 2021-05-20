@@ -141,7 +141,22 @@
         <url-pattern>/blogs/*</url-pattern>
         <url-pattern>/users/*</url-pattern>
     </servlet-mapping>
-
+    <servlet>
+        <servlet-name>ChiSiamoServlet</servlet-name>
+        <servlet-class>com.pavastudios.TomMaso.servlets.ChiSiamoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChiSiamoServlet</servlet-name>
+        <url-pattern>/chi-siamo</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ContactServlet</servlet-name>
+        <servlet-class>com.pavastudios.TomMaso.servlets.ContactServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContactServlet</servlet-name>
+        <url-pattern>/new-chat</url-pattern>
+    </servlet-mapping>
 
 
 

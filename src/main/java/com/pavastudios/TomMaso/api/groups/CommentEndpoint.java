@@ -10,13 +10,14 @@ import com.pavastudios.TomMaso.model.Commento;
 import com.pavastudios.TomMaso.utility.FileUtility;
 
 import java.io.File;
+import java.net.URLDecoder;
 
 public class CommentEndpoint {
     public static final String GROUP_NAME = "comment";
     private static final String SEND_ACTION_NAME = "send-comment";
     private static final ApiEndpoint.Manage SEND_ACTION= (parser, writer, user) -> {
         String comment=parser.getValueString("comment");
-        String page=parser.getValueString("page");
+        String page=URLDecoder.decode(parser.getValueString("page"),"UTF-8");
         String contextPath= MainListener.CONTEXT.getContextPath()+"/blogs";
         if(comment.length()<3){
             writer.name(ApiManager.ERROR_PROP).value("Messaggio troppo breve");

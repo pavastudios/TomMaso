@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-@WebServlet(name = "CreaChat", value = "/crea-chat")
+@WebServlet(name = "CreaChat", value = "/create-chat")
 public class CreaChat extends MasterServlet {
 
     @Override

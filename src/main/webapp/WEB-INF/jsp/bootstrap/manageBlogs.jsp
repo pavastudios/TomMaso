@@ -5,6 +5,7 @@
 <%@ page import="com.sun.xml.internal.txw2.output.CharacterEscapeHandler" %>
 <%@ page import="org.jsoup.nodes.Entities" %>
 <%@ page import="java.util.Arrays" %>
+<%@ page import="com.pavastudios.TomMaso.api.components.ApiEndpoint" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -137,7 +138,7 @@
                     <legend>Carica file</legend>
                     <form action="<%=request.getContextPath()+"/upload-file/"+url%>" method="post" enctype="multipart/form-data">
                         <div class="input-group mb-3">
-                            <input name="file" type="file" class="form-control" id="file" placeholder="Carica file">
+                            <input name="file" type="file" class="form-control" id="file" placeholder="Carica file" required>
                             <input class="btn btn-primary" type="submit" value="Carica"></input>
                         </div>
                     </form>
@@ -148,11 +149,23 @@
                     <form action="<%=request.getContextPath()+"/edit-md/"+url%>" method="post" id="createMD">
                         <div class="input-group mb-3">
                             <input type="text" id="titleMD" class="form-control" placeholder="Inserisci titolo" aria-label="Inserisci titolo" aria-describedby="insert_title">
-                            <input class="btn btn-primary" type="submit" value="Crea"></input>
+                            <input class="btn btn-primary" type="submit" value="Crea" />
                         </div>
                     </form>
                 </fieldset>
-            </div>
+                <div class="separatore">oppure</div>
+                    <fieldset>
+                        <legend>Nuova cartella</legend>
+                        <form action="${pageContext.request.contextPath}/api/blog/create-dir" method="post" id="createDir">
+                            <div class="input-group mb-3">
+                                <input type="text" name="parent-dir" value="<%="/"+url%>" id="parentDir" hidden>
+                                <input type="text"  name="dir-name" id="dirName" class="form-control" placeholder="Inserisci nome cartella" aria-label="Inserisci nome cartella" aria-describedby="insert_title">
+                                <input class="btn btn-primary" type="button" value="Crea" id="createDirConfirm"/>
+                            </div>
+                        </form>
+                    </fieldset>
+
+
         </div>
     </div>
 </div>
@@ -233,6 +246,24 @@
             data: {
                 "from-url": fromUrl,
                 "to-url": toUrl
+            },
+            success: function (data) {
+                console.log(data);
+                if(data["error"]===undefined)
+                    location.reload();
+            }
+        });
+    });
+
+    $("#createDirConfirm").click(function(){
+        var parentDir=$("#parentDir").val();
+        var dirName=$("#dirName").val();
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/api/blog/create-dir',
+            data: {
+                "parent-dir": parentDir,
+                "dir-name": dirName
             },
             success: function (data) {
                 console.log(data);

@@ -23,7 +23,7 @@
                     <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Chi siamo</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/chi-siamo">Chi siamo</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/top">Top Blogs</a>

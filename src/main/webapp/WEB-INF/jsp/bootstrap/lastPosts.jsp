@@ -14,7 +14,7 @@
         List<File> markdowns= (List<File>) request.getAttribute("pages");
         Blog blog= (Blog) request.getAttribute("blog");
     %>
-    <title>Title</title>
+    <title>Ultimi post - <%=blog.getNome()%></title>
 </head>
 <body>
 <%@include file="general/navbar.jsp"%>

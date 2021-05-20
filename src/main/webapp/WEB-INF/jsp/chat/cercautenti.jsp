@@ -17,7 +17,7 @@
     <title>Title</title>
 </head>
 <body>
-<form method="POST" action="${pageContext.request.contextPath}/crea-chat">
+<form method="POST" action="${pageContext.request.contextPath}/create-chat">
   <input type="text" name="unto" value="<%=u.getUsername()%>" hidden>
   <input type="submit"  value="<%=u.getUsername()%>">
 </form>

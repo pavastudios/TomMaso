@@ -29,7 +29,7 @@ public class BlogEndpoint {
         String parentDir = parser.getValueString("parent-dir");
         String dirName = parser.getValueString("dir-name");
         Blog blog=Blog.fromPathInfo(parentDir);
-        if(blog==null||blog.hasAccess(user)){
+        if(blog==null||!blog.hasAccess(user)){
             writer.name(ApiManager.ERROR_PROP).value("Invalid blog");
             return;
         }
