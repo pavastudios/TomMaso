@@ -28,8 +28,7 @@
     <div class="row">
     <%for(Blog blog:blogs){%>
         <div class="col-lg-4 col-sm-12 col-md-6 pb-lg-4 pt-sm-4 pt-md-4 px-3">
-        <a class="px-0" href="<%=request.getContextPath()+"/home/"+blog.getNome()%>">
-    <div class="carta">
+    <div class="carta px-0" href="<%=request.getContextPath()+"/home/"+blog.getNome()%>">
         <div class="card border-dark">
             <div class="card-body text-center">
                 <img id="propic-b<%=blog.getNome()%>" class="rounded-circle w-100" src="${pageContext.request.contextPath}/blogs/<%=blog.getNome()%>/propic.png" onerror="useJidenticon('b<%=blog.getNome()%>')">
@@ -40,7 +39,6 @@
             </div>
         </div>
     </div>
-        </a>
         </div>
     <%}%>
     </div>
@@ -48,6 +46,10 @@
 
 <%@include file="general/footer.jsp"%>
 <%@include file="general/tailTag.jsp"%>
-
+<script>
+    $(".carta").click(function () {
+        location.href=$(this).attr("href");
+    });
+</script>
 </body>
 </html>

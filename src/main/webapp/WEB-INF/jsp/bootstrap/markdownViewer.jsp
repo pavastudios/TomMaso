@@ -41,7 +41,7 @@
                 <span class="float-end"><%=Utility.DATE_FORMAT.format(commento.getDataInvio())%></span>
             </div>
             <div class="card-body">
-                <%=commento.getTesto()%>
+                <%=Entities.escape(commento.getTesto())%>
             </div>
         </div>
     </div>

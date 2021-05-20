@@ -65,13 +65,11 @@
 
                 <!--back button-->
                 <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
-                    <a href="<%=root?request.getContextPath()+"/profile":parent%>">
-                    <div class="card border-dark h-100 align-middle">
+                    <div class="back-button card border-dark h-100 align-middle" href="<%=root?request.getContextPath()+"/profile":parent%>">
                         <div class="card-body d-flex align-items-center justify-content-center">
                             <i class="fas fa-reply fa-10x"></i>
                         </div>
                     </div>
-                    </a>
                 </div>
 
                 <% for (File f: files) {
@@ -80,19 +78,16 @@
                 <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
                     <div class="card border-dark">
                         <%if(f.isFile()){%>
-
-                        <a class="uk-link-heading" href="<%=request.getContextPath()+"/blogs"+relUrl%>">
-                                <%}else{%>
-                            <a class="uk-link-heading" href="<%=request.getContextPath()+"/blog-manage"+relUrl%>">
-                                    <%}%>
-                        <div class="card-header text-center">
+                        <div class="card-header text-center" href="<%=request.getContextPath()+"/blogs"+relUrl%>">
+                        <%}else{%>
+                        <div class="card-header text-center" href="<%=request.getContextPath()+"/blog-manage"+relUrl%>">
+                        <%}%>
                             <i class="fa-10x fas <%=iconFromFile(request.getServletContext(),f)%>"></i>
                             <h5 class="card-title text-truncate"><%=Entities.escape(f.getName())%></h5>
                         </div>
-                            </a>
 
                         <div class="card-footer d-grid w-100">
-                            <div class="row gap-0">
+                            <div class="row gap-0 text-center">
                                 <%
                                     if(FileUtility.getFileType(request.getServletContext(), f)==FileUtility.FileType.MARKDOWN){
                                         String path = f.getAbsolutePath();
@@ -108,13 +103,11 @@
                 <%}%>
                 <!--Add button-->
                 <div class="add-file col-lg-3 col-md-6 col-sm-12 mb-3">
-                    <a data-bs-toggle="modal" data-bs-target="#uploadModal">
-                        <div class="card border-dark h-100 align-middle">
+                        <div class="card border-dark h-100 align-middle" data-bs-toggle="modal" data-bs-target="#uploadModal">
                             <div class="card-body d-flex align-items-center justify-content-center">
                                 <i class="fas fa-plus fa-10x"></i>
                             </div>
                         </div>
-                    </a>
                 </div>
             </div>
         </div>
@@ -154,18 +147,17 @@
                     </form>
                 </fieldset>
                 <div class="separatore">oppure</div>
-                    <fieldset>
-                        <legend>Nuova cartella</legend>
-                        <form action="${pageContext.request.contextPath}/api/blog/create-dir" method="post" id="createDir">
-                            <div class="input-group mb-3">
-                                <input type="text" name="parent-dir" value="<%="/"+url%>" id="parentDir" hidden>
-                                <input type="text"  name="dir-name" id="dirName" class="form-control" placeholder="Inserisci nome cartella" aria-label="Inserisci nome cartella" aria-describedby="insert_title">
-                                <input class="btn btn-primary" type="button" value="Crea" id="createDirConfirm"/>
-                            </div>
-                        </form>
-                    </fieldset>
-
-
+                <fieldset>
+                    <legend>Nuova cartella</legend>
+                    <form action="${pageContext.request.contextPath}/api/blog/create-dir" method="post" id="createDir">
+                        <div class="input-group mb-3">
+                            <input type="text" name="parent-dir" value="<%="/"+url%>" id="parentDir" hidden>
+                            <input type="text"  name="dir-name" id="dirName" class="form-control" placeholder="Inserisci nome cartella" aria-label="Inserisci nome cartella" aria-describedby="insert_title">
+                            <input class="btn btn-primary" type="button" value="Crea" id="createDirConfirm"/>
+                        </div>
+                    </form>
+                </fieldset>
+            </div>
         </div>
     </div>
 </div>
@@ -278,7 +270,12 @@
         console.log($("#titleMD").val());
         $("#createMD").attr("action",original+$("#titleMD").val());
     });
-
+    $(".card-header").click(function () {
+        location.href=$(this).attr("href");
+    });
+    $(".back-button").click(function () {
+        location.href=$(this).attr("href");
+    });
 </script>
 </body>
 </html>
