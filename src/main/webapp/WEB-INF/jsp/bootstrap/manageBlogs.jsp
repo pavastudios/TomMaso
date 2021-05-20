@@ -4,6 +4,7 @@
 <%@ page import="com.pavastudios.TomMaso.utility.FileUtility" %>
 <%@ page import="com.sun.xml.internal.txw2.output.CharacterEscapeHandler" %>
 <%@ page import="org.jsoup.nodes.Entities" %>
+<%@ page import="java.util.Arrays" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,18 +28,35 @@
         Utente user=ses.getUtente();
         File[] files = (File[])request.getAttribute("files");
         String parent = (String)request.getAttribute("parentUrl");
+        String pathInfo= (String)request.getAttribute("pathInfo");
         boolean root = (boolean)request.getAttribute("root");
     %>
+
     <title>Gestione Blog - TomMASO</title>
 </head>
 <body>
 
 <%@include file="general/navbar.jsp"%>
 <%
+    List<String>parts= Arrays.asList(pathInfo.split("/"));
     List<Blog> blogs= (List<Blog>) request.getAttribute("blogs");
 %>
-<div class="container-fluid">
 
+<div class="container-fluid">
+    <!--Breadcrump row-->
+    <div class="row">
+        <nav aria-label="breadcrumb" class="col-12" style="--bs-breadcrumb-divider: '>';">
+            <ol class="breadcrumb">
+                <%for(int i=1;i<parts.size()-1;i++){
+                    String part=parts.get(i);
+                %>
+
+                <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/blog-manage<%=String.join("/",parts.subList(0,i+1))%>"><%=part%></a></li>
+                <%}%>
+                <li class="breadcrumb-item active" aria-current="page"><%=parts.get(parts.size()-1)%></li>
+            </ol>
+        </nav>
+    </div>
     <div class="row py-5">
 
         <div class="col-12">

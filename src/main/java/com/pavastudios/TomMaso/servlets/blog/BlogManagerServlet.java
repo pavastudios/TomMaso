@@ -30,6 +30,7 @@ public class BlogManagerServlet extends MasterServlet {
         String urlParent = req.getContextPath() + "/blog-manage" + uri;
 
         String url = req.getRequestURI();
+        req.setAttribute("pathInfo", req.getPathInfo());
         req.setAttribute("url", url);
         req.setAttribute("files", files);
         req.setAttribute("root", parent.equals(FileUtility.BLOG_FILES_FOLDER));
