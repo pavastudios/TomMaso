@@ -29,7 +29,20 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/top">Top Blogs</a>
                 </li>
             </ul>
+            <form id="navbarSearchForm" class="d-flex" method="GET">
+                <div class="input-group mb-3">
+                    <button id="navbarSearchType" class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Utente</button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" id="navbarSearchBlog">Blog</a></li>
+                        <li><a class="dropdown-item" href="#" id="navbarSearchUser">Utente</a></li>
+                    </ul>
+                    <input type="text" id="navbarSearchText" class="form-control" aria-label="Text input with dropdown button">
+                    <input class="btn btn-outline-success form-control" type="submit" value="Search">
+                </div>
+
+            </form>
             <ul class="navbar-nav ml-auto">
+
                 <%if(ses.getUtente() == null) { %>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#navbarLogin">Login</a>
