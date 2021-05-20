@@ -1,5 +1,6 @@
 <%@ page import="com.pavastudios.TomMaso.model.Blog" %>
 <%@ page import="java.util.List" %>
+<%@ page import="org.jsoup.nodes.Entities" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,11 +59,11 @@
             <%}%>
             <%if(user.equals(ses.getUtente())){%>
             <div class="row">
-                <p>Email: <%=user.getEmail()%></p>
+                <p>Email: <%=Entities.escape(user.getEmail())%></p>
             </div>
             <%}%>
             <div class="row">
-                <p>'<%=user.getBio()%>'</p>
+                <p>'<%=Entities.escape(user.getBio())%>'</p>
             </div>
             <% if(login!=null){%>
             <%if(user.equals(ses.getUtente())){%>
@@ -104,13 +105,11 @@
                 <%if(user.equals(ses.getUtente())){%>
                 <!-- + Button -->
                 <div class="add_button pb-lg-4 pt-sm-4 pt-md-4 col-lg-4 col-md-6 col-sm-12" id="add_button">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#createBlogModal">
-                    <div class="card border-dark h-100 align-middle">
+                    <div class="card border-dark h-100 align-middle" data-bs-toggle="modal" data-bs-target="#createBlogModal">
                         <div class="card-body d-flex align-items-center justify-content-center">
                             <i class="fas fa-plus fa-10x"></i>
                         </div>
                     </div>
-                    </a>
                 </div>
                 <%}%>
             </div>
