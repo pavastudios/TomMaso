@@ -15,8 +15,12 @@ public class ContactServlet extends MasterServlet{
 
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+        Utente login = session.getUtente();
         Utente receiver = Queries.findUserById(Integer.parseInt(req.getParameter("receiver")));
-        Chat newChat = Queries.createChat(session.getUtente(),receiver);
+        Chat newChat = null;
+        if((newChat = Queries.findChatByUsers(login,receiver))==null) {
+            newChat = Queries.createChat(login, receiver);
+        }
         resp.sendRedirect(getServletContext().getContextPath()+"/create-chat?id="+newChat.getIdChat());
         return ;
     }

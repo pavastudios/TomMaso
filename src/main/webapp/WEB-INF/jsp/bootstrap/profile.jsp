@@ -64,6 +64,7 @@
             <div class="row">
                 <p>'<%=user.getBio()%>'</p>
             </div>
+            <% if(login!=null){%>
             <%if(user.equals(ses.getUtente())){%>
             <div class="row d-flex justify-content-center ">
                 <button type="button" class="col-9 btn btn-outline-dark modify-button" data-bs-toggle="modal" data-bs-target="#updateProfile">Modifica utente</button>
@@ -75,7 +76,7 @@
                     <input type="submit" class="col-9 btn btn-outline-dark modify-button" value="Contatta"/>
                 </form>
             </div>
-            <%}%>
+            <%}}%>
         </div>
         <div class="col-lg-9 col-sm-12">
             <div class="row">
