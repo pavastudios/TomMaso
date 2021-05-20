@@ -115,3 +115,32 @@
         once: true,
     });
 </script>
+
+<script>
+    var isUser=true;
+    function updateActionSearch(){
+        const query=$("#navbarSearchText").val();
+        if(isUser){
+            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/user/"+query);
+        }else{
+            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/home/"+query);
+        }
+    }
+
+    $("#navbarSearchBlog").click(function () {
+        $("#navbarSearchType").text("Blog");
+        isUser=false;
+        updateActionSearch();
+    });
+    $("#navbarSearchUser").click(function () {
+        $("#navbarSearchType").text("Utente");
+        isUser=true;
+        updateActionSearch();
+    });
+    $("#navbarSearchText").change(function () {
+        updateActionSearch();
+    });
+    $(function (){
+        updateActionSearch();
+    });
+</script>
