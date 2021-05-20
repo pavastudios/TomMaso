@@ -35,7 +35,6 @@
         Utente login=ses.getUtente();
         Utente user= (Utente) request.getAttribute("user");
         List<Blog> blogs= (List<Blog>) request.getAttribute("blogs");
-        boolean owner=user.equals(login);
     %>
 
     <title>TomMASO - Profilo di <%= user.getUsername() %></title>
@@ -57,28 +56,33 @@
             <%if(user.getIsAdmin()){%>
             <span class="badge bg-primary">Admin</span>
             <%}%>
+            <%if(user.equals(ses.getUtente())){%>
             <div class="row">
                 <p>Email: <%=user.getEmail()%></p>
             </div>
+            <%}%>
             <div class="row">
                 <p>'<%=user.getBio()%>'</p>
             </div>
+            <%if(user.equals(ses.getUtente())){%>
             <div class="row d-flex justify-content-center ">
                 <button type="button" class="col-9 btn btn-outline-dark modify-button" data-bs-toggle="modal" data-bs-target="#updateProfile">Modifica utente</button>
             </div>
+            <%}%>
         </div>
         <div class="col-lg-9 col-sm-12">
             <div class="row">
                 <!-- Blogs -->
                 <%for(Blog blog:blogs){%>
-                <div class="carta col-lg-4 col-sm-12 col-md-6 pb-lg-4 pt-sm-4 pt-md-4">
+                <a class="col-lg-4 col-sm-12 col-md-6 pb-lg-4 pt-sm-4 pt-md-4" href="${pageContext.request.contextPath}/home/<%=blog.getNome()%>">
+                <div class="carta">
                     <div class="card border-dark">
                         <div class="card-header text-center">
                             <img id="propic-b<%=blog.getNome()%>" class="rounded-circle w-100" src="${pageContext.request.contextPath}/blogs/<%=blog.getNome()%>/propic.png" onerror="useJidenticon('b<%=blog.getNome()%>')">
                             <svg id="propic-svg-b<%=blog.getNome()%>" class="rounded-circle" data-jdenticon-value="<%=blog.getNome()%>" hidden></svg>
                             <h5 class="card-title"><%=blog.getNome()%></h5>
                         </div>
-
+                        <%if(blog.hasAccess(ses.getUtente())){%>
                         <div class="card-footer d-grid w-100">
                             <div class="row">
                                 <a class="col-4 px-0" href="${pageContext.request.contextPath}/blog-manage/<%=blog.getNome()%>"><button type="button" class="col-12 btn btn-outline-primary"><i class="fas fa-code"></i></button></a>
@@ -86,9 +90,12 @@
                                 <button data-bs-toggle="modal" data-bs-target="#deleteModal" type="button" class="del-btn col-4 btn btn-outline-danger" blog-name="<%=blog.getNome()%>"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
+                        <%}%>
                     </div>
                 </div>
+                </a>
                 <%}%>
+                <%if(user.equals(ses.getUtente())){%>
                 <!-- + Button -->
                 <div class="add_button pb-lg-4 pt-sm-4 pt-md-4 col-lg-4 col-md-6 col-sm-12" id="add_button">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#createBlogModal">
@@ -99,6 +106,7 @@
                     </div>
                     </a>
                 </div>
+                <%}%>
             </div>
         </div>
     </div>
