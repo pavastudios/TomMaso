@@ -81,10 +81,9 @@
             <div class="row">
                 <!-- Blogs -->
                 <%for(Blog blog:blogs){%>
-                <a class="col-lg-4 col-sm-12 col-md-6 pb-lg-4 pt-sm-4 pt-md-4" href="${pageContext.request.contextPath}/home/<%=blog.getNome()%>">
-                <div class="carta">
+                <div class="carta col-lg-4 col-sm-12 col-md-6 pb-lg-4 pt-sm-4 pt-md-4">
                     <div class="card border-dark">
-                        <div class="card-header text-center">
+                        <div class="card-header text-center" blog="<%=blog.getNome()%>">
                             <img id="propic-b<%=blog.getNome()%>" class="rounded-circle w-100" src="${pageContext.request.contextPath}/blogs/<%=blog.getNome()%>/propic.png" onerror="useJidenticon('b<%=blog.getNome()%>')">
                             <svg id="propic-svg-b<%=blog.getNome()%>" class="rounded-circle" data-jdenticon-value="<%=blog.getNome()%>" hidden></svg>
                             <h5 class="card-title"><%=blog.getNome()%></h5>
@@ -100,7 +99,6 @@
                         <%}%>
                     </div>
                 </div>
-                </a>
                 <%}%>
                 <%if(user.equals(ses.getUtente())){%>
                 <!-- + Button -->
@@ -298,6 +296,9 @@
             }
         });
     });
+    $(".card-header").click(function () {
+        location.href="${pageContext.request.contextPath}/home/"+$(this).attr("blog");
+    })
 </script>
 </body>
 </html>
