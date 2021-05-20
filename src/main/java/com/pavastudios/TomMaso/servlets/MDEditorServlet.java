@@ -17,7 +17,7 @@ public class MDEditorServlet extends MasterServlet{
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
         String pathInfo = req.getPathInfo();
         Blog blog = Blog.fromPathInfo(pathInfo);
-        if(blog==null||!blog.getProprietario().equals(session.getUtente())){
+        if(blog==null||!blog.hasAccess(session.getUtente())){
             resp.sendError(HttpServletResponse.SC_FORBIDDEN,"Blog inaccessibile");
             return;
         }

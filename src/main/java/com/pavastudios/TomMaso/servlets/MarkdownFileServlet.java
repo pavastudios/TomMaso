@@ -32,7 +32,7 @@ public class MarkdownFileServlet extends MasterServlet{
     private void convertToFile(Session session, HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException {
         String path  = req.getPathInfo();
         Blog blog = Blog.fromPathInfo(path);
-        if(blog==null||!blog.getProprietario().equals(session.getUtente())){
+        if(blog==null||!blog.hasAccess(session.getUtente())){
             resp.sendError(HttpServletResponse.SC_FORBIDDEN,"Non proprietario");
             return ;
         }

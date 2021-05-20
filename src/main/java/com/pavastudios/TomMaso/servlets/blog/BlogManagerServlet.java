@@ -1,13 +1,11 @@
 package com.pavastudios.TomMaso.servlets.blog;
 
 import com.pavastudios.TomMaso.model.Blog;
-import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.servlets.MasterServlet;
 import com.pavastudios.TomMaso.utility.FileUtility;
 import com.pavastudios.TomMaso.utility.Session;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -42,8 +40,7 @@ public class BlogManagerServlet extends MasterServlet {
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         Blog blog = Blog.fromPathInfo(req.getPathInfo());
         File file = FileUtility.blogPathToFile(req.getPathInfo());
-        Utente owner = blog == null ? null : blog.getProprietario();
-        if (!session.isLogged() || !session.getUtente().equals(owner)) {
+        if (blog==null||!session.isLogged() || !blog.hasAccess(session.getUtente())) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "utente non loggato o non proprietario");
             return;
         }

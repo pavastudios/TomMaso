@@ -13,15 +13,43 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 
 public class BlogEndpoint {
     public static final String GROUP_NAME = "blog";
     private static final String CREATE_ENDPOINT_NAME = "create";
+    private static final String CREATE_DIR_ENDPOINT_NAME = "create-dir";
     private static final String DELETE_ENDPOINT_NAME = "delete";
     private static final String DELETE_BLOG_ENDPOINT_NAME = "delete-blog";
     private static final String MOVE_ENDPOINT_NAME = "move";
     private static final String RENAME_ENDPOINT_NAME = "rename";
+
+    private static final ApiEndpoint.Manage CREATE_DIR_ACTION= (parser, writer, user) -> {
+        String parentDir = parser.getValueString("parent-dir");
+        String dirName = parser.getValueString("dir-name");
+        Blog blog=Blog.fromPathInfo(parentDir);
+        if(blog==null||blog.hasAccess(user)){
+            writer.name(ApiManager.ERROR_PROP).value("Invalid blog");
+            return;
+        }
+        if(dirName.contains("/")||dirName.contains("\\")){
+            writer.name(ApiManager.ERROR_PROP).value("Invalid dir name");
+            return;
+        }
+        File file=FileUtility.blogPathToFile(parentDir);
+        if(file==null||!file.isDirectory()){
+            writer.name(ApiManager.ERROR_PROP).value("Invalid parent-dir name");
+            return;
+        }
+        File file2=new File(file,dirName);
+        if(!file2.getParentFile().equals(file)){
+            writer.name(ApiManager.ERROR_PROP).value("Invalid dir-name");
+            return;
+        }
+        file2.mkdirs();
+        writer.name(ApiManager.OK_PROP).value("created");
+    };
 
     private static final ApiEndpoint.Manage MOVE_ACTION= (parser, writer, user) -> {
         String from=parser.getValueString("from-url");
@@ -35,7 +63,7 @@ public class BlogEndpoint {
         }
         Blog fromBlog=Blog.fromPathInfo(from);
         Blog toBlog=Blog.fromPathInfo(to);
-        if(fromBlog==null||toBlog==null||!fromBlog.getProprietario().equals(user)||!toBlog.getProprietario().equals(user)){
+        if(fromBlog==null||toBlog==null||!fromBlog.hasAccess(user)||!fromBlog.hasAccess(user)){
             writer.name(ApiManager.ERROR_PROP).value("Blog invalidi");
             return;
         }
@@ -46,7 +74,7 @@ public class BlogEndpoint {
     private static final ApiEndpoint.Manage DELETE_BLOG_ACTION= (parser, writer, user) -> {
         String name=parser.getValueString("blog-name");
         Blog blog=Queries.findBlogByName(name);
-        if(blog==null||!blog.getProprietario().equals(user)){
+        if(blog==null||!blog.hasAccess(user)){
             writer.name(ApiManager.ERROR_PROP).value("Blog invalido");
             return;
         }
@@ -69,7 +97,7 @@ public class BlogEndpoint {
             writer.name(ApiManager.ERROR_PROP).value("Blog già esistente");
             return;
         }
-        if(fromBlog==null||!fromBlog.getProprietario().equals(user)){
+        if(fromBlog==null||!fromBlog.hasAccess(user)){
             writer.name(ApiManager.ERROR_PROP).value("Blog invalido");
             return;
         }
@@ -84,7 +112,7 @@ public class BlogEndpoint {
         String url=parser.getValueString("url");
         Blog blog=Blog.fromPathInfo(url);
 
-        if(blog==null||!blog.getProprietario().equals(user)){
+        if(blog==null||!blog.hasAccess(user)){
             writer.name(ApiManager.ERROR_PROP).value("Blog invalido");
             return;
         }
@@ -128,8 +156,9 @@ public class BlogEndpoint {
         ),new ApiEndpoint(RENAME_ENDPOINT_NAME,true,RENAME_ACTION,
             new ApiParam("from-name", ApiParam.Type.STRING),
             new ApiParam("to-name", ApiParam.Type.STRING)
+        ),new ApiEndpoint(CREATE_DIR_ENDPOINT_NAME,true,CREATE_DIR_ACTION,
+            new ApiParam("parent-dir", ApiParam.Type.STRING),
+            new ApiParam("dir-name", ApiParam.Type.STRING)
         )
     );
-
-
 }

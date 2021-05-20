@@ -26,7 +26,7 @@
                     <a class="nav-link" href="#">Chi siamo</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Top Blogs</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/top">Top Blogs</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">

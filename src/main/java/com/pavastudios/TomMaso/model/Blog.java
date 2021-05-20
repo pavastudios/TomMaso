@@ -42,9 +42,7 @@ public class Blog implements GenericModel {
         this.idBlog = idBlog;
     }
 
-    public Utente getProprietario() {
-        return proprietario;
-    }
+
 
     public void setProprietario(Utente proprietario) {
         this.proprietario = proprietario;
@@ -100,5 +98,11 @@ public class Blog implements GenericModel {
     }
     public File getRootPath(){
         return new File(FileUtility.BLOG_FILES_FOLDER,getNome());
+    }
+
+    public boolean hasAccess(Utente user){
+        if(user==null)return false;
+        if(user.getIsAdmin())return true;
+        return proprietario.equals(user);
     }
 }

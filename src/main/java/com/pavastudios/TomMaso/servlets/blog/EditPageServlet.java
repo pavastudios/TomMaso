@@ -22,7 +22,7 @@ public class EditPageServlet extends MasterServlet {
         Blog blog=Blog.fromPathInfo(pathInfo);
         File file = FileUtility.blogPathToFile(pathInfo);
         FileUtility.FileType type=FileUtility.getFileType(getServletContext(),file);
-        if(blog==null||!blog.getProprietario().equals(user)){
+        if(blog==null||!blog.hasAccess(user)){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"Blog errato");
             return;
         }

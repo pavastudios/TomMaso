@@ -42,7 +42,7 @@ public class BlogUploaderServlet extends MasterServlet {
             return;
         }
         Blog blog = Blog.fromPathInfo(url);
-        if(blog==null||!blog.getProprietario().equals(user)){
+        if(blog==null||!blog.hasAccess(user)){
             resp.sendError(HttpServletResponse.SC_FORBIDDEN,"Utente non autorizzato!");
             return;
         }
