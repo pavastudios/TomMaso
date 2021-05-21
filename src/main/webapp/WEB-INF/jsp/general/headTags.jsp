@@ -16,3 +16,9 @@
 <link rel="icon" href="${pageContext.request.contextPath}/images/logo.ico" type="image/x-icon"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/uikit.min.css">
 <script src="${pageContext.request.contextPath}/js/jdenticon.min.js"></script>
+
+<style>
+    .searchForm {
+        margin-block-end: 0 !important;
+    }
+</style>

@@ -18,12 +18,13 @@
 </head>
 <body>
 <%@include file="general/navbar.jsp"%>
-<div class="container">
+<div class="text-center"><h2 class="mt-3">Lista chat attive</h2></div>
+<div class="container chat-list-container">
     <div class="row">
 <% for(Chat c : chats){
     Utente other = c.otherUser(login);
 %>
-  <div class="col-3">
+  <div class="col-lg-3 col-md-6 col-sm-12 mt-4">
     <div class="card cursore" href="${pageContext.request.contextPath}/chat?id=<%=c.getIdChat()%>">
       <div class="card-header px-5">
         <%=other.propicHtml(request.getServletContext())%>

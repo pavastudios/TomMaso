@@ -54,4 +54,8 @@
     .add-file {
         cursor: pointer;
     }
+
+    .chat-list-container {
+        min-height: 60vh;
+    }
 </style>

@@ -29,30 +29,30 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/top">Top Blogs</a>
                 </li>
             </ul>
-            <form id="navbarSearchForm" class="d-flex" method="GET">
-                <div class="input-group mb-3">
-                    <button id="navbarSearchType" class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Utente</button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" id="navbarSearchBlog">Blog</a></li>
-                        <li><a class="dropdown-item" href="#" id="navbarSearchUser">Utente</a></li>
-                    </ul>
-                    <input type="text" id="navbarSearchText" class="form-control" aria-label="Text input with dropdown button">
-                    <input class="btn btn-outline-success form-control" type="submit" value="Search">
-                </div>
+            <div class="d-sm-flex justify-content-sm-center">
+                <form id="navbarSearchForm" class="mb-0 me-lg-3 me-sm-0 me-md-0 float-lg-none float-md-end float-sm-end" method="GET">
+                    <div class="input-group d-flex ">
+                        <button id="navbarSearchType" class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Utente</button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" id="navbarSearchBlog">Blog</a></li>
+                            <li><a class="dropdown-item" href="#" id="navbarSearchUser">Utente</a></li>
+                        </ul>
+                        <input type="text" id="navbarSearchText" class="form-control" aria-label="navbarSearch">
+                        <input class="btn btn-outline-success form-control" type="submit" value="Cerca">
+                    </div>
+                </form>
+                <ul class="navbar-nav ml-auto d-flex justify-content-center align-content-center flex-md-row flex-sm-column ms-md-2">
 
-            </form>
-            <ul class="navbar-nav ml-auto">
-
-                <%if(ses.getUtente() == null) { %>
+                    <%if(ses.getUtente() == null) { %>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#navbarLogin">Login</a>
+                        <a class="nav-link ms-md-2 me-md-2" href="#" data-bs-toggle="modal" data-bs-target="#navbarLogin">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#navbarRegister">Registrati</a>
+                        <a class="nav-link ms-md-2" href="#" data-bs-toggle="modal" data-bs-target="#navbarRegister">Registrati</a>
                     </li>
-                <% } else {
-                    Utente xUser=ses.getUtente();
-                %>
+                    <% } else {
+                        Utente xUser=ses.getUtente();
+                    %>
 
                     <div class="flex-shrink-0 dropdown">
                         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -66,8 +66,9 @@
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Logout</a></li>
                         </ul>
                     </div>
-                <% }%>
-            </ul>
+                    <% }%>
+                </ul>
+            </div>
         </div>
     </div>
 
