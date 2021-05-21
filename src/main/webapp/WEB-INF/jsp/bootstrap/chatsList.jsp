@@ -19,7 +19,7 @@
 <body>
 <%@include file="general/navbar.jsp"%>
 <div class="text-center"><h2 class="mt-3">Lista chat attive</h2></div>
-<div class="container chat-list-container">
+<div class="container main-container">
     <div class="row">
 <% for(Chat c : chats){
     Utente other = c.otherUser(login);

@@ -46,7 +46,8 @@
 <div class="container-fluid">
     <!--Breadcrump row-->
     <div class="row">
-        <nav aria-label="breadcrumb" class="col-12" style="--bs-breadcrumb-divider: '>';">
+        <li class="list-group-item">
+        <nav aria-label="breadcrumb" class="col-12 pt-3" style="--bs-breadcrumb-divider: '>';">
             <ol class="breadcrumb">
                 <%for(int i=1;i<parts.size()-1;i++){
                     String part=parts.get(i);
@@ -57,8 +58,9 @@
                 <li class="breadcrumb-item active" aria-current="page"><%=parts.get(parts.size()-1)%></li>
             </ol>
         </nav>
+        </li>
     </div>
-    <div class="row py-5">
+    <div class="row py-2">
 
         <div class="col-12">
             <div class="row">

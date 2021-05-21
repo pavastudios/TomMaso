@@ -55,7 +55,7 @@
         cursor: pointer;
     }
 
-    .chat-list-container {
+    .main-container {
         min-height: 60vh;
     }
 </style>

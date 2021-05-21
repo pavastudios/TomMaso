@@ -24,7 +24,7 @@
 
 <%@include file="general/navbar.jsp"%>
 
-<div class="container">
+<div class="container main-container">
     <div class="row">
     <%for(Blog blog:blogs){%>
         <div class="col-lg-4 col-sm-12 col-md-6 pb-lg-4 pt-sm-4 pt-md-4 px-3">

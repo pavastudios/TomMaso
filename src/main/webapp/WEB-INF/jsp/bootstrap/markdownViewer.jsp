@@ -26,9 +26,10 @@
 </head>
 <body>
 <%@include file="general/navbar.jsp"%>
-<div id="content" class="container">
+<div id="content" class="container main-container">
 </div>
 
+<h3 class="text-center">Area commenti</h3>
 <div class="container mt-5">
     <% for(Commento commento:comments){ %>
     <div class="row mt-2">
@@ -47,8 +48,9 @@
     </div>
     <%}%>
     <% if(ses.getUtente()!=null){%>
+    <!-- Comment Area -->
     <div class="row mt-5">
-        <textarea class="col-12" name="commento" id="comment" cols="30" rows="10"></textarea>
+        <textarea class="col-12" name="commento" id="comment" cols="30" rows="5"></textarea>
         <button class="btn btn-primary" id="sendComment">Invia commento</button>
     </div>
     <%}%>

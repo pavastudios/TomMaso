@@ -19,7 +19,7 @@
 <body>
 <%@include file="general/navbar.jsp"%>
 
-<div class="container">
+<div class="container main-container">
     <%for(int i=0;i<markdowns.size();i++){
         File f=markdowns.get(i);
 
