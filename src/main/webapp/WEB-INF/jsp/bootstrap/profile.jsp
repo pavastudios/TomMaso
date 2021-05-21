@@ -66,10 +66,11 @@
                 <p>'<%=Entities.escape(user.getBio())%>'</p>
             </div>
             <% if(login!=null){%>
-            <%if(user.equals(ses.getUtente())){%>
+            <% if(user.equals(login)){%>
             <div class="row d-flex justify-content-center ">
                 <button type="button" class="col-9 btn btn-outline-dark modify-button" data-bs-toggle="modal" data-bs-target="#updateProfile">Modifica utente</button>
             </div>
+            <a class="px-0" href="${pageContext.request.contextPath}/chats"><button type="button" class="btn btn-success"><i class="fas fa-comments"></i></button></a>
             <%}else{%>
             <div class="row d-flex justify-content-center ">
                 <form action="${pageContext.request.contextPath}/new-chat" method="post">
