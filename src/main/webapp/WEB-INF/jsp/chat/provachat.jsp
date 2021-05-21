@@ -15,31 +15,45 @@
 %>
 <html>
 <head>
-    <%@ include file="../general/headTags.jsp" %>
+    <%@ include file="../bootstrap/general/headTags.jsp" %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/tempchat.css" type="text/css"/>
     <title>Title</title>
 </head>
 <body>
-<%@ include file="../general/navbar.jsp" %>
-<div   class="scritti">
-    <% for(Chat chat:chats){
-        Utente other=chat.otherUser(ses.getUtente());
-    %>
-        <a href="${pageContext.request.contextPath}/crea-chat?id=<%=chat.getIdChat()%>">
-            <button><%=other.getUsername()%></button>
-        </a>
-    <% } %>
+<%@ include file="../bootstrap/general/navbar.jsp" %>
+
+
+
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div   class="scritti col-12 col-md-5">
+            <% for(Chat chat:chats){
+                Utente other=chat.otherUser(ses.getUtente());
+            %>
+            <a href="${pageContext.request.contextPath}/crea-chat?id=<%=chat.getIdChat()%>">
+                <button><%=other.getUsername()%></button>
+            </a>
+            <% } %>
+        </div>
+
+        <div id="ricerca"  class="ricerca col-12 col-md-5">
+            <div id="input">
+                <input type="text" name="nickname" placeholder="Nome utente" id="nome">
+                <button id="cerca">Cerca</button>
+            </div>
+            <div id="elenco">
+                <button id="found-username"></button>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<div id="ricerca"  class="ricerca">
-    <div id="input">
-        <input type="text" name="nickname" placeholder="Nome utente" id="nome">
-        <button id="cerca">Cerca</button>
-    </div>
-    <div id="elenco">
-        <button id="found-username"></button>
-    </div>
-</div>
+
+
+
 <script>
 
     const foundBtn = $("#found-username");
@@ -80,8 +94,8 @@
     });
 </script>
 
-<%@include file="../general/footer.jsp"%>
-<%@include file="../general/tailTag.jsp"%>
+<%@include file="../bootstrap/general/footer.jsp"%>
+<%@include file="../bootstrap/general/tailTag.jsp"%>
 
 </body>
 </html>

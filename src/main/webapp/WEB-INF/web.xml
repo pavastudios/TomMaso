@@ -46,6 +46,7 @@
         <url-pattern>/upload-file/*</url-pattern>
     </servlet-mapping>
 
+    <!--Admin-->
 
     <!--User-->
     <servlet>
@@ -166,7 +167,33 @@
         <url-pattern>/chats</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AdminManagement</servlet-name>
+        <servlet-class>com.pavastudios.TomMaso.servlets.Admin.AdminManagement</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminManagement</servlet-name>
+        <url-pattern>/admin/*</url-pattern>
+    </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>CercaUtentiAdmin</servlet-name>
+        <servlet-class>com.pavastudios.TomMaso.servlets.Admin.CercaUtentiAdmin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CercaUtentiAdmin</servlet-name>
+        <url-pattern>/cercaadmin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CambiaRuoloAdmin</servlet-name>
+        <servlet-class>com.pavastudios.TomMaso.servlets.Admin.CambiaRuoloAdmin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CambiaRuoloAdmin</servlet-name>
+        <url-pattern>/cambiaruolo</url-pattern>
+    </servlet-mapping>
 
 
     <mime-mapping>
