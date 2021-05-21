@@ -358,10 +358,8 @@ public class Queries {
         }
         FIND_CHAT_BY_USERS.setInt(1, u1.getIdUtente());
         FIND_CHAT_BY_USERS.setInt(2, u2.getIdUtente());
-        ResultSet rs = FIND_USER_CHAT.executeQuery();
-        Chat chat = null;
-        if(rs.next())
-             chat = Queries.findChatById(rs.getInt(1));
+        ResultSet rs = FIND_CHAT_BY_USERS.executeQuery();
+        Chat chat=resultSetToModel(Entities.CHAT,rs);
         rs.close();
         return chat;
     }
