@@ -62,6 +62,7 @@
                         <ul class="dropdown-propic-nav dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
                             <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createBlogModalNavbar">Nuovo blog...</a></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/profile">Profilo</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/chats">Chat</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Logout</a></li>
                         </ul>
