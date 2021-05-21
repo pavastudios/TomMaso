@@ -106,7 +106,7 @@
                 <%if(user.equals(ses.getUtente())){%>
                 <!-- + Button -->
                 <div class="add_button pb-lg-4 pt-sm-4 pt-md-4 col-lg-4 col-md-6 col-sm-12" id="add_button">
-                    <div class="card border-dark h-100 align-middle" data-bs-toggle="modal" data-bs-target="#createBlogModal">
+                    <div class="card border-dark h-100 align-middle cursore" data-bs-toggle="modal" data-bs-target="#createBlogModal">
                         <div class="card-body d-flex align-items-center justify-content-center">
                             <i class="fas fa-plus fa-10x"></i>
                         </div>

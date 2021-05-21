@@ -23,6 +23,10 @@
     .no-dec:link {text-decoration: none !important;}
     .dropdown-propic-nav {position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(-110px, 0px);}
 
+    .cursore{
+        cursor: pointer;
+    }
+
     .separatore {
         color: rgba(108,117,125,0.79);
         letter-spacing: 0.1rem;

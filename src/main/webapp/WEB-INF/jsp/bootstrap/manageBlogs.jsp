@@ -64,7 +64,7 @@
             <div class="row">
 
                 <!--back button-->
-                <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-3 cursore">
                     <div class="back-button card border-dark h-100 align-middle" href="<%=root?request.getContextPath()+"/profile":parent%>">
                         <div class="card-body d-flex align-items-center justify-content-center">
                             <i class="fas fa-reply fa-10x"></i>
@@ -78,9 +78,9 @@
                 <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
                     <div class="card border-dark">
                         <%if(f.isFile()){%>
-                        <div class="card-header text-center" href="<%=request.getContextPath()+"/blogs"+relUrl%>">
+                        <div class="card-header text-center cursore" href="<%=request.getContextPath()+"/blogs"+relUrl%>">
                         <%}else{%>
-                        <div class="card-header text-center" href="<%=request.getContextPath()+"/blog-manage"+relUrl%>">
+                        <div class="card-header text-center cursore" href="<%=request.getContextPath()+"/blog-manage"+relUrl%>">
                         <%}%>
                             <i class="fa-10x fas <%=iconFromFile(request.getServletContext(),f)%>"></i>
                             <h5 class="card-title text-truncate"><%=Entities.escape(f.getName())%></h5>
@@ -102,7 +102,7 @@
                 </div>
                 <%}%>
                 <!--Add button-->
-                <div class="add-file col-lg-3 col-md-6 col-sm-12 mb-3">
+                <div class="add-file col-lg-3 col-md-6 col-sm-12 mb-3 cursore">
                         <div class="card border-dark h-100 align-middle" data-bs-toggle="modal" data-bs-target="#uploadModal">
                             <div class="card-body d-flex align-items-center justify-content-center">
                                 <i class="fas fa-plus fa-10x"></i>

@@ -18,24 +18,30 @@
 </head>
 <body>
 <%@include file="general/navbar.jsp"%>
-
-<div class="row row-cols-1 row-cols-md-3 g-4">
+<div class="container">
+    <div class="row">
 <% for(Chat c : chats){
     Utente other = c.otherUser(login);
 %>
-  <div class="col-4">
-    <div class="card h-100 w-100">
-      <div>
+  <div class="col-3">
+    <div class="card cursore" href="${pageContext.request.contextPath}/chat?id=<%=c.getIdChat()%>">
+      <div class="card-header px-5">
         <%=other.propicHtml(request.getServletContext())%>
       </div>
       <div class="card-body">
-          <a href="${pageContext.request.contextPath}/create-chat?id=<%=c.getIdChat()%>"><h5 class="card-title text-center"><%=other.getUsername()%></h5></a>
+          <h5 class="card-title text-center"><%=other.getUsername()%></h5>
       </div>
     </div>
   </div>
 <%}%>
 </div>
+</div>
 <%@include file="general/footer.jsp"%>
 <%@include file="general/tailTag.jsp"%>
+<script>
+    $(".card").click(function (){
+        location.href= $(this).attr("href");
+    });
+</script>
 </body>
 </html>

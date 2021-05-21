@@ -18,7 +18,7 @@
     Chat chat= (Chat) request.getAttribute("chat");
     Utente altro=chat.otherUser(ses.getUtente());
   %>
-  <title>Title</title>
+  <title>Chat con <%=altro.getUsername()%> - TomMASO</title>
 </head>
 <body>
 
