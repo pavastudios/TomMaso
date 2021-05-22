@@ -19,7 +19,7 @@
 </head>
 <body>
   <%if(u.isEmpty()){%>
-  <b color="red">Non sono stato trovati utenti</b>
+  <b color="red">Non sono stati trovati utenti</b>
   <%}else{%>
 
   <% for(Utente x:u){%>

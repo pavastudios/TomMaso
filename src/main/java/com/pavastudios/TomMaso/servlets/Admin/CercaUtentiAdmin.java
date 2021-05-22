@@ -21,13 +21,18 @@ public class CercaUtentiAdmin  extends MasterServlet {
 
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         if(session.getUtente().getIsAdmin()){
-            List<Utente> u =new ArrayList<>();
+            List<Utente> admin =new ArrayList<>();
             if(req.getParameter("nome")==null){
-                u=Queries.resultSetToList(Entities.UTENTE,Queries.findAllUsers());
+
+                List<Utente> u=Queries.findAllAdmins();
+                for(Utente x:u) if(x.getIsAdmin()) admin.add(x);
+
             }
-            else u.add(Queries.findUserByUsername(req.getParameter("nome")));
-            req.setAttribute("result",u);
-            getServletContext().getRequestDispatcher("/WEB-INF/jsp/admin/adminResult.jsp").forward(req, resp);
+            else
+                admin.add(Queries.findUserByUsername(req.getParameter("nome")));
+
+            req.setAttribute("result",admin);
+            getServletContext().getRequestDispatcher("/WEB-INF/jsp/admin/adimResult.jsp").forward(req, resp);
         } else resp.sendError(403);
     }
 

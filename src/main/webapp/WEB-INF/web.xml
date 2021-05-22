@@ -183,7 +183,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>CercaUtentiAdmin</servlet-name>
-        <url-pattern>/cercaadmin</url-pattern>
+        <url-pattern>/cerca-admin</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -192,7 +192,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>CambiaRuoloAdmin</servlet-name>
-        <url-pattern>/cambiaruolo</url-pattern>
+        <url-pattern>/cambia-ruolo</url-pattern>
     </servlet-mapping>
 
 
