@@ -21,8 +21,9 @@ public class Session {
     private static final int MAX_TOKENS_COUNT = 20;
     private static final int CSRF_TOKEN_LENGTH = 20;
     private final List<String> csrfTokens = new ArrayList<>(MAX_TOKENS_COUNT);
+    private final HashSet<Integer> blogs = new HashSet<>();
     private Utente utente = null;
-    private HashSet<Integer> blogs = new HashSet<>();
+
 
     private Session() {
     }

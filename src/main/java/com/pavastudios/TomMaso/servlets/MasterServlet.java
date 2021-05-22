@@ -3,6 +3,7 @@ package com.pavastudios.TomMaso.servlets;
 import com.pavastudios.TomMaso.utility.Session;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,14 +21,28 @@ public abstract class MasterServlet extends HttpServlet {
     private static final String METHOD_PUT = "PUT";
     private static final String METHOD_TRACE = "TRACE";
 
+    private static boolean hasSessionCookie(HttpServletRequest req){
+        Cookie[]cookies=req.getCookies();
+        if(cookies==null)return false;
+        for(Cookie c:cookies) {
+            if("JSESSIONID".equals(c.getName()))return true;
+        }
+        return false;
+    }
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String method = req.getMethod();
+
         setDefaultHeader(resp);
 
         try {
             Session session = Session.loadSession(req);
+
+            if(!hasSessionCookie(req))
+                req.setAttribute("rewrite",";jsessionid="+req.getSession().getId());
+            else
+                req.setAttribute("rewrite","");
 
             switch (method) {
                 case METHOD_GET:
