@@ -16,46 +16,4 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/easymde.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/highlightjs.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/aos.css">
-
-<style>
-    .no-dec {text-decoration: none !important;}
-    .no-dec:hover {text-decoration: none !important;}
-    .no-dec:link {text-decoration: none !important;}
-    .dropdown-propic-nav {position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(-110px, 0px);}
-
-    .cursore{
-        cursor: pointer;
-    }
-
-    .separatore {
-        color: rgba(108,117,125,0.79);
-        letter-spacing: 0.1rem;
-        display: flex;
-        align-items: center;
-        --text-divider-gap: 1rem;
-    }
-
-    .separatore::before,
-    .separatore::after {
-        content: '';
-        height: 1px;
-        background-color: silver;
-        flex-grow: 1;
-    }
-
-    .separatore::before {
-        margin-right: var(--text-divider-gap);
-    }
-
-    .separatore::after {
-        margin-left: var(--text-divider-gap);
-    }
-
-    .add-file {
-        cursor: pointer;
-    }
-
-    .main-container {
-        min-height: 60vh;
-    }
-</style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/personal.css">

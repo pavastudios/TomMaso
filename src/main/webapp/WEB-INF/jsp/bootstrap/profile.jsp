@@ -131,7 +131,7 @@
                 <div class="row mb-3">
                     <label for="blogname" class="col-sm-2 col-form-label lead">Nome</label>
                     <div class="col-sm-10">
-                        <input type="text" name="name" id="blogname">
+                        <input type="text" name="name" id="blogname" maxlength="50">
                     </div>
                 </div>
 
@@ -154,7 +154,7 @@
             <div class="modal-body">
                 <p class="lead">Inserisci il nuovo nome:</p>
                 <input type="text" name="name" id="renameFormHid" hidden>
-                <input type="text" name="name" id="renameForm" class="input-text">
+                <input type="text" name="name" id="renameForm" class="input-text" maxlength="50">
 
             </div>
             <div class="modal-footer">
