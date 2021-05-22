@@ -79,7 +79,7 @@ public class Utility {
 
     public static void returnHome(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            resp.sendRedirect(req.getContextPath());
+            resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath()));
         } catch (IOException e) {
             e.printStackTrace();
         }

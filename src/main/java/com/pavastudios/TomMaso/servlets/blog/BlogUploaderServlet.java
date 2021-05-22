@@ -51,7 +51,7 @@ public class BlogUploaderServlet extends MasterServlet {
             resp.sendError(HttpServletResponse.SC_EXPECTATION_FAILED,"Path traversal rilevato");
             return;
         }
-        resp.sendRedirect(req.getServletContext().getContextPath()+"/blog-manage/"+url.substring(1));
+        resp.sendRedirect(resp.encodeRedirectURL(req.getServletContext().getContextPath()+"/blog-manage/"+url.substring(1)));
     }
 }
 
