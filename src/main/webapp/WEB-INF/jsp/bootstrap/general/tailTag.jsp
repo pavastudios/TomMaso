@@ -121,9 +121,9 @@
     function updateActionSearch(){
         const query=$("#navbarSearchText").val();
         if(isUser){
-            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/user/"+query);
+            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/user/"+query+"<%=request.getAttribute("rewrite")%>");
         }else{
-            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/home/"+query);
+            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/home/"+query+"<%=request.getAttribute("rewrite")%>");
         }
     }
 
@@ -140,7 +140,16 @@
     $("#navbarSearchText").change(function () {
         updateActionSearch();
     });
+    function urlRewriteTag(tagName){
+        $("["+tagName+"]").each(function () {
+            if($(this).attr(tagName)==="#")return;
+            $(this).attr(tagName,$(this).attr(tagName)+"<%=request.getAttribute("rewrite")%>");
+        });
+    }
     $(function (){
         updateActionSearch();
+        urlRewriteTag("href");
+        urlRewriteTag("src");
+        urlRewriteTag("action");
     });
 </script>
