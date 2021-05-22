@@ -64,7 +64,7 @@
         const comment=$("#comment").val();
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/api/comment/send-comment',
+            url: '${pageContext.request.contextPath}/api/comment/send-comment<%=request.getAttribute("rewrite")%>',
             data: {
                 "comment": comment,
                 "page":window.location.pathname

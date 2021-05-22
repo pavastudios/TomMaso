@@ -64,7 +64,7 @@
         foundBtn.hide();
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/api/user/find-user',
+            url: '${pageContext.request.contextPath}/api/user/find-user<%=request.getAttribute("rewrite")%>',
             data: {
                 "username": $("#nome").val(),
             },
@@ -81,7 +81,7 @@
         foundBtn.hide();
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/api/chat/create-chat',
+            url: '${pageContext.request.contextPath}/api/chat/create-chat<%=request.getAttribute("rewrite")%>',
             data: {
                 "with": foundBtn.text(),
             },
