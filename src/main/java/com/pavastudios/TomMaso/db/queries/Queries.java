@@ -52,6 +52,7 @@ public class Queries {
     static MasterPreparedStatement TOP_BLOG;
     static MasterPreparedStatement CHANGE_ROLE_USER;
     static MasterPreparedStatement FIND_ALL_USERS;
+    static MasterPreparedStatement FIND_ALL_ADMINS;
 
     public static void initQueries() throws SQLException {
         //FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente` IN ((SELECT `utente2` FROM 'Chat' WHERE `utente1`=?) UNION (SELECT `utente1` FROM 'Chat' WHERE `utente2`=?))");
@@ -59,6 +60,7 @@ public class Queries {
         FETCH_COMMENT_FOR_PAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Commento` WHERE `url_pagina`=? ORDER BY `data_invio`");
         FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? ORDER BY `data_invio` DESC LIMIT ? OFFSET ?");
         FETCH_MESSAGE_FROM_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? AND `id_messaggio`>? ORDER BY `data_invio`");
+        FIND_ALL_ADMINS= GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `is_admin`=1");
         FIND_ALL_USERS= GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente`");
         FIND_USER_BY_USERNAME = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `username`=?");
         FIND_USER_BY_EMAIL = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `email`=?");
@@ -429,8 +431,15 @@ public class Queries {
         ResultSet set= CHANGE_ROLE_USER.executeUpdate();
     }
 
-    public static ResultSet findAllUsers() throws SQLException {
+    public static List<Utente> findAllUsers() throws SQLException {
         ResultSet set= FIND_ALL_USERS.executeQuery();
-        return set;
+        List<Utente> u=Queries.resultSetToList(Entities.UTENTE,set);
+        return u;
+    }
+
+    public static List<Utente> findAllAdmins() throws SQLException {
+        ResultSet set= FIND_ALL_ADMINS.executeQuery();
+        List<Utente> u=Queries.resultSetToList(Entities.UTENTE,set);
+        return u;
     }
 }

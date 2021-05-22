@@ -5,6 +5,7 @@
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/bootstrap/general/navbar.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/bootstrap/general" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/bootstrap/profile.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/bootstrap" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/chat/generatedchat.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/chat" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
       </map>

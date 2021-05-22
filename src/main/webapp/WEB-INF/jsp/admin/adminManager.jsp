@@ -53,7 +53,7 @@
    function greve(){
    $.ajax({
      type: 'POST',
-     url: '${pageContext.request.contextPath}/cercaadmin',
+     url: '${pageContext.request.contextPath}/cerca-admin',
       data: {
         "nome": $("#nomee").val(),
       },
@@ -71,7 +71,7 @@
      const time=Date.now();
      $.ajax({
        type: 'POST',
-       url: '${pageContext.request.contextPath}/cercaadmin',
+       url: '${pageContext.request.contextPath}/cerca-admin',
        data: {
          "nome": null,
        },
