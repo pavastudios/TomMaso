@@ -85,7 +85,7 @@
                     <form id="formNavbarLogin" action="${pageContext.request.contextPath}/user-update" method="POST" enctype="multipart/form-data">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="addon-user">@</span>
-                            <input id="username-login" name="username" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-user">
+                            <input id="username-login" name="username" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-user" maxlength="50">
                         </div>
                         <div class="input-group mb-3">
                             <input id="password-login" name="password" type="password" class="form-control" placeholder="Password" aria-label="Password">
@@ -121,7 +121,7 @@
                     <form id="formNavbarRegister" action="${pageContext.request.contextPath}/user-update" method="POST" enctype="multipart/form-data">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="addon-user-register">@</span>
-                            <input id="username-register" name="username-register" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-user">
+                            <input id="username-register" name="username-register" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-user" maxlength="50">
                         </div>
                         <div class="input-group mb-3">
                             <input id="email-register" name="email-register" type="email" class="form-control" placeholder="Email" aria-label="Email">
@@ -204,7 +204,7 @@
                     <div class="row mb-3">
                         <label for="blognameNavbar" class="col-sm-2 col-form-label lead">Nome</label>
                         <div class="col-sm-10">
-                            <input type="text" name="name" id="blognameNavbar">
+                            <input type="text" name="name" id="blognameNavbar" maxlength="50">
                         </div>
                     </div>
 
