@@ -24,16 +24,22 @@
 
   <% for(Utente x:u){%>
   <div id="template">
-    <form method="post" action="/cambiaruolo" id="form">
+    <form method="post" action="${pageContext.request.contextPath}/cambia-ruolo" id="form">
       <p class="nome"><%=x.getUsername()%></p>
       <input type="text" name="nome" class="name" value="<%=x.getUsername()%>"hidden readonly required>
       <%if(x.getIsAdmin()){%>
-      <input type="submit" class="send" value="Rimuovi admin">
+      <input type="submit" class="send" value="Rimuovi admin" onclick="refresh()">
       <%}else{%>
-      <input type="submit" class="send" value="Aggiungi admin">
+      <input type="submit" class="send" value="Aggiungi admin" onclick="refresh()">
       <%}%>
     </form>
   </div>
   <%}}%>
+
+  <script>
+    function refresh(){
+      location.reload();
+    }
+  </script>
 </body>
 </html>
