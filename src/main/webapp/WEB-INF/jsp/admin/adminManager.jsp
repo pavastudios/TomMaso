@@ -56,6 +56,7 @@
      url: '${pageContext.request.contextPath}/cerca-admin',
       data: {
         "nome": $("#nomee").val(),
+        "admin":"false",
       },
       success: function (data) {
         console.log(data);
@@ -74,6 +75,7 @@
        url: '${pageContext.request.contextPath}/cerca-admin',
        data: {
          "nome": null,
+         "admin":"true",
        },
        success: function (data) {
          console.log(data);
@@ -83,7 +85,7 @@
          $('#lista').html(data)
        }
      });
-   }, 5000); //1 second
+   }, 2000); //5 second
 </script>
 
 <%@include file="../bootstrap/general/footer.jsp"%>

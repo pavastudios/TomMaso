@@ -22,7 +22,7 @@ public class CercaUtentiAdmin  extends MasterServlet {
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         if(session.getUtente().getIsAdmin()){
             List<Utente> admin =new ArrayList<>();
-            if(req.getParameter("nome")==null){
+            if(req.getParameter("admin").equals("true")){
 
                 List<Utente> u=Queries.findAllAdmins();
                 for(Utente x:u) if(x.getIsAdmin()) admin.add(x);
