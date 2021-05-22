@@ -24,7 +24,7 @@
 
 <%@ include file="../bootstrap/general/navbar.jsp" %>
 
-<div class="container">
+<div class="container main-container">
 
     <div id="chat" class="row chat">
     </div>
@@ -33,7 +33,7 @@
     <input type="text" name="chat" value="<%=chat.getIdChat()%>" id="chat-id" hidden>
 
     <textarea class="col-12" placeholder="Invia messaggio" id="messaggio"></textarea>
-      <button class="col-12 btn btn-primary" id="invia">Invia</button>
+      <button class="col-12 btn btn-primary" id="invia">Invia <i class="fas fa-paper-plane me-4"></i></button>
   </div>
 </div>
 <%@include file="../bootstrap/general/footer.jsp"%>
