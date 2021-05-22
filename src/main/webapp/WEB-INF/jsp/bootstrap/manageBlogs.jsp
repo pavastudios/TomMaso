@@ -143,7 +143,7 @@
                     <legend>Nuova pagina</legend>
                     <form action="<%=request.getContextPath()+"/edit-md/"+url%>" method="post" id="createMD">
                         <div class="input-group mb-3">
-                            <input type="text" id="titleMD" class="form-control" placeholder="Inserisci titolo" aria-label="Inserisci titolo" aria-describedby="insert_title">
+                            <input type="text" id="titleMD" class="form-control" placeholder="Inserisci titolo" aria-label="Inserisci titolo" aria-describedby="insert_title" maxlength="50">
                             <input class="btn btn-primary" type="submit" value="Crea" />
                         </div>
                     </form>
@@ -154,7 +154,7 @@
                     <form action="${pageContext.request.contextPath}/api/blog/create-dir" method="post" id="createDir">
                         <div class="input-group mb-3">
                             <input type="text" name="parent-dir" value="<%="/"+url%>" id="parentDir" hidden>
-                            <input type="text"  name="dir-name" id="dirName" class="form-control" placeholder="Inserisci nome cartella" aria-label="Inserisci nome cartella" aria-describedby="insert_title">
+                            <input type="text"  name="dir-name" id="dirName" class="form-control" placeholder="Inserisci nome cartella" aria-label="Inserisci nome cartella" aria-describedby="insert_title" maxlength="20">
                             <input class="btn btn-primary" type="button" value="Crea" id="createDirConfirm"/>
                         </div>
                     </form>
@@ -175,7 +175,7 @@
             <div class="modal-body">
                 <form action="#" method="post">
                     <input type="text" name="from-name" id="moveBlogHid" hidden>
-                    <input type="text" name="to-name" id="moveBlog">
+                    <input type="text" name="to-name" id="moveBlog" maxlength="255">
                 </form>
             </div>
             <div class="modal-footer">
