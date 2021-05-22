@@ -32,13 +32,13 @@
             <div class="d-sm-flex justify-content-sm-center">
                 <form id="navbarSearchForm" class="mb-0 me-lg-3 me-sm-0 me-md-0 float-lg-none float-md-end float-sm-end" method="GET">
                     <div class="input-group d-flex ">
-                        <button id="navbarSearchType" class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Utente</button>
+                        <button id="navbarSearchType" class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Utente</button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#" id="navbarSearchBlog">Blog</a></li>
                             <li><a class="dropdown-item" href="#" id="navbarSearchUser">Utente</a></li>
                         </ul>
                         <input type="text" id="navbarSearchText" class="form-control" aria-label="navbarSearch">
-                        <input class="btn btn-outline-success form-control" type="submit" value="Cerca">
+                        <input class="btn btn-outline-primary form-control" type="submit" value="Cerca">
                     </div>
                 </form>
                 <ul class="navbar-nav ml-auto d-flex justify-content-center align-content-center flex-md-row flex-sm-column ms-md-2">

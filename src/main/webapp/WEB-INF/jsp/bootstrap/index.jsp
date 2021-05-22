@@ -21,10 +21,8 @@
                 <img src="${pageContext.request.contextPath}/images/logo.png" class="scale-on-hover d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
             </div>
             <div class="col-lg-6">
-                <h1 class="display-5 fw-bold lh-1 mb-3">Lorem ipsum</h1>
-                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus alias cupiditate,
-                    dignissimos excepturi ipsa mollitia nam pariatur perspiciatis placeat quisquam, suscipit temporibus
-                    ullam, voluptatibus voluptatum.</p>
+                <h1 class="display-5 fw-bold lh-1 mb-3">TomMASO</h1>
+                <p class="lead">TomMASO è una piattaforma semplice e user-friendly che permette agli utenti registrati di creare un proprio spazio tramite l’utilizzo di un’intuitiva interfaccia grafica. TomMASO è indirizzato a tutti quegli utenti che hanno competenze minime nello svilluppo web. Si è resa possibile la creazione di spazi personali anche da smartphone e tablet grazie alla tecnologia adoperata che rende la piattaforma completamente responsive.</p>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                     <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" data-bs-toggle="modal" data-bs-target="#navbarRegister">Inizia subito</button>
                 </div>
@@ -62,7 +60,7 @@
         </div>
     </section>
 
-    <!-- Prezzi -->
+    <!-- Prezzi
     <div class="container py-3">
         <section>
             <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
@@ -127,7 +125,7 @@
                 </div>
             </div>
         </main>    
-    </div>
+    </div> -->
     <%@ include file="general/footer.jsp"%>
     <%@ include file="general/tailTag.jsp"%>
 </body>
