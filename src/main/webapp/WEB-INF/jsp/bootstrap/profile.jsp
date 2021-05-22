@@ -94,9 +94,9 @@
                         <%if(blog.hasAccess(ses.getUtente())){%>
                         <div class="card-footer d-grid w-100">
                             <div class="row">
-                                <a class="col-4 px-0" href="${pageContext.request.contextPath}/blog-manage/<%=blog.getNome()%>"><button type="button" class="col-12 btn btn-outline-primary"><i class="fas fa-code"></i></button></a>
-                                <button data-bs-toggle="modal" data-bs-target="#renameBlogModal" type="button" class="ren-btn col-4 btn btn-outline-warning" blog-name="<%=blog.getNome()%>"><i class="fas fa-pen"></i></button>
-                                <button data-bs-toggle="modal" data-bs-target="#deleteModal" type="button" class="del-btn col-4 btn btn-outline-danger" blog-name="<%=blog.getNome()%>"><i class="fas fa-trash"></i></button>
+                                <a class="col-4 px-0" href="${pageContext.request.contextPath}/blog-manage/<%=blog.getNome()%>"><button type="button" class="code-anim col-12 btn btn-outline-primary"><i class="fas fa-code"></i></button></a>
+                                <button data-bs-toggle="modal" data-bs-target="#renameBlogModal" type="button" class="write-anim ren-btn col-4 btn btn-outline-warning" blog-name="<%=blog.getNome()%>"><i class="fas fa-pen"></i></button>
+                                <button data-bs-toggle="modal" data-bs-target="#deleteModal" type="button" class="delete-anim del-btn col-4 btn btn-outline-danger" blog-name="<%=blog.getNome()%>"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
                         <%}%>

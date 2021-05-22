@@ -318,6 +318,104 @@
     }
 }
 
+.code-anim:hover > svg {
+    -webkit-animation: code 0.5s linear both;
+    animation: code 0.5s linear both;
+}
+
+@-webkit-keyframes code {
+    0% {
+        -webkit-transform: translateX(0) rotateY(0) scale(1);
+        transform: translateX(0) rotateY(0) scale(1);
+        -webkit-transform-origin: 0% 50%;
+        transform-origin: 0% 50%;
+    }
+    50% {
+        -webkit-transform: translateX(-50%) rotateY(90deg) scale(2);
+        transform: translateX(-50%) rotateY(90deg) scale(2);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+    100% {
+        -webkit-transform: translateX(-100%) rotateY(180deg) scale(1);
+        transform: translateX(-100%) rotateY(180deg) scale(1);
+        -webkit-transform-origin: 100% 50%;
+        transform-origin: 100% 50%;
+    }
+}
+@keyframes code {
+    0% {
+        -webkit-transform: translateX(0) rotateY(0) scale(1);
+        transform: translateX(0) rotateY(0) scale(1);
+        -webkit-transform-origin: 0% 50%;
+        transform-origin: 0% 50%;
+    }
+    50% {
+        -webkit-transform: translateX(-50%) rotateY(90deg) scale(2);
+        transform: translateX(-50%) rotateY(90deg) scale(2);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+    100% {
+        -webkit-transform: translateX(-100%) rotateY(180deg) scale(1);
+        transform: translateX(-100%) rotateY(180deg) scale(1);
+        -webkit-transform-origin: 100% 50%;
+        transform-origin: 100% 50%;
+    }
+}
+
+
+.template{
+    width: 100%;
+    border-bottom: solid;
+    overflow: hidden;
+    border-bottom-color: gray;
+    margin-bottom: 25px;
+}
+
+.name{
+    width: 70%;
+    float: left;
+}
+
+.senda{
+    background: none;
+    text-decoration-color: red;
+    border-color: red;
+    border-radius: 25px;
+}
+
+.sendn{
+    background: none;
+    text-decoration-color: green;
+    border-color: green;
+    border-radius: 25px;
+}
+
+.senda:hover{
+    background: red;
+    text-decoration-color: white;
+}
+
+.sendn:hover{
+    background: green;
+    text-decoration-color: white;
+}
+
+.send{
+    position: relative;
+    float: left;
+    width: 30%;
+    overflow: hidden;
+}
+
+.container-ricerca{
+    border: solid;
+    border-radius: 25px;
+    border-color: gray;
+    margin-bottom: 10px;
+}
+
 .template{
     width: 100%;
     border-bottom: solid;
