@@ -17,7 +17,7 @@ public class UserEndpoint {
             writer.name(ApiManager.ERROR_PROP).value("Utente non trovato");
             return;
         }
-        Queries.changeRole(u,true);
+        Queries.changeRole2(u,true);
         writer.name(ApiManager.OK_PROP).value("ok");
     };
     private static final ApiEndpoint.Manage ADMIN_DEL_ACTION= (parser, writer, user) -> {
@@ -27,7 +27,7 @@ public class UserEndpoint {
             writer.name(ApiManager.ERROR_PROP).value("Utente non trovato");
             return;
         }
-        Queries.changeRole(u,false);
+        Queries.changeRole2(u,false);
         writer.name(ApiManager.OK_PROP).value("ok");
     };
 
