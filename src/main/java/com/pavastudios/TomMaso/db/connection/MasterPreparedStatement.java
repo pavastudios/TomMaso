@@ -71,11 +71,10 @@ public class MasterPreparedStatement {
         return rs;
     }
 
-    public ResultSet executeUpdate() throws SQLException {
+    public void executeUpdate() throws SQLException {
         printQuery(false);
         int count = this.stmt.executeUpdate();
         System.out.format(Locale.US, "U: %d rows\n\n", count);
-        return null;
     }
 
     public ResultSet getGeneratedKeys() throws SQLException {

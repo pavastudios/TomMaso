@@ -3,11 +3,12 @@ package com.pavastudios.TomMaso.db.connection;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import org.jetbrains.annotations.NotNull;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-
-import static com.pavastudios.TomMaso.db.DatiConnessione.JDBC_STRING;
 
 @SuppressWarnings("unused")
 public class GlobalConnection {
@@ -16,10 +17,14 @@ public class GlobalConnection {
     private static boolean initialized = false;
 
     static {
+
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection(JDBC_STRING);
-        } catch (SQLException e) {
+            Context initCtx = new InitialContext();
+            Context encCtx=(Context)initCtx.lookup("java:comp/env");
+            DataSource ds= (DataSource) encCtx.lookup("jdbc/tommaso");
+            conn = ds.getConnection();
+        } catch (SQLException | NamingException e) {
             e.printStackTrace();
         }
         CONNECTION = new MasterConnection(conn);
