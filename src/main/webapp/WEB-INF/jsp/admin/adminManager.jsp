@@ -26,10 +26,11 @@
 
 
 
-<div class="container">
+<div>
   <div class="row justify-content-center">
 
-    <div id="ricerca" class="ricerca col-12 col-md-6">
+    <div id="ricerca" class="container-ricerca col-12 col-md-5">
+      <b>Ricerca:</b>
       <div class="input">
         <input type="text" id="nomee">
         <button id="cerca"  onclick="greve()">Cerca</button>
@@ -40,7 +41,11 @@
       </div>
     </div>
 
-    <div id="lista"  class="lista col-12 col-md-6">
+    <div class="container-ricerca col-12 col-md-5">
+      <b>Admins:</b>
+      <div id="lista">
+
+      </div>
 
     </div>
 
@@ -53,9 +58,10 @@
    function greve(){
    $.ajax({
      type: 'POST',
-     url: '${pageContext.request.contextPath}/cerca-admin',
+     url: '${pageContext.request.contextPath}/cerca-admin<%=request.getAttribute("rewrite")%>',
       data: {
         "nome": $("#nomee").val(),
+        "admin":"false",
       },
       success: function (data) {
         console.log(data);
@@ -71,9 +77,10 @@
      const time=Date.now();
      $.ajax({
        type: 'POST',
-       url: '${pageContext.request.contextPath}/cerca-admin',
+       url: '${pageContext.request.contextPath}/cerca-admin<%=request.getAttribute("rewrite")%>',
        data: {
          "nome": null,
+         "admin":"true",
        },
        success: function (data) {
          console.log(data);
@@ -83,7 +90,7 @@
          $('#lista').html(data)
        }
      });
-   }, 5000); //1 second
+   }, 2000); //5 second
 </script>
 
 <%@include file="../bootstrap/general/footer.jsp"%>

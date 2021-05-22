@@ -54,7 +54,7 @@ public class MarkdownFileServlet extends MasterServlet{
         if(!path.endsWith(".md")){
             path+=".md";
         }
-        resp.sendRedirect(getServletContext().getContextPath()+"/blogs"+path);
+        resp.sendRedirect(resp.encodeRedirectURL(getServletContext().getContextPath()+"/blogs"+path));
         return ;
     }
 

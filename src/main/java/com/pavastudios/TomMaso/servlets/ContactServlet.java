@@ -26,7 +26,7 @@ public class ContactServlet extends MasterServlet{
 
         Chat chat=Queries.findChatByUsers(session.getUtente(),receiver);
         if(chat!=null){
-            resp.sendRedirect(getServletContext().getContextPath()+"/chat?id="+chat.getIdChat());
+            resp.sendRedirect(resp.encodeRedirectURL(getServletContext().getContextPath()+"/chat?id="+chat.getIdChat()));
             return;
         }
         chat = Queries.createChat(session.getUtente(),receiver);
@@ -34,7 +34,7 @@ public class ContactServlet extends MasterServlet{
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Impossibile creare chat");
             return;
         }
-        resp.sendRedirect(getServletContext().getContextPath()+"/chat?id="+chat.getIdChat());
+        resp.sendRedirect(resp.encodeRedirectURL(getServletContext().getContextPath()+"/chat?id="+chat.getIdChat()));
     }
 
     @Override

@@ -250,7 +250,7 @@
         var blogname=$("#blogname").first().val();
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/create',
+            url: '${pageContext.request.contextPath}/api/blog/create<%=request.getAttribute("rewrite")%>',
             data: { name: blogname },
             success: function (data) {
                 console.log(data);
@@ -269,7 +269,7 @@
         var newname=$("#renameForm").val();
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/rename',
+            url: '${pageContext.request.contextPath}/api/blog/rename<%=request.getAttribute("rewrite")%>',
             data: {
                 "from-name": oldname,
                 "to-name": newname
@@ -288,7 +288,7 @@
     $("#confirm-delete").click(function (){
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/delete-blog',
+            url: '${pageContext.request.contextPath}/api/blog/delete-blog<%=request.getAttribute("rewrite")%>',
             data: { "blog-name": $("#deleteBlogHid").text() },
             success: function (data) {
                 console.log(data);

@@ -317,3 +317,54 @@
         transform: translate3d(4px, 0, 0);
     }
 }
+
+.template{
+    width: 100%;
+    border-bottom: solid;
+    overflow: hidden;
+    border-bottom-color: gray;
+    margin-bottom: 25px;
+}
+
+.name{
+    width: 70%;
+    float: left;
+}
+
+.senda{
+    background: none;
+    text-decoration-color: red;
+    border-color: red;
+    border-radius: 25px;
+}
+
+.sendn{
+    background: none;
+    text-decoration-color: green;
+    border-color: green;
+    border-radius: 25px;
+}
+
+.senda:hover{
+    background: red;
+    text-decoration-color: white;
+}
+
+.sendn:hover{
+    background: green;
+    text-decoration-color: white;
+}
+
+.send{
+    position: relative;
+    float: left;
+    width: 30%;
+    overflow: hidden;
+}
+
+.container-ricerca{
+    border: solid;
+    border-radius: 25px;
+    border-color: gray;
+    margin-bottom: 10px;
+}

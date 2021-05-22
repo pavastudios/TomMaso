@@ -15,7 +15,7 @@
         const blogname = $("#blognameNavbar").val();
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/create',
+            url: '${pageContext.request.contextPath}/api/blog/create<%=request.getAttribute("rewrite")%>',
             data: { name: blogname },
             success: function (data) {
                 console.log(data);
@@ -32,7 +32,7 @@
         const remember = $("#remember-login").is(":checked") ? "on" : ""
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/login',
+            url: '${pageContext.request.contextPath}/login<%=request.getAttribute("rewrite")%>',
             data: {
                 username: username,
                 password: password,
@@ -56,7 +56,7 @@
         const remember = $("#remember-register").is(":checked") ? "on" : ""
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/sign-up',
+            url: '${pageContext.request.contextPath}/sign-up<%=request.getAttribute("rewrite")%>',
             data: {
                 username: username,
                 password1: password1,
@@ -77,7 +77,7 @@
         const email = $("#recover-mail").val();
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/forgot',
+            url: '${pageContext.request.contextPath}/forgot<%=request.getAttribute("rewrite")%>',
             data: {
                 email: email,
             },
@@ -96,7 +96,7 @@
         const psw2 = $("password2").val();
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/forgot',
+            url: '${pageContext.request.contextPath}/forgot<%=request.getAttribute("rewrite")%>',
             data: {
                 password1: psw1,
                 password2: psw2,
@@ -121,9 +121,9 @@
     function updateActionSearch(){
         const query=$("#navbarSearchText").val();
         if(isUser){
-            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/user/"+query);
+            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/user/"+query+"<%=request.getAttribute("rewrite")%>");
         }else{
-            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/home/"+query);
+            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/home/"+query+"<%=request.getAttribute("rewrite")%>");
         }
     }
 
@@ -140,7 +140,16 @@
     $("#navbarSearchText").change(function () {
         updateActionSearch();
     });
+    function urlRewriteTag(tagName){
+        $("["+tagName+"]").each(function () {
+            if($(this).attr(tagName)==="#")return;
+            $(this).attr(tagName,$(this).attr(tagName)+"<%=request.getAttribute("rewrite")%>");
+        });
+    }
     $(function (){
         updateActionSearch();
+        urlRewriteTag("href");
+        urlRewriteTag("src");
+        urlRewriteTag("action");
     });
 </script>

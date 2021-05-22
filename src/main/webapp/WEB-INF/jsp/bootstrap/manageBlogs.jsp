@@ -220,7 +220,7 @@
         const url = $("#deleteBlogHid").val();
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/delete',
+            url: '${pageContext.request.contextPath}/api/blog/delete<%=request.getAttribute("rewrite")%>',
             data: {
                 "url": url,
             },
@@ -236,7 +236,7 @@
         var toUrl=$("#moveBlog").val();
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/move',
+            url: '${pageContext.request.contextPath}/api/blog/move<%=request.getAttribute("rewrite")%>',
             data: {
                 "from-url": fromUrl,
                 "to-url": toUrl
@@ -254,7 +254,7 @@
         var dirName=$("#dirName").val();
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/create-dir',
+            url: '${pageContext.request.contextPath}/api/blog/create-dir<%=request.getAttribute("rewrite")%>',
             data: {
                 "parent-dir": parentDir,
                 "dir-name": dirName

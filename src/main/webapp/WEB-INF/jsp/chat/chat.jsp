@@ -79,7 +79,7 @@
   $(function () {
     $.ajax({
       type: 'POST',
-      url: '${pageContext.request.contextPath}/api/chat/fetch-chat',
+      url: '${pageContext.request.contextPath}/api/chat/fetch-chat<%=request.getAttribute("rewrite")%>',
       data: {
         "chat-id": $("#chat-id").val()
       }, success: function (data) {
@@ -103,7 +103,7 @@
     //document.getElementById("chat").innerHTML=this.responseText;
     $.ajax({
       type: 'POST',
-      url: '${pageContext.request.contextPath}/api/chat/fetch-from-id',
+      url: '${pageContext.request.contextPath}/api/chat/fetch-from-id<%=request.getAttribute("rewrite")%>',
       data: {
         "chat-id": $("#chat-id").val(),
         "from-id": lastUpdated,
@@ -129,7 +129,7 @@
   $("#invia").click(function () {
     $.ajax({
       type: 'POST',
-      url: '${pageContext.request.contextPath}/api/chat/send-message',
+      url: '${pageContext.request.contextPath}/api/chat/send-message<%=request.getAttribute("rewrite")%>',
       data: {
         "chat-id": $("#chat-id").val(),
         "message": $("#messaggio").val(),
