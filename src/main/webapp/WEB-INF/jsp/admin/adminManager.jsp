@@ -26,10 +26,11 @@
 
 
 
-<div class="container">
+<div>
   <div class="row justify-content-center">
 
-    <div id="ricerca" class="ricerca col-12 col-md-6">
+    <div id="ricerca" class="container-ricerca col-12 col-md-5">
+      <b>Ricerca:</b>
       <div class="input">
         <input type="text" id="nomee">
         <button id="cerca"  onclick="greve()">Cerca</button>
@@ -40,7 +41,11 @@
       </div>
     </div>
 
-    <div id="lista"  class="lista col-12 col-md-6">
+    <div class="container-ricerca col-12 col-md-5">
+      <b>Admins:</b>
+      <div id="lista">
+
+      </div>
 
     </div>
 
