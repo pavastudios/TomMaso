@@ -99,6 +99,7 @@
                                 <a class="pt-3 link-primary" href="#" data-bs-toggle="modal" data-bs-target="#navInsertMail">Password dimenticata?</a>
                             </div>
                         </div>
+                        <p class="text-danger modal-error"></p>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -139,6 +140,7 @@
                             </label>
                         </div>
                     </form>
+                    <p class="text-danger modal-error"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
@@ -159,6 +161,8 @@
                 <div class="mt-3 mb-3 ms-3 me-3">
                     <input id="recover-mail" name="recover-mail" type="email" class="form-control" placeholder="Email di recupero" aria-label="Email di recupero">
                 </div>
+                <a class="ms-auto link-primary ms-3 me-3" href="#" data-bs-toggle="modal" data-bs-target="#navRecuperaPsw">Hai già un codice?</a>
+                <p class="text-danger modal-error"></p>
                 <div class="modal-footer">
                     <button class="btn btn-primary" id="recoverPsw">Invia</button>
                 </div>
@@ -182,9 +186,10 @@
                     <div class="mt-3 mb-3 ms-3 me-3">
                         <input id="password2" name="recover-psw2" type="password" class="form-control" placeholder="Ripeti nuova password" aria-label="Ripeti nuova password">
                     </div>
+                    <p class="text-danger modal-error"></p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" id="sendMail">Back to first</button>
+                    <button class="btn btn-primary" id="sendMail">Cambia</button>
                 </div>
             </div>
         </div>
@@ -207,7 +212,7 @@
                             <input type="text" name="name" id="blognameNavbar" maxlength="50">
                         </div>
                     </div>
-
+                    <p class="text-danger modal-error"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -20,6 +20,10 @@
             success: function (data) {
                 console.log(data);
                 navbarModel.hide();
+                if (data["error"] !== undefined){
+                    $(".modal-error").show();
+                    $(".modal-error").text(data["error"]);
+                }
             }
         });
     });
@@ -42,6 +46,10 @@
                 console.log(data);
                 navbarLogin.hide();
                 location.reload();
+            },
+            error: function (data) {
+                $(".modal-error").show();
+                $(".modal-error").text("Login fallito");
             }
         });
     });
@@ -68,6 +76,10 @@
                 console.log(data);
                 navbarRegister.hide();
                 location.reload();
+                if (data["error"] !== undefined){
+                    $(".modal-error").show();
+                    $(".modal-error").text(data["error"]);
+                }
             }
         });
     });
@@ -85,6 +97,10 @@
                 console.log(data);
                 navbarRecover.hide();
                 navRecuperaPsw.show();
+                if (data["error"] !== undefined){
+                    $(".modal-error").show();
+                    $(".modal-error").text(data["error"]);
+                }
             }
         });
     });
@@ -92,8 +108,8 @@
     const navRecuperaPsw = new bootstrap.Modal(document.getElementById('navRecuperaPsw'));
     $("#sendMail").click(function () {
         const code = $("#code").val();
-        const psw1 = $("password1").val();
-        const psw2 = $("password2").val();
+        const psw1 = $("#password1").val();
+        const psw2 = $("#password2").val();
         $.ajax({
             type: 'POST',
             url: '${pageContext.request.contextPath}/forgot<%=request.getAttribute("rewrite")%>',
@@ -105,6 +121,10 @@
             success: function (data) {
                 console.log(data);
                 navRecuperaPsw.hide();
+                if (data["error"] !== undefined){
+                    $(".modal-error").show();
+                    $(".modal-error").text(data["error"]);
+                }
             }
         });
     });

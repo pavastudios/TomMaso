@@ -134,7 +134,7 @@
                         <input type="text" name="name" id="blogname" maxlength="50">
                     </div>
                 </div>
-
+                <p class="text-danger modal-error"></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
@@ -155,8 +155,8 @@
                 <p class="lead">Inserisci il nuovo nome:</p>
                 <input type="text" name="name" id="renameFormHid" hidden>
                 <input type="text" name="name" id="renameForm" class="input-text" maxlength="50">
-
             </div>
+            <p class="text-danger modal-error"></p>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
                 <button type="button" class="btn btn-primary" id="rename-blog-ok">Rinomina</button>
@@ -176,6 +176,7 @@
                 Eliminare il blog selezionato?
                 <input type="text" id="deleteBlogHid" value="" hidden/>
             </div>
+            <p class="text-danger modal-error"></p>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
                 <button type="button" class="btn btn-danger" id="confirm-delete">Elimina</button>
@@ -216,6 +217,7 @@
                         <input name="propic" accept="image/*" type="file" class="form-control" placeholder="Nuova foto profilo">
                     </div>
                 </form>
+                <p class="text-danger modal-error"></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
@@ -256,6 +258,10 @@
                 console.log(data);
                 if(data["error"]===undefined)
                     location.reload();
+                else {
+                    $(".modal-error").show();
+                    $(".modal-error").text(data["error"]);
+                }
             }
         });
     });
@@ -278,6 +284,10 @@
                 console.log(data);
                 if(data["error"]===undefined)
                     location.reload();
+                else {
+                    $(".modal-error").show();
+                    $(".modal-error").text(data["error"]);
+                }
             }
         });
     });
@@ -294,6 +304,10 @@
                 console.log(data);
                 if(data["error"]===undefined)
                     location.reload();
+                else {
+                    $(".modal-error").show();
+                    $(".modal-error").text(data["error"]);
+                }
             }
         });
     });

@@ -72,6 +72,10 @@ public class ForgotServlet extends MasterServlet {
             return;
         }
         Utente user = Queries.findUserFromForgot(code);
+        if (user == null) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Codice errato");
+            return;
+        }
         try {
             Queries.changePassword(user, password1);
             Queries.deleteForget(code);

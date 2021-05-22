@@ -70,8 +70,11 @@
             },
             success: function (data) {
                 console.log(data);
-                if(data["error"]!==undefined)
+                if (data["error"] !== undefined){
+                    $(".modal-error").show();
+                    $(".modal-error").text(data["error"]);
                     return;
+                }
                 foundBtn.text(data["response"]["username"]);
                 foundBtn.show();
             }

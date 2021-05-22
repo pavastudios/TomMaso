@@ -67,6 +67,10 @@
         console.log(data);
         if(data["error"]!==undefined)
           return;
+        if (data["error"] !== undefined){
+          $(".modal-error").show();
+          $(".modal-error").text(data["error"]);
+        }
 
         $('#output').html(data)
       }
@@ -84,8 +88,12 @@
        },
        success: function (data) {
          console.log(data);
-         if(data["error"]!==undefined)
-           return;
+         if (data["error"] !== undefined){
+           $(".modal-error").show();
+           $(".modal-error").text(data["error"]);
+           return
+         }
+
 
          $('#lista').html(data)
        }

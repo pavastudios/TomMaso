@@ -84,8 +84,11 @@
         "chat-id": $("#chat-id").val()
       }, success: function (data) {
         console.log(data);
-        if(data["error"]!==undefined)
-          return;
+        if (data["error"] !== undefined){
+          $(".modal-error").show();
+          $(".modal-error").text(data["error"]);
+          return
+        }
         data=data["response"];
         lastUpdated=data[data.length-1]["id"];
         for(let i=0; i<data.length; i++){
@@ -110,8 +113,11 @@
       },
       success: function (data) {
         console.log(data);
-        if(data["error"]!==undefined)
+        if (data["error"] !== undefined){
+          $(".modal-error").show();
+          $(".modal-error").text(data["error"]);
           return;
+        }
         data=data["response"];
         if(data.length==0)return;
         lastUpdated=data[data.length-1]["id"];
@@ -136,8 +142,11 @@
       },
       success: function (data) {
         console.log(data);
-        if(data["error"]!==undefined)
+        if (data["error"] !== undefined){
+          $(".modal-error").show();
+          $(".modal-error").text(data["error"]);
           return;
+        }
         data=data["response"];
         addMessage(data);
         jdenticon();

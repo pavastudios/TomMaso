@@ -136,6 +136,7 @@
                             <input name="file" type="file" class="form-control" id="file" placeholder="Carica file" required>
                             <input class="btn btn-primary" type="submit" value="Carica"></input>
                         </div>
+                        <p class="text-danger modal-error" hidden></p>
                     </form>
                 </fieldset>
                 <div class="separatore">oppure</div>
@@ -146,6 +147,7 @@
                             <input type="text" id="titleMD" class="form-control" placeholder="Inserisci titolo" aria-label="Inserisci titolo" aria-describedby="insert_title" maxlength="50">
                             <input class="btn btn-primary" type="submit" value="Crea" />
                         </div>
+                        <p class="text-danger modal-error"></p>
                     </form>
                 </fieldset>
                 <div class="separatore">oppure</div>
@@ -157,6 +159,7 @@
                             <input type="text"  name="dir-name" id="dirName" class="form-control" placeholder="Inserisci nome cartella" aria-label="Inserisci nome cartella" aria-describedby="insert_title" maxlength="20">
                             <input class="btn btn-primary" type="button" value="Crea" id="createDirConfirm"/>
                         </div>
+                        <p class="text-danger modal-error"></p>
                     </form>
                 </fieldset>
             </div>
@@ -176,6 +179,7 @@
                 <form action="#" method="post">
                     <input type="text" name="from-name" id="moveBlogHid" hidden>
                     <input type="text" name="to-name" id="moveBlog" maxlength="255">
+                    <p class="text-danger modal-error"></p>
                 </form>
             </div>
             <div class="modal-footer">
@@ -196,6 +200,7 @@
             <div class="modal-body">
                 Eliminare il file?
                 <input type="text" id="deleteBlogHid" value="" hidden/>
+                <p class="text-danger modal-error"></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -228,6 +233,10 @@
                 console.log(data);
                 if(data["error"]===undefined)
                     location.reload();
+                if (data["error"] !== undefined){
+                    $(".modal-error").show();
+                    $(".modal-error").text(data["error"]);
+                }
             }
         });
     });
@@ -245,6 +254,10 @@
                 console.log(data);
                 if(data["error"]===undefined)
                     location.reload();
+                if (data["error"] !== undefined){
+                    $(".modal-error").show();
+                    $(".modal-error").text(data["error"]);
+                }
             }
         });
     });
@@ -263,6 +276,10 @@
                 console.log(data);
                 if(data["error"]===undefined)
                     location.reload();
+                if (data["error"] !== undefined){
+                    $(".modal-error").show();
+                    $(".modal-error").text(data["error"]);
+                }
             }
         });
     });
