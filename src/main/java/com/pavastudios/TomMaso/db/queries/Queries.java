@@ -434,6 +434,7 @@ public class Queries {
     }
 
     public static void changeRole(Utente u) throws SQLException {
+        if(u==null)return;
         if(u.getIsAdmin()) CHANGE_ROLE_USER.setInt(1,0);
         else CHANGE_ROLE_USER.setInt(1,1);
 

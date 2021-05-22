@@ -20,7 +20,7 @@ import java.util.List;
 public class CercaUtentiAdmin  extends MasterServlet {
 
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        if(session.getUtente().getIsAdmin()){
+
             List<Utente> admin =new ArrayList<>();
             if(req.getParameter("admin").equals("true")){
 
@@ -33,7 +33,7 @@ public class CercaUtentiAdmin  extends MasterServlet {
 
             req.setAttribute("result",admin);
             getServletContext().getRequestDispatcher("/WEB-INF/jsp/admin/adimResult.jsp").forward(req, resp);
-        } else resp.sendError(403);
+
     }
 
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {

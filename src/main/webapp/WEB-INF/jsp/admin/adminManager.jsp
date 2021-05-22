@@ -75,7 +75,7 @@
         $('#output').html(data)
       }
     });
-    };
+    }
 
    setInterval(function() {
      const time=Date.now();

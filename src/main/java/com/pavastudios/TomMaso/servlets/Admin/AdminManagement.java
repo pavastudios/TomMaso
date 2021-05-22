@@ -12,12 +12,8 @@ import java.sql.SQLException;
 public class AdminManagement extends MasterServlet {
 
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        if(session.getUtente().getIsAdmin()){
-            getServletContext().getRequestDispatcher("/WEB-INF/jsp/admin/adminManager.jsp").forward(req, resp);
-        } else resp.sendError(403);
+        //servlet protetta da tomcat
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/admin/adminManager.jsp").forward(req, resp);
     }
 
-    protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-    doGet(session,req,resp);
-    }
 }

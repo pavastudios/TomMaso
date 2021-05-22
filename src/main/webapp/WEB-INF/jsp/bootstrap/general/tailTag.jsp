@@ -137,6 +137,7 @@
 </script>
 
 <script>
+
     var isUser=true;
     function updateActionSearch(){
         const query=$("#navbarSearchText").val();
@@ -161,15 +162,18 @@
         updateActionSearch();
     });
     function urlRewriteTag(tagName){
+        const x="<%=request.getAttribute("rewrite")%>";
         $("["+tagName+"]").each(function () {
             if($(this).attr(tagName)==="#")return;
-            $(this).attr(tagName,$(this).attr(tagName)+"<%=request.getAttribute("rewrite")%>");
+            $(this).attr(tagName,$(this).attr(tagName)+x);
         });
     }
     $(function (){
         updateActionSearch();
-        urlRewriteTag("href");
-        urlRewriteTag("src");
-        urlRewriteTag("action");
+        if("<%=request.getAttribute("rewrite")%>"!=="") {
+            urlRewriteTag("href");
+            urlRewriteTag("src");
+            urlRewriteTag("action");
+        }
     });
 </script>

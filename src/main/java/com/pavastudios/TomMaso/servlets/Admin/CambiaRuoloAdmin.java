@@ -14,10 +14,10 @@ import java.sql.SQLException;
 public class CambiaRuoloAdmin extends MasterServlet {
 
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        if(session.getUtente().getIsAdmin()){
+
             Utente u= Queries.findUserByUsername(req.getParameter("nome"));
             Queries.changeRole(u);
-        } else resp.sendError(403);
+
     }
 
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
