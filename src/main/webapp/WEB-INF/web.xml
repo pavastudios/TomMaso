@@ -7,7 +7,7 @@
     <!--Blog-->
     <servlet>
         <servlet-name>TopBlogServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.blog.TopBlogServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.blog.TopBlogServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>TopBlogServlet</servlet-name>
@@ -15,7 +15,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>HomeBlogServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.blog.HomeBlogServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.blog.HomeBlogServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeBlogServlet</servlet-name>
@@ -23,7 +23,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>BlogManagerServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.blog.BlogManagerServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.blog.BlogManagerServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>BlogManagerServlet</servlet-name>
@@ -31,7 +31,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>EditPageServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.blog.EditPageServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.blog.EditPageServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>EditPageServlet</servlet-name>
@@ -39,7 +39,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>BlogUploaderServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.blog.BlogUploaderServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.blog.BlogUploaderServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>BlogUploaderServlet</servlet-name>
@@ -51,7 +51,7 @@
     <!--User-->
     <servlet>
         <servlet-name>ForgotServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.user.ForgotServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.user.ForgotServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ForgotServlet</servlet-name>
@@ -59,7 +59,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.user.LoginServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.user.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -67,7 +67,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.user.LogoutServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.user.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
@@ -75,7 +75,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ProfileServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.user.ProfileServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.user.ProfileServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ProfileServlet</servlet-name>
@@ -85,7 +85,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.user.RegisterServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.user.RegisterServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
@@ -93,7 +93,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>UpdateUserServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.user.UpdateUserServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.user.UpdateUserServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateUserServlet</servlet-name>
@@ -103,7 +103,7 @@
     <!--General-->
     <servlet>
         <servlet-name>ApiServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.global.ApiServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.global.ApiServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ApiServlet</servlet-name>
@@ -111,7 +111,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>IndexServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.global.IndexServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.global.IndexServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
@@ -119,7 +119,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>MarkdownFileServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.blog.MDFileServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.blog.MDFileServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MarkdownFileServlet</servlet-name>
@@ -127,7 +127,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>MDEditorServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.blog.MDEditorServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.blog.MDEditorServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MDEditorServlet</servlet-name>
@@ -135,7 +135,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ViewerServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.global.ViewerServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.global.ViewerServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ViewerServlet</servlet-name>
@@ -144,7 +144,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ChiSiamoServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.global.ChiSiamoServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.global.ChiSiamoServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChiSiamoServlet</servlet-name>
@@ -152,7 +152,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ContactServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.chat.ContactServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.chat.ContactServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ContactServlet</servlet-name>
@@ -160,7 +160,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ChatListServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.chat.ChatListServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.chat.ChatListServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChatListServlet</servlet-name>
@@ -168,7 +168,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ChatServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.chat.ChatServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.chat.ChatServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChatServlet</servlet-name>
@@ -177,7 +177,7 @@
 
     <servlet>
         <servlet-name>AdminManagement</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.admin.AdminServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.admin.AdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AdminManagement</servlet-name>
@@ -187,7 +187,7 @@
 
     <servlet>
         <servlet-name>CercaUtentiAdmin</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.admin.CercaUtentiServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.admin.CercaUtentiServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CercaUtentiAdmin</servlet-name>
@@ -196,7 +196,7 @@
 
     <servlet>
         <servlet-name>CambiaRuoloAdmin</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.servlets.admin.CambiaRuoloServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.control.admin.CambiaRuoloServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CambiaRuoloAdmin</servlet-name>

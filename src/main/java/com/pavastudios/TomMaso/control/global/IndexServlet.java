@@ -1,9 +1,8 @@
-package com.pavastudios.TomMaso.servlets.global;
+package com.pavastudios.TomMaso.control.global;
 
-import com.pavastudios.TomMaso.servlets.MasterServlet;
+import com.pavastudios.TomMaso.control.MasterServlet;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

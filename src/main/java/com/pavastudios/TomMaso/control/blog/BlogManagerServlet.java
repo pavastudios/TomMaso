@@ -1,7 +1,7 @@
-package com.pavastudios.TomMaso.servlets.blog;
+package com.pavastudios.TomMaso.control.blog;
 
+import com.pavastudios.TomMaso.control.MasterServlet;
 import com.pavastudios.TomMaso.model.Blog;
-import com.pavastudios.TomMaso.servlets.MasterServlet;
 import com.pavastudios.TomMaso.utility.FileUtility;
 import com.pavastudios.TomMaso.utility.Session;
 
@@ -40,7 +40,7 @@ public class BlogManagerServlet extends MasterServlet {
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         Blog blog = Blog.fromPathInfo(req.getPathInfo());
         File file = FileUtility.blogPathToFile(req.getPathInfo());
-        if (blog==null||!session.isLogged() || !blog.hasAccess(session.getUtente())) {
+        if (blog == null || !session.isLogged() || !blog.hasAccess(session.getUtente())) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "utente non loggato o non proprietario");
             return;
         }
@@ -48,7 +48,7 @@ public class BlogManagerServlet extends MasterServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "File non trovato");
             return;
         }
-        if(file.isFile()){
+        if (file.isFile()) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Impossibile gestire un file");
             return;
         }

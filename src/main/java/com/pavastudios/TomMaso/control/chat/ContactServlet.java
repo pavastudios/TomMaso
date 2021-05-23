@@ -1,9 +1,9 @@
-package com.pavastudios.TomMaso.servlets.chat;
+package com.pavastudios.TomMaso.control.chat;
 
+import com.pavastudios.TomMaso.control.MasterServlet;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Chat;
 import com.pavastudios.TomMaso.model.Utente;
-import com.pavastudios.TomMaso.servlets.MasterServlet;
 import com.pavastudios.TomMaso.utility.Session;
 import com.pavastudios.TomMaso.utility.Utility;
 
@@ -17,25 +17,25 @@ public class ContactServlet extends MasterServlet {
 
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        String user=req.getParameter("receiver");
-        int userId= Utility.tryParseInt(user,-1);
+        String user = req.getParameter("receiver");
+        int userId = Utility.tryParseInt(user, -1);
         Utente receiver = Queries.findUserById(userId);
-        if(receiver==null){
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"receiver invalido");
+        if (receiver == null) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "receiver invalido");
             return;
         }
 
-        Chat chat=Queries.findChatByUsers(session.getUtente(),receiver);
-        if(chat!=null){
-            resp.sendRedirect(resp.encodeRedirectURL(getServletContext().getContextPath()+"/chat?id="+chat.getIdChat()));
+        Chat chat = Queries.findChatByUsers(session.getUtente(), receiver);
+        if (chat != null) {
+            resp.sendRedirect(resp.encodeRedirectURL(getServletContext().getContextPath() + "/chat?id=" + chat.getIdChat()));
             return;
         }
-        chat = Queries.createChat(session.getUtente(),receiver);
-        if(chat==null){
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Impossibile creare chat");
+        chat = Queries.createChat(session.getUtente(), receiver);
+        if (chat == null) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Impossibile creare chat");
             return;
         }
-        resp.sendRedirect(resp.encodeRedirectURL(getServletContext().getContextPath()+"/chat?id="+chat.getIdChat()));
+        resp.sendRedirect(resp.encodeRedirectURL(getServletContext().getContextPath() + "/chat?id=" + chat.getIdChat()));
     }
 
     @Override

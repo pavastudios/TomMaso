@@ -21,8 +21,8 @@ public class GlobalConnection {
         Connection conn = null;
         try {
             Context initCtx = new InitialContext();
-            Context encCtx=(Context)initCtx.lookup("java:comp/env");
-            DataSource ds= (DataSource) encCtx.lookup("jdbc/tommaso");
+            Context encCtx = (Context) initCtx.lookup("java:comp/env");
+            DataSource ds = (DataSource) encCtx.lookup("jdbc/tommaso");
             conn = ds.getConnection();
         } catch (SQLException | NamingException e) {
             e.printStackTrace();

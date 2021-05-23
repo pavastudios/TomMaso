@@ -84,8 +84,8 @@ public class Chat implements GenericModel {
     }
 
 
-    public Utente otherUser(@Nullable Utente user){
-        if(utente1.equals(user))return utente2;
+    public Utente otherUser(@Nullable Utente user) {
+        if (utente1.equals(user)) return utente2;
         return utente1;
     }
 }

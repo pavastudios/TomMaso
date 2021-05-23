@@ -1,17 +1,15 @@
-package com.pavastudios.TomMaso.servlets.user;
+package com.pavastudios.TomMaso.control.user;
 
+import com.pavastudios.TomMaso.control.MasterServlet;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Utente;
-import com.pavastudios.TomMaso.servlets.MasterServlet;
 import com.pavastudios.TomMaso.utility.RememberMeUtility;
 import com.pavastudios.TomMaso.utility.Session;
 import com.pavastudios.TomMaso.utility.Utility;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 

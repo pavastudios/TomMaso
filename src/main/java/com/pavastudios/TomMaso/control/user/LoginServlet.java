@@ -1,14 +1,13 @@
-package com.pavastudios.TomMaso.servlets.user;
+package com.pavastudios.TomMaso.control.user;
 
+import com.pavastudios.TomMaso.control.MasterServlet;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Utente;
-import com.pavastudios.TomMaso.servlets.MasterServlet;
 import com.pavastudios.TomMaso.utility.RememberMeUtility;
 import com.pavastudios.TomMaso.utility.Session;
 import com.pavastudios.TomMaso.utility.Utility;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +16,7 @@ import java.sql.SQLException;
 
 public class LoginServlet extends MasterServlet {
 
-    private static final boolean PASSWORD_BYPASS=true;
+    private static final boolean PASSWORD_BYPASS = true;
 
     @Override
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
@@ -26,7 +25,7 @@ public class LoginServlet extends MasterServlet {
         boolean remember = "on".equals(req.getParameter("remember"));
 
         Utente u = Queries.findUserByUsername(username);
-        if(u==null){
+        if (u == null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //username non trovato
             return;
         }

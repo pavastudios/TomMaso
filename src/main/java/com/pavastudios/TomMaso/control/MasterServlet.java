@@ -1,4 +1,4 @@
-package com.pavastudios.TomMaso.servlets;
+package com.pavastudios.TomMaso.control;
 
 import com.pavastudios.TomMaso.utility.Session;
 
@@ -21,11 +21,11 @@ public abstract class MasterServlet extends HttpServlet {
     private static final String METHOD_PUT = "PUT";
     private static final String METHOD_TRACE = "TRACE";
 
-    private static boolean hasSessionCookie(HttpServletRequest req){
-        Cookie[]cookies=req.getCookies();
-        if(cookies==null)return false;
-        for(Cookie c:cookies) {
-            if("JSESSIONID".equals(c.getName()))return true;
+    private static boolean hasSessionCookie(HttpServletRequest req) {
+        Cookie[] cookies = req.getCookies();
+        if (cookies == null) return false;
+        for (Cookie c : cookies) {
+            if ("JSESSIONID".equals(c.getName())) return true;
         }
         return false;
     }
@@ -39,10 +39,10 @@ public abstract class MasterServlet extends HttpServlet {
         try {
             Session session = Session.loadSession(req);
 
-            if(!hasSessionCookie(req))
-                req.setAttribute("rewrite",";jsessionid="+req.getSession().getId());
+            if (!hasSessionCookie(req))
+                req.setAttribute("rewrite", ";jsessionid=" + req.getSession().getId());
             else
-                req.setAttribute("rewrite","");
+                req.setAttribute("rewrite", "");
 
             switch (method) {
                 case METHOD_GET:

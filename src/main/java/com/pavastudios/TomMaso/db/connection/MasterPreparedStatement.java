@@ -34,7 +34,7 @@ public class MasterPreparedStatement {
     }
 
     public void setDate(int parameterIndex, Date x) throws SQLException {
-        java.sql.Date date=new java.sql.Date(x.getTime());
+        java.sql.Date date = new java.sql.Date(x.getTime());
         parameters.put(parameterIndex, date.toString());
         this.stmt.setDate(parameterIndex, date);
     }

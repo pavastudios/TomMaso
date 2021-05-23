@@ -1,7 +1,7 @@
-package com.pavastudios.TomMaso.servlets.blog;
+package com.pavastudios.TomMaso.control.blog;
 
+import com.pavastudios.TomMaso.control.MasterServlet;
 import com.pavastudios.TomMaso.model.Blog;
-import com.pavastudios.TomMaso.servlets.MasterServlet;
 import com.pavastudios.TomMaso.utility.FileUtility;
 import com.pavastudios.TomMaso.utility.Session;
 
@@ -16,14 +16,14 @@ import java.util.List;
 public class HomeBlogServlet extends MasterServlet {
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        Blog blog= Blog.fromPathInfo(req.getPathInfo());
-        List<File>markdowns= FileUtility.getPages(getServletContext(),blog);
-        if(markdowns==null){
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"Blog invalido");
+        Blog blog = Blog.fromPathInfo(req.getPathInfo());
+        List<File> markdowns = FileUtility.getPages(getServletContext(), blog);
+        if (markdowns == null) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Blog invalido");
             return;
         }
-        req.setAttribute("pages",markdowns);
-        req.setAttribute("blog",blog);
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/blog/lastPosts.jsp").forward(req,resp);
+        req.setAttribute("pages", markdowns);
+        req.setAttribute("blog", blog);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/blog/lastPosts.jsp").forward(req, resp);
     }
 }

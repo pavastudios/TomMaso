@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 @SuppressWarnings("unused")
 public class Utility {
-    public static final SimpleDateFormat DATE_FORMAT=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     public static final Pattern NORMAL_CHARS = Pattern.compile("^[a-zA-Z0-9-._]*$");
     public static final Random RANDOM = new Random(System.nanoTime());
     public static final SecureRandom SECURE_RANDOM = new SecureRandom();
@@ -86,7 +86,7 @@ public class Utility {
     }
 
     public static int tryParseInt(String str, int defValue, int radix) {
-        if(str==null)return defValue;
+        if (str == null) return defValue;
         try {
             return Integer.parseInt(str, radix);
         } catch (NumberFormatException ignore) {

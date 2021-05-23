@@ -1,6 +1,6 @@
-package com.pavastudios.TomMaso.servlets.admin;
+package com.pavastudios.TomMaso.control.admin;
 
-import com.pavastudios.TomMaso.servlets.MasterServlet;
+import com.pavastudios.TomMaso.control.MasterServlet;
 import com.pavastudios.TomMaso.utility.Session;
 
 import javax.servlet.ServletException;

@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
@@ -141,28 +140,30 @@ public class Utente implements GenericModel {
     }
 
     public boolean userVerifyLogin(String password) {
-        return Security.verify(this.password,password);
-    }
-    public File getUserFolder(){
-        return new File(FileUtility.USER_FILES_FOLDER,username);
-    }
-    public File getPropicFile(){
-        return new File(getUserFolder(),"propic.png");
+        return Security.verify(this.password, password);
     }
 
-    public String propicHtml(ServletContext context){
-        return propicHtml(context,"");
+    public File getUserFolder() {
+        return new File(FileUtility.USER_FILES_FOLDER, username);
     }
 
-    public String propicHtml(ServletContext context,String additional){
-        File propic=getPropicFile();
+    public File getPropicFile() {
+        return new File(getUserFolder(), "propic.png");
+    }
 
-        if(propic.exists()){
-            return String.format(Locale.US,"<img class=\"w-100 propic rounded-circle\" src=\"%s/users/%s/propic.png\" %s >",
-                    context.getContextPath(),getUsername(),additional);
+    public String propicHtml(ServletContext context) {
+        return propicHtml(context, "");
+    }
+
+    public String propicHtml(ServletContext context, String additional) {
+        File propic = getPropicFile();
+
+        if (propic.exists()) {
+            return String.format(Locale.US, "<img class=\"w-100 propic rounded-circle\" src=\"%s/users/%s/propic.png\" %s >",
+                    context.getContextPath(), getUsername(), additional);
         }
-        return String.format(Locale.US,"<svg class=\"w-100 propic rounded-circle\" data-jdenticon-value=\"%s\" %s ></svg>",
-                getUsername(),additional);
+        return String.format(Locale.US, "<svg class=\"w-100 propic rounded-circle\" data-jdenticon-value=\"%s\" %s ></svg>",
+                getUsername(), additional);
     }
 
 }

@@ -1,6 +1,6 @@
-package com.pavastudios.TomMaso.servlets.global;
+package com.pavastudios.TomMaso.control.global;
 
-import com.pavastudios.TomMaso.servlets.MasterServlet;
+import com.pavastudios.TomMaso.control.MasterServlet;
 import com.pavastudios.TomMaso.utility.Session;
 
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ public class ChiSiamoServlet extends MasterServlet {
 
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/global/chiSiamo.jsp").forward(req,resp);
-        return ;
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/global/chiSiamo.jsp").forward(req, resp);
+        return;
     }
 }

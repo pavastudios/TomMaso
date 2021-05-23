@@ -15,27 +15,27 @@ import java.net.URLDecoder;
 public class CommentEndpoint {
     public static final String GROUP_NAME = "comment";
     private static final String SEND_ACTION_NAME = "send-comment";
-    private static final ApiEndpoint.Manage SEND_ACTION= (parser, writer, user) -> {
-        String comment=parser.getValueString("comment");
-        String page=URLDecoder.decode(parser.getValueString("page"),"UTF-8");
-        String contextPath= MainListener.CONTEXT.getContextPath()+"/blogs";
-        if(comment.length()<3){
+    private static final ApiEndpoint.Manage SEND_ACTION = (parser, writer, user) -> {
+        String comment = parser.getValueString("comment");
+        String page = URLDecoder.decode(parser.getValueString("page"), "UTF-8");
+        String contextPath = MainListener.CONTEXT.getContextPath() + "/blogs";
+        if (comment.length() < 3) {
             writer.name(ApiManager.ERROR_PROP).value("Messaggio troppo breve");
             return;
         }
-        if(!page.startsWith(contextPath)){
+        if (!page.startsWith(contextPath)) {
             writer.name(ApiManager.ERROR_PROP).value("Percorso invalido");
             return;
         }
-        page=page.substring(contextPath.length());
-        File file= FileUtility.blogPathToFile(page);
-        FileUtility.FileType fileType=FileUtility.getFileType(MainListener.CONTEXT,file);
-        if(fileType==null){
+        page = page.substring(contextPath.length());
+        File file = FileUtility.blogPathToFile(page);
+        FileUtility.FileType fileType = FileUtility.getFileType(MainListener.CONTEXT, file);
+        if (fileType == null) {
             writer.name(ApiManager.ERROR_PROP).value("Pagina invalida");
             return;
         }
-        Commento com= Queries.sendComment(user,comment,page);
-        if(com==null){
+        Commento com = Queries.sendComment(user, comment, page);
+        if (com == null) {
             writer.name(ApiManager.ERROR_PROP).value("Problema invio messaggio");
             return;
         }

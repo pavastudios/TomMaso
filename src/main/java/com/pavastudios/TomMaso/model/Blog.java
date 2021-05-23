@@ -25,6 +25,13 @@ public class Blog implements GenericModel {
         return b;
     }
 
+    public static Blog fromPathInfo(String pathInfo) throws SQLException {
+        if (pathInfo == null) return null;
+        String[] parts = pathInfo.split("/", 3);
+        if (parts.length < 2 || !parts[0].isEmpty()) return null;
+        return Queries.findBlogByName(parts[1]);
+    }
+
     public int getVisite() {
         return visite;
     }
@@ -41,8 +48,6 @@ public class Blog implements GenericModel {
     public void setIdBlog(int idBlog) {
         this.idBlog = idBlog;
     }
-
-
 
     public void setProprietario(Utente proprietario) {
         this.proprietario = proprietario;
@@ -90,19 +95,13 @@ public class Blog implements GenericModel {
         writer.endObject();
     }
 
-    public static Blog fromPathInfo(String pathInfo) throws SQLException {
-        if(pathInfo==null)return null;
-        String[]parts=pathInfo.split("/",3);
-        if(parts.length<2||!parts[0].isEmpty())return null;
-        return Queries.findBlogByName(parts[1]);
-    }
-    public File getRootPath(){
-        return new File(FileUtility.BLOG_FILES_FOLDER,getNome());
+    public File getRootPath() {
+        return new File(FileUtility.BLOG_FILES_FOLDER, getNome());
     }
 
-    public boolean hasAccess(Utente user){
-        if(user==null)return false;
-        if(user.getIsAdmin())return true;
+    public boolean hasAccess(Utente user) {
+        if (user == null) return false;
+        if (user.getIsAdmin()) return true;
         return proprietario.equals(user);
     }
 }

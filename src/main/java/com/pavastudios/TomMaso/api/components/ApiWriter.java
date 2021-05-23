@@ -8,10 +8,11 @@ import java.io.Writer;
 @SuppressWarnings("unused")
 public class ApiWriter extends JsonWriter {
     private final JsonWriter writer;
-    private boolean errorWritten=false;
+    private boolean errorWritten = false;
+
     public ApiWriter(Writer writer) {
         super(writer);
-        this.writer=new JsonWriter(writer);
+        this.writer = new JsonWriter(writer);
     }
 
     public boolean isLenient() {
@@ -35,7 +36,7 @@ public class ApiWriter extends JsonWriter {
     }
 
     public JsonWriter name(String name) throws IOException {
-        if(ApiManager.ERROR_PROP.equals(name))errorWritten=true;
+        if (ApiManager.ERROR_PROP.equals(name)) errorWritten = true;
         return writer.name(name);
     }
 

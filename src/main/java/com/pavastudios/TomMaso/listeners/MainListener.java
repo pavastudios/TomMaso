@@ -12,9 +12,10 @@ import java.sql.SQLException;
 @WebListener
 public class MainListener implements ServletContextListener {
     public static ServletContext CONTEXT;
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        CONTEXT= sce.getServletContext();
+        CONTEXT = sce.getServletContext();
         FileUtility.USER_FILES_FOLDER.mkdirs();
         FileUtility.BLOG_FILES_FOLDER.mkdir();
         FileUtility.TMP_FOLDER.mkdir();

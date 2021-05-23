@@ -1,8 +1,8 @@
-package com.pavastudios.TomMaso.servlets.admin;
+package com.pavastudios.TomMaso.control.admin;
 
+import com.pavastudios.TomMaso.control.MasterServlet;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Utente;
-import com.pavastudios.TomMaso.servlets.MasterServlet;
 import com.pavastudios.TomMaso.utility.Session;
 
 import javax.servlet.ServletException;
@@ -14,8 +14,8 @@ import java.sql.SQLException;
 public class CambiaRuoloServlet extends MasterServlet {
 
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        Utente u= Queries.findUserByUsername(req.getParameter("nome"));
+        Utente u = Queries.findUserByUsername(req.getParameter("nome"));
         Queries.changeRole(u);
-        resp.sendRedirect(resp.encodeRedirectURL(req.getServletContext().getContextPath()+"/admin"));
+        resp.sendRedirect(resp.encodeRedirectURL(req.getServletContext().getContextPath() + "/admin"));
     }
 }

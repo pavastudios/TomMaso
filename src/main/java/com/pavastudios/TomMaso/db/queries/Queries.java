@@ -59,12 +59,12 @@ public class Queries {
     public static void initQueries() throws SQLException {
         //FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente` IN ((SELECT `utente2` FROM 'Chat' WHERE `utente1`=?) UNION (SELECT `utente1` FROM 'Chat' WHERE `utente2`=?))");
         FETCH_ADMIN = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `is_admin`=1 ORDER BY `username`");
-        FIND_ALL_ADMINS= GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `is_admin`=1");
+        FIND_ALL_ADMINS = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `is_admin`=1");
         TOP_BLOG = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` ORDER BY `visite` DESC LIMIT ?");
         FETCH_COMMENT_FOR_PAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Commento` WHERE `url_pagina`=? ORDER BY `data_invio`");
         FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? ORDER BY `data_invio` DESC LIMIT ? OFFSET ?");
         FETCH_MESSAGE_FROM_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? AND `id_messaggio`>? ORDER BY `data_invio`");
-        FIND_ALL_USERS= GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente`");
+        FIND_ALL_USERS = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente`");
         FIND_USER_BY_USERNAME = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `username`=?");
         FIND_USER_BY_EMAIL = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `email`=?");
         FIND_USER_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=?");
@@ -99,25 +99,25 @@ public class Queries {
         CHANGE_ROLE_USER = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `is_admin`=? WHERE `id_utente`=?");
     }
 
-    public static List<Utente>getAdmins()throws SQLException{
-        ResultSet rs=FETCH_ADMIN.executeQuery();
-        List<Utente>users=resultSetToList(Entities.UTENTE,rs);
+    public static List<Utente> getAdmins() throws SQLException {
+        ResultSet rs = FETCH_ADMIN.executeQuery();
+        List<Utente> users = resultSetToList(Entities.UTENTE, rs);
         rs.close();
         return users;
     }
 
-    public static List<Commento>fetchCommentsFromPage(String page) throws SQLException {
-        FETCH_COMMENT_FOR_PAGE.setString(1,page);
-        ResultSet rs=FETCH_COMMENT_FOR_PAGE.executeQuery();
-        List<Commento>comments=resultSetToList(Entities.COMMENTO,rs);
+    public static List<Commento> fetchCommentsFromPage(String page) throws SQLException {
+        FETCH_COMMENT_FOR_PAGE.setString(1, page);
+        ResultSet rs = FETCH_COMMENT_FOR_PAGE.executeQuery();
+        List<Commento> comments = resultSetToList(Entities.COMMENTO, rs);
         rs.close();
         return comments;
     }
 
-    public static List<Blog>topBlogs(int count) throws SQLException {
-        TOP_BLOG.setInt(1,count);
-        ResultSet rs=TOP_BLOG.executeQuery();
-        List<Blog>blogs=resultSetToList(Entities.BLOG,rs);
+    public static List<Blog> topBlogs(int count) throws SQLException {
+        TOP_BLOG.setInt(1, count);
+        ResultSet rs = TOP_BLOG.executeQuery();
+        List<Blog> blogs = resultSetToList(Entities.BLOG, rs);
         rs.close();
         return blogs;
     }
@@ -292,7 +292,7 @@ public class Queries {
     public static @Nullable Utente login(String username, String password) throws SQLException {
         Utente u = findUserByUsername(username);
         if (u == null) return null;
-        return u.userVerifyLogin(password)?u:null;
+        return u.userVerifyLogin(password) ? u : null;
     }
 
     //Query Pagina
@@ -305,9 +305,9 @@ public class Queries {
         return findById(Entities.BLOG, idBlog);
     }
 
-    public static void incrementVisit(Blog blog) throws SQLException{
-        if(blog==null)return;
-        BLOG_INCREMENT.setInt(1,blog.getIdBlog());
+    public static void incrementVisit(Blog blog) throws SQLException {
+        if (blog == null) return;
+        BLOG_INCREMENT.setInt(1, blog.getIdBlog());
         BLOG_INCREMENT.executeUpdate();
     }
 
@@ -376,13 +376,13 @@ public class Queries {
         FIND_CHAT_BY_USERS.setInt(2, u2.getIdUtente());
         ResultSet rs = FIND_CHAT_BY_USERS.executeQuery();
         rs.first();
-        Chat chat=resultSetToModel(Entities.CHAT,rs);
+        Chat chat = resultSetToModel(Entities.CHAT, rs);
         rs.close();
         return chat;
     }
 
     public static void changePassword(Utente user, String password) throws SQLException {
-        String hashed=Security.crypt(password);
+        String hashed = Security.crypt(password);
         CHANGE_PASSWORD.setString(1, hashed);
         CHANGE_PASSWORD.setInt(2, user.getIdUtente());
         CHANGE_PASSWORD.executeUpdate();
@@ -395,7 +395,7 @@ public class Queries {
     }
 
     public static void deleteBlog(Blog blog) throws SQLException {
-        DELETE_BLOG.setInt(1,blog.getIdBlog());
+        DELETE_BLOG.setInt(1, blog.getIdBlog());
         DELETE_BLOG.executeUpdate();
     }
 
@@ -411,53 +411,54 @@ public class Queries {
         return true;
     }
 
-    public static void renameBlog(Blog fromBlog, String toName) throws SQLException{
-        UPDATE_BLOG_NAME.setString(1,toName);
-        UPDATE_BLOG_NAME.setInt(2,fromBlog.getIdBlog());
+    public static void renameBlog(Blog fromBlog, String toName) throws SQLException {
+        UPDATE_BLOG_NAME.setString(1, toName);
+        UPDATE_BLOG_NAME.setInt(2, fromBlog.getIdBlog());
         UPDATE_BLOG_NAME.executeUpdate();
     }
 
     public static void updateUser(Utente user, String newUsername, String bio) throws SQLException {
-        UPDATE_USER_DATA.setString(1,newUsername.isEmpty()?user.getUsername():newUsername);
-        UPDATE_USER_DATA.setString(2,bio.isEmpty()?user.getBio():bio);
-        UPDATE_USER_DATA.setInt(3,user.getIdUtente());
+        UPDATE_USER_DATA.setString(1, newUsername.isEmpty() ? user.getUsername() : newUsername);
+        UPDATE_USER_DATA.setString(2, bio.isEmpty() ? user.getBio() : bio);
+        UPDATE_USER_DATA.setInt(3, user.getIdUtente());
         UPDATE_USER_DATA.executeUpdate();
     }
 
     public static List<Messaggio> fetchMessageFromId(Chat chat, int fromId) throws SQLException {
-        FETCH_MESSAGE_FROM_ID.setInt(1,chat.getIdChat());
-        FETCH_MESSAGE_FROM_ID.setInt(2,fromId);
-        ResultSet set= FETCH_MESSAGE_FROM_ID.executeQuery();
-        List<Messaggio>messages=resultSetToList(Entities.MESSAGGIO,set);
+        FETCH_MESSAGE_FROM_ID.setInt(1, chat.getIdChat());
+        FETCH_MESSAGE_FROM_ID.setInt(2, fromId);
+        ResultSet set = FETCH_MESSAGE_FROM_ID.executeQuery();
+        List<Messaggio> messages = resultSetToList(Entities.MESSAGGIO, set);
         set.close();
         return messages;
     }
 
     public static void changeRole(Utente u) throws SQLException {
-        if(u==null)return;
-        if(u.getIsAdmin()) CHANGE_ROLE_USER.setInt(1,0);
-        else CHANGE_ROLE_USER.setInt(1,1);
+        if (u == null) return;
+        if (u.getIsAdmin()) CHANGE_ROLE_USER.setInt(1, 0);
+        else CHANGE_ROLE_USER.setInt(1, 1);
 
-        CHANGE_ROLE_USER.setInt(2,u.getIdUtente());
+        CHANGE_ROLE_USER.setInt(2, u.getIdUtente());
         CHANGE_ROLE_USER.executeUpdate();
     }
 
 
     public static List<Utente> findAllUsers() throws SQLException {
-        ResultSet set= FIND_ALL_USERS.executeQuery();
-        List<Utente> u=Queries.resultSetToList(Entities.UTENTE,set);
+        ResultSet set = FIND_ALL_USERS.executeQuery();
+        List<Utente> u = Queries.resultSetToList(Entities.UTENTE, set);
         return u;
     }
 
     public static List<Utente> findAllAdmins() throws SQLException {
-        ResultSet set= FIND_ALL_ADMINS.executeQuery();
-        List<Utente> u=Queries.resultSetToList(Entities.UTENTE,set);
+        ResultSet set = FIND_ALL_ADMINS.executeQuery();
+        List<Utente> u = Queries.resultSetToList(Entities.UTENTE, set);
         return u;
     }
-    public static void changeRole2(Utente u,boolean admin) throws SQLException {
-        if(u==null)return;
-        CHANGE_ROLE_USER.setInt(1,admin?1:0);
-        CHANGE_ROLE_USER.setInt(2,u.getIdUtente());
+
+    public static void changeRole2(Utente u, boolean admin) throws SQLException {
+        if (u == null) return;
+        CHANGE_ROLE_USER.setInt(1, admin ? 1 : 0);
+        CHANGE_ROLE_USER.setInt(2, u.getIdUtente());
         CHANGE_ROLE_USER.executeUpdate();
     }
 }

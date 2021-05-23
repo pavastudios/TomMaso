@@ -40,19 +40,6 @@ public class Session {
         return s;
     }
 
-
-    public boolean hasVisitedBlog(Blog blog) {
-        if(blog==null)return false;
-        return blogs.contains(blog.getIdBlog());
-    }
-
-    public void visitedBlog(Blog blog) throws SQLException {
-        if(blog==null)return;
-        if(!hasVisitedBlog(blog))
-            Queries.incrementVisit(blog);
-        blogs.add(blog.getIdBlog());
-    }
-
     private static Session createSession(HttpServletRequest req) {
         Session s = new Session();
         try {
@@ -62,6 +49,18 @@ public class Session {
             throwables.printStackTrace();
         }
         return s;
+    }
+
+    public boolean hasVisitedBlog(Blog blog) {
+        if (blog == null) return false;
+        return blogs.contains(blog.getIdBlog());
+    }
+
+    public void visitedBlog(Blog blog) throws SQLException {
+        if (blog == null) return;
+        if (!hasVisitedBlog(blog))
+            Queries.incrementVisit(blog);
+        blogs.add(blog.getIdBlog());
     }
 
     public boolean isLogged() {

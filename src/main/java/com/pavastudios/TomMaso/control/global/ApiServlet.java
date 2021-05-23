@@ -1,13 +1,11 @@
-package com.pavastudios.TomMaso.servlets.global;
+package com.pavastudios.TomMaso.control.global;
 
-import com.google.gson.stream.JsonWriter;
 import com.pavastudios.TomMaso.api.components.ApiManager;
 import com.pavastudios.TomMaso.api.components.ApiWriter;
-import com.pavastudios.TomMaso.servlets.MasterServlet;
+import com.pavastudios.TomMaso.control.MasterServlet;
 import com.pavastudios.TomMaso.utility.Session;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -32,7 +30,7 @@ public class ApiServlet extends MasterServlet {
 
         writer.endObject();
         writer.flush();
-        if(writer.isErrorWritten())
+        if (writer.isErrorWritten())
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
 

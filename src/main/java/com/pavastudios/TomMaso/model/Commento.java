@@ -14,6 +14,7 @@ public class Commento implements GenericModel {
     private String pagina;
     private String testo;
     private Date dataInvio;
+
     public static Commento fromResultSet(ResultSet rs) throws SQLException {
         Commento c = new Commento();
         c.setIdCommento(rs.getInt("id_commento"));
@@ -24,12 +25,12 @@ public class Commento implements GenericModel {
         return c;
     }
 
-    public void setDataInvio(Date dataInvio) {
-        this.dataInvio = dataInvio;
-    }
-
     public Date getDataInvio() {
         return dataInvio;
+    }
+
+    public void setDataInvio(Date dataInvio) {
+        this.dataInvio = dataInvio;
     }
 
     public int getIdCommento() {
