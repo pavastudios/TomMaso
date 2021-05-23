@@ -12,8 +12,6 @@ public class MailSender {
 
     private static final String FORGOT_URL = "http://localhost:8080/TomMaso_war_exploded/forgot";
     private static final String FORGOT_SUBJECT = "TomMASO password dimenticata";
-    private static final String FORGOT_TEXT = String.format(Locale.US, "Url di recupero password: <a href='%s?code=%%s'>%s?code=%%s</a>", FORGOT_URL, FORGOT_URL);
-
 
     private static final String SMTP_USERNAME = "tommasosrl@libero.it";
     private static final String SMTP_PASSWORD = "m7AZpmL5RZwtJEj@";
@@ -40,9 +38,8 @@ public class MailSender {
     }
 
     public static void sendForgotPassword(String toMail, String code) throws MessagingException {
-        String text = String.format(Locale.US, FORGOT_TEXT, code, code);
         try {
-            sendMessage(toMail, FORGOT_SUBJECT, text);
+            sendMessage(toMail, FORGOT_SUBJECT, code);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -54,7 +51,7 @@ public class MailSender {
         message.setFrom(new InternetAddress(MAIL_FROM, MAIL_FROMNAME));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toMail));
         message.setSubject(subject);
-        message.setContent(text, "text/html");
+        message.setContent(text, "text/plain");
         Transport.send(message);
     }
 }

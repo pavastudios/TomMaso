@@ -30,14 +30,6 @@
         <url-pattern>/blog-manage/*</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>EditPageServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.control.blog.EditPageServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>EditPageServlet</servlet-name>
-        <url-pattern>/edit-page/*</url-pattern>
-    </servlet-mapping>
-    <servlet>
         <servlet-name>BlogUploaderServlet</servlet-name>
         <servlet-class>com.pavastudios.TomMaso.control.blog.BlogUploaderServlet</servlet-class>
     </servlet>
