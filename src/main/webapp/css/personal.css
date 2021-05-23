@@ -374,7 +374,6 @@
 }
 
 .name{
-    width: 70%;
     float: left;
 }
 
@@ -382,14 +381,14 @@
     background: none;
     text-decoration-color: red;
     border-color: red;
-    border-radius: 25px;
+    border-radius: 5px;
 }
 
 .sendn{
     background: none;
     text-decoration-color: green;
     border-color: green;
-    border-radius: 25px;
+    border-radius: 5px;
 }
 
 .senda:hover{
@@ -405,14 +404,16 @@
 .send{
     position: relative;
     float: left;
-    width: 30%;
     overflow: hidden;
 }
 
 .container-ricerca{
     border: solid;
-    border-radius: 25px;
     border-color: gray;
+    margin-bottom: 10px;
+}
+
+.input{
     margin-bottom: 10px;
 }
 
@@ -462,7 +463,6 @@
 
 .container-ricerca{
     border: solid;
-    border-radius: 25px;
     border-color: gray;
     margin-bottom: 10px;
 }
