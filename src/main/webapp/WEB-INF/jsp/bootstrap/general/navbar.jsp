@@ -91,8 +91,8 @@
                             <input id="password-login" name="password" type="password" class="form-control" placeholder="Password" aria-label="Password">
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" id="remember-login" type="checkbox" value="" name="remember" id="remember">
-                            <label class="form-check-label" for="remember">
+                            <input class="form-check-input" id="remember-login" type="checkbox" value="" name="remember">
+                            <label class="form-check-label" for="remember-login">
                                 Ricorda accesso
                             </label>
                             <div class="float-end">
@@ -135,7 +135,7 @@
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" id="remember-register" type="checkbox" value="" name="remember">
-                            <label class="form-check-label" for="remember">
+                            <label class="form-check-label" for="remember-register">
                                 Ricorda accesso
                             </label>
                         </div>

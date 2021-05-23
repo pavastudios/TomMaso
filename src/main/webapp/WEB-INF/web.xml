@@ -94,6 +94,14 @@
 
     <!--General-->
     <servlet>
+        <servlet-name>ErrorServlet</servlet-name>
+        <servlet-class>com.pavastudios.TomMaso.control.global.ErrorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ErrorServlet</servlet-name>
+        <url-pattern>/error</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>ApiServlet</servlet-name>
         <servlet-class>com.pavastudios.TomMaso.control.global.ApiServlet</servlet-class>
     </servlet>
@@ -232,5 +240,8 @@
         <realm-name>TomMASO</realm-name>
     </login-config>
 
+    <error-page>
+        <location>/error</location>
+    </error-page>
 
 </web-app>
