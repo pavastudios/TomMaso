@@ -20,11 +20,6 @@ public class LoginServlet extends MasterServlet {
     private static final boolean PASSWORD_BYPASS=true;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(req, resp);
-    }
-
-    @Override
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");

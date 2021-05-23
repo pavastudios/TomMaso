@@ -18,6 +18,6 @@ public class TopBlogServlet extends MasterServlet {
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         List<Blog> blogs= Queries.topBlogs(TOP_COUNT);
         req.setAttribute("blogs",blogs);
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/topBlogs.jsp").forward(req,resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/blog/topBlogs.jsp").forward(req,resp);
     }
 }

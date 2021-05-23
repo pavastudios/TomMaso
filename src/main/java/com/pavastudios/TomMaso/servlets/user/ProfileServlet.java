@@ -35,7 +35,7 @@ public class ProfileServlet extends MasterServlet {
         List<Blog> blogs = Queries.getBlogsUser(u);
         req.setAttribute("user", u);
         req.setAttribute("blogs", blogs);
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/profile.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/global/profile.jsp").forward(req, resp);
     }
 
     @Override

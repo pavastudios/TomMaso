@@ -24,6 +24,6 @@ public class HomeBlogServlet extends MasterServlet {
         }
         req.setAttribute("pages",markdowns);
         req.setAttribute("blog",blog);
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/lastPosts.jsp").forward(req,resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/blog/lastPosts.jsp").forward(req,resp);
     }
 }

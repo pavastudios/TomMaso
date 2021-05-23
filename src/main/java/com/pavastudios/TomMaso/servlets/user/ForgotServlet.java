@@ -18,24 +18,6 @@ import java.sql.SQLException;
 public class ForgotServlet extends MasterServlet {
 
     @Override
-    protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        String code = req.getParameter("code");
-        if (code == null) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid 'code' parameter");
-            return;
-        }
-        try {
-            Utility.fromHexString(code);
-        } catch (NumberFormatException e) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid 'code' parameter");
-            return;
-        }
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/login/forgot.jsp").forward(req, resp);
-
-
-    }
-
-    @Override
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         if (req.getParameter("code") != null) {
             changePassword(session, req, resp);

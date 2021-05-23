@@ -33,7 +33,7 @@ public class BlogManagerServlet extends MasterServlet {
         req.setAttribute("files", files);
         req.setAttribute("root", parent.equals(FileUtility.BLOG_FILES_FOLDER));
         req.setAttribute("parentUrl", urlParent);
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/manageBlogs.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/blog/manageBlogs.jsp").forward(req, resp);
     }
 
     @Override

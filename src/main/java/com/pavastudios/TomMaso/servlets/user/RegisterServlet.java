@@ -17,10 +17,6 @@ import java.sql.SQLException;
 
 public class RegisterServlet extends MasterServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/login/register.jsp").forward(req, resp);
-    }
 
     @Override
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
