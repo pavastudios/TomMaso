@@ -70,13 +70,12 @@
                 "page":window.location.pathname
             },
             success: function (data) {
-                console.log(data);
+                if (data["error"] !== undefined){
+                    showError(data["error"]);
+                    return;
+                }
                 if(data["error"]===undefined)
                     location.reload();
-                if (data["error"] !== undefined){
-                    $(".modal-error").show();
-                    $(".modal-error").text(data["error"]);
-                }
             }
         });
     });

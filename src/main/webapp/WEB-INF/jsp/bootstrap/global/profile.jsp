@@ -255,13 +255,12 @@
             url: '${pageContext.request.contextPath}/api/blog/create<%=request.getAttribute("rewrite")%>',
             data: { name: blogname },
             success: function (data) {
-                console.log(data);
+                if (data["error"] !== undefined){
+                    showError(data["error"]);
+                    return;
+                }
                 if(data["error"]===undefined)
                     location.reload();
-                else {
-                    $(".modal-error").show();
-                    $(".modal-error").text(data["error"]);
-                }
             }
         });
     });
@@ -281,13 +280,12 @@
                 "to-name": newname
             },
             success: function (data) {
-                console.log(data);
+                if (data["error"] !== undefined){
+                    showError(data["error"]);
+                    return;
+                }
                 if(data["error"]===undefined)
                     location.reload();
-                else {
-                    $(".modal-error").show();
-                    $(".modal-error").text(data["error"]);
-                }
             }
         });
     });
@@ -301,13 +299,12 @@
             url: '${pageContext.request.contextPath}/api/blog/delete-blog<%=request.getAttribute("rewrite")%>',
             data: { "blog-name": $("#deleteBlogHid").text() },
             success: function (data) {
-                console.log(data);
+                if (data["error"] !== undefined){
+                    showError(data["error"]);
+                    return;
+                }
                 if(data["error"]===undefined)
                     location.reload();
-                else {
-                    $(".modal-error").show();
-                    $(".modal-error").text(data["error"]);
-                }
             }
         });
     });

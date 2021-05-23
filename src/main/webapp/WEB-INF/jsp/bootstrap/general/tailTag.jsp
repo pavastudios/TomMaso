@@ -9,6 +9,15 @@
 <script src="${pageContext.request.contextPath}/js/highlight.min.js"></script>
 
 <script>
+
+    function showError(text){
+        $(".modal-error").show();
+        $(".modal-error").text(text);
+        setInterval(function () {
+            $(".modal-error").hide();
+        },3000);
+    }
+
     const navbarModel = new bootstrap.Modal(document.getElementById('createBlogModalNavbar'));
     //Create blog code
     $( "#createBlogNavbar" ).click(function() {
@@ -18,12 +27,11 @@
             url: '${pageContext.request.contextPath}/api/blog/create<%=request.getAttribute("rewrite")%>',
             data: { name: blogname },
             success: function (data) {
-                console.log(data);
-                navbarModel.hide();
                 if (data["error"] !== undefined){
-                    $(".modal-error").show();
-                    $(".modal-error").text(data["error"]);
+                    showError(data["error"]);
+                    return;
                 }
+                navbarModel.hide();
             }
         });
     });
@@ -41,15 +49,13 @@
                 username: username,
                 password: password,
                 remember: remember
+            },error: function (){
+                showError("Impossibile eseguire login");
             },
             success: function (data) {
                 console.log(data);
                 navbarLogin.hide();
                 location.reload();
-            },
-            error: function (data) {
-                $(".modal-error").show();
-                $(".modal-error").text("Login fallito");
             }
         });
     });
@@ -71,15 +77,13 @@
                 password2: password2 ,
                 email: email ,
                 remember: remember
+            },error: function (){
+                showError("Impossibile registrare l'account");
             },
             success: function (data) {
                 console.log(data);
                 navbarRegister.hide();
                 location.reload();
-                if (data["error"] !== undefined){
-                    $(".modal-error").show();
-                    $(".modal-error").text(data["error"]);
-                }
             }
         });
     });
@@ -92,15 +96,13 @@
             url: '${pageContext.request.contextPath}/forgot<%=request.getAttribute("rewrite")%>',
             data: {
                 email: email,
+            },error: function (){
+                showError("Email invalida");
             },
             success: function (data) {
                 console.log(data);
                 navbarRecover.hide();
                 navRecuperaPsw.show();
-                if (data["error"] !== undefined){
-                    $(".modal-error").show();
-                    $(".modal-error").text(data["error"]);
-                }
             }
         });
     });
@@ -117,14 +119,12 @@
                 password1: psw1,
                 password2: psw2,
                 code: code,
+            },error: function (){
+                showError("Parametri invalidi");
             },
             success: function (data) {
                 console.log(data);
                 navRecuperaPsw.hide();
-                if (data["error"] !== undefined){
-                    $(".modal-error").show();
-                    $(".modal-error").text(data["error"]);
-                }
             }
         });
     });

@@ -82,12 +82,11 @@
       url: '${pageContext.request.contextPath}/api/chat/fetch-chat<%=request.getAttribute("rewrite")%>',
       data: {
         "chat-id": $("#chat-id").val()
-      }, success: function (data) {
-        console.log(data);
+      },
+      success: function (data) {
         if (data["error"] !== undefined){
-          $(".modal-error").show();
-          $(".modal-error").text(data["error"]);
-          return
+          showError(data["error"]);
+          return;
         }
         data=data["response"];
         lastUpdated=data[data.length-1]["id"];
@@ -112,10 +111,8 @@
         "from-id": lastUpdated,
       },
       success: function (data) {
-        console.log(data);
         if (data["error"] !== undefined){
-          $(".modal-error").show();
-          $(".modal-error").text(data["error"]);
+          showError(data["error"]);
           return;
         }
         data=data["response"];
@@ -141,10 +138,8 @@
         "message": $("#messaggio").val(),
       },
       success: function (data) {
-        console.log(data);
         if (data["error"] !== undefined){
-          $(".modal-error").show();
-          $(".modal-error").text(data["error"]);
+          showError(data["error"]);
           return;
         }
         data=data["response"];

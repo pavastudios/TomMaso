@@ -62,23 +62,16 @@
       data: {
         "nome": $("#nomee").val(),
         "admin":"false",
-      },
-      success: function (data) {
-        console.log(data);
-        if(data["error"]!==undefined)
-          return;
-        if (data["error"] !== undefined){
-          $(".modal-error").show();
-          $(".modal-error").text(data["error"]);
-        }
-
+      },error: function (){
+       showError("Utente non trovato");
+     },
+     success: function (data) {
         $('#output').html(data)
       }
     });
     }
 
-   setInterval(function() {
-     const time=Date.now();
+
      $.ajax({
        type: 'POST',
        url: '${pageContext.request.contextPath}/cerca-admin<%=request.getAttribute("rewrite")%>',
@@ -86,19 +79,16 @@
          "nome": null,
          "admin":"true",
        },
+       error: function (){
+         showError("Impossibile trovare l'account");
+       },
        success: function (data) {
-         console.log(data);
-         if (data["error"] !== undefined){
-           $(".modal-error").show();
-           $(".modal-error").text(data["error"]);
-           return
-         }
 
 
          $('#lista').html(data)
        }
      });
-   }, 2000); //5 second
+
 </script>
 
 <%@include file="../general/footer.jsp"%>
