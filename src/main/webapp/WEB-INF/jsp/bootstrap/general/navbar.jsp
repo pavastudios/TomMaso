@@ -74,7 +74,7 @@
     </div>
 
     <!-- Login Modal -->
-    <div class="modal fade" id="navbarLogin" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal fade" id="navbarLogin" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -111,7 +111,7 @@
     </div>
 
     <!-- Registration Modal -->
-    <div class="modal fade" id="navbarRegister" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal fade" id="navbarRegister" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -198,11 +198,11 @@
 
 
     <!-- create blog Modal -->
-    <div class="modal fade" id="createBlogModalNavbar" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal fade" id="createBlogModalNavbar" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1">Crea nuovo blog</h5>
+                    <h5 class="modal-title">Crea nuovo blog</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
