@@ -20,7 +20,7 @@
   List<Utente> u = (List<Utente>) request.getAttribute("result");
 %>
 
-  <%if(u.isEmpty()){%>
+  <%if(u.isEmpty()||u.get(0)==null){%>
   <b color="red">Non sono stati trovati utenti</b>
   <%}else{%>
 
