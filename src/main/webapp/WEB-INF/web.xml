@@ -50,14 +50,6 @@
 
     <!--User-->
     <servlet>
-        <servlet-name>ForgotServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.control.user.ForgotServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ForgotServlet</servlet-name>
-        <url-pattern>/forgot</url-pattern>
-    </servlet-mapping>
-    <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.pavastudios.TomMaso.control.user.LoginServlet</servlet-class>
     </servlet>

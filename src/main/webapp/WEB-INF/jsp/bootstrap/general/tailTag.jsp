@@ -93,13 +93,15 @@
         const email = $("#recover-mail").val();
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/forgot<%=request.getAttribute("rewrite")%>',
+            url: '${pageContext.request.contextPath}/api/user/send-forgot-code<%=request.getAttribute("rewrite")%>',
             data: {
                 email: email,
-            },error: function (){
-                showError("Email invalida");
             },
             success: function (data) {
+                if (data["error"] !== undefined){
+                    showError(data["error"]);
+                    return;
+                }
                 console.log(data);
                 navbarRecover.hide();
                 navRecuperaPsw.show();
@@ -114,16 +116,17 @@
         const psw2 = $("#password2").val();
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/forgot<%=request.getAttribute("rewrite")%>',
+            url: '${pageContext.request.contextPath}/api/user/change-password<%=request.getAttribute("rewrite")%>',
             data: {
                 password1: psw1,
                 password2: psw2,
                 code: code,
-            },error: function (){
-                showError("Parametri invalidi");
             },
             success: function (data) {
-                console.log(data);
+                if (data["error"] !== undefined){
+                    showError(data["error"]);
+                    return;
+                }
                 navRecuperaPsw.hide();
             }
         });
