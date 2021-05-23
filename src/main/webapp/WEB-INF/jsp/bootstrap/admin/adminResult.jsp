@@ -20,7 +20,7 @@
   List<Utente> u = (List<Utente>) request.getAttribute("result");
 %>
 
-  <%if(u.isEmpty()){%>
+  <%if(u.isEmpty()||u.get(0)==null){%>
   <b color="red">Non sono stati trovati utenti</b>
   <%}else{%>
 
@@ -34,9 +34,9 @@
       <input type="text" name="nome" class="name" value="<%=x.getUsername()%>"hidden readonly required>
       <div class="send">
       <%if(x.getIsAdmin()){%>
-      <input type="submit" class="senda" value="Rimuovi admin" onclick="refresh()">
+      <input type="submit" class="btn btn-danger" value="Rimuovi admin" onclick="refresh()">
       <%}else{%>
-      <input type="submit" class="sendn" value="Aggiungi admin" onclick="refresh()">
+      <input type="submit" class="btn btn-success" value="Aggiungi admin" onclick="refresh()">
       <%}%>
       </div>
     </form>

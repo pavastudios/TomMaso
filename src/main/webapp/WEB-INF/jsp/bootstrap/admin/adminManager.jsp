@@ -31,9 +31,14 @@
 
     <div id="ricerca" class="container-ricerca col-12 col-md-5">
       <b>Ricerca:</b>
-      <div class="input">
-        <input type="text" id="nomee">
-        <button id="cerca"  onclick="greve()">Cerca</button>
+      <div class="input row">
+        <div class="col-7">
+          <input type="text" id="nomee" class="form-control">
+        </div>
+        <div class="col-5">
+          <button id="cerca"  onclick="greve()" class="btn btn-dark">Cerca</button>
+        </div>
+
       </div>
 
       <div id="output">
@@ -53,6 +58,10 @@
 
 </div>
 
+
+<%@include file="../general/footer.jsp"%>
+<%@include file="../general/tailTag.jsp"%>
+
 <script>
 
    function greve(){
@@ -71,7 +80,7 @@
     });
     }
 
-
+   $(document).ready(function (){
      $.ajax({
        type: 'POST',
        url: '${pageContext.request.contextPath}/cerca-admin<%=request.getAttribute("rewrite")%>',
@@ -88,11 +97,9 @@
          $('#lista').html(data)
        }
      });
-
+   });
 </script>
 
-<%@include file="../general/footer.jsp"%>
-<%@include file="../general/tailTag.jsp"%>
 
 </body>
 </html>
