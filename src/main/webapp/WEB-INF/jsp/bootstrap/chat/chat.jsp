@@ -32,8 +32,8 @@
   <div class="row justify-content-center mt-5">
     <input type="text" name="chat" value="<%=chat.getIdChat()%>" id="chat-id" hidden>
 
-    <textarea class="col-12" placeholder="Invia messaggio" id="messaggio"></textarea>
-      <button class="col-12 btn btn-primary" id="invia">Invia <i class="fas fa-paper-plane me-4"></i></button>
+    <textarea class="col-12 form-control" placeholder="Invia messaggio" id="messaggio"></textarea>
+    <button class="col-12 btn btn-primary" id="invia">Invia <i class="fas fa-paper-plane me-4"></i></button>
   </div>
 </div>
 <%@include file="../general/footer.jsp"%>

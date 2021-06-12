@@ -172,19 +172,19 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Spostare il file</h5>
+                <h5 class="modal-title">Spostare file</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="#" method="post">
+                <form action="#" method="post" class="row">
                     <input type="text" name="from-name" id="moveBlogHid" hidden>
-                    <input type="text" name="to-name" id="moveBlog" maxlength="255">
+                    <input type="text" name="to-name" id="moveBlog" class="col-9 form-control" maxlength="255">
                     <p class="text-danger modal-error"></p>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="moveConfirm">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                <button type="button" class="btn btn-primary" id="moveConfirm">Salva</button>
             </div>
         </div>
     </div>
@@ -203,7 +203,7 @@
                 <p class="text-danger modal-error"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
                 <button type="button" class="btn btn-danger" id="deleteBlog">Elimina</button>
             </div>
         </div>

@@ -10,7 +10,7 @@
 <%@ page import="java.util.*" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Admin - TomMASO</title>
 
   <%@ include file="../general/headTags.jsp" %>
 

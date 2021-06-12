@@ -22,6 +22,10 @@
     //Create blog code
     $( "#createBlogNavbar" ).click(function() {
         const blogname = $("#blognameNavbar").val();
+        if(!blogname.match(/^[a-zA-Z0-9-\\._]+$/)){
+            showError("Nome non valido!");
+            return;
+        }
         $.ajax({
             type: 'POST',
             url: '${pageContext.request.contextPath}/api/blog/create<%=request.getAttribute("rewrite")%>',
@@ -32,8 +36,12 @@
                     return;
                 }
                 navbarModel.hide();
+                if(location.pathname.endsWith("profile")){
+                    location.reload();
+                }
             }
         });
+
     });
 
     const navbarLogin = new bootstrap.Modal(document.getElementById('navbarLogin'));

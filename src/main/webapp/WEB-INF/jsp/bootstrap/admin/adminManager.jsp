@@ -17,15 +17,10 @@
 <head>
   <%@ include file="../general/headTags.jsp" %>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/tempchat.css" type="text/css"/>
-  <title>Title</title>
+  <title>Admin - TomMASO</title>
 </head>
 <body>
 <%@ include file="../general/navbar.jsp" %>
-
-
-
-
-
 <div>
   <div class="row justify-content-center">
 

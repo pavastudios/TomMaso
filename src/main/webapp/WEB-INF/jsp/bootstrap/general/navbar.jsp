@@ -215,8 +215,8 @@
                     <p class="text-danger modal-error"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="createBlogNavbar">Create</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                    <button type="button" class="btn btn-primary" id="createBlogNavbar">Crea</button>
                 </div>
             </div>
         </div>

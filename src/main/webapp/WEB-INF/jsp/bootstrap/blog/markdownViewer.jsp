@@ -50,7 +50,7 @@
     <% if(ses.getUtente()!=null){%>
     <!-- Comment Area -->
     <div class="row mt-5">
-        <textarea class="col-12" name="commento" id="comment" cols="30" rows="5"></textarea>
+        <textarea class="col-12 form-control" name="commento" id="comment" cols="30" rows="5"></textarea>
         <button class="btn btn-primary" id="sendComment">Invia commento</button>
     </div>
     <%}%>

@@ -106,7 +106,7 @@
                 <%if(user.equals(ses.getUtente())){%>
                 <!-- + Button -->
                 <div class="add_button pb-lg-4 pt-sm-4 pt-md-4 col-lg-4 col-md-6 col-sm-12" id="add_button">
-                    <div class="card border-dark h-100 align-middle cursore" data-bs-toggle="modal" data-bs-target="#createBlogModal">
+                    <div class="card border-dark h-100 align-middle cursore" data-bs-toggle="modal" data-bs-target="#createBlogModalNavbar">
                         <div class="card-body d-flex align-items-center justify-content-center">
                             <i class="fas fa-plus fa-10x"></i>
                         </div>
@@ -118,31 +118,6 @@
     </div>
 </div>
 
-
-<!-- create blog Modal -->
-<div class="modal fade" id="createBlogModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Crea nuovo blog</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row mb-3">
-                    <label for="blogname" class="col-sm-2 col-form-label lead">Nome</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="name" id="blogname" maxlength="50">
-                    </div>
-                </div>
-                <p class="text-danger modal-error"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                <button type="button" class="btn btn-primary" id="createBlog">Create</button>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- rename blog Modal -->
 <div class="modal modal-fullscreen-md-down fade" id="renameBlogModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -247,23 +222,7 @@
     $( "#ok-update" ).click(function() {
         $("#formUpdateUser").submit();
     });
-    //Create blog code
-    $( "#createBlog" ).click(function() {
-        var blogname=$("#blogname").first().val();
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/create<%=request.getAttribute("rewrite")%>',
-            data: { name: blogname },
-            success: function (data) {
-                if (data["error"] !== undefined){
-                    showError(data["error"]);
-                    return;
-                }
-                if(data["error"]===undefined)
-                    location.reload();
-            }
-        });
-    });
+
     //Rename blog code
     $(".ren-btn").click(function () {
         $("#renameFormHid").val($(this).attr("blog-name"));

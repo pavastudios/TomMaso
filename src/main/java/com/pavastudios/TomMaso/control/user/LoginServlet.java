@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 public class LoginServlet extends MasterServlet {
 
-    private static final boolean PASSWORD_BYPASS = true;
+    private static final boolean PASSWORD_BYPASS = false;
 
     @Override
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
