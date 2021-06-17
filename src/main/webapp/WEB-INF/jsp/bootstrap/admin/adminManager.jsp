@@ -22,7 +22,7 @@
 <body>
 <%@ include file="../general/navbar.jsp" %>
 <div>
-  <div class="row justify-content-center">
+  <div class="main-container mt-3 row justify-content-center">
 
     <div id="ricerca" class="container-ricerca col-12 col-md-5">
       <b>Ricerca:</b>
@@ -42,7 +42,7 @@
     </div>
 
     <div class="container-ricerca col-12 col-md-5">
-      <b>Admins:</b>
+      <b>Admin:</b>
       <div id="lista">
 
       </div>
