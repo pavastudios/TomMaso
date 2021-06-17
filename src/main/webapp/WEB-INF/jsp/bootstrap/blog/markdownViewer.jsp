@@ -86,8 +86,10 @@
 
 
 <script>
-    let cont = marked("<%=content%>");
-    cont = DOMPurify.sanitize(cont)
+    let cont = marked("<%=content.replace("script","scr\"+\"ipt")%>");
+    console.log(cont);
+    cont = DOMPurify.sanitize(cont);
+    console.log(cont);
     document.getElementById('content').innerHTML = cont;
 </script>
 </body>

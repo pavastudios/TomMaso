@@ -7,6 +7,7 @@
 <%@ page import="java.nio.file.LinkOption" %>
 <%@ page import="com.pavastudios.TomMaso.utility.Utility" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="com.pavastudios.TomMaso.db.queries.Entities" %>
 <html>
 <head>
     <%@include file="../general/headTags.jsp"%>
@@ -58,7 +59,7 @@
         String head= FileUtility.headFile(f,10);
         String escaped=FileUtility.escapeForMarked(head);
         %>
-    lollo('page-<%=i%>',"<%=escaped%>")
+    lollo('page-<%=i%>',"<%=escaped.replace("script","scr\"+\"ipt")%>");
     <%}%>
 </script>
 </body>
