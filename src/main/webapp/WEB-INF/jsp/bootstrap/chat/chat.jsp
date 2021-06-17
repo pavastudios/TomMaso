@@ -54,12 +54,14 @@
         CONTENUTO_MESSAGGIO
       </div>
     </div>
+
   </div>
 <script>
   let lastUpdated = -1;
   const messageTemplate=$("#message-template");
   messageTemplate.hide();
   function addMessage(mes) {
+    const other="<%=altro.getUsername()%>";
     const clon = messageTemplate.clone();
     const data=new Date(mes["data_invio"]);
     clon.attr("id","m-"+mes["id"]);
@@ -73,6 +75,10 @@
     clon.find(".msg-propic").attr("src","${pageContext.request.contextPath}/users/"+mes["mittente"]["username"]+"/propic.png");
     clon.find(".msg-propic").attr("onerror","useJidenticonNav('msg-"+mes["id"]+"')");
     clon.show();
+    if(mes["mittente"]["username"]===other) {
+      clon.find(".card").after(clon.find(".msg-sender").first());
+      //clon.find(".card").before(clon.find(".xxx").first());
+    }
     clon.appendTo($("#chat"));
   }
 

@@ -7,7 +7,7 @@
 <%@ page import="java.nio.file.LinkOption" %>
 <%@ page import="com.pavastudios.TomMaso.utility.Utility" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="com.pavastudios.TomMaso.db.queries.Entities" %>
+<%@ page import="java.net.URLEncoder" %>
 <html>
 <head>
     <%@include file="../general/headTags.jsp"%>
@@ -23,14 +23,16 @@
 <div class="container main-container">
     <%for(int i=0;i<markdowns.size();i++){
         File f=markdowns.get(i);
-
-        String url=FileUtility.relativeUrl(f);
+        String[] urlParts=FileUtility.relativeUrl(f).split("/",3);
+        if(urlParts.length==3)
+            urlParts[2] = URLEncoder.encode(urlParts[2], "UTF-8");
+        String url = String.join("/", urlParts);
         BasicFileAttributes attributes= Files.readAttributes(f.toPath(),BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
     %>
     <div class="row mt-2">
         <div class="card px-0 col-12">
             <div class="card-header">
-                <span><%=f.getName()%></span>
+                <span><%=org.jsoup.nodes.Entities.escape(f.getName())%></span>
                 <span class="float-end"><%=Utility.DATE_FORMAT.format(new Date(attributes.creationTime().toMillis()))%></span>
             </div>
             <div class="card-body" id="page-<%=i%>"></div>

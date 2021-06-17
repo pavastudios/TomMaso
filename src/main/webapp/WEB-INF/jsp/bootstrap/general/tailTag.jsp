@@ -148,10 +148,11 @@
 </script>
 
 <script>
-
+    const navbarSearchText=$("#navbarSearchText");
     var isUser=true;
     function updateActionSearch(){
-        const query=$("#navbarSearchText").val();
+        const query=navbarSearchText.val();
+        navbarSearchText.val(query.replace(/[\\\/]/g,""));
         if(isUser){
             $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/user/"+query+"<%=request.getAttribute("rewrite")%>");
         }else{
@@ -169,7 +170,7 @@
         isUser=true;
         updateActionSearch();
     });
-    $("#navbarSearchText").change(function () {
+    navbarSearchText.change(function () {
         updateActionSearch();
     });
     function urlRewriteTag(tagName){

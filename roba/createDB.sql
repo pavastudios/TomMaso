@@ -49,7 +49,8 @@ CREATE TABLE `Chat`(
     `utente1` INT NOT NULL,
     `utente2` INT NOT NULL,
     FOREIGN KEY (`utente1`) REFERENCES `Utente`(`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (`utente2`) REFERENCES `Utente`(`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (`utente2`) REFERENCES `Utente`(`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE,
+    UNIQUE (`utente1`, `utente2`)
 );
 
 CREATE TABLE `Messaggio`(
