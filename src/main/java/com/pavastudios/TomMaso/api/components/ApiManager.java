@@ -43,8 +43,7 @@ public class ApiManager {
             return;
         }
         //Controlla se l'utente è loggato
-        Utente user = session.getUtente();
-        if (endpoint.requireLogin() && user == null) {
+        if (endpoint.requireLogin() && session.isLogged()) {
             writer.name(ERROR_PROP).value("user not authenticated");
             return;
         }
@@ -59,6 +58,7 @@ public class ApiManager {
         }
 
         //Richieta valida
+        Utente user = session.getUtente();
         try {
             endpoint.manage(parser, writer, user);
         } catch (SQLException e) {

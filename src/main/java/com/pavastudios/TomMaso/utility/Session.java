@@ -28,7 +28,7 @@ public class Session {
     private Session() {
     }
 
-    public static Session loadSession(HttpServletRequest req) {
+    public static Session loadSession(HttpServletRequest req) throws SQLException {
         HttpSession session = req.getSession(true);
         Session s = null;
         if (!session.isNew())//restore from httpsession
@@ -37,7 +37,15 @@ public class Session {
             s = createSession(req);
         session.setAttribute(SESSION_FIELD, s);
         s.initRequestAttributes(req); //inizializza roba come attributi nella request
+        s.updateUser();//Propaga modifiche all'utente
         return s;
+    }
+
+    private void updateUser() throws SQLException {
+        if(!isLogged())return;
+        int idUser=utente.getIdUtente();
+        Utente newUtente=Queries.findUserById(idUser);
+        setUtente(newUtente);
     }
 
     private static Session createSession(HttpServletRequest req) {
