@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>TomMaso</title>
+    <title>TomMASO</title>
     <%@ include file="../general/headTags.jsp" %>
 </head>
 <body>
@@ -24,7 +24,13 @@
                 <h1 class="display-5 fw-bold lh-1 mb-3">TomMASO</h1>
                 <p class="lead">TomMASO è una piattaforma semplice e user-friendly che permette agli utenti registrati di creare un proprio spazio tramite l’utilizzo di un’intuitiva interfaccia grafica. TomMASO è indirizzato a tutti quegli utenti che hanno competenze minime nello svilluppo web. Si è resa possibile la creazione di spazi personali anche da smartphone e tablet grazie alla tecnologia adoperata che rende la piattaforma completamente responsive.</p>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                    <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" data-bs-toggle="modal" data-bs-target="#navbarRegister">Inizia subito</button>
+                    <% if(!ses.isLogged()){%>
+                        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" data-bs-toggle="modal" data-bs-target="#navbarRegister">Inizia subito</button>
+                    <%}else{%>
+                        <a href="${pageContext.request.contextPath}/profile">
+                            <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Inizia subito</button>
+                        </a>
+                    <%}%>
                 </div>
             </div>
         </div>
