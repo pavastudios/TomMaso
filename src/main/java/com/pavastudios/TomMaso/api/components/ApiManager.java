@@ -43,7 +43,7 @@ public class ApiManager {
             return;
         }
         //Controlla se l'utente è loggato
-        if (endpoint.requireLogin() && session.isLogged()) {
+        if (endpoint.requireLogin() && !session.isLogged()) {
             writer.name(ERROR_PROP).value("user not authenticated");
             return;
         }
