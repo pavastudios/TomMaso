@@ -23,6 +23,7 @@
     %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/comments.css">
     <title><%=file.getName()%></title>
+
 </head>
 <body>
 <%@include file="../general/navbar.jsp"%>
@@ -87,10 +88,11 @@
 
 <script>
     let cont = marked("<%=content.replace("script","scr\"+\"ipt")%>");
-    console.log(cont);
     cont = DOMPurify.sanitize(cont);
     console.log(cont);
     document.getElementById('content').innerHTML = cont;
+    $("#content table").addClass("table table-striped");
+    $("#content img").addClass("img-fluid");
 </script>
 </body>
 </html>

@@ -55,6 +55,8 @@
         let x=marked(markdown);
         x=DOMPurify.sanitize(x);
         document.getElementById(id).innerHTML = x;
+        $("#"+id+" table").addClass("table table-striped");
+        $("#"+id+" img").addClass("img-fluid");
     }
     <%for(int i=0;i<markdowns.size();i++){
         File f=markdowns.get(i);
