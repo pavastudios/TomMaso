@@ -66,7 +66,7 @@ public class BlogEndpoint {
             writer.name(ApiManager.ERROR_PROP).value("Blog invalidi");
             return;
         }
-        Queries.moveComments(from,to);
+        Queries.moveComments(from, to);
         Files.move(fromFile.toPath(), toFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         writer.name(ApiManager.OK_PROP).value("ok");
     };
@@ -103,8 +103,8 @@ public class BlogEndpoint {
         }
         File newRootBlog = new File(FileUtility.BLOG_FILES_FOLDER, toName);
         File oldRootBlog = new File(FileUtility.BLOG_FILES_FOLDER, fromName);
-        Blog newBlog=Queries.renameBlog(fromBlog, toName);
-        Queries.updateBlogComments(fromBlog,newBlog);
+        Blog newBlog = Queries.renameBlog(fromBlog, toName);
+        Queries.updateBlogComments(fromBlog, newBlog);
         Files.move(oldRootBlog.toPath(), newRootBlog.toPath(), StandardCopyOption.REPLACE_EXISTING);
         writer.name(ApiManager.OK_PROP).value("ok");
     };

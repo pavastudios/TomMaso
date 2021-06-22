@@ -41,13 +41,6 @@ public class Session {
         return s;
     }
 
-    private void updateUser() throws SQLException {
-        if(!isLogged())return;
-        int idUser=utente.getIdUtente();
-        Utente newUtente=Queries.findUserById(idUser);
-        setUtente(newUtente);
-    }
-
     private static Session createSession(HttpServletRequest req) {
         Session s = new Session();
         try {
@@ -57,6 +50,13 @@ public class Session {
             throwables.printStackTrace();
         }
         return s;
+    }
+
+    private void updateUser() throws SQLException {
+        if (!isLogged()) return;
+        int idUser = utente.getIdUtente();
+        Utente newUtente = Queries.findUserById(idUser);
+        setUtente(newUtente);
     }
 
     public boolean hasVisitedBlog(Blog blog) {

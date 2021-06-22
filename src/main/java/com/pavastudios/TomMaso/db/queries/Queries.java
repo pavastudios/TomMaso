@@ -99,8 +99,8 @@ public class Queries {
         UPDATE_BLOG_NAME = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Blog` SET `nome`=? WHERE `id_blog`=?");
         UPDATE_USER_DATA = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `username`=?,`bio`=? WHERE `id_utente`=?");
         CHANGE_ROLE_USER = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `is_admin`=? WHERE `id_utente`=?");
-        UPDATE_BLOG_COMMENTS=GlobalConnection.CONNECTION.prepareStatement("UPDATE `Commento` SET `url_pagina`=CONCAT(?,RIGHT(`url_pagina`,LENGTH(`url_pagina`)-LENGTH(?)-2)) WHERE `url_pagina` LIKE ?");
-        MOVE_COMMENTS=GlobalConnection.CONNECTION.prepareStatement("UPDATE `Commento` SET `url_pagina`=? WHERE `url_pagina`=?");
+        UPDATE_BLOG_COMMENTS = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Commento` SET `url_pagina`=CONCAT(?,RIGHT(`url_pagina`,LENGTH(`url_pagina`)-LENGTH(?)-2)) WHERE `url_pagina` LIKE ?");
+        MOVE_COMMENTS = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Commento` SET `url_pagina`=? WHERE `url_pagina`=?");
     }
 
     public static List<Utente> getAdmins() throws SQLException {
@@ -279,7 +279,6 @@ public class Queries {
         rs.close();
         return user;
     }
-
 
 
     public static @Nullable Utente findUserById(int idUtente) throws SQLException {
@@ -468,17 +467,18 @@ public class Queries {
         CHANGE_ROLE_USER.setInt(2, u.getIdUtente());
         CHANGE_ROLE_USER.executeUpdate();
     }
-//"UPDATE `Commento` SET `url_pagina`=CONCAT(?,RIGHT(`url_pagina`,LENGTH(`url_pagina`)-LENGTH(?)-2)) WHERE `url_pagina` LIKE ?");
+
+    //"UPDATE `Commento` SET `url_pagina`=CONCAT(?,RIGHT(`url_pagina`,LENGTH(`url_pagina`)-LENGTH(?)-2)) WHERE `url_pagina` LIKE ?");
     public static void updateBlogComments(Blog fromBlog, Blog newBlog) throws SQLException {
-        UPDATE_BLOG_COMMENTS.setString(1,"/"+newBlog.getNome()+"/");
-        UPDATE_BLOG_COMMENTS.setString(2,fromBlog.getNome());
-        UPDATE_BLOG_COMMENTS.setString(3,"/"+fromBlog.getNome()+"/%");
+        UPDATE_BLOG_COMMENTS.setString(1, "/" + newBlog.getNome() + "/");
+        UPDATE_BLOG_COMMENTS.setString(2, fromBlog.getNome());
+        UPDATE_BLOG_COMMENTS.setString(3, "/" + fromBlog.getNome() + "/%");
         UPDATE_BLOG_COMMENTS.executeUpdate();
     }
 
     public static void moveComments(String from, String to) throws SQLException {
-        MOVE_COMMENTS.setString(1,to);
-        MOVE_COMMENTS.setString(2,from);
+        MOVE_COMMENTS.setString(1, to);
+        MOVE_COMMENTS.setString(2, from);
         MOVE_COMMENTS.executeUpdate();
     }
 }

@@ -10,7 +10,6 @@ import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.Utility;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
 public class UserEndpoint {
