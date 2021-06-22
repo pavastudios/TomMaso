@@ -26,7 +26,7 @@
         String[] urlParts=FileUtility.relativeUrl(f).split("/",3);
         if(urlParts.length==3)
             urlParts[2] = URLEncoder.encode(urlParts[2], "UTF-8");
-        String url = String.join("/", urlParts);
+        String url = String.join("/", urlParts).replace("+","%20");
         BasicFileAttributes attributes= Files.readAttributes(f.toPath(),BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
     %>
     <div class="row mt-2">

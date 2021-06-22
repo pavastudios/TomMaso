@@ -9,34 +9,51 @@
 <script src="${pageContext.request.contextPath}/js/highlight.min.js"></script>
 
 <script>
-
-    function showError(text){
-        $(".modal-error").show();
-        $(".modal-error").text(text);
-        setInterval(function () {
-            $(".modal-error").hide();
-        },3000);
+    function urlRewriteTag(tagName){
+        const x="<%=request.getAttribute("rewrite")%>";
+        $("["+tagName+"]").each(function () {
+            if($(this).attr(tagName)==="#")return;
+            $(this).attr(tagName,$(this).attr(tagName)+x);
+        });
     }
-
+    $(function (){
+        updateActionSearch();
+        if("<%=request.getAttribute("rewrite")%>"!=="") {
+            urlRewriteTag("href");
+            urlRewriteTag("src");
+            urlRewriteTag("action");
+        }
+    });
+    const navbarSearchText=$("#navbarSearchText");
+    var isUser=true;
+    function updateActionSearch(){
+        const query=navbarSearchText.val();
+        navbarSearchText.val(query.replace(/[\\\/]/g,""));
+        if(isUser){
+            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/user/"+query+"<%=request.getAttribute("rewrite")%>");
+        }else{
+            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/home/"+query+"<%=request.getAttribute("rewrite")%>");
+        }
+    }
     const navbarModel = new bootstrap.Modal(document.getElementById('createBlogModalNavbar'));
     //Create blog code
-    $( "#createBlogNavbar" ).click(function() {
+    $("#createBlogNavbar").click(function () {
         const blogname = $("#blognameNavbar").val();
-        if(!blogname.match(/^[a-zA-Z0-9-\\._]+$/)){
+        if (!blogname.match(/^[a-zA-Z0-9-\\._]+$/)) {
             showError("Nome non valido!");
             return;
         }
         $.ajax({
             type: 'POST',
             url: '${pageContext.request.contextPath}/api/blog/create<%=request.getAttribute("rewrite")%>',
-            data: { name: blogname },
+            data: {name: blogname},
             success: function (data) {
-                if (data["error"] !== undefined){
+                if (data["error"] !== undefined) {
                     showError(data["error"]);
                     return;
                 }
                 navbarModel.hide();
-                if(location.pathname.endsWith("profile")){
+                if (location.pathname.endsWith("profile")) {
                     location.reload();
                 }
             }
@@ -46,7 +63,7 @@
 
     const navbarLogin = new bootstrap.Modal(document.getElementById('navbarLogin'));
     //Create blog code
-    $( "#navbarLoginSubmit" ).click(function() {
+    $("#navbarLoginSubmit").click(function () {
         const username = $("#username-login").val();
         const password = $("#password-login").val();
         const remember = $("#remember-login").is(":checked") ? "on" : ""
@@ -57,7 +74,7 @@
                 username: username,
                 password: password,
                 remember: remember
-            },error: function (){
+            }, error: function () {
                 showError("Impossibile eseguire login");
             },
             success: function (data) {
@@ -70,7 +87,7 @@
 
     const navbarRegister = new bootstrap.Modal(document.getElementById('navbarRegister'));
     //Create blog code
-    $( "#navbarRegisterSubmit" ).click(function() {
+    $("#navbarRegisterSubmit").click(function () {
         const username = $("#username-register").val();
         const email = $("#email-register").val();
         const password1 = $("#password1-register").val();
@@ -82,10 +99,10 @@
             data: {
                 username: username,
                 password1: password1,
-                password2: password2 ,
-                email: email ,
+                password2: password2,
+                email: email,
                 remember: remember
-            },error: function (){
+            }, error: function () {
                 showError("Impossibile registrare l'account");
             },
             success: function (data) {
@@ -106,7 +123,7 @@
                 email: email,
             },
             success: function (data) {
-                if (data["error"] !== undefined){
+                if (data["error"] !== undefined) {
                     showError(data["error"]);
                     return;
                 }
@@ -131,7 +148,7 @@
                 code: code,
             },
             success: function (data) {
-                if (data["error"] !== undefined){
+                if (data["error"] !== undefined) {
                     showError(data["error"]);
                     return;
                 }
@@ -141,51 +158,4 @@
     });
 </script>
 
-<script>
-    AOS.init({
-        once: true,
-    });
-</script>
-
-<script>
-    const navbarSearchText=$("#navbarSearchText");
-    var isUser=true;
-    function updateActionSearch(){
-        const query=navbarSearchText.val();
-        navbarSearchText.val(query.replace(/[\\\/]/g,""));
-        if(isUser){
-            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/user/"+query+"<%=request.getAttribute("rewrite")%>");
-        }else{
-            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/home/"+query+"<%=request.getAttribute("rewrite")%>");
-        }
-    }
-
-    $("#navbarSearchBlog").click(function () {
-        $("#navbarSearchType").text("Blog");
-        isUser=false;
-        updateActionSearch();
-    });
-    $("#navbarSearchUser").click(function () {
-        $("#navbarSearchType").text("Utente");
-        isUser=true;
-        updateActionSearch();
-    });
-    navbarSearchText.change(function () {
-        updateActionSearch();
-    });
-    function urlRewriteTag(tagName){
-        const x="<%=request.getAttribute("rewrite")%>";
-        $("["+tagName+"]").each(function () {
-            if($(this).attr(tagName)==="#")return;
-            $(this).attr(tagName,$(this).attr(tagName)+x);
-        });
-    }
-    $(function (){
-        updateActionSearch();
-        if("<%=request.getAttribute("rewrite")%>"!=="") {
-            urlRewriteTag("href");
-            urlRewriteTag("src");
-            urlRewriteTag("action");
-        }
-    });
-</script>
+<script src="${pageContext.request.contextPath}/js/personal.js"></script>
