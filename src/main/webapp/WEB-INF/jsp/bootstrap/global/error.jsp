@@ -18,7 +18,7 @@
     <!-- Hero -->
     <%
     String error=request.getAttribute("javax.servlet.error.message").toString();
-    if(error!=null)
+    if(error!=null&&error.length()>1)
         error=Character.toUpperCase(error.charAt(0))+error.substring(1);
     else
         error=exception.toString();
