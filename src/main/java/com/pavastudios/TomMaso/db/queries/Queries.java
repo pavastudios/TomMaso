@@ -49,11 +49,13 @@ public class Queries {
     static MasterPreparedStatement FETCH_COMMENT_FOR_PAGE;
     static MasterPreparedStatement SEND_COMMENT;
     static MasterPreparedStatement BLOG_INCREMENT;
+    static MasterPreparedStatement UPDATE_BLOG_COMMENTS;
     static MasterPreparedStatement TOP_BLOG;
     static MasterPreparedStatement CHANGE_ROLE_USER;
     static MasterPreparedStatement FIND_ALL_USERS;
     static MasterPreparedStatement FETCH_ADMIN;
     static MasterPreparedStatement FIND_ALL_ADMINS;
+    static MasterPreparedStatement MOVE_COMMENTS;
 
 
     public static void initQueries() throws SQLException {
@@ -97,6 +99,8 @@ public class Queries {
         UPDATE_BLOG_NAME = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Blog` SET `nome`=? WHERE `id_blog`=?");
         UPDATE_USER_DATA = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `username`=?,`bio`=? WHERE `id_utente`=?");
         CHANGE_ROLE_USER = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `is_admin`=? WHERE `id_utente`=?");
+        UPDATE_BLOG_COMMENTS=GlobalConnection.CONNECTION.prepareStatement("UPDATE `Commento` SET `url_pagina`=CONCAT(?,RIGHT(`url_pagina`,LENGTH(`url_pagina`)-LENGTH(?)-2)) WHERE `url_pagina` LIKE ?");
+        MOVE_COMMENTS=GlobalConnection.CONNECTION.prepareStatement("UPDATE `Commento` SET `url_pagina`=? WHERE `url_pagina`=?");
     }
 
     public static List<Utente> getAdmins() throws SQLException {
@@ -276,6 +280,8 @@ public class Queries {
         return user;
     }
 
+
+
     public static @Nullable Utente findUserById(int idUtente) throws SQLException {
         return findById(Entities.UTENTE, idUtente);
     }
@@ -411,10 +417,11 @@ public class Queries {
         return true;
     }
 
-    public static void renameBlog(Blog fromBlog, String toName) throws SQLException {
+    public static Blog renameBlog(Blog fromBlog, String toName) throws SQLException {
         UPDATE_BLOG_NAME.setString(1, toName);
         UPDATE_BLOG_NAME.setInt(2, fromBlog.getIdBlog());
         UPDATE_BLOG_NAME.executeUpdate();
+        return findBlogByName(toName);
     }
 
     public static void updateUser(Utente user, String newUsername, String bio) throws SQLException {
@@ -460,5 +467,18 @@ public class Queries {
         CHANGE_ROLE_USER.setInt(1, admin ? 1 : 0);
         CHANGE_ROLE_USER.setInt(2, u.getIdUtente());
         CHANGE_ROLE_USER.executeUpdate();
+    }
+//"UPDATE `Commento` SET `url_pagina`=CONCAT(?,RIGHT(`url_pagina`,LENGTH(`url_pagina`)-LENGTH(?)-2)) WHERE `url_pagina` LIKE ?");
+    public static void updateBlogComments(Blog fromBlog, Blog newBlog) throws SQLException {
+        UPDATE_BLOG_COMMENTS.setString(1,"/"+newBlog.getNome()+"/");
+        UPDATE_BLOG_COMMENTS.setString(2,fromBlog.getNome());
+        UPDATE_BLOG_COMMENTS.setString(3,"/"+fromBlog.getNome()+"/%");
+        UPDATE_BLOG_COMMENTS.executeUpdate();
+    }
+
+    public static void moveComments(String from, String to) throws SQLException {
+        MOVE_COMMENTS.setString(1,to);
+        MOVE_COMMENTS.setString(2,from);
+        MOVE_COMMENTS.executeUpdate();
     }
 }

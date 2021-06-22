@@ -18,7 +18,10 @@
     <!-- Hero -->
     <%
     String error=request.getAttribute("javax.servlet.error.message").toString();
-    error=Character.toUpperCase(error.charAt(0))+error.substring(1);
+    if(error!=null)
+        error=Character.toUpperCase(error.charAt(0))+error.substring(1);
+    else
+        error=exception.toString();
     %>
     <div class="container col-xxl-8 px-4 py-5">
         <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
