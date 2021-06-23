@@ -92,7 +92,23 @@
         const email = $("#email-register").val();
         const password1 = $("#password1-register").val();
         const password2 = $("#password2-register").val();
-        const remember = $("#remember-register").is(":checked") ? "on" : ""
+        const remember = $("#remember-register").is(":checked") ? "on" : "";
+        if(password1!=password2){
+            showError("password diverse");
+            return;
+        }
+        if(password1.length<5){
+            showError("password troppo piccola");
+            return;
+        }
+        if(username.length<5){
+            showError("password troppo corta");
+            return;
+        }
+        if(email.indexOf("@")){
+            showError("email invalida");
+            return;
+        }
         $.ajax({
             type: 'POST',
             url: '${pageContext.request.contextPath}/sign-up<%=request.getAttribute("rewrite")%>',
