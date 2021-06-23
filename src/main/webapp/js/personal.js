@@ -3,7 +3,7 @@ function showError(text) {
     $(".modal-error").text(text);
     setInterval(function () {
         $(".modal-error").hide();
-    }, 3000);
+    }, 5000);
 }
 
 AOS.init({

@@ -66,7 +66,15 @@
     $("#navbarLoginSubmit").click(function () {
         const username = $("#username-login").val();
         const password = $("#password-login").val();
-        const remember = $("#remember-login").is(":checked") ? "on" : ""
+        const remember = $("#remember-login").is(":checked") ? "on" : "";
+        if(password.length<5){
+            showError("Password troppo piccola");
+            return;
+        }
+        if(username.length<5){
+            showError("Username troppo corto");
+            return;
+        }
         $.ajax({
             type: 'POST',
             url: '${pageContext.request.contextPath}/login<%=request.getAttribute("rewrite")%>',
@@ -94,19 +102,19 @@
         const password2 = $("#password2-register").val();
         const remember = $("#remember-register").is(":checked") ? "on" : "";
         if(password1!=password2){
-            showError("password diverse");
+            showError("Password diverse");
             return;
         }
         if(password1.length<5){
-            showError("password troppo piccola");
+            showError("Password troppo piccola");
             return;
         }
         if(username.length<5){
-            showError("password troppo corta");
+            showError("Username troppo corto");
             return;
         }
         if(email.indexOf("@")==-1){
-            showError("email invalida");
+            showError("Email invalida");
             return;
         }
         $.ajax({
