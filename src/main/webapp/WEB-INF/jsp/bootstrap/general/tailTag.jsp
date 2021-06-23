@@ -68,11 +68,11 @@
         const password = $("#password-login").val();
         const remember = $("#remember-login").is(":checked") ? "on" : "";
         if(password.length<5){
-            showError("Password troppo piccola");
+            showError("La password deve contenere almeno 5 caratteri!");
             return;
         }
         if(username.length<5){
-            showError("Username troppo corto");
+            showError("L'username deve contenere almeno 5 caratteri!");
             return;
         }
         $.ajax({
@@ -83,7 +83,7 @@
                 password: password,
                 remember: remember
             }, error: function () {
-                showError("Impossibile eseguire login");
+                showError("Impossibile eseguire login!");
             },
             success: function (data) {
                 console.log(data);
@@ -102,19 +102,19 @@
         const password2 = $("#password2-register").val();
         const remember = $("#remember-register").is(":checked") ? "on" : "";
         if(password1!=password2){
-            showError("Password diverse");
+            showError("Le password non corrispondono!");
             return;
         }
         if(password1.length<5){
-            showError("Password troppo piccola");
+            showError("La password deve contenere almeno 5 caratteri!");
             return;
         }
         if(username.length<5){
-            showError("Username troppo corto");
+            showError("L'username deve contenere almeno 5 caratteri!");
             return;
         }
         if(email.indexOf("@")==-1){
-            showError("Email invalida");
+            showError("Email non valida!");
             return;
         }
         $.ajax({
