@@ -105,7 +105,7 @@
             showError("password troppo corta");
             return;
         }
-        if(email.indexOf("@")){
+        if(email.indexOf("@")==-1){
             showError("email invalida");
             return;
         }
