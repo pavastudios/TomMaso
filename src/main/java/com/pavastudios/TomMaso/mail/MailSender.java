@@ -13,7 +13,7 @@ public class MailSender {
     private static final String FORGOT_SUBJECT = "TomMASO password dimenticata";
 
     private static final String SMTP_USERNAME = "tommasosrl@libero.it";
-    private static final String SMTP_PASSWORD = System.getEnv("TOMMASO_EMAIL_PASSWORD");
+    private static final String SMTP_PASSWORD = System.getenv("TOMMASO_EMAIL_PASSWORD");
     private static final String STMP_HOST = "smtp.libero.it";
     private static final int STMP_PORT = 465;
 
