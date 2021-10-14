@@ -40,6 +40,5 @@ services:
       - "8080:8080"
     volumes:
       - ../target:/usr/local/tomcat/webapps
+      - ../data:/data
       - ./tomcat-docker/conf:/usr/local/tomcat/conf
-
-        
