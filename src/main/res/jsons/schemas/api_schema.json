@@ -1,0 +1,49 @@
+{
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "endpoint": {
+                "type": "string",
+                "pattern": "^(/[a-z\\-]+)+$"
+            },
+            "require-login": {
+                "type": "boolean"
+            },
+            "params": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "pattern": "^[a-z0-9\\\\-]+$"
+                        },
+                        "type": {
+                            "enum": [
+                                "string",
+                                "int",
+                                "float"
+                            ]
+                        },
+                        "default": {
+                            "type": [
+                                "string",
+                                "number"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "type"
+                    ]
+                }
+            }
+        },
+        "required": [
+            "endpoint",
+            "require-login",
+            "params"
+        ]
+    }
+}
