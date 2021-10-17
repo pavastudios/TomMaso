@@ -3,84 +3,192 @@ package com.pavastudios.TomMaso.api.components;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
-import java.io.Writer;
+import java.io.StringWriter;
 
 @SuppressWarnings("unused")
-public class ApiWriter extends JsonWriter {
-    private final JsonWriter writer;
-    private boolean errorWritten = false;
 
-    public ApiWriter(Writer writer) {
-        super(writer);
-        this.writer = new JsonWriter(writer);
+public class ApiWriter extends JsonWriter {
+    private final StringWriter stringWriter = new StringWriter();
+    private final JsonWriter writer = new JsonWriter(stringWriter);
+
+    /**
+     * JsonWriter implementation written to create API responses, it automatically wrap the written json inside an object
+     * and it doesn't need to catch IOException because underlying it uses a StringWriter which allows the retrieve
+     * of the written JSON
+     */
+    public ApiWriter() {
+        super(new StringWriter());
+        this.beginObject();
     }
 
+    /**
+     * This method indicates that the JSON generation has been completed and no further operation
+     * will be made on this instance, using this method will close the writer
+     *
+     * @return The generated JSON until this point
+     */
+    public String commit() {
+        try {
+            writer.endObject();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+        String result = stringWriter.toString();
+        System.out.println(result);
+        this.close();
+        return result;
+    }
+
+    @Override
     public boolean isLenient() {
         return writer.isLenient();
     }
 
-    public JsonWriter beginArray() throws IOException {
-        return writer.beginArray();
+    @Override
+    public ApiWriter beginArray() {
+        try {
+            writer.beginArray();
+            return this;
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
-    public JsonWriter endArray() throws IOException {
-        return writer.endArray();
+    @Override
+    public ApiWriter endArray() {
+        try {
+            writer.endArray();
+            return this;
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
-    public JsonWriter beginObject() throws IOException {
-        return writer.beginObject();
+    @Override
+    public ApiWriter beginObject() {
+        try {
+            writer.beginObject();
+            return this;
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
-    public JsonWriter endObject() throws IOException {
-        return writer.endObject();
+    @Override
+    public ApiWriter endObject() {
+        try {
+            writer.endObject();
+            return this;
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
-    public JsonWriter name(String name) throws IOException {
-        if (ApiManager.ERROR_PROP.equals(name)) errorWritten = true;
-        return writer.name(name);
+    @Override
+    public ApiWriter name(String name) {
+        try {
+            writer.name(name);
+            return this;
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
-    public boolean isErrorWritten() {
-        return errorWritten;
+    @Override
+    public ApiWriter value(String value) {
+        try {
+            writer.value(value);
+            return this;
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
-    public JsonWriter value(String value) throws IOException {
-        return writer.value(value);
+    @Override
+    public ApiWriter jsonValue(String value) {
+        try {
+            writer.jsonValue(value);
+            return this;
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
-    public JsonWriter jsonValue(String value) throws IOException {
-        return writer.jsonValue(value);
+    @Override
+    public ApiWriter nullValue() {
+        try {
+            writer.nullValue();
+            return this;
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
-    public JsonWriter nullValue() throws IOException {
-        return writer.nullValue();
+    @Override
+    public ApiWriter value(boolean value) {
+        try {
+            writer.value(value);
+            return this;
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
-    public JsonWriter value(boolean value) throws IOException {
-        return writer.value(value);
+    @Override
+    public ApiWriter value(Boolean value) {
+        try {
+            writer.value(value);
+            return this;
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
-    public JsonWriter value(Boolean value) throws IOException {
-        return writer.value(value);
+    @Override
+    public ApiWriter value(double value) {
+        try {
+            writer.value(value);
+            return this;
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
-    public JsonWriter value(double value) throws IOException {
-        return writer.value(value);
+    @Override
+    public ApiWriter value(long value) {
+        try {
+            writer.value(value);
+            return this;
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
-    public JsonWriter value(long value) throws IOException {
-        return writer.value(value);
+    @Override
+    public ApiWriter value(Number value) {
+        try {
+            writer.value(value);
+            return this;
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
-    public JsonWriter value(Number value) throws IOException {
-        return writer.value(value);
+    public void flush() {
+        try {
+            writer.flush();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
-    public void flush() throws IOException {
-        writer.flush();
-    }
-
-    public void close() throws IOException {
-        writer.close();
+    public void close() {
+        try {
+            super.jsonValue("{}");
+            writer.close();
+            super.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -1,5 +1,3 @@
-<%@ page import="com.pavastudios.TomMaso.utility.FileUtility" %>
-<%@ page import="com.pavastudios.TomMaso.test.PersonalFileDir" %>
 <%@ page import="java.io.File" %>
 <%@ page import="org.jsoup.nodes.Entities" %>
 <%@ page import="java.nio.file.Files" %><%--

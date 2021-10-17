@@ -18,17 +18,13 @@ public class ApiParam {
     public ApiParam(String name, Type type, Object defValue) {
         this.name = name;
         this.type = type;
-        this.defValue = defValue.toString();
+        this.optional = defValue != null;
+        this.defValue = defValue != null ? defValue.toString() : null;
         this.defValueArray = null;
-        this.optional = true;
     }
 
     public ApiParam(String name, Type type) {
-        this.name = name;
-        this.type = type;
-        this.optional = false;
-        this.defValue = null;
-        this.defValueArray = null;
+        this(name, type, null);
     }
 
     private static String[] toStringArray(Object[] defValue) {

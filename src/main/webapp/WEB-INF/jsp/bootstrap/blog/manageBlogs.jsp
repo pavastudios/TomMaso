@@ -2,10 +2,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.io.File" %>
 <%@ page import="com.pavastudios.TomMaso.utility.FileUtility" %>
-<%@ page import="com.sun.xml.internal.txw2.output.CharacterEscapeHandler" %>
 <%@ page import="org.jsoup.nodes.Entities" %>
 <%@ page import="java.util.Arrays" %>
-<%@ page import="com.pavastudios.TomMaso.api.components.ApiEndpoint" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>

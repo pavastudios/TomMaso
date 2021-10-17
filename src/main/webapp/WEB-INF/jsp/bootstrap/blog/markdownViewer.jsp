@@ -1,6 +1,4 @@
 <%@ page import="java.io.File" %>
-<%@ page import="java.io.FileInputStream" %>
-<%@ page import="java.io.BufferedInputStream" %>
 <%@ page import="com.pavastudios.TomMaso.model.Commento" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.pavastudios.TomMaso.utility.Utility" %>
