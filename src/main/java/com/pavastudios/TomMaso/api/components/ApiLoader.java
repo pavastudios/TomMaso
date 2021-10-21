@@ -1,44 +1,35 @@
 package com.pavastudios.TomMaso.api.components;
 
-import com.google.gson.stream.JsonReader;
-import com.pavastudios.TomMaso.utility.Utility;
+import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.util.Set;
 
 public class ApiLoader {
-    private static final String[] API_FILE_PATHS = new String[]{
-            "/jsons/api/"
-    };
 
+    static void loadApi() throws IllegalAccessException {
+        Reflections reflections = new Reflections("com.pavastudios.TomMaso", Scanners.FieldsAnnotated);
+        Set<Field> apiEndpoints = reflections.getFieldsAnnotatedWith(Endpoint.class);
+        for (Field field : apiEndpoints) {
+            Endpoint ann = field.getAnnotation(Endpoint.class);
+            ApiEndpoint.Manage manage = (ApiEndpoint.Manage) field.get(null);
+            ApiEndpoint endpoint = new ApiEndpoint(ann.value(), ann.requireLogin(), manage, toApiParams(ann.params()));
+            ApiManager.API.put(ann.value(), endpoint);
 
-    private static void parseApiFile(JsonReader reader) throws IOException {
-        reader.beginArray();
-        while (reader.hasNext()) {
-            parseApiEndpoint(reader);
         }
     }
 
-    private static void parseApiEndpoint(JsonReader reader) {
-        ApiEndpoint e = new ApiEndpoint(reader);
-        ApiManager.API.put(e.getEndpoint(), e);
-    }
-
-    static void loadApi() {
-        ApiEndpoint.ApiJsonParser.startApiSearch();
-        for (String file : API_FILE_PATHS) {
-            try {
-                InputStream apiFile = Utility.readResource(file);
-                assert apiFile != null;
-                InputStreamReader jsonFile = new InputStreamReader(apiFile);
-                JsonReader reader = new JsonReader(jsonFile);
-                parseApiFile(reader);
-                reader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+    private static ApiParam[] toApiParams(ApiParameter[] params) {
+        ApiParam[] apiParams = new ApiParam[params.length];
+        for (int i = 0; i < params.length; i++) {
+            ApiParameter p = params[i];
+            if (p.type() == ApiParam.Type.INT && p.defInt() != ApiParam.DEFAULT_INT) {
+                apiParams[i] = new ApiParam(p.value(), p.type(), p.defInt());
+            } else {
+                apiParams[i] = new ApiParam(p.value(), p.type());
             }
         }
-        ApiEndpoint.ApiJsonParser.stopApiSearch();
+        return apiParams;
     }
 }

@@ -19,7 +19,11 @@ public class ApiManager {
     static HashMap<String, ApiEndpoint> API = new HashMap<>();
 
     static {
-        ApiLoader.loadApi();
+        try {
+            ApiLoader.loadApi();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     public static @Nullable ApiEndpoint getEndpoint(HttpServletRequest req) {

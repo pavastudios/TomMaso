@@ -1,9 +1,6 @@
 package com.pavastudios.TomMaso.api.groups;
 
-import com.pavastudios.TomMaso.api.components.ApiEndpoint;
-import com.pavastudios.TomMaso.api.components.ApiException;
-import com.pavastudios.TomMaso.api.components.ApiManager;
-import com.pavastudios.TomMaso.api.components.Endpoint;
+import com.pavastudios.TomMaso.api.components.*;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.mail.MailSender;
 import com.pavastudios.TomMaso.model.Utente;
@@ -14,7 +11,9 @@ import java.sql.SQLException;
 
 @SuppressWarnings("unused")
 public class UserEndpoint {
-    @Endpoint("/user/send-forgot-code")
+    @Endpoint(value = "/user/send-forgot-code", requireLogin = false, params = {
+            @ApiParameter(value = "email", type = ApiParam.Type.STRING)
+    })
     public static final ApiEndpoint.Manage FORGOT_CODE_ACTION = (parser, writer, user) -> {
         String email = parser.getValueString("email");
         String code = Queries.forgetPassword(email);
@@ -30,7 +29,11 @@ public class UserEndpoint {
         }
         writer.name(ApiManager.OK_PROP).value("OK");
     };
-    @Endpoint("/user/change-password")
+    @Endpoint(value = "/user/change-password", requireLogin = false, params = {
+            @ApiParameter(value = "password1", type = ApiParam.Type.STRING),
+            @ApiParameter(value = "password2", type = ApiParam.Type.STRING),
+            @ApiParameter(value = "code", type = ApiParam.Type.STRING)
+    })
     public static final ApiEndpoint.Manage CHANGE_PASSWORD_ACTION = (parser, writer, user) -> {
         String password1 = parser.getValueString("password1");
         String password2 = parser.getValueString("password2");
@@ -55,7 +58,9 @@ public class UserEndpoint {
         }
         writer.name(ApiManager.OK_PROP).value("changed");
     };
-    @Endpoint("/user/find-user")
+    @Endpoint(value = "/user/find-user", requireLogin = false, params = {
+            @ApiParameter(value = "username", type = ApiParam.Type.STRING)
+    })
     public static final ApiEndpoint.Manage FIND_ACTION = (parser, writer, user) -> {
         String username = parser.getValueString("username");
         Utente u = Queries.findUserByUsername(username);
@@ -66,7 +71,9 @@ public class UserEndpoint {
         u.writeJson(writer);
     };
 
-    @Endpoint("/user/add-admin")
+    @Endpoint(value = "/user/add-admin", requireLogin = true, params = {
+            @ApiParameter(value = "username", type = ApiParam.Type.STRING)
+    })
     public static final ApiEndpoint.Manage ADMIN_ADD_ACTION = (parser, writer, user) -> {
         String username = parser.getValueString("username");
         Utente u = Queries.findUserByUsername(username);
@@ -76,7 +83,9 @@ public class UserEndpoint {
         Queries.changeRole2(u, true);
         writer.name(ApiManager.OK_PROP).value("ok");
     };
-    @Endpoint("/user/remove-admin")
+    @Endpoint(value = "/user/remove-admin", requireLogin = true, params = {
+            @ApiParameter(value = "username", type = ApiParam.Type.STRING)
+    })
     public static final ApiEndpoint.Manage ADMIN_DEL_ACTION = (parser, writer, user) -> {
         String username = parser.getValueString("username");
         Utente u = Queries.findUserByUsername(username);

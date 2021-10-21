@@ -1,9 +1,6 @@
 package com.pavastudios.TomMaso.api.groups;
 
-import com.pavastudios.TomMaso.api.components.ApiEndpoint;
-import com.pavastudios.TomMaso.api.components.ApiException;
-import com.pavastudios.TomMaso.api.components.ApiManager;
-import com.pavastudios.TomMaso.api.components.Endpoint;
+import com.pavastudios.TomMaso.api.components.*;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.model.Blog;
 import com.pavastudios.TomMaso.utility.FileUtility;
@@ -16,7 +13,10 @@ import java.sql.SQLException;
 
 @SuppressWarnings("unused")
 public class BlogEndpoint {
-    @Endpoint("/blog/create-dir")
+    @Endpoint(value = "/blog/create-dir", requireLogin = true, params = {
+            @ApiParameter(value = "parent-dir", type = ApiParam.Type.STRING),
+            @ApiParameter(value = "dir-name", type = ApiParam.Type.STRING)
+    })
     public static final ApiEndpoint.Manage CREATE_DIR_ACTION = (parser, writer, user) -> {
         String parentDir = parser.getValueString("parent-dir");
         String dirName = parser.getValueString("dir-name");
@@ -40,7 +40,11 @@ public class BlogEndpoint {
         }
         writer.name(ApiManager.OK_PROP).value("created");
     };
-    @Endpoint("/blog/move")
+
+    @Endpoint(value = "/blog/move", requireLogin = true, params = {
+            @ApiParameter(value = "from-url", type = ApiParam.Type.STRING),
+            @ApiParameter(value = "to-url", type = ApiParam.Type.STRING)
+    })
     public static final ApiEndpoint.Manage MOVE_ACTION = (parser, writer, user) -> {
         String from = parser.getValueString("from-url");
         String to = parser.getValueString("to-url");
@@ -59,7 +63,9 @@ public class BlogEndpoint {
         Files.move(fromFile.toPath(), toFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         writer.name(ApiManager.OK_PROP).value("ok");
     };
-    @Endpoint("/blog/delete-blog")
+    @Endpoint(value = "/blog/delete-blog", requireLogin = true, params = {
+            @ApiParameter(value = "blog-name", type = ApiParam.Type.STRING)
+    })
     public static final ApiEndpoint.Manage DELETE_BLOG_ACTION = (parser, writer, user) -> {
         String name = parser.getValueString("blog-name");
         Blog blog = Queries.findBlogByName(name);
@@ -71,7 +77,10 @@ public class BlogEndpoint {
         FileUtility.recursiveDelete(rootBlog);
         writer.name(ApiManager.OK_PROP).value("ok");
     };
-    @Endpoint("/blog/rename")
+    @Endpoint(value = "/blog/rename", requireLogin = true, params = {
+            @ApiParameter(value = "from-name", type = ApiParam.Type.STRING),
+            @ApiParameter(value = "to-name", type = ApiParam.Type.STRING)
+    })
     public static final ApiEndpoint.Manage RENAME_ACTION = (parser, writer, user) -> {
         String fromName = parser.getValueString("from-name");
         String toName = parser.getValueString("to-name");
@@ -93,7 +102,9 @@ public class BlogEndpoint {
         Files.move(oldRootBlog.toPath(), newRootBlog.toPath(), StandardCopyOption.REPLACE_EXISTING);
         writer.name(ApiManager.OK_PROP).value("ok");
     };
-    @Endpoint("/blog/delete")
+    @Endpoint(value = "/blog/delete", requireLogin = true, params = {
+            @ApiParameter(value = "url", type = ApiParam.Type.STRING)
+    })
     public static final ApiEndpoint.Manage DELETE_ACTION = (parser, writer, user) -> {
         String url = parser.getValueString("url");
         Blog blog = Blog.fromPathInfo(url);
@@ -109,7 +120,9 @@ public class BlogEndpoint {
         FileUtility.recursiveDelete(file);
         writer.name(ApiManager.OK_PROP).value("ok");
     };
-    @Endpoint("/blog/create")
+    @Endpoint(value = "/blog/create", requireLogin = true, params = {
+            @ApiParameter(value = "name", type = ApiParam.Type.STRING)
+    })
     public static final ApiEndpoint.Manage CREATE_ACTION = (parser, writer, user) -> {
         String name = parser.getValueString("name");
         if (name.length() < Blog.MINIMUM_NAME_LENGTH || !Utility.useOnlyNormalChars(name)) {
