@@ -1,6 +1,7 @@
 package com.pavastudios.TomMaso.api.components;
 
 public class ApiParam {
+    public static final int DEFAULT_INT = Integer.MIN_VALUE;
     private final String name;
     private final boolean optional;
     private final Type type;
@@ -24,7 +25,7 @@ public class ApiParam {
     }
 
     public ApiParam(String name, Type type) {
-        this(name, type, null);
+        this(name, type, (Object) null);
     }
 
     private static String[] toStringArray(Object[] defValue) {

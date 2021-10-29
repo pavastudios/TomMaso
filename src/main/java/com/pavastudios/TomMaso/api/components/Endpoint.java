@@ -9,4 +9,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Endpoint {
     String value();
+
+    ApiParameter[] params() default {};
+
+    boolean requireLogin();
 }

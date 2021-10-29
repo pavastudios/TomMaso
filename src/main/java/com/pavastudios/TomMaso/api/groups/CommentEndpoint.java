@@ -1,9 +1,6 @@
 package com.pavastudios.TomMaso.api.groups;
 
-import com.pavastudios.TomMaso.api.components.ApiEndpoint;
-import com.pavastudios.TomMaso.api.components.ApiException;
-import com.pavastudios.TomMaso.api.components.ApiManager;
-import com.pavastudios.TomMaso.api.components.Endpoint;
+import com.pavastudios.TomMaso.api.components.*;
 import com.pavastudios.TomMaso.db.queries.Queries;
 import com.pavastudios.TomMaso.listeners.MainListener;
 import com.pavastudios.TomMaso.model.Commento;
@@ -14,7 +11,10 @@ import java.net.URLDecoder;
 
 @SuppressWarnings("unused")
 public class CommentEndpoint {
-    @Endpoint("/comment/send-comment")
+    @Endpoint(value = "/comment/send-comment", requireLogin = true, params = {
+            @ApiParameter(value = "comment", type = ApiParam.Type.STRING),
+            @ApiParameter(value = "page", type = ApiParam.Type.STRING)
+    })
     public static final ApiEndpoint.Manage SEND_ACTION = (parser, writer, user) -> {
         String comment = parser.getValueString("comment");
         String page = URLDecoder.decode(parser.getValueString("page"), "UTF-8");
