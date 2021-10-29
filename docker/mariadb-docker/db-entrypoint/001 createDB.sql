@@ -15,7 +15,7 @@ CREATE TABLE `Utente`
     `password`        VARCHAR(255) NOT NULL,
     `data_iscrizione` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `propic_url`      VARCHAR(255),
-    `is_admin`        BOOLEAN               DEFAULT 0,
+    `permessi`        INT          NOT NULL DEFAULT 0,
     `username`        VARCHAR(255) NOT NULL UNIQUE,
     `bio`             VARCHAR(255) NOT NULL DEFAULT ''
 );

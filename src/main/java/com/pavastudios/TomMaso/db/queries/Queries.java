@@ -60,8 +60,8 @@ public class Queries {
 
     public static void initQueries() throws SQLException {
         //FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente` IN ((SELECT `utente2` FROM 'Chat' WHERE `utente1`=?) UNION (SELECT `utente1` FROM 'Chat' WHERE `utente2`=?))");
-        FETCH_ADMIN = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `is_admin`=1 ORDER BY `username`");
-        FIND_ALL_ADMINS = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `is_admin`=1");
+        FETCH_ADMIN = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `permessi`=1 ORDER BY `username`");
+        FIND_ALL_ADMINS = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `permessi`=1");
         TOP_BLOG = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` ORDER BY `visite` DESC LIMIT ?");
         FETCH_COMMENT_FOR_PAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Commento` WHERE `url_pagina`=? ORDER BY `data_invio`");
         FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? ORDER BY `data_invio` DESC LIMIT ? OFFSET ?");
@@ -98,7 +98,7 @@ public class Queries {
         DELETE_BLOG = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `Blog` WHERE `id_blog`=?");
         UPDATE_BLOG_NAME = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Blog` SET `nome`=? WHERE `id_blog`=?");
         UPDATE_USER_DATA = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `username`=?,`bio`=? WHERE `id_utente`=?");
-        CHANGE_ROLE_USER = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `is_admin`=? WHERE `id_utente`=?");
+        CHANGE_ROLE_USER = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `permessi`=? WHERE `id_utente`=?");
         UPDATE_BLOG_COMMENTS = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Commento` SET `url_pagina`=CONCAT(?,RIGHT(`url_pagina`,LENGTH(`url_pagina`)-LENGTH(?)-2)) WHERE `url_pagina` LIKE ?");
         MOVE_COMMENTS = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Commento` SET `url_pagina`=? WHERE `url_pagina`=?");
     }
