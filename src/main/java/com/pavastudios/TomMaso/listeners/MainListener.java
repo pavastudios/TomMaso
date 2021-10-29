@@ -1,6 +1,8 @@
 package com.pavastudios.TomMaso.listeners;
 
 import com.pavastudios.TomMaso.db.connection.GlobalConnection;
+import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.FileUtility;
 
 import javax.servlet.ServletContext;
@@ -12,7 +14,9 @@ import java.sql.SQLException;
 @WebListener
 public class MainListener implements ServletContextListener {
     public static ServletContext CONTEXT;
-
+    public static String ADMIN_EMAIL="admin@admin.com";
+    public static String ADMIN_PASSWORD="admin";
+    public static String ADMIN_USERNAME="admin";
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         CONTEXT = sce.getServletContext();
@@ -23,11 +27,20 @@ public class MainListener implements ServletContextListener {
             System.out.println("Connecting to DB...");
             Class.forName("org.mariadb.jdbc.Driver");
             GlobalConnection.init();
+            createAdminAccount();
             System.out.println("Successfully connected to DB");
         } catch (Exception throwables) {
             throwables.printStackTrace();
         }
 
+    }
+
+    private void createAdminAccount() throws SQLException {
+        Utente u=Queries.findUserByUsername(ADMIN_USERNAME);
+        if(u==null) {
+            Utente admin=Queries.registerUser(ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_USERNAME);
+            Queries.changeRole(admin);
+        }
     }
 
     @Override
