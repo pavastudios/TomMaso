@@ -60,6 +60,12 @@ public class Chat implements GenericModel {
     }
 
     public boolean hasAccess(Utente user) {
+        if (user == null) return false;
+        if (user.getPermessi().hasPermissions(Utente.Permessi.MOD_CHAT)) return true;
+        return isPartecipant(user);
+    }
+
+    public boolean isPartecipant(Utente user) {
         return utente1.equals(user) || utente2.equals(user);
     }
 

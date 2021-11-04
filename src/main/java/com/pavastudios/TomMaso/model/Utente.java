@@ -37,7 +37,12 @@ public class Utente implements GenericModel {
         u.setPropicURL(rs.getString("propic_url"));
         u.setUsername(rs.getString("username"));
         u.setBio(rs.getString("bio"));
+        u.setPermessi(new Permessi(rs.getInt("permessi")));
         return u;
+    }
+
+    public Permessi getPermessi() {
+        return permessi;
     }
 
     public String getUsername() {
@@ -128,6 +133,10 @@ public class Utente implements GenericModel {
                 ", username='" + username + '\'' +
                 ", dataIscrizione=" + dataIscrizione +
                 '}';
+    }
+
+    public void setPermessi(Permessi permessi) {
+        this.permessi = permessi;
     }
 
     @Override

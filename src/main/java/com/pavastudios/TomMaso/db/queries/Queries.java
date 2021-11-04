@@ -389,7 +389,8 @@ public class Queries {
         return chats;
     }
 
-    public static @Nullable Chat findChatByUsers(Utente u1, Utente u2) throws SQLException {
+    public static @Nullable Chat findChatByUsers(@Nullable Utente u1, @Nullable Utente u2) throws SQLException {
+        if (u1 == null || u2 == null) return null;
         if (u1.getIdUtente() > u2.getIdUtente()) {
             Utente temp = u1;
             u1 = u2;

@@ -20,7 +20,7 @@ public class ChatEndpoint {
         int chatId = parser.getValueInt("chat-id");
         String message = parser.getValueString("message");
         Chat chat = Queries.findChatById(chatId);
-        if (chat == null || !chat.hasAccess(user)) {
+        if (chat == null || !chat.isPartecipant(user)) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "invalid chat-id");
         }
         Messaggio m = Queries.sendTextToChat(chat, user, message);
