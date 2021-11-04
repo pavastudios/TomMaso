@@ -1,7 +1,7 @@
 package com.pavastudios.TomMaso.api.components;
 
 public @interface ApiParameter {
-    String value();
+    String name();
 
     ApiParam.Type type();
 

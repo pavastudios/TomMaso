@@ -14,8 +14,8 @@ public class ApiLoader {
         for (Field field : apiEndpoints) {
             Endpoint ann = field.getAnnotation(Endpoint.class);
             ApiEndpoint.Manage manage = (ApiEndpoint.Manage) field.get(null);
-            ApiEndpoint endpoint = new ApiEndpoint(ann.value(), ann.requireLogin(), manage, toApiParams(ann.params()));
-            ApiManager.API.put(ann.value(), endpoint);
+            ApiEndpoint endpoint = new ApiEndpoint(ann.url(), ann.requireLogin(), manage, toApiParams(ann.params()));
+            ApiManager.API.put(ann.url(), endpoint);
 
         }
     }
@@ -25,9 +25,9 @@ public class ApiLoader {
         for (int i = 0; i < params.length; i++) {
             ApiParameter p = params[i];
             if (p.type() == ApiParam.Type.INT && p.defInt() != ApiParam.DEFAULT_INT) {
-                apiParams[i] = new ApiParam(p.value(), p.type(), p.defInt());
+                apiParams[i] = new ApiParam(p.name(), p.type(), p.defInt());
             } else {
-                apiParams[i] = new ApiParam(p.value(), p.type());
+                apiParams[i] = new ApiParam(p.name(), p.type());
             }
         }
         return apiParams;

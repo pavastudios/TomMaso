@@ -8,9 +8,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Endpoint {
-    String value();
+    String url();
 
-    ApiParameter[] params() default {};
+    ApiParameter[] params();
 
     boolean requireLogin();
 }

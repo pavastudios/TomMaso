@@ -211,6 +211,11 @@
 <%@include file="../general/footer.jsp"%>
 <%@include file="../general/tailTag.jsp"%>
 <script>
+    $(".add-file").click(function (){
+        $("#titleMD").val("");
+        $("#dirName").val("");
+        $("#file").val("");
+    });
     $(".move-blog").click(function(){
         $("#moveBlogHid").val($(this).attr("rel-url"));
         $("#moveBlog").val($(this).attr("rel-url"));
@@ -223,7 +228,7 @@
         const url = $("#deleteBlogHid").val();
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/delete<%=request.getAttribute("rewrite")%>',
+            url: '${pageContext.request.contextPath}/api/blog/delete-file<%=request.getAttribute("rewrite")%>',
             data: {
                 "url": url,
             },
@@ -279,7 +284,7 @@
         });
     });
 
-    $("#titleMD").change(function(){
+    $('#titleMD').on("input",function(){
         const original ="<%=request.getContextPath()+"/edit-md/"+url+"/"%>";
         console.log($("#titleMD").val());
         $("#createMD").attr("action",original+$("#titleMD").val());
