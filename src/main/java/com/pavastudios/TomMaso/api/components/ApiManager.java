@@ -7,6 +7,7 @@ import com.pavastudios.TomMaso.utility.tuple.Tuple2;
 import org.jetbrains.annotations.Nullable;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.sql.SQLException;
@@ -58,7 +59,7 @@ public class ApiManager {
             throw e;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ApiException(500, e.getMessage());
+            throw new ApiException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 
@@ -67,11 +68,11 @@ public class ApiManager {
         //Controlla esistenza endpoint
         ApiEndpoint endpoint = getEndpoint(req);
         if (endpoint == null) {
-            throw new ApiException(405, "method not implemented");
+            throw new ApiException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "method not implemented");
         }
         //Controlla se l'utente è loggato
         if (endpoint.requireLogin() && !session.isLogged()) {
-            throw new ApiException(401, "user not authenticated");
+            throw new ApiException(HttpServletResponse.SC_UNAUTHORIZED, "user not authenticated");
         }
         //Controlla i parametri passati
         ApiParser parser = new ApiParser(endpoint, req);

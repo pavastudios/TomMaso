@@ -1,6 +1,7 @@
 package com.pavastudios.TomMaso.api.components;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -31,7 +32,7 @@ public class ApiParser {
         if (s == null) { //handle param not found
             if (!param.isOptional()) {
                 String errorString = String.format(Locale.US, "missing param '%s'", param.getName());
-                throw new ApiException(400, errorString);
+                throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
             }
             s = param.getDefValue();
         }
@@ -46,7 +47,7 @@ public class ApiParser {
             }
         } catch (NumberFormatException ignore) {
             String errorString = String.format(Locale.US, "invalid value for param '%s'", param.getName());
-            throw new ApiException(400, errorString);
+            throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
         }
         return null;
     }
@@ -56,7 +57,7 @@ public class ApiParser {
         if (values == null) {
             if (!param.isOptional()) {
                 String errorString = String.format(Locale.US, "missing param '%s'", param.getName());
-                throw new ApiException(400, errorString);
+                throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
             }
             values = param.getDefValueArray();
         }
@@ -71,7 +72,7 @@ public class ApiParser {
             }
         } catch (NumberFormatException ignore) {
             String errorString = String.format(Locale.US, "invalid value for param '%s'", param.getName());
-            throw new ApiException(400, errorString);
+            throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
         }
         return null;
     }

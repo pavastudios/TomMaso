@@ -27,7 +27,7 @@
         escaped="";
     }
 %>
-<form action="<%=request.getContextPath()%>/upload-md<%=path%>" method="post">
+<form action="<%=request.getContextPath()%>/upload-md<%=path%>" method="post" enctype="multipart/form-data">
     <textarea id="my-text-area" style="width: 100%;" name="content"><%=escaped%></textarea>
     <div class="text-center">
         <input type="submit" value="Carica" class="btn btn-primary"/>

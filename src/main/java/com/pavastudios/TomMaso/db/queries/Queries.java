@@ -56,6 +56,7 @@ public class Queries {
     static MasterPreparedStatement FETCH_ADMIN;
     static MasterPreparedStatement FIND_ALL_ADMINS;
     static MasterPreparedStatement MOVE_COMMENTS;
+    static MasterPreparedStatement DELETE_COMMENTS_FOR_POST;
 
 
     public static void initQueries() throws SQLException {
@@ -101,6 +102,23 @@ public class Queries {
         CHANGE_ROLE_USER = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `permessi`=? WHERE `id_utente`=?");
         UPDATE_BLOG_COMMENTS = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Commento` SET `url_pagina`=CONCAT(?,RIGHT(`url_pagina`,LENGTH(`url_pagina`)-LENGTH(?)-2)) WHERE `url_pagina` LIKE ?");
         MOVE_COMMENTS = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Commento` SET `url_pagina`=? WHERE `url_pagina`=?");
+        DELETE_COMMENTS_FOR_POST = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `Commento` WHERE `url_pagina` LIKE ?");
+    }
+
+    private static String escapeLike(String toEscape) {
+        //Evitare wildcard nella stringa e fare il corretto escape di \
+        return toEscape
+                .replace("\\", "\\\\")
+                .replace("%", "\\%")
+                .replace("_", "\\_");
+    }
+
+    /*L'url deve essere del tipo /NOMEBLOG/... */
+    public static void deleteCommentsForBlog(String postUrl) throws SQLException {
+        postUrl = escapeLike(postUrl);
+        postUrl += "%";//Se si sta cancellando una cartella allora tutti quelli che iniziano con uno specifico nome devono essere cancellati
+        DELETE_COMMENTS_FOR_POST.setString(1, postUrl);
+        DELETE_COMMENTS_FOR_POST.executeUpdate();
     }
 
     public static List<Utente> getAdmins() throws SQLException {
@@ -371,7 +389,8 @@ public class Queries {
         return chats;
     }
 
-    public static @Nullable Chat findChatByUsers(Utente u1, Utente u2) throws SQLException {
+    public static @Nullable Chat findChatByUsers(@Nullable Utente u1, @Nullable Utente u2) throws SQLException {
+        if (u1 == null || u2 == null) return null;
         if (u1.getIdUtente() > u2.getIdUtente()) {
             Utente temp = u1;
             u1 = u2;
@@ -402,18 +421,6 @@ public class Queries {
     public static void deleteBlog(Blog blog) throws SQLException {
         DELETE_BLOG.setInt(1, blog.getIdBlog());
         DELETE_BLOG.executeUpdate();
-    }
-
-    public static boolean inviaMessaggio(Utente mittente, Utente destinatario, String messaggio) throws SQLException {
-        if (Queries.findChatByUsers(mittente, destinatario) == null)
-            Queries.createChat(mittente, destinatario);
-
-        Chat chat = Queries.findChatByUsers(mittente, destinatario);
-        SEND_MESSAGE.setInt(1, chat.getIdChat());
-        SEND_MESSAGE.setInt(2, mittente.getIdUtente());
-        SEND_MESSAGE.setString(3, messaggio);
-        SEND_MESSAGE.executeUpdate();
-        return true;
     }
 
     public static Blog renameBlog(Blog fromBlog, String toName) throws SQLException {
@@ -468,11 +475,10 @@ public class Queries {
         CHANGE_ROLE_USER.executeUpdate();
     }
 
-    //"UPDATE `Commento` SET `url_pagina`=CONCAT(?,RIGHT(`url_pagina`,LENGTH(`url_pagina`)-LENGTH(?)-2)) WHERE `url_pagina` LIKE ?");
     public static void updateBlogComments(Blog fromBlog, Blog newBlog) throws SQLException {
         UPDATE_BLOG_COMMENTS.setString(1, "/" + newBlog.getNome() + "/");
         UPDATE_BLOG_COMMENTS.setString(2, fromBlog.getNome());
-        UPDATE_BLOG_COMMENTS.setString(3, "/" + fromBlog.getNome() + "/%");
+        UPDATE_BLOG_COMMENTS.setString(3, "/" + escapeLike(fromBlog.getNome()) + "/%");
         UPDATE_BLOG_COMMENTS.executeUpdate();
     }
 

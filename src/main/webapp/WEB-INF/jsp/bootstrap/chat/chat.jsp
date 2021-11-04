@@ -28,12 +28,13 @@
     <div id="chat" class="row chat">
     </div>
 
+  <input type="text" name="chat" value="<%=chat.getIdChat()%>" id="chat-id" hidden>
+  <% if(chat.isPartecipant(ses.getUtente())){ %>
   <div class="row justify-content-center mt-5">
-    <input type="text" name="chat" value="<%=chat.getIdChat()%>" id="chat-id" hidden>
-
     <textarea class="col-12 form-control" placeholder="Invia messaggio" id="messaggio"></textarea>
     <button class="col-12 btn btn-primary" id="invia">Invia <i class="fas fa-paper-plane me-4"></i></button>
   </div>
+  <%}%>
 </div>
 <%@include file="../general/footer.jsp"%>
 <%@include file="../general/tailTag.jsp"%>
@@ -47,7 +48,12 @@
     <div class="card px-0 col-10">
       <div class="card-header">
         <span class="msg-sender-name">NOME_UTENTE</span>
-        <span class="msg-date float-end">DATE_MESSAGE</span>
+        <div class="float-end">
+          <span class="msg-date" style="margin-right: 8px">DATE_MESSAGE</span>
+          <%if(chat.isPartecipant(ses.getUtente())){%>
+          <button data-bs-toggle="modal" data-bs-target="#reportMessageModal" class="report-message btn btn-danger"><i class="fas fa-flag"></i></button>
+          <%}%>
+        </div>
       </div>
       <div class="card-body">
         CONTENUTO_MESSAGGIO
@@ -55,7 +61,34 @@
     </div>
 
   </div>
+
+<!-- report comment Modal -->
+<div class="modal modal-fullscreen-md-down fade" id="reportMessageModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Segnala mesasggio:</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="lead">Inserisci il motivo:</p>
+        <input type="text" name="name" id="id-message" hidden>
+        <input type="text" name="name" id="reason" class="input-text" maxlength="50">
+      </div>
+      <p class="text-danger modal-error"></p>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+        <button type="button" class="btn btn-danger" id="reportCommentModalOk">Segnala</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
+  $(".report-message").click(function () {
+    let id=parseInt(this.parentElement.parentElement.parentElement.parentElement.id.split("-")[1]);
+    $("#id-message").val(id);
+  });
   let lastUpdated = -1;
   const messageTemplate=$("#message-template");
   messageTemplate.hide();

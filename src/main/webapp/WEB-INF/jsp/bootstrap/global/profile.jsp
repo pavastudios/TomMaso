@@ -73,8 +73,7 @@
             <a class="px-0" href="${pageContext.request.contextPath}/chats"><button type="button" class="btn btn-success"><i class="fas fa-comments"></i></button></a>
             <%}else{%>
             <div class="row d-flex justify-content-center ">
-                <form action="${pageContext.request.contextPath}/new-chat" method="post">
-                    <input type="text" name="receiver" value="<%=user.getIdUtente()%>" hidden/>
+                <form action="#" method="post" id="createChat">
                     <input type="submit" class="col-9 btn btn-outline-dark modify-button" value="Contatta"/>
                 </form>
             </div>
@@ -205,7 +204,20 @@
 <%@include file="../general/footer.jsp"%>
 <%@include file="../general/tailTag.jsp"%>
 <script>
-
+    $("#createChat").submit(function(e){
+        e.preventDefault();
+        let withName="<%=user.getUsername()%>";
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/api/chat/create-chat<%=request.getAttribute("rewrite")%>',
+            data: {"with": withName},
+            success: function () {
+                document.location.href = '${pageContext.request.contextPath}/chat/'+withName+'<%=request.getAttribute("rewrite")%>';
+            },error:function () {
+                document.location.href = '${pageContext.request.contextPath}/chat/'+withName+'<%=request.getAttribute("rewrite")%>';
+            }
+        });
+    });
     //set add button height
     var card = $(".carta:first");
     var add_button = $("#add_button");

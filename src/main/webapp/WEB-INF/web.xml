@@ -143,14 +143,6 @@
         <url-pattern>/chi-siamo</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>ContactServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.control.chat.ContactServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ContactServlet</servlet-name>
-        <url-pattern>/new-chat</url-pattern>
-    </servlet-mapping>
-    <servlet>
         <servlet-name>ChatListServlet</servlet-name>
         <servlet-class>com.pavastudios.TomMaso.control.chat.ChatListServlet</servlet-class>
     </servlet>
@@ -164,7 +156,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ChatServlet</servlet-name>
-        <url-pattern>/chat</url-pattern>
+        <url-pattern>/chat/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
