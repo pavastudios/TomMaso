@@ -423,18 +423,6 @@ public class Queries {
         DELETE_BLOG.executeUpdate();
     }
 
-    public static boolean inviaMessaggio(Utente mittente, Utente destinatario, String messaggio) throws SQLException {
-        if (Queries.findChatByUsers(mittente, destinatario) == null)
-            Queries.createChat(mittente, destinatario);
-
-        Chat chat = Queries.findChatByUsers(mittente, destinatario);
-        SEND_MESSAGE.setInt(1, chat.getIdChat());
-        SEND_MESSAGE.setInt(2, mittente.getIdUtente());
-        SEND_MESSAGE.setString(3, messaggio);
-        SEND_MESSAGE.executeUpdate();
-        return true;
-    }
-
     public static Blog renameBlog(Blog fromBlog, String toName) throws SQLException {
         UPDATE_BLOG_NAME.setString(1, toName);
         UPDATE_BLOG_NAME.setInt(2, fromBlog.getIdBlog());
@@ -488,10 +476,9 @@ public class Queries {
     }
 
     public static void updateBlogComments(Blog fromBlog, Blog newBlog) throws SQLException {
-        String blogName = escapeLike(newBlog.getNome());
-        UPDATE_BLOG_COMMENTS.setString(1, "/" + blogName + "/");
+        UPDATE_BLOG_COMMENTS.setString(1, "/" + newBlog.getNome() + "/");
         UPDATE_BLOG_COMMENTS.setString(2, fromBlog.getNome());
-        UPDATE_BLOG_COMMENTS.setString(3, "/" + blogName + "/%");
+        UPDATE_BLOG_COMMENTS.setString(3, "/" + escapeLike(fromBlog.getNome()) + "/%");
         UPDATE_BLOG_COMMENTS.executeUpdate();
     }
 
