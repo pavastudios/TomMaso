@@ -11,7 +11,8 @@ public enum Entities {
     COMMENTO(Commento.class, Queries.FIND_COMMENT_BY_ID),
     MESSAGGIO(Messaggio.class, Queries.FIND_MESSAGE_BY_ID),
     PAGINA(Pagina.class, Queries.FIND_PAGE_BY_ID),
-    UTENTE(Utente.class, Queries.FIND_USER_BY_ID);
+    UTENTE(Utente.class, Queries.FIND_USER_BY_ID),
+    REPORT(Report.class, Queries.FIND_REPORT_BY_ID);
 
     Class entityClass;
     MasterPreparedStatement findByIdStmt;

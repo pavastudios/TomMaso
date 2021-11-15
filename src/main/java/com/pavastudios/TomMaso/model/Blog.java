@@ -41,6 +41,10 @@ public class Blog implements GenericModel {
         return this;
     }
 
+    public Utente getProprietario() {
+        return proprietario;
+    }
+
     public int getIdBlog() {
         return idBlog;
     }

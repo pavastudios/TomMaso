@@ -77,6 +77,19 @@ CREATE TABLE `PasswordReset`(
     FOREIGN KEY (`id_utente`) REFERENCES `Utente`(`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+CREATE TABLE `Report`
+(
+    `id_report`     INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    `tipo`          TINYINT         NOT NULL,
+    `url`           VARCHAR(255)    NOT NULL,
+    `motivo`        VARCHAR(255)    NOT NULL,
+    `reporter`      INT             NOT NULL,
+    `data_report`   TIMESTAMP       NOT NULL,
+    FOREIGN KEY (`reporter`) REFERENCES `Utente` (`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE,
+    UNIQUE (`url`, `reporter`)
+);
+
+
 -- Creazione eventi
 
 DROP EVENT IF EXISTS `removed_expired_tokens_remember`;

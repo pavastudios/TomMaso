@@ -51,7 +51,7 @@
         <div class="float-end">
           <span class="msg-date" style="margin-right: 8px">DATE_MESSAGE</span>
           <%if(chat.isPartecipant(ses.getUtente())){%>
-          <button data-bs-toggle="modal" data-bs-target="#reportMessageModal" class="report-message btn btn-danger"><i class="fas fa-flag"></i></button>
+          <button data-bs-toggle="modal" data-bs-target="#reportMessageModal" class="btn btn-danger" onclick="setMessageId(this)"><i class="fas fa-flag"></i></button>
           <%}%>
         </div>
       </div>
@@ -85,9 +85,28 @@
 </div>
 
 <script>
-  $(".report-message").click(function () {
-    let id=parseInt(this.parentElement.parentElement.parentElement.parentElement.id.split("-")[1]);
-    $("#id-message").val(id);
+  function setMessageId(btn) {
+    $("#id-message").val(btn.parentElement.parentElement.parentElement.parentElement.id.split("-")[1]);
+  }
+  $("#reportCommentModalOk").click(function () {
+    let reason=$("#reason").val();
+    let idMessage=parseInt($("#id-message").val());
+    $.ajax({
+      type: 'POST',
+      url: '${pageContext.request.contextPath}/api/report/message<%=request.getAttribute("rewrite")%>',
+      data: {
+        "reason": reason,
+        "id-message":idMessage
+      },
+      success: function (data) {
+        if (data["error"] !== undefined){
+          showError(data["error"]);
+          return;
+        }
+        if(data["error"]===undefined)
+          location.reload();
+      }
+    });
   });
   let lastUpdated = -1;
   const messageTemplate=$("#message-template");

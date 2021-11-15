@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 
 public class Queries {
@@ -57,6 +58,8 @@ public class Queries {
     static MasterPreparedStatement FIND_ALL_ADMINS;
     static MasterPreparedStatement MOVE_COMMENTS;
     static MasterPreparedStatement DELETE_COMMENTS_FOR_POST;
+    static MasterPreparedStatement CREATE_REPORT;
+    static MasterPreparedStatement FIND_REPORT_BY_ID;
 
 
     public static void initQueries() throws SQLException {
@@ -73,6 +76,7 @@ public class Queries {
         FIND_USER_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=?");
         FIND_PAGE_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Pagina` WHERE `id_pagina`=?");
         FIND_BLOG_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` WHERE `id_blog`=?");
+        FIND_REPORT_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Report` WHERE `id_report`=?");
         FIND_BLOGS_OWNED_BY = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` WHERE `proprietario`=? ORDER BY `nome`");
         FIND_COMMENT_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Commento` WHERE `id_commento`=?");
         FIND_USER_CHAT = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Chat` WHERE `utente1`=? OR `utente2`=?");
@@ -87,6 +91,7 @@ public class Queries {
         SEND_COMMENT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Commento`(`mittente`,`testo`,`url_pagina`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
         DELETE_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `RememberMe` WHERE `cookie`=?");
         CREATE_BLOG = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Blog`(`proprietario`,`nome`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
+        CREATE_REPORT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Report`(`tipo`,`url`,`motivo`,`reporter`) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
         CHANGE_PASSWORD = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `password`=? WHERE `id_utente`=?");
         BLOG_INCREMENT = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Blog` SET `visite`=`visite`+1 WHERE `id_blog`=?");
         CREATE_FORGET_COOKIE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `PasswordReset`(`codice`,`id_utente`) VALUES (?,?)");
@@ -486,5 +491,20 @@ public class Queries {
         MOVE_COMMENTS.setString(1, to);
         MOVE_COMMENTS.setString(2, from);
         MOVE_COMMENTS.executeUpdate();
+    }
+
+    public static @NotNull Report report(@NotNull Report.Type comment, @NotNull Utente user, @NotNull String url, @NotNull String reason) throws SQLException {
+        CREATE_REPORT.setInt(1, comment.ordinal());
+        CREATE_REPORT.setString(2, url);
+        CREATE_REPORT.setString(3, reason);
+        CREATE_REPORT.setInt(4, user.getIdUtente());
+        CREATE_REPORT.executeUpdate();
+        int idReport = Utility.getIdFromGeneratedKeys(CREATE_REPORT);
+        return Objects.requireNonNull(findReportById(idReport));
+    }
+
+    //Query Blog
+    public static @Nullable Report findReportById(int idReport) throws SQLException {
+        return findById(Entities.REPORT, idReport);
     }
 }
