@@ -91,7 +91,7 @@ public class Queries {
         SEND_COMMENT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Commento`(`mittente`,`testo`,`url_pagina`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
         DELETE_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `RememberMe` WHERE `cookie`=?");
         CREATE_BLOG = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Blog`(`proprietario`,`nome`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
-        CREATE_REPORT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Report`(`tipo`,`url`,`motivo`,`reporter`) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+        CREATE_REPORT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Report`(`tipo`,`url`,`motivo`,`reporter`,`target`) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
         CHANGE_PASSWORD = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `password`=? WHERE `id_utente`=?");
         BLOG_INCREMENT = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Blog` SET `visite`=`visite`+1 WHERE `id_blog`=?");
         CREATE_FORGET_COOKIE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `PasswordReset`(`codice`,`id_utente`) VALUES (?,?)");
@@ -493,11 +493,12 @@ public class Queries {
         MOVE_COMMENTS.executeUpdate();
     }
 
-    public static @NotNull Report report(@NotNull Report.Type comment, @NotNull Utente user, @NotNull String url, @NotNull String reason) throws SQLException {
+    public static @NotNull Report report(@NotNull Report.Type comment, @NotNull Utente user, @NotNull String url, @NotNull String reason, @Nullable Utente target) throws SQLException {
         CREATE_REPORT.setInt(1, comment.ordinal());
         CREATE_REPORT.setString(2, url);
         CREATE_REPORT.setString(3, reason);
         CREATE_REPORT.setInt(4, user.getIdUtente());
+        CREATE_REPORT.setInt(5, target.getIdUtente());
         CREATE_REPORT.executeUpdate();
         int idReport = Utility.getIdFromGeneratedKeys(CREATE_REPORT);
         return Objects.requireNonNull(findReportById(idReport));

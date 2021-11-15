@@ -30,7 +30,7 @@ public class ReportEndpoint {
                 commento.getPagina(),
                 commento.getIdCommento()
         );
-        Report report = Queries.report(Report.Type.COMMENT, user, url, reason);
+        Report report = Queries.report(Report.Type.COMMENT, user, url, reason, commento.getMittente());
         writer.name(ApiManager.OK_PROP);
         report.writeJson(writer);
     };
@@ -54,7 +54,7 @@ public class ReportEndpoint {
         if (user.equals(blog.getProprietario())) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Non è possibile segnalare un proprio post");
         }
-        Report report = Queries.report(Report.Type.POST, user, post, reason);
+        Report report = Queries.report(Report.Type.POST, user, post, reason, blog.getProprietario());
         writer.name(ApiManager.OK_PROP);
         report.writeJson(writer);
     };
@@ -83,7 +83,7 @@ public class ReportEndpoint {
                 chat.getUtente2().getUsername(),
                 messaggio.getIdMessaggio()
         );
-        Report report = Queries.report(Report.Type.CHAT, user, url, reason);
+        Report report = Queries.report(Report.Type.CHAT, user, url, reason, messaggio.getMittente());
         writer.name(ApiManager.OK_PROP);
         report.writeJson(writer);
     };

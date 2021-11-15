@@ -95,7 +95,9 @@ CREATE TABLE `Report`
     `reporter`      INT             NOT NULL,
     `data_report`   TIMESTAMP       NOT NULL,
     `status`        INT             NOT NULL DEFAULT 0,
+    `target`        INT             ,
     FOREIGN KEY (`reporter`) REFERENCES `Utente` (`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (`target`)   REFERENCES `Utente` (`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE,
     UNIQUE (`url`, `reporter`)
 );
 
