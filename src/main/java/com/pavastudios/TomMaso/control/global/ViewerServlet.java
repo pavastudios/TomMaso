@@ -18,8 +18,10 @@ import java.sql.SQLException;
 public class ViewerServlet extends MasterServlet {
 
     private void manageMarkdown(Session session, HttpServletRequest req, HttpServletResponse resp, File file) throws IOException, ServletException, SQLException {
-        session.visitedBlog(Blog.fromPathInfo(req.getPathInfo()));
+        Blog blog = Blog.fromPathInfo(req.getPathInfo());
+        session.visitedBlog(blog);
         req.setAttribute("file", file);
+        req.setAttribute("blog", blog);
         req.setAttribute("comments", Queries.fetchCommentsFromPage(req.getPathInfo()));
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/blog/markdownViewer.jsp").forward(req, resp);
     }

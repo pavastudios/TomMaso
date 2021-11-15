@@ -51,7 +51,7 @@
         <div class="float-end">
           <span class="msg-date" style="margin-right: 8px">DATE_MESSAGE</span>
           <%if(chat.isPartecipant(ses.getUtente())){%>
-          <button data-bs-toggle="modal" data-bs-target="#reportMessageModal" class="btn btn-danger" onclick="setMessageId(this)"><i class="fas fa-flag"></i></button>
+          <button data-bs-toggle="modal" data-bs-target="#reportMessageModal" class="report btn btn-danger" onclick="setMessageId(this)"><i class="fas fa-flag"></i></button>
           <%}%>
         </div>
       </div>
@@ -125,6 +125,7 @@
     clon.find(".card-body").text(mes["testo"]);
     clon.find(".msg-propic").attr("src","${pageContext.request.contextPath}/users/"+mes["mittente"]["username"]+"/propic.png");
     clon.find(".msg-propic").attr("onerror","useJidenticonNav('msg-"+mes["id"]+"')");
+    clon.find(".report").attr("hidden",mes["mittente"]["username"]=="<%=ses.getUtente().getUsername()%>");
     clon.show();
     if(mes["mittente"]["username"]===other) {
       clon.find(".card").after(clon.find(".msg-sender").first());

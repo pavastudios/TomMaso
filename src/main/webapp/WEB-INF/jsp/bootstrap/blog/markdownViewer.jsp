@@ -3,7 +3,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.pavastudios.TomMaso.utility.Utility" %>
 <%@ page import="com.pavastudios.TomMaso.utility.FileUtility" %>
-<%@ page import="org.jsoup.nodes.Entities" %><%--
+<%@ page import="org.jsoup.nodes.Entities" %>
+<%@ page import="com.pavastudios.TomMaso.model.Blog" %><%--
   Created by IntelliJ IDEA.
   User: pasqu
   Date: 17/05/2021
@@ -16,6 +17,7 @@
     <%@include file="../general/headTags.jsp"%>
     <%
         File file = (File) request.getAttribute("file");
+        Blog blog=(Blog)request.getAttribute("blog");
         List<Commento> comments = (List<Commento>) request.getAttribute("comments");
         String content = FileUtility.escapeMDFile(file);
     %>
@@ -26,7 +28,9 @@
 <body>
 <%@include file="../general/navbar.jsp"%>
 <div class="container main-container">
+    <%if(ses.isLogged()&&!ses.getUtente().equals(blog.getProprietario())){%>
     <button data-bs-toggle="modal" data-bs-target="#reportPostModal" class="report-comment btn btn-danger float-end"><i class="fas fa-flag"></i></button>
+    <%}%>
     <div id="content">
 
     </div>
@@ -46,7 +50,9 @@
                 <span><%=username%></span>
                 <div class="float-end">
                     <span style="margin-right: 8px"><%=Utility.DATE_FORMAT.format(commento.getDataInvio())%></span>
+                    <%if(ses.isLogged()&&!ses.getUtente().equals(commento.getMittente())){%>
                     <button data-bs-toggle="modal" data-bs-target="#reportCommentModal" class="report-comment btn btn-danger"><i class="fas fa-flag"></i></button>
+                    <%}%>
                 </div>
             </div>
             <div class="card-body">

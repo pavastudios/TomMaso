@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.Locale;
 
-// TODO: 15/11/21 NASCONDERE I REPORT AGLI UTENTI CHE HANNO CREATO I CONTENUTI
 public class ReportEndpoint {
     @Endpoint(url = "/report/comment", params = {
             @ApiParameter(name = "id-comment", type = ApiParam.Type.INT),
@@ -52,7 +51,7 @@ public class ReportEndpoint {
         if (blog == null || !file.exists()) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Invalid Url");
         }
-        if (!user.equals(blog.getProprietario())) {
+        if (user.equals(blog.getProprietario())) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Non è possibile segnalare un proprio post");
         }
         Report report = Queries.report(Report.Type.POST, user, post, reason);
