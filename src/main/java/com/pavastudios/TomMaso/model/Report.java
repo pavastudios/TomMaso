@@ -16,11 +16,13 @@ public class Report implements GenericModel {
     private String reason;
     private Utente reporter;
     private Date reportDate;
+    private Status reportStatus;
 
     public static Report fromResultSet(ResultSet rs) throws SQLException {
         Report p = new Report();
         p.setIdReport(rs.getInt("id_report"));
         p.setType(Type.values()[rs.getInt("tipo")]);
+        p.setReportStatus(Status.values()[rs.getInt("status")]);
         p.setUrl(rs.getString("url"));
         p.setReason(rs.getString("motivo"));
         p.setReporter(Queries.findUserById(rs.getInt("reporter")));
@@ -42,6 +44,14 @@ public class Report implements GenericModel {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public Status getReportStatus() {
+        return reportStatus;
+    }
+
+    public void setReportStatus(Status reportStatus) {
+        this.reportStatus = reportStatus;
     }
 
     public String getUrl() {
@@ -96,6 +106,7 @@ public class Report implements GenericModel {
         writer.beginObject();
         writer.name("id").value(idReport);
         writer.name("type").value(type.ordinal());
+        writer.name("status").value(reportStatus.ordinal());
         writer.name("url").value(url);
         writer.name("reason").value(reason);
         writer.name("reporter");
@@ -109,6 +120,7 @@ public class Report implements GenericModel {
         return "Report{" +
                 "idReport=" + idReport +
                 ", type=" + type +
+                ", status=" + reportStatus +
                 ", url='" + url + '\'' +
                 ", reason='" + reason + '\'' +
                 ", reporter=" + reporter +
@@ -117,4 +129,6 @@ public class Report implements GenericModel {
     }
 
     public enum Type {COMMENT, CHAT, POST}
+
+    public enum Status {NOT_REVIEWED, ACCEPTED, REJECTED}
 }

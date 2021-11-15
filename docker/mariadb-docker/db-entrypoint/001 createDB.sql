@@ -1,4 +1,5 @@
 -- Creazione tabelle
+DROP TABLE IF EXISTS `Report`;
 DROP TABLE IF EXISTS `RememberMe`;
 DROP TABLE IF EXISTS `Messaggio`;
 DROP TABLE IF EXISTS `Chat`;
@@ -93,6 +94,7 @@ CREATE TABLE `Report`
     `motivo`        VARCHAR(255)    NOT NULL,
     `reporter`      INT             NOT NULL,
     `data_report`   TIMESTAMP       NOT NULL,
+    `status`        INT             NOT NULL DEFAULT 0,
     FOREIGN KEY (`reporter`) REFERENCES `Utente` (`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE,
     UNIQUE (`url`, `reporter`)
 );
