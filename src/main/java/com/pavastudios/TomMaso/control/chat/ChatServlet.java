@@ -1,7 +1,8 @@
 package com.pavastudios.TomMaso.control.chat;
 
 import com.pavastudios.TomMaso.control.MasterServlet;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.ChatQueries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import com.pavastudios.TomMaso.model.Chat;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.Session;
@@ -25,13 +26,13 @@ public class ChatServlet extends MasterServlet {
         Utente u1 = null, u2 = null;
         if (pathInfo.length == 2) {
             u1 = session.getUtente();
-            u2 = Queries.findUserByUsername(pathInfo[1]);
+            u2 = UserQueries.findUserByUsername(pathInfo[1]);
         } else if (pathInfo.length == 3 && session.getUtente().getPermessi().hasPermissions(Utente.Permessi.MOD_CHAT)) {
-            u1 = Queries.findUserByUsername(pathInfo[1]);
-            u2 = Queries.findUserByUsername(pathInfo[2]);
+            u1 = UserQueries.findUserByUsername(pathInfo[1]);
+            u2 = UserQueries.findUserByUsername(pathInfo[2]);
         }
         System.out.println(req.getPathInfo());
-        Chat chat = Queries.findChatByUsers(u1, u2);
+        Chat chat = ChatQueries.findChatByUsers(u1, u2);
         if (chat == null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid chat");
             return;

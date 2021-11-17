@@ -1,7 +1,7 @@
 package com.pavastudios.TomMaso.model;
 
 import com.google.gson.stream.JsonWriter;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
@@ -15,8 +15,8 @@ public class Chat implements GenericModel {
     public static Chat fromResultSet(ResultSet rs) throws SQLException {
         Chat c = new Chat();
         c.setIdChat(rs.getInt("id_chat"));
-        c.setUtente1(Queries.findUserById(rs.getInt("utente1")));
-        c.setUtente2(Queries.findUserById(rs.getInt("utente2")));
+        c.setUtente1(UserQueries.findUserById(rs.getInt("utente1")));
+        c.setUtente2(UserQueries.findUserById(rs.getInt("utente2")));
         return c;
     }
 

@@ -1,7 +1,7 @@
 package com.pavastudios.TomMaso.listeners;
 
 import com.pavastudios.TomMaso.db.connection.GlobalConnection;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.FileUtility;
 
@@ -36,10 +36,10 @@ public class MainListener implements ServletContextListener {
     }
 
     private void createAdminAccount() throws SQLException {
-        Utente u=Queries.findUserByUsername(ADMIN_USERNAME);
+        Utente u = UserQueries.findUserByUsername(ADMIN_USERNAME);
         if(u==null) {
-            Utente admin=Queries.registerUser(ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_USERNAME);
-            Queries.changeRole(admin);
+            Utente admin = UserQueries.registerUser(ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_USERNAME);
+            UserQueries.changeRole(admin, new Utente.Permessi(Utente.Permessi.MANAGE_USER));
         }
     }
 

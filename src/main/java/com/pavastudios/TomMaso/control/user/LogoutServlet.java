@@ -1,7 +1,7 @@
 package com.pavastudios.TomMaso.control.user;
 
 import com.pavastudios.TomMaso.control.MasterServlet;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import com.pavastudios.TomMaso.utility.RememberMeUtility;
 import com.pavastudios.TomMaso.utility.Session;
 import com.pavastudios.TomMaso.utility.Utility;
@@ -17,7 +17,7 @@ public class LogoutServlet extends MasterServlet {
         req.getSession().invalidate();
         for (Cookie c : req.getCookies()) {
             if (RememberMeUtility.COOKIE_REMEMBER_ME.equals(c.getName())) {
-                Queries.removeCookie(c.getValue());
+                UserQueries.removeCookie(c.getValue());
                 c.setMaxAge(0);
                 c.setValue("");
                 resp.addCookie(c);

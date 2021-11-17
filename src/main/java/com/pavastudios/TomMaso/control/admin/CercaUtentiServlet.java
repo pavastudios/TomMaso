@@ -1,7 +1,7 @@
 package com.pavastudios.TomMaso.control.admin;
 
 import com.pavastudios.TomMaso.control.MasterServlet;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.Session;
 
@@ -20,11 +20,11 @@ public class CercaUtentiServlet extends MasterServlet {
         List<Utente> admin = new ArrayList<>();
         if (req.getParameter("admin").equals("true")) {
 
-            List<Utente> u = Queries.findAllAdmins();
+            List<Utente> u = UserQueries.findAllAdmins();
             for (Utente x : u) if (x.getIsAdmin()) admin.add(x);
 
         } else
-            admin.add(Queries.findUserByUsername(req.getParameter("nome")));
+            admin.add(UserQueries.findUserByUsername(req.getParameter("nome")));
 
         req.setAttribute("result", admin);
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/admin/adminResult.jsp").forward(req, resp);

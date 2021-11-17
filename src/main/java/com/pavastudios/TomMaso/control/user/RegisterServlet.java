@@ -1,7 +1,7 @@
 package com.pavastudios.TomMaso.control.user;
 
 import com.pavastudios.TomMaso.control.MasterServlet;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.RememberMeUtility;
 import com.pavastudios.TomMaso.utility.Session;
@@ -37,7 +37,7 @@ public class RegisterServlet extends MasterServlet {
         }
         Utente utente;
         try {
-            utente = Queries.registerUser(email, password1, username);
+            utente = UserQueries.registerUser(email, password1, username);
             if (utente == null) {
                 resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Email o username già esistenti");
                 return;

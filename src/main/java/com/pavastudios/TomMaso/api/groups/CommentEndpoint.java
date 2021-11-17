@@ -1,7 +1,7 @@
 package com.pavastudios.TomMaso.api.groups;
 
 import com.pavastudios.TomMaso.api.components.*;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.CommentQueries;
 import com.pavastudios.TomMaso.listeners.MainListener;
 import com.pavastudios.TomMaso.model.Commento;
 import com.pavastudios.TomMaso.utility.FileUtility;
@@ -32,7 +32,7 @@ public class CommentEndpoint {
         if (fileType == null) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Pagina invalida");
         }
-        Commento com = Queries.sendComment(user, comment, page);
+        Commento com = CommentQueries.sendComment(user, comment, page);
         if (com == null) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Problema invio messaggio");
         }

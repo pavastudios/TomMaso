@@ -1,7 +1,8 @@
 package com.pavastudios.TomMaso.control.user;
 
 import com.pavastudios.TomMaso.control.MasterServlet;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.BlogQueries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import com.pavastudios.TomMaso.model.Blog;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.Session;
@@ -21,7 +22,7 @@ public class ProfileServlet extends MasterServlet {
         String[] parts = req.getPathInfo().split("/");
         if (parts.length == 0) return userLogged;
         String username = parts[parts.length - 1];
-        return Queries.findUserByUsername(username);
+        return UserQueries.findUserByUsername(username);
     }
 
     @Override
@@ -31,7 +32,7 @@ public class ProfileServlet extends MasterServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "username non trovato"); //username non trovato
             return;
         }
-        List<Blog> blogs = Queries.getBlogsUser(u);
+        List<Blog> blogs = BlogQueries.getBlogsUser(u);
         req.setAttribute("user", u);
         req.setAttribute("blogs", blogs);
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/global/profile.jsp").forward(req, resp);

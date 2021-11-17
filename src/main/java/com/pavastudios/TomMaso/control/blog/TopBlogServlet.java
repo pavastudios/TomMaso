@@ -1,7 +1,7 @@
 package com.pavastudios.TomMaso.control.blog;
 
 import com.pavastudios.TomMaso.control.MasterServlet;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.BlogQueries;
 import com.pavastudios.TomMaso.model.Blog;
 import com.pavastudios.TomMaso.utility.Session;
 
@@ -17,7 +17,7 @@ public class TopBlogServlet extends MasterServlet {
 
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        List<Blog> blogs = Queries.topBlogs(TOP_COUNT);
+        List<Blog> blogs = BlogQueries.topBlogs(TOP_COUNT);
         req.setAttribute("blogs", blogs);
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/blog/topBlogs.jsp").forward(req, resp);
     }

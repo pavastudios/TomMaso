@@ -1,6 +1,7 @@
 package com.pavastudios.TomMaso.utility;
 
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.BlogQueries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import com.pavastudios.TomMaso.model.Blog;
 import com.pavastudios.TomMaso.model.Utente;
 
@@ -55,7 +56,7 @@ public class Session {
     private void updateUser() throws SQLException {
         if (!isLogged()) return;
         int idUser = utente.getIdUtente();
-        Utente newUtente = Queries.findUserById(idUser);
+        Utente newUtente = UserQueries.findUserById(idUser);
         setUtente(newUtente);
     }
 
@@ -67,7 +68,7 @@ public class Session {
     public void visitedBlog(Blog blog) throws SQLException {
         if (blog == null) return;
         if (!hasVisitedBlog(blog))
-            Queries.incrementVisit(blog);
+            BlogQueries.incrementVisit(blog);
         blogs.add(blog.getIdBlog());
     }
 

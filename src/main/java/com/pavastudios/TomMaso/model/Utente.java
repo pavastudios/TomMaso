@@ -177,25 +177,28 @@ public class Utente implements GenericModel {
                 getUsername(), additional);
     }
 
-    public static class Permessi{
-        public static final int MANAGE_USER=0x00000001;
-        public static final int MOD_CHAT=0x00000002;
-        public static final int MOD_USER=0x00000004;
+    public static class Permessi {
+        public static final int MANAGE_USER = 0x00000001;
+        public static final int MOD_CHAT = 0x00000002;
+        public static final int MOD_BLOG = 0x00000004;
+        public static final int CAN_LOGIN = 0x00000008;
 
-        public int permessi=0;
+        public int permessi;
 
         public Permessi(@MagicConstant(flagsFromClass = Permessi.class) int permessi) {
             this.permessi = permessi;
         }
 
-        public void addPermission(@MagicConstant(flagsFromClass = Permessi.class) int permission){
-            permessi|=permission;
+        public void addPermission(@MagicConstant(flagsFromClass = Permessi.class) int permission) {
+            permessi |= permission;
         }
-        public void removePermissions(@MagicConstant(flagsFromClass = Permessi.class) int permission){
-            permessi&=(~permission);
+
+        public void removePermissions(@MagicConstant(flagsFromClass = Permessi.class) int permission) {
+            permessi &= (~permission);
         }
-        public boolean hasPermissions(@MagicConstant(flagsFromClass = Permessi.class) int permission){
-            return (permessi&permission)==permission;
+
+        public boolean hasPermissions(@MagicConstant(flagsFromClass = Permessi.class) int permission) {
+            return (permessi & permission) == permission;
         }
 
         public int getPermessi() {

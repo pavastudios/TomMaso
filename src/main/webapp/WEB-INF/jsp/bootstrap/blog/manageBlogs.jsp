@@ -92,10 +92,9 @@
                                     if(FileUtility.getFileType(request.getServletContext(), f)==FileUtility.FileType.MARKDOWN){
                                         String path = f.getAbsolutePath();
                                 %>
-                                <a class="col-4" rel-url="<%=relUrl%>" href="<%=request.getContextPath()%>/edit-md/<%=path.substring(path.indexOf("blogs")+6)%>"><button type="button" class="write-anim col-12 btn btn-outline-primary"><i class="fas fa-pen"></i></button></a>
+                                <a class="col-6" rel-url="<%=relUrl%>" href="<%=request.getContextPath()%>/edit-md/<%=path.substring(path.indexOf("blogs")+6)%>"><button type="button" class="write-anim col-12 btn btn-outline-primary"><i class="fas fa-pen"></i></button></a>
                                 <%}%>
-                                <a class="col-4 move-blog" rel-url="<%=relUrl%>" data-bs-toggle="modal" data-bs-target="#moveModal" href="#"><button type="button" class="shake-anim col-12 btn btn-outline-warning"><i class="fas fa-copy"></i></button></a>
-                                <a class="col-4 delete-blog" rel-url="<%=relUrl%>" data-bs-toggle="modal" data-bs-target="#deleteModal" href="#"><button type="button" class="delete-anim col-12 btn btn-outline-danger" ><i class="fas fa-trash"></i></button></a>
+                                <a class="col-6 delete-blog" rel-url="<%=relUrl%>" data-bs-toggle="modal" data-bs-target="#deleteModal" href="#"><button type="button" class="delete-anim col-12 btn btn-outline-danger" ><i class="fas fa-trash"></i></button></a>
                             </div>
                         </div>
                     </div>
@@ -165,28 +164,6 @@
     </div>
 </div>
 
-<!-- Move Modal -->
-<div class="modal fade" id="moveModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Spostare file</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="#" method="post" class="row">
-                    <input type="text" name="from-name" id="moveBlogHid" hidden>
-                    <input type="text" name="to-name" id="moveBlog" class="col-9 form-control" maxlength="255">
-                    <p class="text-danger modal-error"></p>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                <button type="button" class="btn btn-primary" id="moveConfirm">Salva</button>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -216,10 +193,6 @@
         $("#dirName").val("");
         $("#file").val("");
     });
-    $(".move-blog").click(function(){
-        $("#moveBlogHid").val($(this).attr("rel-url"));
-        $("#moveBlog").val($(this).attr("rel-url"));
-    });
     $(".delete-blog").click(function(){
         $("#deleteBlogTitle").text("Eliminare definitivamente '"+$(this).attr("rel-url")+"'?");
         $("#deleteBlogHid").val($(this).attr("rel-url"));
@@ -231,26 +204,6 @@
             url: '${pageContext.request.contextPath}/api/blog/delete-file<%=request.getAttribute("rewrite")%>',
             data: {
                 "url": url,
-            },
-            success: function (data) {
-                if (data["error"] !== undefined){
-                    showError(data["error"]);
-                    return;
-                }
-                if(data["error"]===undefined)
-                    location.reload();
-            }
-        });
-    });
-    $("#moveConfirm").click(function(){
-        var fromUrl=$("#moveBlogHid").val();
-        var toUrl=$("#moveBlog").val();
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/move<%=request.getAttribute("rewrite")%>',
-            data: {
-                "from-url": fromUrl,
-                "to-url": toUrl
             },
             success: function (data) {
                 if (data["error"] !== undefined){

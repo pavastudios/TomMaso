@@ -17,7 +17,6 @@
         });
     }
     $(function (){
-        updateActionSearch();
         if("<%=request.getAttribute("rewrite")%>"!=="") {
             urlRewriteTag("href");
             urlRewriteTag("src");
@@ -25,41 +24,6 @@
         }
     });
     const navbarSearchText=$("#navbarSearchText");
-    var isUser=true;
-    function updateActionSearch(){
-        const query=navbarSearchText.val();
-        navbarSearchText.val(query.replace(/[\\\/]/g,""));
-        if(isUser){
-            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/user/"+query+"<%=request.getAttribute("rewrite")%>");
-        }else{
-            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/home/"+query+"<%=request.getAttribute("rewrite")%>");
-        }
-    }
-    const navbarModel = new bootstrap.Modal(document.getElementById('createBlogModalNavbar'));
-    //Create blog code
-    $("#createBlogNavbar").click(function () {
-        const blogname = $("#blognameNavbar").val();
-        if (!blogname.match(/^[a-zA-Z0-9-\\._]+$/)) {
-            showError("Nome non valido!");
-            return;
-        }
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/create<%=request.getAttribute("rewrite")%>',
-            data: {name: blogname},
-            success: function (data) {
-                if (data["error"] !== undefined) {
-                    showError(data["error"]);
-                    return;
-                }
-                navbarModel.hide();
-                if (location.pathname.endsWith("profile")) {
-                    location.reload();
-                }
-            }
-        });
-
-    });
 
     const navbarLogin = new bootstrap.Modal(document.getElementById('navbarLogin'));
     //Create blog code
@@ -133,50 +97,6 @@
                 console.log(data);
                 navbarRegister.hide();
                 location.reload();
-            }
-        });
-    });
-
-    const navbarRecover = new bootstrap.Modal(document.getElementById('navInsertMail'));
-    $("#recoverPsw").click(function () {
-        const email = $("#recover-mail").val();
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath}/api/user/send-forgot-code<%=request.getAttribute("rewrite")%>',
-            data: {
-                email: email,
-            },
-            success: function (data) {
-                if (data["error"] !== undefined) {
-                    showError(data["error"]);
-                    return;
-                }
-                console.log(data);
-                navbarRecover.hide();
-                navRecuperaPsw.show();
-            }
-        });
-    });
-
-    const navRecuperaPsw = new bootstrap.Modal(document.getElementById('navRecuperaPsw'));
-    $("#sendMail").click(function () {
-        const code = $("#code").val();
-        const psw1 = $("#password1").val();
-        const psw2 = $("#password2").val();
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath}/api/user/change-password<%=request.getAttribute("rewrite")%>',
-            data: {
-                password1: psw1,
-                password2: psw2,
-                code: code,
-            },
-            success: function (data) {
-                if (data["error"] !== undefined) {
-                    showError(data["error"]);
-                    return;
-                }
-                navRecuperaPsw.hide();
             }
         });
     });

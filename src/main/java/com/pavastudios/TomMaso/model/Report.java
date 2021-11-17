@@ -1,7 +1,7 @@
 package com.pavastudios.TomMaso.model;
 
 import com.google.gson.stream.JsonWriter;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -25,7 +25,7 @@ public class Report implements GenericModel {
         p.setReportStatus(Status.values()[rs.getInt("status")]);
         p.setUrl(rs.getString("url"));
         p.setReason(rs.getString("motivo"));
-        p.setReporter(Queries.findUserById(rs.getInt("reporter")));
+        p.setReporter(UserQueries.findUserById(rs.getInt("reporter")));
         p.setReportDate(rs.getTimestamp("data_report"));
         return p;
     }

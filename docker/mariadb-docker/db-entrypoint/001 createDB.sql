@@ -4,7 +4,6 @@ DROP TABLE IF EXISTS `RememberMe`;
 DROP TABLE IF EXISTS `Messaggio`;
 DROP TABLE IF EXISTS `Chat`;
 DROP TABLE IF EXISTS `Commento`;
-DROP TABLE IF EXISTS `Pagina`;
 DROP TABLE IF EXISTS `Blog`;
 DROP TABLE IF EXISTS `PasswordReset`;
 DROP TABLE IF EXISTS `Utente`;
@@ -28,15 +27,6 @@ CREATE TABLE `Blog`
     `nome`         VARCHAR(255) NOT NULL UNIQUE,
     `visite`       INT          NOT NULL DEFAULT 0,
     FOREIGN KEY (`proprietario`) REFERENCES `Utente` (`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE `Pagina`
-(
-    `id_pagina`  INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `blog`       INT          NOT NULL,
-    `url`        VARCHAR(255) NOT NULL,
-    `data_invio` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (`blog`) REFERENCES `Blog` (`id_blog`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE `Commento`

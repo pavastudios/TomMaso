@@ -75,14 +75,6 @@
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/sign-up</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>UpdateUserServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.control.user.UpdateUserServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UpdateUserServlet</servlet-name>
-        <url-pattern>/user-update</url-pattern>
-    </servlet-mapping>
 
     <!--General-->
     <servlet>

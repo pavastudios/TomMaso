@@ -1,7 +1,8 @@
 package com.pavastudios.TomMaso.model;
 
 import com.google.gson.stream.JsonWriter;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.ChatQueries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -18,10 +19,10 @@ public class Messaggio implements GenericModel {
     public static Messaggio fromResultSet(ResultSet rs) throws SQLException {
         Messaggio m = new Messaggio();
         m.setIdMessaggio(rs.getInt("id_messaggio"));
-        m.setChat(Queries.findChatById(rs.getInt("id_chat")));
+        m.setChat(ChatQueries.findChatById(rs.getInt("id_chat")));
         m.setTesto(rs.getString("testo"));
         m.setDataInvio(rs.getTimestamp("data_invio"));
-        m.setMittente(Queries.findUserById(rs.getInt("mittente")));
+        m.setMittente(UserQueries.findUserById(rs.getInt("mittente")));
         return m;
     }
 

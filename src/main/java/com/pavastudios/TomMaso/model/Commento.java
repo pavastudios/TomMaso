@@ -1,7 +1,7 @@
 package com.pavastudios.TomMaso.model;
 
 import com.google.gson.stream.JsonWriter;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class Commento implements GenericModel {
     public static Commento fromResultSet(ResultSet rs) throws SQLException {
         Commento c = new Commento();
         c.setIdCommento(rs.getInt("id_commento"));
-        c.setMittente(Queries.findUserById(rs.getInt("mittente")));
+        c.setMittente(UserQueries.findUserById(rs.getInt("mittente")));
         c.setPagina(rs.getString("url_pagina"));
         c.setTesto(rs.getString("testo"));
         c.setDataInvio(rs.getTimestamp("data_invio"));

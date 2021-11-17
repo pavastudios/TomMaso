@@ -1,7 +1,7 @@
 package com.pavastudios.TomMaso.control.chat;
 
 import com.pavastudios.TomMaso.control.MasterServlet;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.ChatQueries;
 import com.pavastudios.TomMaso.model.Chat;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.Session;
@@ -27,7 +27,7 @@ public class ChatListServlet extends MasterServlet {
             resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Utente non autorizzato");
             return;
         }
-        List<Chat> chats = Queries.findUserChat(login);
+        List<Chat> chats = ChatQueries.findUserChat(login);
         req.setAttribute("chats", chats);
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/chat/chatsList.jsp").forward(req, resp);
         return;

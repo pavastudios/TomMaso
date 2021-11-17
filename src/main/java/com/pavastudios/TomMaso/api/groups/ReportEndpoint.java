@@ -1,7 +1,8 @@
 package com.pavastudios.TomMaso.api.groups;
 
 import com.pavastudios.TomMaso.api.components.*;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.CommentQueries;
+import com.pavastudios.TomMaso.db.queries.entities.ReportQueries;
 import com.pavastudios.TomMaso.model.*;
 import com.pavastudios.TomMaso.utility.FileUtility;
 
@@ -18,7 +19,7 @@ public class ReportEndpoint {
         int idCommento = parser.getValueInt("id-comment");
         String reason = parser.getValueString("reason");
 
-        Commento commento = Queries.findCommentById(idCommento);
+        Commento commento = CommentQueries.findCommentById(idCommento);
         if (commento == null) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "commento non trovato");
         }
@@ -30,7 +31,7 @@ public class ReportEndpoint {
                 commento.getPagina(),
                 commento.getIdCommento()
         );
-        Report report = Queries.report(Report.Type.COMMENT, user, url, reason, commento.getMittente());
+        Report report = ReportQueries.report(Report.Type.COMMENT, user, url, reason, commento.getMittente());
         writer.name(ApiManager.OK_PROP);
         report.writeJson(writer);
     };
@@ -54,7 +55,7 @@ public class ReportEndpoint {
         if (user.equals(blog.getProprietario())) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Non è possibile segnalare un proprio post");
         }
-        Report report = Queries.report(Report.Type.POST, user, post, reason, blog.getProprietario());
+        Report report = ReportQueries.report(Report.Type.POST, user, post, reason, blog.getProprietario());
         writer.name(ApiManager.OK_PROP);
         report.writeJson(writer);
     };
@@ -67,7 +68,7 @@ public class ReportEndpoint {
         int idMessage = parser.getValueInt("id-message");
         String reason = parser.getValueString("reason");
 
-        Messaggio messaggio = Queries.findMessageById(idMessage);
+        Messaggio messaggio = CommentQueries.findMessageById(idMessage);
         if (messaggio == null) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "messaggio non trovato");
         }
@@ -83,7 +84,7 @@ public class ReportEndpoint {
                 chat.getUtente2().getUsername(),
                 messaggio.getIdMessaggio()
         );
-        Report report = Queries.report(Report.Type.CHAT, user, url, reason, messaggio.getMittente());
+        Report report = ReportQueries.report(Report.Type.CHAT, user, url, reason, messaggio.getMittente());
         writer.name(ApiManager.OK_PROP);
         report.writeJson(writer);
     };

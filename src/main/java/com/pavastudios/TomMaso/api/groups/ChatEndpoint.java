@@ -1,7 +1,8 @@
 package com.pavastudios.TomMaso.api.groups;
 
 import com.pavastudios.TomMaso.api.components.*;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.ChatQueries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import com.pavastudios.TomMaso.model.Chat;
 import com.pavastudios.TomMaso.model.Messaggio;
 import com.pavastudios.TomMaso.model.Utente;
@@ -19,11 +20,11 @@ public class ChatEndpoint {
     public static final ApiEndpoint.Manage SEND_ACTION = (parser, writer, user) -> {
         int chatId = parser.getValueInt("chat-id");
         String message = parser.getValueString("message");
-        Chat chat = Queries.findChatById(chatId);
+        Chat chat = ChatQueries.findChatById(chatId);
         if (chat == null || !chat.isPartecipant(user)) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "invalid chat-id");
         }
-        Messaggio m = Queries.sendTextToChat(chat, user, message);
+        Messaggio m = ChatQueries.sendTextToChat(chat, user, message);
         if (m == null) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "impossibile inviare messaggio");
         }
@@ -35,13 +36,13 @@ public class ChatEndpoint {
     })
     public static final ApiEndpoint.Manage CREATE_ACTION = (parser, writer, user) -> {
         String otherUsername = parser.getValueString("with");
-        Utente other = Queries.findUserByUsername(otherUsername);
+        Utente other = UserQueries.findUserByUsername(otherUsername);
         Chat chat;
         if (other == null) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Invalid username");
         }
         try {
-            chat = Queries.createChat(user, other);
+            chat = ChatQueries.createChat(user, other);
         } catch (SQLException ignore) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Chat già esistente");
         }
@@ -55,12 +56,12 @@ public class ChatEndpoint {
     public static final ApiEndpoint.Manage FETCH_FROM_ID_ACTION = (parser, writer, user) -> {
         int chatId = parser.getValueInt("chat-id");
         int fromId = parser.getValueInt("from-id");
-        Chat chat = Queries.findChatById(chatId);
+        Chat chat = ChatQueries.findChatById(chatId);
         if (chat == null || !chat.hasAccess(user)) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "invalid chat-id");
         }
 
-        List<Messaggio> messaggi = Queries.fetchMessageFromId(chat, fromId);
+        List<Messaggio> messaggi = ChatQueries.fetchMessageFromId(chat, fromId);
         writer.name(ApiManager.OK_PROP);
         writer.beginArray();
         for (Messaggio m : messaggi)
@@ -78,12 +79,12 @@ public class ChatEndpoint {
         int count = parser.getValueInt("count");
         int offset = parser.getValueInt("offset");
 
-        Chat chat = Queries.findChatById(chatId);
+        Chat chat = ChatQueries.findChatById(chatId);
         if (chat == null || !chat.hasAccess(user)) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "invalid chat-id");
         }
 
-        List<Messaggio> messaggi = Queries.fetchMessages(chat, count, offset);
+        List<Messaggio> messaggi = ChatQueries.fetchMessages(chat, count, offset);
         writer.name(ApiManager.OK_PROP);
         writer.beginArray();
         for (Messaggio m : messaggi)

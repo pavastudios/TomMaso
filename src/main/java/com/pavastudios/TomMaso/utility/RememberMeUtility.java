@@ -1,6 +1,6 @@
 package com.pavastudios.TomMaso.utility;
 
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import com.pavastudios.TomMaso.model.Utente;
 
 import javax.servlet.http.Cookie;
@@ -13,7 +13,7 @@ public class RememberMeUtility {
     private static final int SECONDS_IN_YEAR = 60 * 60 * 24 * 365;
 
     public static Cookie createRememberMeCookie(Utente utente) throws SQLException {
-        byte[] bytes = Queries.registerRememberMe(utente);
+        byte[] bytes = UserQueries.registerRememberMe(utente);
         String val = Utility.toHexString(bytes);
         Cookie cookie = new Cookie(COOKIE_REMEMBER_ME, val);
         cookie.setMaxAge(SECONDS_IN_YEAR);
@@ -25,7 +25,7 @@ public class RememberMeUtility {
         if (cookies == null) return null;
         for (Cookie c : cookies) {
             if (COOKIE_REMEMBER_ME.equals(c.getName())) {
-                return Queries.findUserByCookie(c.getValue());
+                return UserQueries.findUserByCookie(c.getValue());
             }
         }
         return null;
