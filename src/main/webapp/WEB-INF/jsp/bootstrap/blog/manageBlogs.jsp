@@ -147,18 +147,6 @@
                         <p class="text-danger modal-error"></p>
                     </form>
                 </fieldset>
-                <div class="separatore">oppure</div>
-                <fieldset>
-                    <legend>Nuova cartella</legend>
-                    <form action="${pageContext.request.contextPath}/api/blog/create-dir" method="post" id="createDir">
-                        <div class="input-group mb-3">
-                            <input type="text" name="parent-dir" value="<%="/"+url%>" id="parentDir" hidden>
-                            <input type="text"  name="dir-name" id="dirName" class="form-control" placeholder="Inserisci nome cartella" aria-label="Inserisci nome cartella" aria-describedby="insert_title" maxlength="20">
-                            <input class="btn btn-primary" type="button" value="Crea" id="createDirConfirm"/>
-                        </div>
-                        <p class="text-danger modal-error"></p>
-                    </form>
-                </fieldset>
             </div>
         </div>
     </div>
@@ -190,7 +178,6 @@
 <script>
     $(".add-file").click(function (){
         $("#titleMD").val("");
-        $("#dirName").val("");
         $("#file").val("");
     });
     $(".delete-blog").click(function(){
@@ -204,27 +191,6 @@
             url: '${pageContext.request.contextPath}/api/blog/delete-file<%=request.getAttribute("rewrite")%>',
             data: {
                 "url": url,
-            },
-            success: function (data) {
-                if (data["error"] !== undefined){
-                    showError(data["error"]);
-                    return;
-                }
-                if(data["error"]===undefined)
-                    location.reload();
-            }
-        });
-    });
-
-    $("#createDirConfirm").click(function(){
-        var parentDir=$("#parentDir").val();
-        var dirName=$("#dirName").val();
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/create-dir<%=request.getAttribute("rewrite")%>',
-            data: {
-                "parent-dir": parentDir,
-                "dir-name": dirName
             },
             success: function (data) {
                 if (data["error"] !== undefined){

@@ -13,34 +13,6 @@ import java.sql.SQLException;
 
 @SuppressWarnings("unused")
 public class BlogEndpoint {
-    @Endpoint(url = "/blog/create-dir", requireLogin = true, params = {
-            @ApiParameter(name = "parent-dir", type = ApiParam.Type.STRING),
-            @ApiParameter(name = "dir-name", type = ApiParam.Type.STRING)
-    })
-    public static final ApiEndpoint.Manage CREATE_DIR_ACTION = (parser, writer, user) -> {
-        String parentDir = parser.getValueString("parent-dir");
-        String dirName = parser.getValueString("dir-name");
-        Blog blog = Blog.fromPathInfo(parentDir);
-        if (blog == null || !blog.hasAccess(user)) {
-            throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Invalid blog");
-        }
-        if (dirName.contains("/") || dirName.contains("\\")) {
-            throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Invalid dir name");
-        }
-        File file = FileUtility.blogPathToFile(parentDir);
-        if (file == null || !file.isDirectory()) {
-            throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Invalid parent-dir name");
-        }
-        File file2 = new File(file, dirName);
-        if (!file2.getParentFile().equals(file)) {
-            throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Invalid dir-name");
-        }
-        if (!file2.mkdirs()) {
-            throw new ApiException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "unable to create the folder");
-        }
-        writer.name(ApiManager.OK_PROP).value("created");
-    };
-
 
     @Endpoint(url = "/blog/delete-blog", requireLogin = true, params = {
             @ApiParameter(name = "blog-name", type = ApiParam.Type.STRING)
