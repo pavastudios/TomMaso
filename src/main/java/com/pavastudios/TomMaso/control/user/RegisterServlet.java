@@ -3,7 +3,6 @@ package com.pavastudios.TomMaso.control.user;
 import com.pavastudios.TomMaso.control.MasterServlet;
 import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import com.pavastudios.TomMaso.model.Utente;
-import com.pavastudios.TomMaso.utility.RememberMeUtility;
 import com.pavastudios.TomMaso.utility.Session;
 import com.pavastudios.TomMaso.utility.Utility;
 
@@ -21,9 +20,7 @@ public class RegisterServlet extends MasterServlet {
         String username = req.getParameter("username");
         String password1 = req.getParameter("password1");
         String password2 = req.getParameter("password2");
-        String email = req.getParameter("email");
-        boolean remember = "on".equals(req.getParameter("remember"));
-        if (username == null || password1 == null || password2 == null || email == null) {
+        if (username == null || password1 == null || password2 == null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
@@ -37,16 +34,13 @@ public class RegisterServlet extends MasterServlet {
         }
         Utente utente;
         try {
-            utente = UserQueries.registerUser(email, password1, username);
+            utente = UserQueries.registerUser(password1, username);
             if (utente == null) {
-                resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Email o username già esistenti");
+                resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Username già esistenti");
                 return;
             }
             utente.getUserFolder().mkdir();//crea cartella per l'utente
             session.setUtente(utente);
-            if (remember) {
-                resp.addCookie(RememberMeUtility.createRememberMeCookie(utente));
-            }
             Utility.returnHome(req, resp);
         } catch (SQLException throwables) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, throwables.getErrorCode() + ": " + throwables.getLocalizedMessage());

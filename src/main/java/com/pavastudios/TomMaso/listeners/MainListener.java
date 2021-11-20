@@ -14,9 +14,9 @@ import java.sql.SQLException;
 @WebListener
 public class MainListener implements ServletContextListener {
     public static ServletContext CONTEXT;
-    public static String ADMIN_EMAIL="admin@admin.com";
-    public static String ADMIN_PASSWORD="admin";
-    public static String ADMIN_USERNAME="admin";
+    public static String ADMIN_PASSWORD = "admin";
+    public static String ADMIN_USERNAME = "admin";
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         CONTEXT = sce.getServletContext();
@@ -37,8 +37,8 @@ public class MainListener implements ServletContextListener {
 
     private void createAdminAccount() throws SQLException {
         Utente u = UserQueries.findUserByUsername(ADMIN_USERNAME);
-        if(u==null) {
-            Utente admin = UserQueries.registerUser(ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_USERNAME);
+        if (u == null) {
+            Utente admin = UserQueries.registerUser(ADMIN_PASSWORD, ADMIN_USERNAME);
             UserQueries.changeRole(admin, new Utente.Permessi(Utente.Permessi.MANAGE_USER));
         }
     }

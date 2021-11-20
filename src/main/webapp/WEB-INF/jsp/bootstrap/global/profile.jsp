@@ -6,13 +6,7 @@
 <head>
 
     <%@include file="../general/headTags.jsp"%>
-    <script>
-        //no propic code
-        function useJidenticon(id){
-            document.getElementById("propic-"+id).setAttribute("hidden","");
-            document.getElementById("propic-svg-"+id).removeAttribute("hidden");
-        }
-    </script>
+
 
     <style>
         .input-text {
@@ -49,18 +43,13 @@
         <!-- Sidebaby -->
         <div class="col-lg-3 col-sm-12 col-md-12 text-center h-100">
             <div class="row d-flex justify-content-center">
-                <%=user.propicHtml(request.getServletContext())%>
+                <svg class="w-100 propic rounded-circle" data-jdenticon-value="<%=user.getUsername()%>" ></svg>
             </div>
             <div class="row">
                 <h4><%=user.getUsername()%></h4>
             </div>
             <%if(user.getIsAdmin()){%>
             <span class="badge bg-primary">Admin</span>
-            <%}%>
-            <%if(user.equals(ses.getUtente())){%>
-            <div class="row">
-                <p>Email: <%=Entities.escape(user.getEmail())%></p>
-            </div>
             <%}%>
             <% if(login!=null&&!user.equals(login)){%>
             <div class="row d-flex justify-content-center ">
@@ -77,8 +66,7 @@
                 <div class="carta col-lg-4 col-sm-12 col-md-6 pb-lg-4 pt-sm-4 pt-md-4">
                     <div class="card border-dark">
                         <div class="card-header text-center" blog="<%=blog.getNome()%>">
-                            <img id="propic-b<%=blog.getNome()%>" class="rounded-circle w-100" src="${pageContext.request.contextPath}/blogs/<%=blog.getNome()%>/propic.png" onerror="useJidenticon('b<%=blog.getNome()%>')">
-                            <svg id="propic-svg-b<%=blog.getNome()%>" class="rounded-circle" data-jdenticon-value="<%=blog.getNome()%>" hidden></svg>
+                            <svg id="propic-svg-b<%=blog.getNome()%>" class="rounded-circle" data-jdenticon-value="<%=blog.getNome()%>"></svg>
                             <h5 class="card-title"><%=blog.getNome()%></h5>
                         </div>
                         <%if(blog.hasAccess(ses.getUtente())){%>
@@ -106,7 +94,30 @@
         </div>
     </div>
 </div>
-
+<!-- create blog Modal -->
+<div class="modal fade" id="createBlogModalNavbar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Crea nuovo blog</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <label for="blognameNavbar" class="col-sm-2 col-form-label lead">Nome</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="name" id="blognameNavbar" maxlength="50">
+                    </div>
+                </div>
+                <p class="text-danger modal-error"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                <button type="button" class="btn btn-primary" id="createBlogNavbar">Crea</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">

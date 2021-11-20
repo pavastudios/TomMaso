@@ -20,9 +20,6 @@ public class UserQueries {
     static MasterPreparedStatement FIND_USER_BY_USERNAME;
     static MasterPreparedStatement FIND_USER_BY_COOKIE;
     static MasterPreparedStatement REGISTER_USER;
-    static MasterPreparedStatement REGISTER_REMEMBER_ME;
-    static MasterPreparedStatement DELETE_REMEMBER_ME;
-    static MasterPreparedStatement FIND_USER_BY_EMAIL;
     static MasterPreparedStatement CHANGE_PASSWORD;
     static MasterPreparedStatement DELETE_FORGET;
     static MasterPreparedStatement UPDATE_USER_DATA;
@@ -36,12 +33,9 @@ public class UserQueries {
         FIND_ALL_ADMINS = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `permessi`=1");
         FIND_ALL_USERS = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente`");
         FIND_USER_BY_USERNAME = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `username`=?");
-        FIND_USER_BY_EMAIL = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `email`=?");
         FIND_USER_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=?");
         FIND_USER_BY_COOKIE = GlobalConnection.CONNECTION.prepareStatement("SELECT `id_utente` FROM `RememberMe` WHERE `cookie`=?");
-        REGISTER_USER = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Utente`(`email`,`password`,`username`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
-        REGISTER_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `RememberMe`(`id_utente`,`cookie`) VALUES (?,?)");
-        DELETE_REMEMBER_ME = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `RememberMe` WHERE `cookie`=?");
+        REGISTER_USER = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Utente`(`password`,`username`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
         CHANGE_PASSWORD = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `password`=? WHERE `id_utente`=?");
         DELETE_FORGET = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `PasswordReset` WHERE `codice`=?");
         DELETE_FORGET = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `PasswordReset` WHERE `codice`=?");
@@ -49,12 +43,6 @@ public class UserQueries {
         CHANGE_ROLE_USER = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `permessi`=? WHERE `id_utente`=?");
     }
 
-
-    public static void removeCookie(String cookie) throws SQLException {
-        byte[] bytes = Utility.fromHexString(cookie);
-        DELETE_REMEMBER_ME.setBytes(1, bytes);
-        DELETE_REMEMBER_ME.executeUpdate();
-    }
 
     //Query Utente
     public static @Nullable Utente findUserByUsername(@NotNull String username) throws SQLException {
@@ -71,35 +59,14 @@ public class UserQueries {
         return Queries.findById(Entities.UTENTE, idUtente);
     }
 
-    public static @Nullable Utente registerUser(String email, String password, String username) throws SQLException {
-        REGISTER_USER.setString(1, email);
-        REGISTER_USER.setString(2, Security.crypt(password));
-        REGISTER_USER.setString(3, username);
+    public static @Nullable Utente registerUser(String password, String username) throws SQLException {
+        REGISTER_USER.setString(1, Security.crypt(password));
+        REGISTER_USER.setString(2, username);
         REGISTER_USER.executeUpdate();
         int newId = Utility.getIdFromGeneratedKeys(REGISTER_USER);
         return findUserById(newId);
     }
 
-    //Query RememberMe
-    public static @Nullable Utente findUserByCookie(String cookie) throws SQLException {
-        if (cookie == null) return null;
-        byte[] bytes = Utility.fromHexString(cookie);
-        FIND_USER_BY_COOKIE.setBytes(1, bytes);
-        ResultSet rs = FIND_USER_BY_COOKIE.executeQuery();
-        int id = -1;
-        if (rs.first())
-            id = rs.getInt("id_utente");
-        rs.close();
-        return id == -1 ? null : findUserById(id);
-    }
-
-    public static @Nullable byte[] registerRememberMe(Utente u) throws SQLException {
-        byte[] cookie = Utility.generateRememberMeCookie();
-        REGISTER_REMEMBER_ME.setInt(1, u.getIdUtente());
-        REGISTER_REMEMBER_ME.setBytes(2, cookie);
-        REGISTER_REMEMBER_ME.executeUpdate();
-        return cookie;
-    }
 
     public static void changeRole(Utente u, Utente.Permessi permessi) throws SQLException {
         if (u == null) return;

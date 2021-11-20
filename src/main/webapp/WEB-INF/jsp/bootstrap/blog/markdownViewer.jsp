@@ -43,7 +43,9 @@
     %>
     <div class="row mt-2" id="comment-<%=commento.getIdCommento()%>">
         <a class="col-2" href="${pageContext.request.contextPath}/user/<%=username%>">
-            <%=commento.getMittente()==null?"":commento.getMittente().propicHtml(request.getServletContext())%>
+            <%if(commento.getMittente()!=null){%>
+            <svg class="w-100 propic rounded-circle" data-jdenticon-value="<%=commento.getMittente()%>" ></svg>
+            <%}%>
         </a>
         <div class="card px-0 col-10">
             <div class="card-header">

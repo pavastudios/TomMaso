@@ -3,12 +3,10 @@ package com.pavastudios.TomMaso.control.user;
 import com.pavastudios.TomMaso.control.MasterServlet;
 import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import com.pavastudios.TomMaso.model.Utente;
-import com.pavastudios.TomMaso.utility.RememberMeUtility;
 import com.pavastudios.TomMaso.utility.Session;
 import com.pavastudios.TomMaso.utility.Utility;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -22,7 +20,6 @@ public class LoginServlet extends MasterServlet {
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        boolean remember = "on".equals(req.getParameter("remember"));
 
         Utente u = UserQueries.findUserByUsername(username);
         if (u == null) {
@@ -34,10 +31,6 @@ public class LoginServlet extends MasterServlet {
             return;
         }
         session.setUtente(u);
-        if (remember) {
-            Cookie c = RememberMeUtility.createRememberMeCookie(u);
-            resp.addCookie(c);
-        }
         Utility.returnHome(req, resp);
 
     }

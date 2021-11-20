@@ -27,7 +27,7 @@
   <div class="col-lg-3 col-md-6 col-sm-12 mt-4">
     <div class="card cursore" href="${pageContext.request.contextPath}/chat?id=<%=c.getIdChat()%>">
       <div class="card-header px-5">
-        <%=other.propicHtml(request.getServletContext())%>
+          <svg class="w-100 propic rounded-circle" data-jdenticon-value="<%=other.getUsername()%>" ></svg>
       </div>
       <div class="card-body">
           <h5 class="card-title text-center"><%=other.getUsername()%></h5>

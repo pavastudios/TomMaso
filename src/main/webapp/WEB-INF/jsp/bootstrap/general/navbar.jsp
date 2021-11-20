@@ -1,11 +1,5 @@
 <%@ page import="com.pavastudios.TomMaso.model.Utente" %>
-<script>
-    //no propic code
-    function useJidenticonNav(id){
-        document.getElementById("nav-"+id).setAttribute("hidden","");
-        document.getElementById("nav-svg-"+id).removeAttribute("hidden");
-    }
-</script>
+
 
 <!-- Barra di navigazione -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -30,7 +24,17 @@
                 </li>
             </ul>
             <div class="d-sm-flex justify-content-sm-center">
-
+                <form id="navbarSearchForm" class="mb-0 me-lg-3 me-sm-0 me-md-0 float-lg-none float-md-end float-sm-end" method="GET">
+                    <div class="input-group d-flex ">
+                        <button id="navbarSearchType" class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Utente</button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" id="navbarSearchBlog">Blog</a></li>
+                            <li><a class="dropdown-item" href="#" id="navbarSearchUser">Utente</a></li>
+                        </ul>
+                        <input type="text" id="navbarSearchText" class="form-control" aria-label="navbarSearch">
+                        <input class="btn btn-outline-primary form-control" type="submit" value="Cerca">
+                    </div>
+                </form>
                 <ul class="navbar-nav ml-auto d-flex justify-content-center align-content-center flex-md-row flex-sm-column ms-md-2">
 
                     <%if(ses.getUtente() == null) { %>
@@ -46,8 +50,7 @@
 
                     <div class="flex-shrink-0 dropdown">
                         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img id="nav-user" class="rounded-circle" src="${pageContext.request.contextPath}/users/<%=xUser.getUsername()%>/propic.png" alt="<%=xUser.getUsername()%>" width="32" height="32" onerror="useJidenticonNav('user')">
-                            <svg width="50" height="50" id="nav-svg-user" class="rounded-circle" data-jdenticon-value="<%=xUser.getUsername()%>" hidden></svg>
+                            <svg width="50" height="50" id="nav-svg-user" class="rounded-circle" data-jdenticon-value="<%=xUser.getUsername()%>"></svg>
                         </a>
                         <ul class="dropdown-propic-nav dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/profile">Profilo</a></li>
@@ -79,13 +82,6 @@
                         <div class="input-group mb-3">
                             <input id="password-login" name="password" type="password" class="form-control" placeholder="Password" aria-label="Password">
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" id="remember-login" type="checkbox" value="" name="remember">
-                            <label class="form-check-label" for="remember-login">
-                                Ricorda accesso
-                            </label>
-
-                        </div>
                         <p class="text-danger modal-error"></p>
                     </form>
                 </div>
@@ -112,19 +108,10 @@
                             <input id="username-register" name="username-register" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-user" maxlength="50">
                         </div>
                         <div class="input-group mb-3">
-                            <input id="email-register" name="email-register" type="email" class="form-control" placeholder="Email" aria-label="Email">
-                        </div>
-                        <div class="input-group mb-3">
                             <input id="password1-register" name="psw1-register" type="password" class="form-control" placeholder="Password" aria-label="Password1">
                         </div>
                         <div class="input-group mb-3">
                             <input id="password2-register" name="psw2-register" type="password" class="form-control" placeholder="Ripeti password" aria-label="Password2">
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" id="remember-register" type="checkbox" value="" name="remember">
-                            <label class="form-check-label" for="remember-register">
-                                Ricorda accesso
-                            </label>
                         </div>
                     </form>
                     <p class="text-danger modal-error"></p>

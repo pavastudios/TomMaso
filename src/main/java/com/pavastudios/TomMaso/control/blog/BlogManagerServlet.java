@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 public class BlogManagerServlet extends MasterServlet {
 
-    private void manageFolder(HttpServletRequest req, HttpServletResponse resp, File file) throws SQLException, ServletException, IOException {
+    private void manageFolder(HttpServletRequest req, HttpServletResponse resp, File file) throws ServletException, IOException {
         File[] files = file.listFiles();
         if (files == null) files = new File[0];
         Arrays.sort(files, (o1, o2) -> {

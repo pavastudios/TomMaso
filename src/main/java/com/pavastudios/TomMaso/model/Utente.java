@@ -5,23 +5,18 @@ import com.pavastudios.TomMaso.utility.FileUtility;
 import com.pavastudios.TomMaso.utility.Security;
 import org.intellij.lang.annotations.MagicConstant;
 
-import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.Locale;
 
 public class Utente implements GenericModel {
     public static final int MINIMUM_USERNAME_LENGTH = 4;
     private int idUtente;
     private Permessi permessi;
-    private String email;
     private String password;
-    private String propicURL;
     private String username;
-    private String bio;
     private Date dataIscrizione;
 
     public Utente() {
@@ -31,18 +26,19 @@ public class Utente implements GenericModel {
         Utente u = new Utente();
         u.setIdUtente(rs.getInt("id_utente"));
         u.setDataIscrizione(rs.getTimestamp("data_iscrizione"));
-        u.setEmail(rs.getString("email"));
         u.setPassword(rs.getString("password"));
         u.setIsAdmin(rs.getBoolean("permessi"));
-        u.setPropicURL(rs.getString("propic_url"));
         u.setUsername(rs.getString("username"));
-        u.setBio(rs.getString("bio"));
         u.setPermessi(new Permessi(rs.getInt("permessi")));
         return u;
     }
 
     public Permessi getPermessi() {
         return permessi;
+    }
+
+    public void setPermessi(Permessi permessi) {
+        this.permessi = permessi;
     }
 
     public String getUsername() {
@@ -66,28 +62,12 @@ public class Utente implements GenericModel {
     }
 
     public void setIsAdmin(boolean isAdmin) {
-        if(isAdmin)permessi=new Permessi(Permessi.MANAGE_USER);
-        else permessi=new Permessi(0);
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+        if (isAdmin) permessi = new Permessi(Permessi.MANAGE_USER);
+        else permessi = new Permessi(0);
     }
 
     private void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getPropicURL() {
-        return propicURL;
-    }
-
-    public void setPropicURL(String propicURL) {
-        this.propicURL = propicURL;
     }
 
     public Date getDataIscrizione() {
@@ -98,14 +78,6 @@ public class Utente implements GenericModel {
         this.dataIscrizione = dataIscrizione;
     }
 
-    public String getBio() {
-        return bio;
-    }
-
-    public Utente setBio(String bio) {
-        this.bio = bio;
-        return this;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -127,16 +99,10 @@ public class Utente implements GenericModel {
         return "Utente{" +
                 "idUtente=" + idUtente +
                 ", permessi=" + permessi +
-                ", email='" + email + '\'' +
                 ", password=" + password +
-                ", propicURL='" + propicURL + '\'' +
                 ", username='" + username + '\'' +
                 ", dataIscrizione=" + dataIscrizione +
                 '}';
-    }
-
-    public void setPermessi(Permessi permessi) {
-        this.permessi = permessi;
     }
 
     @Override
@@ -146,7 +112,6 @@ public class Utente implements GenericModel {
         writer.name("isAdmin").value(permessi.getPermessi());
         writer.name("username").value(username);
         writer.name("data_iscrizione").value(dataIscrizione.getTime());
-        writer.name("propic_url").value(propicURL);
         writer.endObject();
     }
 
@@ -158,24 +123,6 @@ public class Utente implements GenericModel {
         return new File(FileUtility.USER_FILES_FOLDER, username);
     }
 
-    public File getPropicFile() {
-        return new File(getUserFolder(), "propic.png");
-    }
-
-    public String propicHtml(ServletContext context) {
-        return propicHtml(context, "");
-    }
-
-    public String propicHtml(ServletContext context, String additional) {
-        File propic = getPropicFile();
-
-        if (propic.exists()) {
-            return String.format(Locale.US, "<img class=\"w-100 propic rounded-circle\" src=\"%s/users/%s/propic.png\" %s >",
-                    context.getContextPath(), getUsername(), additional);
-        }
-        return String.format(Locale.US, "<svg class=\"w-100 propic rounded-circle\" data-jdenticon-value=\"%s\" %s ></svg>",
-                getUsername(), additional);
-    }
 
     public static class Permessi {
         public static final int MANAGE_USER = 0x00000001;

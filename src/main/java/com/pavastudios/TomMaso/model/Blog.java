@@ -46,16 +46,16 @@ public class Blog implements GenericModel {
         return proprietario;
     }
 
+    public void setProprietario(Utente proprietario) {
+        this.proprietario = proprietario;
+    }
+
     public int getIdBlog() {
         return idBlog;
     }
 
     public void setIdBlog(int idBlog) {
         this.idBlog = idBlog;
-    }
-
-    public void setProprietario(Utente proprietario) {
-        this.proprietario = proprietario;
     }
 
     public String getNome() {

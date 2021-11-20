@@ -7,13 +7,7 @@
         List<Blog> blogs= (List<Blog>) request.getAttribute("blogs");
 
     %>
-    <script>
-        //no propic code
-        function useJidenticon(id){
-            document.getElementById("propic-"+id).setAttribute("hidden","");
-            document.getElementById("propic-svg-"+id).removeAttribute("hidden");
-        }
-    </script>
+
     <style>
         @media screen and (max-device-width: 576px){
             .carta { padding: 20px; }
@@ -31,8 +25,7 @@
     <div class="carta px-0" href="<%=request.getContextPath()+"/home/"+blog.getNome()%>">
         <div class="card border-dark">
             <div class="card-body text-center">
-                <img id="propic-b<%=blog.getNome()%>" class="rounded-circle w-100" src="${pageContext.request.contextPath}/blogs/<%=blog.getNome()%>/propic.png" onerror="useJidenticon('b<%=blog.getNome()%>')">
-                <svg id="propic-svg-b<%=blog.getNome()%>" class="rounded-circle" data-jdenticon-value="<%=blog.getNome()%>" hidden></svg>
+                <svg id="propic-svg-b<%=blog.getNome()%>" class="rounded-circle" data-jdenticon-value="<%=blog.getNome()%>"></svg>
             </div>
             <div class="card-header text-center">
                 <h5 class="card-title"><%=blog.getNome()%></h5>

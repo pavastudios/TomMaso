@@ -9,3 +9,16 @@ function showError(text) {
 AOS.init({
     once: true,
 });
+$("#navbarSearchBlog").click(function () {
+    $("#navbarSearchType").text("Blog");
+    isUser = false;
+    updateActionSearch();
+});
+$("#navbarSearchUser").click(function () {
+    $("#navbarSearchType").text("Utente");
+    isUser = true;
+    updateActionSearch();
+});
+navbarSearchText.change(function () {
+    updateActionSearch();
+});

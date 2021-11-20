@@ -42,8 +42,7 @@
   <!--TEMPLATE MESSAGGIO-->
   <div class="col-12 row px-0 mt-2 msg-card" id="message-template">
     <a class="msg-sender col-2" href="PAGINA_UTENTE">
-      <img id="nav-user" class="w-100 msg-propic rounded-circle" src="">
-      <svg id="nav-svg-user" class="w-100 msg-svg rounded-circle" data-jdenticon-value="" hidden></svg>
+      <svg id="nav-svg-user" class="w-100 msg-svg rounded-circle" data-jdenticon-value=""></svg>
     </a>
     <div class="card px-0 col-10">
       <div class="card-header">
@@ -123,8 +122,6 @@
     clon.find(".msg-sender-name").text(mes["mittente"]["username"]);
     clon.find(".msg-date").text(data.toLocaleString("it-IT",{timeZone:'Europe/Rome'}));
     clon.find(".card-body").text(mes["testo"]);
-    clon.find(".msg-propic").attr("src","${pageContext.request.contextPath}/users/"+mes["mittente"]["username"]+"/propic.png");
-    clon.find(".msg-propic").attr("onerror","useJidenticonNav('msg-"+mes["id"]+"')");
     clon.find(".report").attr("hidden",mes["mittente"]["username"]=="<%=ses.getUtente().getUsername()%>");
     clon.show();
     if(mes["mittente"]["username"]===other) {

@@ -12,10 +12,7 @@ import java.security.SecureRandom;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Random;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,22 +33,12 @@ public class Utility {
         return id;
     }
 
-    public static byte[] generateRememberMeCookie() {
-        String uuid = UUID.randomUUID().toString();
-        return Security.sha256(uuid);
-    }
-
     public static boolean useOnlyNormalChars(String str) {
         if (str == null) return false;
         Matcher matcher = NORMAL_CHARS.matcher(str);
         return matcher.matches();
     }
 
-    public static java.util.Date generateRememberMeExpireDate() {
-        Calendar cal = new GregorianCalendar();
-        cal.add(Calendar.YEAR, 1);
-        return cal.getTime();
-    }
 
     @Contract("null -> null;!null -> !null")
     public static @Nullable String toHexString(byte[] bytes) {

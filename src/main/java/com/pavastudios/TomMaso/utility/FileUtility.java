@@ -15,9 +15,9 @@ import java.util.List;
 public class FileUtility {
     private static final File TOMMASO_FOLDER = new File(PersonalFileDir.TOMMASO_DATA_FOLDER).getAbsoluteFile();
     public static final File BLOG_FILES_FOLDER = new File(TOMMASO_FOLDER, "blogs").getAbsoluteFile();
+    private static final int PATH_LENGTH = BLOG_FILES_FOLDER.getAbsolutePath().length();
     public static final File USER_FILES_FOLDER = new File(TOMMASO_FOLDER, "users").getAbsoluteFile();
     public static final File TMP_FOLDER = new File(TOMMASO_FOLDER, "tmp").getAbsoluteFile();
-    private static final int PATH_LENGTH = BLOG_FILES_FOLDER.getAbsolutePath().length();
 
     public static void writeFile(InputStream input, OutputStream output) throws IOException {
         byte[] buffer = new byte[4096];

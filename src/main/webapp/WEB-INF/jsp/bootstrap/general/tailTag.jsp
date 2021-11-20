@@ -17,6 +17,7 @@
         });
     }
     $(function (){
+        updateActionSearch();
         if("<%=request.getAttribute("rewrite")%>"!=="") {
             urlRewriteTag("href");
             urlRewriteTag("src");
@@ -24,13 +25,41 @@
         }
     });
     const navbarSearchText=$("#navbarSearchText");
-
+    var isUser=true;
+    function updateActionSearch(){
+        const query=navbarSearchText.val();
+        navbarSearchText.val(query.replace(/[\\\/]/g,""));
+        if(isUser){
+            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/user/"+query+"<%=request.getAttribute("rewrite")%>");
+        }else{
+            $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/home/"+query+"<%=request.getAttribute("rewrite")%>");
+        }
+    }
+    //Create blog code
+    $("#createBlogNavbar").click(function () {
+        const blogname = $("#blognameNavbar").val();
+        if (!blogname.match(/^[a-zA-Z0-9-\\._]+$/)) {
+            showError("Nome non valido!");
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/api/blog/create<%=request.getAttribute("rewrite")%>',
+            data: {name: blogname},
+            success: function (data) {
+                if (data["error"] !== undefined) {
+                    showError(data["error"]);
+                    return;
+                }
+                location.reload();
+            }
+        });
+    });
     const navbarLogin = new bootstrap.Modal(document.getElementById('navbarLogin'));
     //Create blog code
     $("#navbarLoginSubmit").click(function () {
         const username = $("#username-login").val();
         const password = $("#password-login").val();
-        const remember = $("#remember-login").is(":checked") ? "on" : "";
         if(password.length<5){
             showError("La password deve contenere almeno 5 caratteri!");
             return;
@@ -45,7 +74,6 @@
             data: {
                 username: username,
                 password: password,
-                remember: remember
             }, error: function () {
                 showError("Impossibile eseguire login!");
             },
@@ -61,10 +89,8 @@
     //Create blog code
     $("#navbarRegisterSubmit").click(function () {
         const username = $("#username-register").val();
-        const email = $("#email-register").val();
         const password1 = $("#password1-register").val();
         const password2 = $("#password2-register").val();
-        const remember = $("#remember-register").is(":checked") ? "on" : "";
         if(password1!=password2){
             showError("Le password non corrispondono!");
             return;
@@ -77,10 +103,6 @@
             showError("L'username deve contenere almeno 5 caratteri!");
             return;
         }
-        if(email.indexOf("@")==-1){
-            showError("Email non valida!");
-            return;
-        }
         $.ajax({
             type: 'POST',
             url: '${pageContext.request.contextPath}/sign-up<%=request.getAttribute("rewrite")%>',
@@ -88,8 +110,6 @@
                 username: username,
                 password1: password1,
                 password2: password2,
-                email: email,
-                remember: remember
             }, error: function () {
                 showError("Impossibile registrare l'account");
             },
