@@ -1,7 +1,7 @@
 package com.pavastudios.TomMaso.control.global;
 
 import com.pavastudios.TomMaso.control.MasterServlet;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.CommentQueries;
 import com.pavastudios.TomMaso.model.Blog;
 import com.pavastudios.TomMaso.utility.FileUtility;
 import com.pavastudios.TomMaso.utility.Session;
@@ -18,9 +18,11 @@ import java.sql.SQLException;
 public class ViewerServlet extends MasterServlet {
 
     private void manageMarkdown(Session session, HttpServletRequest req, HttpServletResponse resp, File file) throws IOException, ServletException, SQLException {
-        session.visitedBlog(Blog.fromPathInfo(req.getPathInfo()));
+        Blog blog = Blog.fromPathInfo(req.getPathInfo());
+        session.visitedBlog(blog);
         req.setAttribute("file", file);
-        req.setAttribute("comments", Queries.fetchCommentsFromPage(req.getPathInfo()));
+        req.setAttribute("blog", blog);
+        req.setAttribute("comments", CommentQueries.fetchCommentsFromPage(req.getPathInfo()));
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/blog/markdownViewer.jsp").forward(req, resp);
     }
 

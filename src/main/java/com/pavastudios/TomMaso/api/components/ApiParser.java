@@ -1,22 +1,25 @@
 package com.pavastudios.TomMaso.api.components;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class ApiParser {
     private final ApiEndpoint endpoint;
     private final HttpServletRequest req;
     private final HashMap<ApiParam, Object> params = new HashMap<>();
-    private ApiParam error;
 
     public ApiParser(ApiEndpoint endpoint, HttpServletRequest req) {
         this.endpoint = endpoint;
         this.req = req;
     }
 
+    /**
+     * @throws ApiException if parameter is missing or the wrong type
+     */
     public void parse() {
         for (ApiParam param : endpoint.getParams()) {
-            if (error != null) break;
             if (param.isArray())
                 params.put(param, arrayParse(param));
             else
@@ -24,21 +27,12 @@ public class ApiParser {
         }
     }
 
-
-    public boolean hasError() {
-        return error != null;
-    }
-
-    public ApiParam getError() {
-        return error;
-    }
-
     private Object atomicParse(ApiParam param) throws NumberFormatException {
         String s = req.getParameter(param.getName());
         if (s == null) { //handle param not found
             if (!param.isOptional()) {
-                error = param;
-                return null;
+                String errorString = String.format(Locale.US, "missing param '%s'", param.getName());
+                throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
             }
             s = param.getDefValue();
         }
@@ -52,7 +46,8 @@ public class ApiParser {
                     return s;
             }
         } catch (NumberFormatException ignore) {
-            error = param;
+            String errorString = String.format(Locale.US, "invalid value for param '%s'", param.getName());
+            throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
         }
         return null;
     }
@@ -61,8 +56,8 @@ public class ApiParser {
         String[] values = req.getParameterValues(param.getName());
         if (values == null) {
             if (!param.isOptional()) {
-                error = param;
-                return null;
+                String errorString = String.format(Locale.US, "missing param '%s'", param.getName());
+                throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
             }
             values = param.getDefValueArray();
         }
@@ -76,7 +71,8 @@ public class ApiParser {
                     return values;
             }
         } catch (NumberFormatException ignore) {
-            error = param;
+            String errorString = String.format(Locale.US, "invalid value for param '%s'", param.getName());
+            throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
         }
         return null;
     }

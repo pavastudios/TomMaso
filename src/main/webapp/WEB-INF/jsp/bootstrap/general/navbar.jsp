@@ -30,17 +30,7 @@
                 </li>
             </ul>
             <div class="d-sm-flex justify-content-sm-center">
-                <form id="navbarSearchForm" class="mb-0 me-lg-3 me-sm-0 me-md-0 float-lg-none float-md-end float-sm-end" method="GET">
-                    <div class="input-group d-flex ">
-                        <button id="navbarSearchType" class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Utente</button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" id="navbarSearchBlog">Blog</a></li>
-                            <li><a class="dropdown-item" href="#" id="navbarSearchUser">Utente</a></li>
-                        </ul>
-                        <input type="text" id="navbarSearchText" class="form-control" aria-label="navbarSearch">
-                        <input class="btn btn-outline-primary form-control" type="submit" value="Cerca">
-                    </div>
-                </form>
+
                 <ul class="navbar-nav ml-auto d-flex justify-content-center align-content-center flex-md-row flex-sm-column ms-md-2">
 
                     <%if(ses.getUtente() == null) { %>
@@ -60,7 +50,6 @@
                             <svg width="50" height="50" id="nav-svg-user" class="rounded-circle" data-jdenticon-value="<%=xUser.getUsername()%>" hidden></svg>
                         </a>
                         <ul class="dropdown-propic-nav dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createBlogModalNavbar">Nuovo blog...</a></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/profile">Profilo</a></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/chats">Chat</a></li>
                             <li><hr class="dropdown-divider"></li>
@@ -95,9 +84,7 @@
                             <label class="form-check-label" for="remember-login">
                                 Ricorda accesso
                             </label>
-                            <div class="float-end">
-                                <a class="pt-3 link-primary" href="#" data-bs-toggle="modal" data-bs-target="#navInsertMail">Password dimenticata?</a>
-                            </div>
+
                         </div>
                         <p class="text-danger modal-error"></p>
                     </form>
@@ -150,75 +137,4 @@
         </div>
     </div>
 
-    <!-- Password Dimenticata -->
-    <div class="modal fade" id="navInsertMail" aria-hidden="true" aria-labelledby="navInsertMail" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="navInsertMailTitle">Inserisci l'email di recupero</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="mt-3 mb-3 ms-3 me-3">
-                    <input id="recover-mail" name="recover-mail" type="email" class="form-control" placeholder="Email di recupero" aria-label="Email di recupero">
-                </div>
-                <a class="ms-auto link-primary ms-3 me-3" href="#" data-bs-toggle="modal" data-bs-target="#navRecuperaPsw">Hai già un codice?</a>
-                <p class="text-danger modal-error"></p>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" id="recoverPsw">Invia</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade mt-5" id="navRecuperaPsw" aria-hidden="true" aria-labelledby="navRecuperaPsw" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="navRecuperaPswTitle">Cambia password</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mt-3 mb-3 ms-3 me-3">
-                        <input id="code" name="recover-code" type="text" class="form-control" placeholder="Codice" aria-label="Email di recupero">
-                    </div>
-                    <div class="mt-3 mb-3 ms-3 me-3">
-                        <input id="password1" name="recover-psw1" type="password" class="form-control" placeholder="Nuova password" aria-label="Nuova password">
-                    </div>
-                    <div class="mt-3 mb-3 ms-3 me-3">
-                        <input id="password2" name="recover-psw2" type="password" class="form-control" placeholder="Ripeti nuova password" aria-label="Ripeti nuova password">
-                    </div>
-                    <p class="text-danger modal-error"></p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" id="sendMail">Cambia</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <!-- create blog Modal -->
-    <div class="modal fade" id="createBlogModalNavbar" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Crea nuovo blog</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <label for="blognameNavbar" class="col-sm-2 col-form-label lead">Nome</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="name" id="blognameNavbar" maxlength="50">
-                        </div>
-                    </div>
-                    <p class="text-danger modal-error"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                    <button type="button" class="btn btn-primary" id="createBlogNavbar">Crea</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </nav>

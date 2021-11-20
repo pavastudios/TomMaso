@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.SecureRandom;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -75,6 +76,11 @@ public class Utility {
             bytes[i] = (byte) Short.parseShort(s, 16);
         }
         return bytes;
+    }
+
+    @Nullable
+    public static InputStream readResource(String name) {
+        return Utility.class.getClassLoader().getResourceAsStream("jsons/api/api.json");
     }
 
     public static void returnHome(HttpServletRequest req, HttpServletResponse resp) {

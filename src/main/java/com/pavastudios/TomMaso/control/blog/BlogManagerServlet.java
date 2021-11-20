@@ -44,7 +44,7 @@ public class BlogManagerServlet extends MasterServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "utente non loggato o non proprietario");
             return;
         }
-        if (file == null) {
+        if (file == null || !file.exists()) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "File non trovato");
             return;
         }

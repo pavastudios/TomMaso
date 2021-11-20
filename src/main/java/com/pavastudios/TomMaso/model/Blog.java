@@ -1,7 +1,8 @@
 package com.pavastudios.TomMaso.model;
 
 import com.google.gson.stream.JsonWriter;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.BlogQueries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import com.pavastudios.TomMaso.utility.FileUtility;
 
 import java.io.File;
@@ -21,7 +22,7 @@ public class Blog implements GenericModel {
         b.setIdBlog(rs.getInt("id_blog"));
         b.setNome(rs.getString("nome"));
         b.setVisite(rs.getInt("visite"));
-        b.setProprietario(Queries.findUserById(rs.getInt("proprietario")));
+        b.setProprietario(UserQueries.findUserById(rs.getInt("proprietario")));
         return b;
     }
 
@@ -29,7 +30,7 @@ public class Blog implements GenericModel {
         if (pathInfo == null) return null;
         String[] parts = pathInfo.split("/", 3);
         if (parts.length < 2 || !parts[0].isEmpty()) return null;
-        return Queries.findBlogByName(parts[1]);
+        return BlogQueries.findBlogByName(parts[1]);
     }
 
     public int getVisite() {
@@ -39,6 +40,10 @@ public class Blog implements GenericModel {
     public Blog setVisite(int visite) {
         this.visite = visite;
         return this;
+    }
+
+    public Utente getProprietario() {
+        return proprietario;
     }
 
     public int getIdBlog() {

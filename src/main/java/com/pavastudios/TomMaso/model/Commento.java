@@ -1,7 +1,8 @@
 package com.pavastudios.TomMaso.model;
 
 import com.google.gson.stream.JsonWriter;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import java.util.Date;
 
 public class Commento implements GenericModel {
     private int idCommento;
+    @Nullable
     private Utente mittente;
     private String pagina;
     private String testo;
@@ -18,7 +20,7 @@ public class Commento implements GenericModel {
     public static Commento fromResultSet(ResultSet rs) throws SQLException {
         Commento c = new Commento();
         c.setIdCommento(rs.getInt("id_commento"));
-        c.setMittente(Queries.findUserById(rs.getInt("mittente")));
+        c.setMittente(UserQueries.findUserById(rs.getInt("mittente")));
         c.setPagina(rs.getString("url_pagina"));
         c.setTesto(rs.getString("testo"));
         c.setDataInvio(rs.getTimestamp("data_invio"));
@@ -41,7 +43,7 @@ public class Commento implements GenericModel {
         this.idCommento = idCommento;
     }
 
-    public Utente getMittente() {
+    public @Nullable Utente getMittente() {
         return mittente;
     }
 
@@ -95,7 +97,11 @@ public class Commento implements GenericModel {
         writer.beginObject();
         writer.name("id").value(idCommento);
         writer.name("mittente");
-        mittente.writeJson(writer);
+        if (mittente == null) {
+            writer.nullValue();
+        } else {
+            mittente.writeJson(writer);
+        }
         writer.name("pagina").value(pagina);
         writer.name("pagina").value(testo);
         writer.endObject();

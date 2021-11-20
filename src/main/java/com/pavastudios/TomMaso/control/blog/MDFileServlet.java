@@ -6,26 +6,27 @@ import com.pavastudios.TomMaso.utility.FileUtility;
 import com.pavastudios.TomMaso.utility.Session;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 
+@MultipartConfig()
 public class MDFileServlet extends MasterServlet {
 
-    private void manageExistingFile(Session session, HttpServletRequest req, HttpServletResponse resp, File file) throws IOException {
+    private void manageExistingFile(Session session, HttpServletRequest req, HttpServletResponse resp, File file) throws IOException, ServletException {
         FileOutputStream out = new FileOutputStream(file);
-        byte[] content = req.getParameter("content").getBytes(StandardCharsets.UTF_8);
-        out.write(content);
-        out.flush();
+        Part part = req.getPart("content");
+        FileUtility.writeFile(part.getInputStream(), out);
         out.close();
     }
 
 
-    private void convertToFile(Session session, HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException {
+    private void convertToFile(Session session, HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException, ServletException {
         String path = req.getPathInfo();
         Blog blog = Blog.fromPathInfo(path);
         if (blog == null || !blog.hasAccess(session.getUtente())) {
@@ -51,7 +52,6 @@ public class MDFileServlet extends MasterServlet {
             path += ".md";
         }
         resp.sendRedirect(resp.encodeRedirectURL(getServletContext().getContextPath() + "/blogs" + path));
-        return;
     }
 
 }

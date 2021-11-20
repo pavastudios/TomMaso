@@ -2,10 +2,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.io.File" %>
 <%@ page import="com.pavastudios.TomMaso.utility.FileUtility" %>
-<%@ page import="com.sun.xml.internal.txw2.output.CharacterEscapeHandler" %>
 <%@ page import="org.jsoup.nodes.Entities" %>
 <%@ page import="java.util.Arrays" %>
-<%@ page import="com.pavastudios.TomMaso.api.components.ApiEndpoint" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -94,10 +92,9 @@
                                     if(FileUtility.getFileType(request.getServletContext(), f)==FileUtility.FileType.MARKDOWN){
                                         String path = f.getAbsolutePath();
                                 %>
-                                <a class="col-4" rel-url="<%=relUrl%>" href="<%=request.getContextPath()%>/edit-md/<%=path.substring(path.indexOf("blogs")+6)%>"><button type="button" class="write-anim col-12 btn btn-outline-primary"><i class="fas fa-pen"></i></button></a>
+                                <a class="col-6" rel-url="<%=relUrl%>" href="<%=request.getContextPath()%>/edit-md/<%=path.substring(path.indexOf("blogs")+6)%>"><button type="button" class="write-anim col-12 btn btn-outline-primary"><i class="fas fa-pen"></i></button></a>
                                 <%}%>
-                                <a class="col-4 move-blog" rel-url="<%=relUrl%>" data-bs-toggle="modal" data-bs-target="#moveModal" href="#"><button type="button" class="shake-anim col-12 btn btn-outline-warning"><i class="fas fa-copy"></i></button></a>
-                                <a class="col-4 delete-blog" rel-url="<%=relUrl%>" data-bs-toggle="modal" data-bs-target="#deleteModal" href="#"><button type="button" class="delete-anim col-12 btn btn-outline-danger" ><i class="fas fa-trash"></i></button></a>
+                                <a class="col-6 delete-blog" rel-url="<%=relUrl%>" data-bs-toggle="modal" data-bs-target="#deleteModal" href="#"><button type="button" class="delete-anim col-12 btn btn-outline-danger" ><i class="fas fa-trash"></i></button></a>
                             </div>
                         </div>
                     </div>
@@ -150,45 +147,11 @@
                         <p class="text-danger modal-error"></p>
                     </form>
                 </fieldset>
-                <div class="separatore">oppure</div>
-                <fieldset>
-                    <legend>Nuova cartella</legend>
-                    <form action="${pageContext.request.contextPath}/api/blog/create-dir" method="post" id="createDir">
-                        <div class="input-group mb-3">
-                            <input type="text" name="parent-dir" value="<%="/"+url%>" id="parentDir" hidden>
-                            <input type="text"  name="dir-name" id="dirName" class="form-control" placeholder="Inserisci nome cartella" aria-label="Inserisci nome cartella" aria-describedby="insert_title" maxlength="20">
-                            <input class="btn btn-primary" type="button" value="Crea" id="createDirConfirm"/>
-                        </div>
-                        <p class="text-danger modal-error"></p>
-                    </form>
-                </fieldset>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Move Modal -->
-<div class="modal fade" id="moveModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Spostare file</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="#" method="post" class="row">
-                    <input type="text" name="from-name" id="moveBlogHid" hidden>
-                    <input type="text" name="to-name" id="moveBlog" class="col-9 form-control" maxlength="255">
-                    <p class="text-danger modal-error"></p>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                <button type="button" class="btn btn-primary" id="moveConfirm">Salva</button>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -213,9 +176,9 @@
 <%@include file="../general/footer.jsp"%>
 <%@include file="../general/tailTag.jsp"%>
 <script>
-    $(".move-blog").click(function(){
-        $("#moveBlogHid").val($(this).attr("rel-url"));
-        $("#moveBlog").val($(this).attr("rel-url"));
+    $(".add-file").click(function (){
+        $("#titleMD").val("");
+        $("#file").val("");
     });
     $(".delete-blog").click(function(){
         $("#deleteBlogTitle").text("Eliminare definitivamente '"+$(this).attr("rel-url")+"'?");
@@ -225,7 +188,7 @@
         const url = $("#deleteBlogHid").val();
         $.ajax({
             type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/delete<%=request.getAttribute("rewrite")%>',
+            url: '${pageContext.request.contextPath}/api/blog/delete-file<%=request.getAttribute("rewrite")%>',
             data: {
                 "url": url,
             },
@@ -239,49 +202,8 @@
             }
         });
     });
-    $("#moveConfirm").click(function(){
-        var fromUrl=$("#moveBlogHid").val();
-        var toUrl=$("#moveBlog").val();
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/move<%=request.getAttribute("rewrite")%>',
-            data: {
-                "from-url": fromUrl,
-                "to-url": toUrl
-            },
-            success: function (data) {
-                if (data["error"] !== undefined){
-                    showError(data["error"]);
-                    return;
-                }
-                if(data["error"]===undefined)
-                    location.reload();
-            }
-        });
-    });
 
-    $("#createDirConfirm").click(function(){
-        var parentDir=$("#parentDir").val();
-        var dirName=$("#dirName").val();
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/create-dir<%=request.getAttribute("rewrite")%>',
-            data: {
-                "parent-dir": parentDir,
-                "dir-name": dirName
-            },
-            success: function (data) {
-                if (data["error"] !== undefined){
-                    showError(data["error"]);
-                    return;
-                }
-                if(data["error"]===undefined)
-                    location.reload();
-            }
-        });
-    });
-
-    $("#titleMD").change(function(){
+    $('#titleMD').on("input",function(){
         const original ="<%=request.getContextPath()+"/edit-md/"+url+"/"%>";
         console.log($("#titleMD").val());
         $("#createMD").attr("action",original+$("#titleMD").val());

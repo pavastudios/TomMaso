@@ -1,6 +1,6 @@
 package com.pavastudios.TomMaso.db.connection;
 
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.*;
 import org.jetbrains.annotations.NotNull;
 
 import javax.naming.Context;
@@ -32,7 +32,11 @@ public class GlobalConnection {
 
     public static void init() throws SQLException {
         if (initialized) return;
-        Queries.initQueries();
+        CommentQueries.initQueries();
+        BlogQueries.initQueries();
+        ChatQueries.initQueries();
+        ReportQueries.initQueries();
+        UserQueries.initQueries();
         initialized = true;
     }
 

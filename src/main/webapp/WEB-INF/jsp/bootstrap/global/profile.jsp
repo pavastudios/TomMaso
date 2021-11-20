@@ -62,23 +62,13 @@
                 <p>Email: <%=Entities.escape(user.getEmail())%></p>
             </div>
             <%}%>
-            <div class="row">
-                <p>'<%=Entities.escape(user.getBio())%>'</p>
-            </div>
-            <% if(login!=null){%>
-            <% if(user.equals(login)){%>
+            <% if(login!=null&&!user.equals(login)){%>
             <div class="row d-flex justify-content-center ">
-                <button type="button" class="col-9 btn btn-outline-dark modify-button" data-bs-toggle="modal" data-bs-target="#updateProfile">Modifica utente</button>
-            </div>
-            <a class="px-0" href="${pageContext.request.contextPath}/chats"><button type="button" class="btn btn-success"><i class="fas fa-comments"></i></button></a>
-            <%}else{%>
-            <div class="row d-flex justify-content-center ">
-                <form action="${pageContext.request.contextPath}/new-chat" method="post">
-                    <input type="text" name="receiver" value="<%=user.getIdUtente()%>" hidden/>
+                <form action="#" method="post" id="createChat">
                     <input type="submit" class="col-9 btn btn-outline-dark modify-button" value="Contatta"/>
                 </form>
             </div>
-            <%}}%>
+            <%}%>
         </div>
         <div class="col-lg-9 col-sm-12">
             <div class="row">
@@ -94,9 +84,8 @@
                         <%if(blog.hasAccess(ses.getUtente())){%>
                         <div class="card-footer d-grid w-100">
                             <div class="row">
-                                <a class="col-4 px-0" href="${pageContext.request.contextPath}/blog-manage/<%=blog.getNome()%>"><button type="button" class="code-anim col-12 btn btn-outline-primary"><i class="fas fa-code"></i></button></a>
-                                <button data-bs-toggle="modal" data-bs-target="#renameBlogModal" type="button" class="write-anim ren-btn col-4 btn btn-outline-warning" blog-name="<%=blog.getNome()%>"><i class="fas fa-pen"></i></button>
-                                <button data-bs-toggle="modal" data-bs-target="#deleteModal" type="button" class="delete-anim del-btn col-4 btn btn-outline-danger" blog-name="<%=blog.getNome()%>"><i class="fas fa-trash"></i></button>
+                                <a class="col-6 px-0" href="${pageContext.request.contextPath}/blog-manage/<%=blog.getNome()%>"><button type="button" class="code-anim col-12 btn btn-outline-primary"><i class="fas fa-code"></i></button></a>
+                                <button data-bs-toggle="modal" data-bs-target="#deleteModal" type="button" class="delete-anim del-btn col-6 btn btn-outline-danger" blog-name="<%=blog.getNome()%>"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
                         <%}%>
@@ -118,27 +107,6 @@
     </div>
 </div>
 
-<!-- rename blog Modal -->
-<div class="modal modal-fullscreen-md-down fade" id="renameBlogModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Rinomina blog</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p class="lead">Inserisci il nuovo nome:</p>
-                <input type="text" name="name" id="renameFormHid" hidden>
-                <input type="text" name="name" id="renameForm" class="input-text" maxlength="50">
-            </div>
-            <p class="text-danger modal-error"></p>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                <button type="button" class="btn btn-primary" id="rename-blog-ok">Rinomina</button>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -205,7 +173,20 @@
 <%@include file="../general/footer.jsp"%>
 <%@include file="../general/tailTag.jsp"%>
 <script>
-
+    $("#createChat").submit(function(e){
+        e.preventDefault();
+        let withName="<%=user.getUsername()%>";
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/api/chat/create-chat<%=request.getAttribute("rewrite")%>',
+            data: {"with": withName},
+            success: function () {
+                document.location.href = '${pageContext.request.contextPath}/chat/'+withName+'<%=request.getAttribute("rewrite")%>';
+            },error:function () {
+                document.location.href = '${pageContext.request.contextPath}/chat/'+withName+'<%=request.getAttribute("rewrite")%>';
+            }
+        });
+    });
     //set add button height
     var card = $(".carta:first");
     var add_button = $("#add_button");
@@ -223,31 +204,6 @@
         $("#formUpdateUser").submit();
     });
 
-    //Rename blog code
-    $(".ren-btn").click(function () {
-        $("#renameFormHid").val($(this).attr("blog-name"));
-        $("#renameForm").val("");
-    });
-    $( "#rename-blog-ok" ).click(function() {
-        var oldname=$("#renameFormHid").val();
-        var newname=$("#renameForm").val();
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/rename<%=request.getAttribute("rewrite")%>',
-            data: {
-                "from-name": oldname,
-                "to-name": newname
-            },
-            success: function (data) {
-                if (data["error"] !== undefined){
-                    showError(data["error"]);
-                    return;
-                }
-                if(data["error"]===undefined)
-                    location.reload();
-            }
-        });
-    });
     //Delete blog code
     $(".del-btn").click(function(){
         $("#deleteBlogHid").text($(this).attr("blog-name"))

@@ -1,10 +1,11 @@
 package com.pavastudios.TomMaso.control.chat;
 
 import com.pavastudios.TomMaso.control.MasterServlet;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.ChatQueries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import com.pavastudios.TomMaso.model.Chat;
+import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.Session;
-import com.pavastudios.TomMaso.utility.Utility;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,14 +18,23 @@ public class ChatServlet extends MasterServlet {
 
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        int id = Utility.tryParseInt(req.getParameter("id"), -1);
-        Chat chat = Queries.findChatById(id);
-        if (chat == null) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid chat");
+        String[] pathInfo = req.getPathInfo().split("/");
+        if (!session.isLogged()) {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Must be logged");
             return;
         }
-        if (!chat.hasAccess(session.getUtente())) {
-            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "You can't access the chat");
+        Utente u1 = null, u2 = null;
+        if (pathInfo.length == 2) {
+            u1 = session.getUtente();
+            u2 = UserQueries.findUserByUsername(pathInfo[1]);
+        } else if (pathInfo.length == 3 && session.getUtente().getPermessi().hasPermissions(Utente.Permessi.MOD_CHAT)) {
+            u1 = UserQueries.findUserByUsername(pathInfo[1]);
+            u2 = UserQueries.findUserByUsername(pathInfo[2]);
+        }
+        System.out.println(req.getPathInfo());
+        Chat chat = ChatQueries.findChatByUsers(u1, u2);
+        if (chat == null) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid chat");
             return;
         }
         req.setAttribute("chat", chat);

@@ -1,9 +1,9 @@
 -- Creazione tabelle
+DROP TABLE IF EXISTS `Report`;
 DROP TABLE IF EXISTS `RememberMe`;
 DROP TABLE IF EXISTS `Messaggio`;
 DROP TABLE IF EXISTS `Chat`;
 DROP TABLE IF EXISTS `Commento`;
-DROP TABLE IF EXISTS `Pagina`;
 DROP TABLE IF EXISTS `Blog`;
 DROP TABLE IF EXISTS `PasswordReset`;
 DROP TABLE IF EXISTS `Utente`;
@@ -15,7 +15,7 @@ CREATE TABLE `Utente`
     `password`        VARCHAR(255) NOT NULL,
     `data_iscrizione` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `propic_url`      VARCHAR(255),
-    `is_admin`        BOOLEAN               DEFAULT 0,
+    `permessi`        INT          NOT NULL DEFAULT 0,
     `username`        VARCHAR(255) NOT NULL UNIQUE,
     `bio`             VARCHAR(255) NOT NULL DEFAULT ''
 );
@@ -27,15 +27,6 @@ CREATE TABLE `Blog`
     `nome`         VARCHAR(255) NOT NULL UNIQUE,
     `visite`       INT          NOT NULL DEFAULT 0,
     FOREIGN KEY (`proprietario`) REFERENCES `Utente` (`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE `Pagina`
-(
-    `id_pagina`  INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `blog`       INT          NOT NULL,
-    `url`        VARCHAR(255) NOT NULL,
-    `data_invio` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (`blog`) REFERENCES `Blog` (`id_blog`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE `Commento`
@@ -84,6 +75,23 @@ CREATE TABLE `PasswordReset`
     `scadenza`  TIMESTAMP NOT NULL,     -- 1 ora
     FOREIGN KEY (`id_utente`) REFERENCES `Utente` (`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+CREATE TABLE `Report`
+(
+    `id_report`     INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    `tipo`          TINYINT         NOT NULL,
+    `url`           VARCHAR(255)    NOT NULL,
+    `motivo`        VARCHAR(255)    NOT NULL,
+    `reporter`      INT             NOT NULL,
+    `data_report`   TIMESTAMP       NOT NULL,
+    `status`        INT             NOT NULL DEFAULT 0,
+    `target`        INT             ,
+    FOREIGN KEY (`reporter`) REFERENCES `Utente` (`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (`target`)   REFERENCES `Utente` (`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE,
+    UNIQUE (`url`, `reporter`)
+);
+
+
 
 -- Creazione eventi
 

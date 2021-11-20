@@ -75,14 +75,6 @@
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/sign-up</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>UpdateUserServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.control.user.UpdateUserServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UpdateUserServlet</servlet-name>
-        <url-pattern>/user-update</url-pattern>
-    </servlet-mapping>
 
     <!--General-->
     <servlet>
@@ -143,14 +135,6 @@
         <url-pattern>/chi-siamo</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>ContactServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.control.chat.ContactServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ContactServlet</servlet-name>
-        <url-pattern>/new-chat</url-pattern>
-    </servlet-mapping>
-    <servlet>
         <servlet-name>ChatListServlet</servlet-name>
         <servlet-class>com.pavastudios.TomMaso.control.chat.ChatListServlet</servlet-class>
     </servlet>
@@ -164,7 +148,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ChatServlet</servlet-name>
-        <url-pattern>/chat</url-pattern>
+        <url-pattern>/chat/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

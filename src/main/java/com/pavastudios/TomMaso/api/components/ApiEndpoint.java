@@ -4,7 +4,9 @@ import com.pavastudios.TomMaso.model.Utente;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class ApiEndpoint {
@@ -15,10 +17,14 @@ public class ApiEndpoint {
     private final String endpoint;
 
     public ApiEndpoint(String endpoint, boolean requireLogin, Manage action, ApiParam... params) {
+        this(endpoint, requireLogin, action, Arrays.asList(params));
+    }
+
+    public ApiEndpoint(String endpoint, boolean requireLogin, Manage action, Collection<ApiParam> params) {
         this.endpoint = endpoint;
         this.action = action;
         this.requireLogin = requireLogin;
-        this.params = Arrays.asList(params);
+        this.params = new ArrayList<>(params);
     }
 
     public String getEndpoint() {

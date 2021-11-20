@@ -1,7 +1,7 @@
 package com.pavastudios.TomMaso.control.user;
 
 import com.pavastudios.TomMaso.control.MasterServlet;
-import com.pavastudios.TomMaso.db.queries.Queries;
+import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.RememberMeUtility;
 import com.pavastudios.TomMaso.utility.Session;
@@ -24,7 +24,7 @@ public class LoginServlet extends MasterServlet {
         String password = req.getParameter("password");
         boolean remember = "on".equals(req.getParameter("remember"));
 
-        Utente u = Queries.findUserByUsername(username);
+        Utente u = UserQueries.findUserByUsername(username);
         if (u == null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //username non trovato
             return;

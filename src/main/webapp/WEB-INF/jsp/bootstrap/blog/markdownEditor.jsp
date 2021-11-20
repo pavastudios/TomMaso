@@ -1,5 +1,3 @@
-<%@ page import="com.pavastudios.TomMaso.utility.FileUtility" %>
-<%@ page import="com.pavastudios.TomMaso.test.PersonalFileDir" %>
 <%@ page import="java.io.File" %>
 <%@ page import="org.jsoup.nodes.Entities" %>
 <%@ page import="java.nio.file.Files" %><%--
@@ -29,7 +27,7 @@
         escaped="";
     }
 %>
-<form action="<%=request.getContextPath()%>/upload-md<%=path%>" method="post">
+<form action="<%=request.getContextPath()%>/upload-md<%=path%>" method="post" enctype="multipart/form-data">
     <textarea id="my-text-area" style="width: 100%;" name="content"><%=escaped%></textarea>
     <div class="text-center">
         <input type="submit" value="Carica" class="btn btn-primary"/>
