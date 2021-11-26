@@ -18,11 +18,8 @@ import java.util.List;
 public class UserQueries {
     public static MasterPreparedStatement FIND_USER_BY_ID;
     static MasterPreparedStatement FIND_USER_BY_USERNAME;
-    static MasterPreparedStatement FIND_USER_BY_COOKIE;
     static MasterPreparedStatement REGISTER_USER;
     static MasterPreparedStatement CHANGE_PASSWORD;
-    static MasterPreparedStatement DELETE_FORGET;
-    static MasterPreparedStatement UPDATE_USER_DATA;
     static MasterPreparedStatement CHANGE_ROLE_USER;
     static MasterPreparedStatement FIND_ALL_USERS;
     static MasterPreparedStatement FETCH_ADMIN;
@@ -34,12 +31,8 @@ public class UserQueries {
         FIND_ALL_USERS = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente`");
         FIND_USER_BY_USERNAME = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `username`=?");
         FIND_USER_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=?");
-        FIND_USER_BY_COOKIE = GlobalConnection.CONNECTION.prepareStatement("SELECT `id_utente` FROM `RememberMe` WHERE `cookie`=?");
         REGISTER_USER = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Utente`(`password`,`username`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
         CHANGE_PASSWORD = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `password`=? WHERE `id_utente`=?");
-        DELETE_FORGET = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `PasswordReset` WHERE `codice`=?");
-        DELETE_FORGET = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `PasswordReset` WHERE `codice`=?");
-        UPDATE_USER_DATA = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `username`=?,`bio`=? WHERE `id_utente`=?");
         CHANGE_ROLE_USER = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Utente` SET `permessi`=? WHERE `id_utente`=?");
     }
 
