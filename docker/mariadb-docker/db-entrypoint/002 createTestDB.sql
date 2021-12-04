@@ -1,11 +1,11 @@
 -- Cancella vecchi DB
-DROP DATABASE IF EXISTS `tommaso`;
+DROP DATABASE IF EXISTS `tommaso_test`;
 
 -- Creazione DB
-CREATE DATABASE `tommaso`;
+CREATE DATABASE `tommaso_test`;
 
--- Creazione tabelle in tommaso
-USE `tommaso`;
+-- Creazione tabelle in tommaso_test
+USE `tommaso_test`;
 
 CREATE TABLE `Utente`
 (

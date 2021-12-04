@@ -11,7 +11,6 @@ services:
       #Alla creazione del container vengono eseguiti tutti gli script contenuti nella cartella in ordine alfabetico
       - ./mariadb-docker/db-entrypoint:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_DATABASE: tommaso
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
 
   phpmyadmin:
