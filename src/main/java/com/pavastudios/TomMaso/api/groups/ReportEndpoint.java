@@ -1,6 +1,9 @@
 package com.pavastudios.TomMaso.api.groups;
 
-import com.pavastudios.TomMaso.api.components.*;
+import com.pavastudios.TomMaso.api.components.ApiEndpoint;
+import com.pavastudios.TomMaso.api.components.ApiException;
+import com.pavastudios.TomMaso.api.components.ApiParameter;
+import com.pavastudios.TomMaso.api.components.Endpoint;
 import com.pavastudios.TomMaso.db.queries.entities.CommentQueries;
 import com.pavastudios.TomMaso.db.queries.entities.ReportQueries;
 import com.pavastudios.TomMaso.model.*;
@@ -12,8 +15,8 @@ import java.util.Locale;
 
 public class ReportEndpoint {
     @Endpoint(url = "/report/comment", params = {
-            @ApiParameter(name = "id-comment", type = ApiParam.Type.INT),
-            @ApiParameter(name = "reason", type = ApiParam.Type.STRING),
+            @ApiParameter(name = "id-comment", type = ApiParameter.Type.INT),
+            @ApiParameter(name = "reason", type = ApiParameter.Type.STRING),
     }, requireLogin = true)
     public static final ApiEndpoint.Manage COMMENT_REPORT = (parser, writer, user) -> {
         int idCommento = parser.getValueInt("id-comment");
@@ -32,13 +35,12 @@ public class ReportEndpoint {
                 commento.getIdCommento()
         );
         Report report = ReportQueries.report(Report.Type.COMMENT, user, url, reason, commento.getMittente());
-        writer.name(ApiManager.OK_PROP);
         report.writeJson(writer);
     };
 
     @Endpoint(url = "/report/post", params = {
-            @ApiParameter(name = "url-post", type = ApiParam.Type.STRING),
-            @ApiParameter(name = "reason", type = ApiParam.Type.STRING),
+            @ApiParameter(name = "url-post", type = ApiParameter.Type.STRING),
+            @ApiParameter(name = "reason", type = ApiParameter.Type.STRING),
     }, requireLogin = true)
     public static final ApiEndpoint.Manage POST_REPORT = (parser, writer, user) -> {
         String post = parser.getValueString("url-post");
@@ -56,13 +58,12 @@ public class ReportEndpoint {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Non è possibile segnalare un proprio post");
         }
         Report report = ReportQueries.report(Report.Type.POST, user, post, reason, blog.getProprietario());
-        writer.name(ApiManager.OK_PROP);
         report.writeJson(writer);
     };
 
     @Endpoint(url = "/report/message", params = {
-            @ApiParameter(name = "id-message", type = ApiParam.Type.INT),
-            @ApiParameter(name = "reason", type = ApiParam.Type.STRING),
+            @ApiParameter(name = "id-message", type = ApiParameter.Type.INT),
+            @ApiParameter(name = "reason", type = ApiParameter.Type.STRING),
     }, requireLogin = true)
     public static final ApiEndpoint.Manage MESSAGE_REPORT = (parser, writer, user) -> {
         int idMessage = parser.getValueInt("id-message");
@@ -85,7 +86,6 @@ public class ReportEndpoint {
                 messaggio.getIdMessaggio()
         );
         Report report = ReportQueries.report(Report.Type.CHAT, user, url, reason, messaggio.getMittente());
-        writer.name(ApiManager.OK_PROP);
         report.writeJson(writer);
     };
 }

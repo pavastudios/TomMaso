@@ -1,9 +1,9 @@
 package com.pavastudios.TomMaso.api.components;
 
 public @interface ApiParameter {
+    Type type();
+
     String name();
 
-    ApiParam.Type type();
-
-    int defInt() default ApiParam.DEFAULT_INT;
+    enum Type {INT, FLOAT, STRING}
 }

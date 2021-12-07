@@ -5,25 +5,37 @@ import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.Session;
 import com.pavastudios.TomMaso.utility.tuple.Tuple2;
 import org.jetbrains.annotations.Nullable;
+import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Set;
 
 public class ApiManager {
-    public static final String OK_PROP = "response";
-    private static final String ERROR_PROP = "error";
-    private static final String ERROR_CODE_PROP = "error-code";
-    static HashMap<String, ApiEndpoint> API = new HashMap<>();
+    private static final HashMap<String, ApiEndpoint> API = new HashMap<>();
 
     static {
         try {
-            ApiLoader.loadApi();
+            loadApiEndpoints();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void loadApiEndpoints() throws IllegalAccessException {
+        Reflections reflections = new Reflections("com.pavastudios.TomMaso", Scanners.FieldsAnnotated);
+        Set<Field> apiEndpoints = reflections.getFieldsAnnotatedWith(Endpoint.class);
+        for (Field field : apiEndpoints) {
+            Endpoint ann = field.getAnnotation(Endpoint.class);
+            ApiEndpoint.Manage manage = (ApiEndpoint.Manage) field.get(null);
+            ApiEndpoint endpoint = new ApiEndpoint(manage, ann);
+            ApiManager.API.put(ann.url(), endpoint);
         }
     }
 
@@ -36,8 +48,8 @@ public class ApiManager {
         JsonWriter writer = new JsonWriter(stringWriter);
         try {
             writer.beginObject();
-            writer.name(ApiManager.ERROR_PROP).value(e.getMessage());
-            writer.name(ApiManager.ERROR_CODE_PROP).value(e.getStatusCode());
+            writer.name(ApiWriter.ERROR_PROP).value(e.getMessage());
+            writer.name(ApiWriter.ERROR_CODE_PROP).value(e.getStatusCode());
             writer.endObject();
         } catch (IOException ignore) {
         }//non può essere lanciato
@@ -76,7 +88,6 @@ public class ApiManager {
         }
         //Controlla i parametri passati
         ApiParser parser = new ApiParser(endpoint, req);
-        parser.parse();
 
         //Richieta valida, esegui l'endpoint
         Utente user = session.getUtente();

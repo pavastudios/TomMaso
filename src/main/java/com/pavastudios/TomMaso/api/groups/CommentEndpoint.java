@@ -1,6 +1,9 @@
 package com.pavastudios.TomMaso.api.groups;
 
-import com.pavastudios.TomMaso.api.components.*;
+import com.pavastudios.TomMaso.api.components.ApiEndpoint;
+import com.pavastudios.TomMaso.api.components.ApiException;
+import com.pavastudios.TomMaso.api.components.ApiParameter;
+import com.pavastudios.TomMaso.api.components.Endpoint;
 import com.pavastudios.TomMaso.db.queries.entities.CommentQueries;
 import com.pavastudios.TomMaso.listeners.MainListener;
 import com.pavastudios.TomMaso.model.Commento;
@@ -13,8 +16,8 @@ import java.net.URLDecoder;
 @SuppressWarnings("unused")
 public class CommentEndpoint {
     @Endpoint(url = "/comment/send-comment", requireLogin = true, params = {
-            @ApiParameter(name = "comment", type = ApiParam.Type.STRING),
-            @ApiParameter(name = "page", type = ApiParam.Type.STRING)
+            @ApiParameter(name = "comment", type = ApiParameter.Type.STRING),
+            @ApiParameter(name = "page", type = ApiParameter.Type.STRING)
     })
     public static final ApiEndpoint.Manage SEND_ACTION = (parser, writer, user) -> {
         String comment = parser.getValueString("comment");
@@ -36,7 +39,6 @@ public class CommentEndpoint {
         if (com == null) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Problema invio messaggio");
         }
-        writer.name(ApiManager.OK_PROP);
         com.writeJson(writer);
     };
 

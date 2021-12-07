@@ -8,6 +8,10 @@ import java.io.StringWriter;
 @SuppressWarnings("unused")
 
 public class ApiWriter extends JsonWriter {
+    public static final String ERROR_PROP = "error";
+    public static final String ERROR_CODE_PROP = "error-code";
+    private static final String OK_PROP = "response";
+
     private final StringWriter stringWriter = new StringWriter();
     private final JsonWriter writer = new JsonWriter(stringWriter);
 
@@ -19,6 +23,7 @@ public class ApiWriter extends JsonWriter {
     public ApiWriter() {
         super(new StringWriter());
         this.beginObject();
+        this.name(OK_PROP);
     }
 
     /**

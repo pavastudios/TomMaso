@@ -4,95 +4,48 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class ApiParser {
     private final ApiEndpoint endpoint;
-    private final HttpServletRequest req;
-    private final HashMap<ApiParam, Object> params = new HashMap<>();
+    private final HashMap<ApiParameter, Object> params = new HashMap<>();
 
-    public ApiParser(ApiEndpoint endpoint, HttpServletRequest req) {
+    public ApiParser(ApiEndpoint endpoint, HttpServletRequest req) throws ApiException {
         this.endpoint = endpoint;
-        this.req = req;
+        parse(req.getParameterMap());
     }
 
     /**
      * @throws ApiException if parameter is missing or the wrong type
      */
-    public void parse() {
-        for (ApiParam param : endpoint.getParams()) {
-            if (param.isArray())
-                params.put(param, arrayParse(param));
-            else
-                params.put(param, atomicParse(param));
+    private void parse(Map<String, String[]> req) throws ApiException {
+        for (ApiParameter param : endpoint.getParams()) {
+            params.put(param, parseParam(req, param));
         }
     }
 
-    private Object atomicParse(ApiParam param) throws NumberFormatException {
-        String s = req.getParameter(param.getName());
-        if (s == null) { //handle param not found
-            if (!param.isOptional()) {
-                String errorString = String.format(Locale.US, "missing param '%s'", param.getName());
-                throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
-            }
-            s = param.getDefValue();
+    private Object parseParam(Map<String, String[]> req, ApiParameter param) throws ApiException {
+
+        if (!req.containsKey(param.name())) { //handle param not found
+            String errorString = String.format(Locale.US, "missing param '%s'", param.name());
+            throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
         }
+
+        String value = req.get(param.name())[0];
         try {
-            switch (param.getType()) {//prova ad associare il valore
+            switch (param.type()) {//prova ad associare il valore
                 case INT:
-                    return Long.parseLong(s);
+                    return Long.parseLong(value);
                 case FLOAT:
-                    return Double.parseDouble(s);
+                    return Double.parseDouble(value);
                 case STRING:
-                    return s;
+                    return value;
             }
         } catch (NumberFormatException ignore) {
-            String errorString = String.format(Locale.US, "invalid value for param '%s'", param.getName());
+            String errorString = String.format(Locale.US, "invalid value for param '%s'", param.name());
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
         }
         return null;
-    }
-
-    private Object[] arrayParse(ApiParam param) {
-        String[] values = req.getParameterValues(param.getName());
-        if (values == null) {
-            if (!param.isOptional()) {
-                String errorString = String.format(Locale.US, "missing param '%s'", param.getName());
-                throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
-            }
-            values = param.getDefValueArray();
-        }
-        try {
-            switch (param.getType()) {//prova ad associare il valore
-                case INT:
-                    return arrayInt(values);
-                case FLOAT:
-                    return arrayFloat(values);
-                case STRING:
-                    return values;
-            }
-        } catch (NumberFormatException ignore) {
-            String errorString = String.format(Locale.US, "invalid value for param '%s'", param.getName());
-            throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
-        }
-        return null;
-    }
-
-    private Double[] arrayFloat(String[] values) {
-        Double[] arr = new Double[values.length];
-        for (int i = 0; i < values.length; i++)
-            arr[i] = Double.parseDouble(values[i]);
-        return arr;
-    }
-
-    private Long[] arrayInt(String[] values) {
-        Long[] arr = new Long[values.length];
-        for (int i = 0; i < values.length; i++)
-            arr[i] = Long.parseLong(values[i]);
-        return arr;
-    }
-
-    public Object getValue(ApiParam param) {
-        return params.get(param);
     }
 
     public String getValueString(String s) {
@@ -107,7 +60,7 @@ public class ApiParser {
         return (int) getValueLong(s);
     }
 
-    public Object getValueFromName(String s) {
+    private Object getValueFromName(String s) {
         return params.get(endpoint.getFromName(s));
     }
 

@@ -1,6 +1,9 @@
 package com.pavastudios.TomMaso.api.groups;
 
-import com.pavastudios.TomMaso.api.components.*;
+import com.pavastudios.TomMaso.api.components.ApiEndpoint;
+import com.pavastudios.TomMaso.api.components.ApiException;
+import com.pavastudios.TomMaso.api.components.ApiParameter;
+import com.pavastudios.TomMaso.api.components.Endpoint;
 import com.pavastudios.TomMaso.db.queries.entities.BlogQueries;
 import com.pavastudios.TomMaso.db.queries.entities.CommentQueries;
 import com.pavastudios.TomMaso.model.Blog;
@@ -15,7 +18,7 @@ import java.sql.SQLException;
 public class BlogEndpoint {
 
     @Endpoint(url = "/blog/delete-blog", requireLogin = true, params = {
-            @ApiParameter(name = "blog-name", type = ApiParam.Type.STRING)
+            @ApiParameter(name = "blog-name", type = ApiParameter.Type.STRING)
     })
     public static final ApiEndpoint.Manage DELETE_BLOG_ACTION = (parser, writer, user) -> {
         String name = parser.getValueString("blog-name");
@@ -27,11 +30,11 @@ public class BlogEndpoint {
         CommentQueries.deleteCommentsForBlog("/" + blog.getNome() + "/");
         File rootBlog = new File(FileUtility.BLOG_FILES_FOLDER, blog.getNome());
         FileUtility.recursiveDelete(rootBlog);
-        writer.name(ApiManager.OK_PROP).value("ok");
+        writer.value("ok");
     };
 
     @Endpoint(url = "/blog/delete-file", requireLogin = true, params = {
-            @ApiParameter(name = "url", type = ApiParam.Type.STRING)
+            @ApiParameter(name = "url", type = ApiParameter.Type.STRING)
     })
     public static final ApiEndpoint.Manage DELETE_FILE_ACTION = (parser, writer, user) -> {
         String url = parser.getValueString("url");
@@ -47,10 +50,10 @@ public class BlogEndpoint {
         }
         FileUtility.recursiveDelete(file);
         CommentQueries.deleteCommentsForBlog(url);
-        writer.name(ApiManager.OK_PROP).value("ok");
+        writer.value("ok");
     };
     @Endpoint(url = "/blog/create", requireLogin = true, params = {
-            @ApiParameter(name = "name", type = ApiParam.Type.STRING)
+            @ApiParameter(name = "name", type = ApiParameter.Type.STRING)
     })
     public static final ApiEndpoint.Manage CREATE_ACTION = (parser, writer, user) -> {
         String name = parser.getValueString("name");
@@ -59,7 +62,6 @@ public class BlogEndpoint {
         }
         try {
             Blog blog = BlogQueries.createBlog(user, name);
-            writer.name(ApiManager.OK_PROP);
             blog.writeJson(writer);
             File file = new File(FileUtility.BLOG_FILES_FOLDER, blog.getNome());
             file.mkdir();

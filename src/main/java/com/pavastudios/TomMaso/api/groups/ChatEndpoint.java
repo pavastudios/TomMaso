@@ -1,6 +1,9 @@
 package com.pavastudios.TomMaso.api.groups;
 
-import com.pavastudios.TomMaso.api.components.*;
+import com.pavastudios.TomMaso.api.components.ApiEndpoint;
+import com.pavastudios.TomMaso.api.components.ApiException;
+import com.pavastudios.TomMaso.api.components.ApiParameter;
+import com.pavastudios.TomMaso.api.components.Endpoint;
 import com.pavastudios.TomMaso.db.queries.entities.ChatQueries;
 import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
 import com.pavastudios.TomMaso.model.Chat;
@@ -14,8 +17,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class ChatEndpoint {
     @Endpoint(url = "/chat/send-message", requireLogin = true, params = {
-            @ApiParameter(name = "chat-id", type = ApiParam.Type.INT),
-            @ApiParameter(name = "message", type = ApiParam.Type.STRING),
+            @ApiParameter(name = "chat-id", type = ApiParameter.Type.INT),
+            @ApiParameter(name = "message", type = ApiParameter.Type.STRING),
     })
     public static final ApiEndpoint.Manage SEND_ACTION = (parser, writer, user) -> {
         int chatId = parser.getValueInt("chat-id");
@@ -28,11 +31,10 @@ public class ChatEndpoint {
         if (m == null) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "impossibile inviare messaggio");
         }
-        writer.name(ApiManager.OK_PROP);
         m.writeJson(writer);
     };
     @Endpoint(url = "/chat/create-chat", requireLogin = true, params = {
-            @ApiParameter(name = "with", type = ApiParam.Type.STRING)
+            @ApiParameter(name = "with", type = ApiParameter.Type.STRING)
     })
     public static final ApiEndpoint.Manage CREATE_ACTION = (parser, writer, user) -> {
         String otherUsername = parser.getValueString("with");
@@ -46,12 +48,11 @@ public class ChatEndpoint {
         } catch (SQLException ignore) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Chat già esistente");
         }
-        writer.name(ApiManager.OK_PROP);
         chat.writeJson(writer);
     };
     @Endpoint(url = "/chat/fetch-from-id", requireLogin = true, params = {
-            @ApiParameter(name = "chat-id", type = ApiParam.Type.INT),
-            @ApiParameter(name = "from-id", type = ApiParam.Type.INT),
+            @ApiParameter(name = "chat-id", type = ApiParameter.Type.INT),
+            @ApiParameter(name = "from-id", type = ApiParameter.Type.INT),
     })
     public static final ApiEndpoint.Manage FETCH_FROM_ID_ACTION = (parser, writer, user) -> {
         int chatId = parser.getValueInt("chat-id");
@@ -62,17 +63,15 @@ public class ChatEndpoint {
         }
 
         List<Messaggio> messaggi = ChatQueries.fetchMessageFromId(chat, fromId);
-        writer.name(ApiManager.OK_PROP);
         writer.beginArray();
         for (Messaggio m : messaggi)
             m.writeJson(writer);
         writer.endArray();
     };
     @Endpoint(url = "/chat/fetch-chat", requireLogin = true, params = {
-            @ApiParameter(name = "chat-id", type = ApiParam.Type.INT),
-            @ApiParameter(name = "count", type = ApiParam.Type.INT, defInt = 25),
-            @ApiParameter(name = "offset", type = ApiParam.Type.INT, defInt = 0),
-
+            @ApiParameter(name = "chat-id", type = ApiParameter.Type.INT),
+            @ApiParameter(name = "count", type = ApiParameter.Type.INT),
+            @ApiParameter(name = "offset", type = ApiParameter.Type.INT),
     })
     public static final ApiEndpoint.Manage FETCH_ACTION = (parser, writer, user) -> {
         int chatId = parser.getValueInt("chat-id");
@@ -85,7 +84,6 @@ public class ChatEndpoint {
         }
 
         List<Messaggio> messaggi = ChatQueries.fetchMessages(chat, count, offset);
-        writer.name(ApiManager.OK_PROP);
         writer.beginArray();
         for (Messaggio m : messaggi)
             m.writeJson(writer);

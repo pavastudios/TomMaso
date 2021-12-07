@@ -4,43 +4,31 @@ import com.pavastudios.TomMaso.model.Utente;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 
 public class ApiEndpoint {
 
     private final Manage action;
-    private final List<ApiParam> params;
-    private final boolean requireLogin;
-    private final String endpoint;
+    private final Endpoint endpoint;
 
-    public ApiEndpoint(String endpoint, boolean requireLogin, Manage action, ApiParam... params) {
-        this(endpoint, requireLogin, action, Arrays.asList(params));
-    }
-
-    public ApiEndpoint(String endpoint, boolean requireLogin, Manage action, Collection<ApiParam> params) {
-        this.endpoint = endpoint;
+    public ApiEndpoint(Manage action, Endpoint ann) {
         this.action = action;
-        this.requireLogin = requireLogin;
-        this.params = new ArrayList<>(params);
+        this.endpoint = ann;
     }
 
     public String getEndpoint() {
-        return endpoint;
+        return endpoint.url();
     }
 
     public boolean requireLogin() {
-        return requireLogin;
+        return endpoint.requireLogin();
     }
 
-    public List<ApiParam> getParams() {
-        return params;
+    public ApiParameter[] getParams() {
+        return endpoint.params();
     }
 
-    public ApiParam getFromName(String s) {
-        for (ApiParam api : params) if (api.getName().equals(s)) return api;
+    public ApiParameter getFromName(String s) {
+        for (ApiParameter api : getParams()) if (api.name().equals(s)) return api;
         return null;
     }
 
