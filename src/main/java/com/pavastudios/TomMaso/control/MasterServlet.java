@@ -38,11 +38,7 @@ public abstract class MasterServlet extends HttpServlet {
 
         try {
             Session session = Session.loadSession(req);
-
-            if (!hasSessionCookie(req))
-                req.setAttribute("rewrite", ";jsessionid=" + req.getSession().getId());
-            else
-                req.setAttribute("rewrite", "");
+            setRewriteAttribute(req);
 
             switch (method) {
                 case METHOD_GET:
@@ -74,6 +70,13 @@ public abstract class MasterServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setRewriteAttribute(HttpServletRequest req){
+        if (!hasSessionCookie(req))
+            req.setAttribute("rewrite", ";jsessionid=" + req.getSession().getId());
+        else
+            req.setAttribute("rewrite", "");
     }
 
 
