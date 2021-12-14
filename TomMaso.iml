@@ -46,5 +46,6 @@
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.6.2" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="mockito.core" level="project" />
+    <orderEntry type="library" name="dbunit" level="project" />
   </component>
 </module>
