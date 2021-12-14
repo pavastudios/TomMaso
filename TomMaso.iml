@@ -47,5 +47,6 @@
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="mockito.core" level="project" />
     <orderEntry type="library" name="dbunit" level="project" />
+    <orderEntry type="library" name="h2database.h2" level="project" />
   </component>
 </module>
