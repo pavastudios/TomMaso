@@ -39,7 +39,14 @@
     </servlet-mapping>
 
     <!--Admin-->
-
+    <servlet>
+        <servlet-name>ReportsServlet</servlet-name>
+        <servlet-class>com.pavastudios.TomMaso.control.admin.ReportServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReportsServlet</servlet-name>
+        <url-pattern>/reports</url-pattern>
+    </servlet-mapping>
     <!--User-->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>

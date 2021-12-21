@@ -40,6 +40,11 @@ public class ApiParser {
                     return Double.parseDouble(value);
                 case STRING:
                     return value;
+                case BOOL:
+                    if (!value.equals("false") && !value.equals("true")) {
+                        throw new NumberFormatException();
+                    }
+                    return value.equals("true");
             }
         } catch (NumberFormatException ignore) {
             String errorString = String.format(Locale.US, "invalid value for param '%s'", param.name());
@@ -58,6 +63,12 @@ public class ApiParser {
 
     public int getValueInt(String s) {
         return (int) getValueLong(s);
+    }
+
+    public boolean getValueBool(String s) {
+        String ss = getValueFromName(s).toString();
+        System.out.println("BOOL: " + ss);
+        return ss.equals("true");
     }
 
     private Object getValueFromName(String s) {

@@ -5,5 +5,5 @@ public @interface ApiParameter {
 
     String name();
 
-    enum Type {INT, FLOAT, STRING}
+    enum Type {INT, FLOAT, STRING, BOOL}
 }

@@ -55,6 +55,9 @@
                         <ul class="dropdown-propic-nav dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/profile">Profilo</a></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/chats">Chat</a></li>
+                            <%if(xUser.getPermessi().hasPermissions(Utente.Permessi.MOD_BLOG)||xUser.getPermessi().hasPermissions(Utente.Permessi.MOD_CHAT)){%>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/reports">Vedi report</a></li>
+                        <% } %>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Logout</a></li>
                         </ul>

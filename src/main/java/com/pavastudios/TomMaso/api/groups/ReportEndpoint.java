@@ -61,6 +61,26 @@ public class ReportEndpoint {
         report.writeJson(writer);
     };
 
+
+    @Endpoint(url = "/report/review", params = {
+            @ApiParameter(name = "id-report", type = ApiParameter.Type.INT),
+            @ApiParameter(name = "approved", type = ApiParameter.Type.BOOL),
+    }, requireLogin = true)
+    public static final ApiEndpoint.Manage REPORT_REVIEWED = (parser, writer, user) -> {
+        Report report = ReportQueries.findReportById(parser.getValueInt("id-report"));
+        Report.Status approved = parser.getValueBool("approved") ? Report.Status.ACCEPTED : Report.Status.REJECTED;
+        boolean chatReport = report.getType() == Report.Type.CHAT;
+        if (chatReport && !user.getPermessi().hasPermissions(Utente.Permessi.MOD_CHAT)) {
+            throw new ApiException(HttpServletResponse.SC_FORBIDDEN, "can't moderate this report");
+        }
+        if (!user.getPermessi().hasPermissions(Utente.Permessi.MOD_BLOG)) {
+            throw new ApiException(HttpServletResponse.SC_FORBIDDEN, "can't moderate this report");
+        }
+
+        ReportQueries.reviewReport(report, approved);
+        writer.value("ok");
+    };
+
     @Endpoint(url = "/report/message", params = {
             @ApiParameter(name = "id-message", type = ApiParameter.Type.INT),
             @ApiParameter(name = "reason", type = ApiParameter.Type.STRING),
