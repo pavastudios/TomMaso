@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 public class LoginServlet extends MasterServlet {
 
-    private static final boolean PASSWORD_BYPASS = true;
+    private static final boolean PASSWORD_BYPASS = false;
 
     @Override
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
@@ -28,6 +28,10 @@ public class LoginServlet extends MasterServlet {
         }
         if (!PASSWORD_BYPASS && !u.userVerifyLogin(password)) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //password errata
+            return;
+        }
+        if (!u.getPermessi().hasPermissions(Utente.Permessi.CAN_LOGIN)) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN); //password errata
             return;
         }
         session.setUtente(u);

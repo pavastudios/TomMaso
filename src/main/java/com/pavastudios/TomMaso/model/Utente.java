@@ -30,7 +30,6 @@ public class Utente implements GenericModel {
         u.setIdUtente(rs.getInt("id_utente"));
         u.setDataIscrizione(rs.getTimestamp("data_iscrizione"));
         u.setPassword(rs.getString("password"));
-        u.setIsAdmin(rs.getBoolean("permessi"));
         u.setUsername(rs.getString("username"));
         u.setPermessi(new Permessi(rs.getInt("permessi")));
         return u;
@@ -59,15 +58,6 @@ public class Utente implements GenericModel {
 
     public void setIdUtente(int idUtente) {
         this.idUtente = idUtente;
-    }
-
-    public boolean getIsAdmin() {
-        return permessi.hasPermissions(Permessi.MANAGE_USER);
-    }
-
-    public void setIsAdmin(boolean isAdmin) {
-        if (isAdmin) permessi = new Permessi(Permessi.MANAGE_USER);
-        else permessi = new Permessi(0);
     }
 
     private void setPassword(String password) {

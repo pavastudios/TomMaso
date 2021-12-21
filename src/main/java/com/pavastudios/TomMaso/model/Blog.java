@@ -106,7 +106,7 @@ public class Blog implements GenericModel {
 
     public boolean hasAccess(Utente user) {
         if (user == null) return false;
-        if (user.getIsAdmin()) return true;
+        if (user.getPermessi().hasPermissions(Utente.Permessi.MOD_BLOG)) return true;
         return proprietario.equals(user);
     }
 }

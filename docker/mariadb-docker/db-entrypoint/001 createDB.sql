@@ -12,7 +12,7 @@ CREATE TABLE `Utente`
     `id_utente`       INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `password`        VARCHAR(255) NOT NULL,
     `data_iscrizione` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `permessi`        INT          NOT NULL DEFAULT 0,
+    `permessi`        INT          NOT NULL DEFAULT 8,
     `username`        VARCHAR(255) NOT NULL UNIQUE
 );
 

@@ -50,9 +50,6 @@
             <div class="row">
                 <h4><%=user.getUsername()%></h4>
             </div>
-            <%if(user.getIsAdmin()){%>
-            <span class="badge bg-primary">Admin</span>
-            <%}%>
             <% if(login!=null&&!user.equals(login)){%>
             <div class="row d-flex justify-content-center ">
                 <form action="#" method="post" id="createChat">
