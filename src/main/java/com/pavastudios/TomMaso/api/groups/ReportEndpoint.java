@@ -76,7 +76,9 @@ public class ReportEndpoint {
         if (!user.getPermessi().hasPermissions(Utente.Permessi.MOD_BLOG)) {
             throw new ApiException(HttpServletResponse.SC_FORBIDDEN, "can't moderate this report");
         }
-
+        if (approved == Report.Status.ACCEPTED) {
+            report.deleteContent();
+        }
         ReportQueries.reviewReport(report, approved);
         writer.value("ok");
     };

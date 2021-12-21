@@ -1,8 +1,12 @@
 package com.pavastudios.TomMaso.model;
 
 import com.google.gson.stream.JsonWriter;
+import com.pavastudios.TomMaso.db.queries.entities.ChatQueries;
+import com.pavastudios.TomMaso.db.queries.entities.CommentQueries;
 import com.pavastudios.TomMaso.db.queries.entities.UserQueries;
+import com.pavastudios.TomMaso.utility.FileUtility;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -126,6 +130,27 @@ public class Report implements GenericModel {
                 ", reporter=" + reporter +
                 ", reportDate=" + reportDate +
                 '}';
+    }
+
+    public void deleteContent() throws SQLException {
+        switch (this.getType()) {
+            case COMMENT:
+                Commento commento = CommentQueries.findCommentById(Integer.parseInt(this.getUrl().split("-")[1]));
+                assert commento != null;
+                CommentQueries.deleteCommento(commento);
+                break;
+            case CHAT:
+                Messaggio messaggio = ChatQueries.findMessageById(Integer.parseInt(this.getUrl().split("-")[1]));
+                assert messaggio != null;
+                ChatQueries.deleteMessage(messaggio);
+                break;
+            case POST:
+                String url = this.getUrl().substring(6);
+                File file = FileUtility.blogPathToFile(url);
+                FileUtility.recursiveDelete(file);
+                CommentQueries.deleteCommentsForBlog(url);
+                break;
+        }
     }
 
     public enum Type {COMMENT, CHAT, POST}

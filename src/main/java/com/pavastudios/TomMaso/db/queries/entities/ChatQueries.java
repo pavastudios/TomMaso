@@ -26,6 +26,7 @@ public class ChatQueries {
     static MasterPreparedStatement FIND_USER_CHAT;
     static MasterPreparedStatement FIND_CHAT_BY_USERS;
     static MasterPreparedStatement FETCH_MESSAGE_FROM_ID;
+    static MasterPreparedStatement DELETE_MESSAGE;
 
 
     public static void initQueries() throws SQLException {
@@ -35,6 +36,7 @@ public class ChatQueries {
         FIND_MESSAGE_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_messaggio`=?");
         FIND_CHAT_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Chat` WHERE `id_chat`=?");
         FIND_CHAT_BY_USERS = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Chat` WHERE `utente1`=? AND `utente2`=? ");
+        DELETE_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `Messaggio` WHERE `id_messaggio` =?");
         CREATE_CHAT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Chat`(`utente1`,`utente2`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
         SEND_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Messaggio`(`id_chat`,`mittente`,`testo`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
     }
@@ -82,6 +84,11 @@ public class ChatQueries {
         return Queries.findById(Entities.CHAT, idChat);
     }
 
+    //Query Message
+    public static @Nullable Messaggio findMessageById(int idMessaggio) throws SQLException {
+        return Queries.findById(Entities.MESSAGGIO, idMessaggio);
+    }
+
     public static @NotNull List<Chat> findUserChat(Utente u1) throws SQLException {
         FIND_USER_CHAT.setInt(1, u1.getIdUtente());
         FIND_USER_CHAT.setInt(2, u1.getIdUtente());
@@ -114,5 +121,10 @@ public class ChatQueries {
         List<Messaggio> messages = Queries.resultSetToList(Entities.MESSAGGIO, set);
         set.close();
         return messages;
+    }
+
+    public static void deleteMessage(Messaggio messaggio) throws SQLException {
+        DELETE_MESSAGE.setInt(1, messaggio.getIdMessaggio());
+        DELETE_MESSAGE.executeUpdate();
     }
 }

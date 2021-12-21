@@ -2,6 +2,7 @@ package com.pavastudios.TomMaso.utility;
 
 import com.pavastudios.TomMaso.model.Blog;
 import com.pavastudios.TomMaso.test.PersonalFileDir;
+import org.jetbrains.annotations.Nullable;
 
 import javax.servlet.ServletContext;
 import java.io.*;
@@ -124,7 +125,10 @@ public class FileUtility {
         return pathToFile(FileUtility.BLOG_FILES_FOLDER, pathInfo);
     }
 
-    public static void recursiveDelete(File file) {
+    public static void recursiveDelete(@Nullable File file) {
+        if (file == null) {
+            return;
+        }
         if (file.isFile()) {
             file.delete();
             return;

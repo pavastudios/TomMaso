@@ -22,6 +22,7 @@ public class CommentQueries {
     static MasterPreparedStatement UPDATE_BLOG_COMMENTS;
     static MasterPreparedStatement MOVE_COMMENTS;
     static MasterPreparedStatement DELETE_COMMENTS_FOR_POST;
+    static MasterPreparedStatement DELETE_COMMENT;
 
 
     public static void initQueries() throws SQLException {
@@ -31,6 +32,7 @@ public class CommentQueries {
         UPDATE_BLOG_COMMENTS = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Commento` SET `url_pagina`=CONCAT(?,RIGHT(`url_pagina`,LENGTH(`url_pagina`)-LENGTH(?)-2)) WHERE `url_pagina` LIKE ?");
         MOVE_COMMENTS = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Commento` SET `url_pagina`=? WHERE `url_pagina`=?");
         DELETE_COMMENTS_FOR_POST = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `Commento` WHERE `url_pagina` LIKE ?");
+        DELETE_COMMENT = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `Commento` WHERE `id_commento` =?");
     }
 
     /*L'url deve essere del tipo /NOMEBLOG/... */
@@ -67,5 +69,10 @@ public class CommentQueries {
     //Query Messaggio
     public static @Nullable Messaggio findMessageById(int idMessaggio) throws SQLException {
         return Queries.findById(Entities.MESSAGGIO, idMessaggio);
+    }
+
+    public static void deleteCommento(Commento commento) throws SQLException {
+        DELETE_COMMENT.setInt(1, commento.getIdCommento());
+        DELETE_COMMENT.executeUpdate();
     }
 }
