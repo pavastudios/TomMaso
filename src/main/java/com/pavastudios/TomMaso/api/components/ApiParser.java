@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class ApiParser {
     private final ApiEndpoint endpoint;
-    private final HashMap<ApiParameter, Object> params = new HashMap<>();
+    private final HashMap<String, Object> params = new HashMap<>();
 
     public ApiParser(ApiEndpoint endpoint, HttpServletRequest req) throws ApiException {
         this.endpoint = endpoint;
@@ -19,8 +19,11 @@ public class ApiParser {
      * @throws ApiException if parameter is missing or the wrong type
      */
     private void parse(Map<String, String[]> req) throws ApiException {
+        for (String s : req.keySet()) {
+            params.put(s, req.get(s)[0]);
+        }
         for (ApiParameter param : endpoint.getParams()) {
-            params.put(param, parseParam(req, param));
+            params.put(param.name(), parseParam(req, param));
         }
     }
 
@@ -72,7 +75,7 @@ public class ApiParser {
     }
 
     private Object getValueFromName(String s) {
-        return params.get(endpoint.getFromName(s));
+        return params.get(s);
     }
 
 }
