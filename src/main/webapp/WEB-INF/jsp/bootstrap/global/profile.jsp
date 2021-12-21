@@ -1,6 +1,8 @@
 <%@ page import="com.pavastudios.TomMaso.model.Blog" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.jsoup.nodes.Entities" %>
+<%@ page import="com.pavastudios.TomMaso.utility.tuple.Tuple2" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,10 +56,16 @@
             <% if(login!=null&&!user.equals(login)){%>
             <div class="row d-flex justify-content-center ">
                 <form action="#" method="post" id="createChat">
-                    <input type="submit" class="col-9 btn btn-outline-dark modify-button" value="Contatta"/>
+                    <input type="submit" class="col-9 btn btn-outline-success modify-button" value="Contatta"/>
                 </form>
             </div>
             <%}%>
+            <% if(login!=null&&login.getPermessi().hasPermissions(Utente.Permessi.MANAGE_USER)){ %>
+            <div class="row d-flex justify-content-center ">
+                <input type="button" class="col-9 btn btn-outline-danger modify-button" value="Modera" data-bs-toggle="modal" data-bs-target="#moderationModalNavbar"/>
+            </div>
+            <%}%>
+
         </div>
         <div class="col-lg-9 col-sm-12">
             <div class="row">
@@ -181,6 +189,38 @@
     </div>
 </div>
 
+<% if(login!=null&&login.getPermessi().hasPermissions(Utente.Permessi.MANAGE_USER)){%>
+<!-- moderation blog Modal -->
+<div class="modal fade" id="moderationModalNavbar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Gestione permessi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <% ArrayList<Tuple2<String, Boolean>> permList = user.getPermessi().getAsArray();
+                for(Tuple2<String, Boolean> perm : permList){ %>
+                <div class="row mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input permesso" type="checkbox" value="" id="<%=perm.get1()%>" <% if(perm.get2()){%>checked<%}%>>
+                        <label class="form-check-label" for="<%=perm.get1()%>">
+                            <%=perm.get1()%>
+                        </label>
+                    </div>
+                </div>
+                <%}%>
+                <p class="text-danger modal-error"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                <button type="button" class="btn btn-primary" id="changePermissionsButton">Salva</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%}%>
+
 <%@include file="../general/footer.jsp"%>
 <%@include file="../general/tailTag.jsp"%>
 <script>
@@ -237,6 +277,24 @@
     $(".card-header").click(function () {
         location.href="${pageContext.request.contextPath}/home/"+$(this).attr("blog");
     })
+
+    <% if(login!=null&&login.getPermessi().hasPermissions(Utente.Permessi.MANAGE_USER)){%>
+    //Moderation code
+    $("#changePermissionsButton").click(function(){
+        let list = $(".permesso");
+        let dict = {"id-user":<%=user.getIdUtente()%>};
+        for (let i = 0; i < list.length; i++)
+            dict[list[i].id]=list[i].checked;
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/api/user/change-permissions<%=request.getAttribute("rewrite")%>',
+            data: dict,
+            success: function (data) {
+                location.reload();
+            }
+        });
+    })
+    <%}%>
 </script>
 </body>
 </html>

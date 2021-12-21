@@ -3,12 +3,15 @@ package com.pavastudios.TomMaso.model;
 import com.google.gson.stream.JsonWriter;
 import com.pavastudios.TomMaso.utility.FileUtility;
 import com.pavastudios.TomMaso.utility.Security;
+import com.pavastudios.TomMaso.utility.tuple.Tuple2;
 import org.intellij.lang.annotations.MagicConstant;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Utente implements GenericModel {
@@ -36,6 +39,7 @@ public class Utente implements GenericModel {
     public Permessi getPermessi() {
         return permessi;
     }
+
 
     public void setPermessi(Permessi permessi) {
         this.permessi = permessi;
@@ -150,6 +154,22 @@ public class Utente implements GenericModel {
 
         public int getPermessi() {
             return permessi;
+        }
+
+        public ArrayList<Tuple2<String, Boolean>> getAsArray() {
+            ArrayList<Tuple2<String, Boolean>> list = new ArrayList<>();
+            Field[] fields = Permessi.class.getFields();
+            int i = 0;
+            for (Field field : fields) {
+                String name = field.getName();
+                if (!name.equals("permessi")) {
+                    try {
+                        list.add(new Tuple2<>(name, hasPermissions(field.getInt(null))));
+                    } catch (IllegalAccessException e) {
+                    }
+                }
+            }
+            return list;
         }
     }
 
