@@ -9,7 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * La classe ApiServlet è una entità di controllo che offre la possibilità di invocare
+ * le API richieste dall'utente
+ */
+
 public class ApiServlet extends MasterServlet {
+
+
 
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws IOException {

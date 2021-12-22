@@ -29,6 +29,11 @@ public class GlobalConnection {
         CONNECTION = new MasterConnection(conn);
     }
 
+    /**
+     * questo metodo inizializza le queries
+     * @throws SQLException
+     */
+
     public static void init() throws SQLException {
         if (initialized) return;
         CommentQueries.initQueries();
@@ -39,6 +44,11 @@ public class GlobalConnection {
         initialized = true;
     }
 
+
+    /**
+     * chiede la connesisone al database
+     * @throws SQLException
+     */
 
     public static void closeConnection() throws SQLException {
         CONNECTION.close();

@@ -11,6 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * ProfileServlet è la servet di controllo per permettere ad un utente di registrarsi
+ * nella piattaforma con controlli sulla lunghezza dell'username e della
+ *  password al fine di avere più sicurezza e protezione per l'account dell'utente
+ */
+
 public class RegisterServlet extends MasterServlet {
 
 

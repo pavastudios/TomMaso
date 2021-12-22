@@ -9,6 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * ErrorServlet è una entità di control che reindirizza l'utente ad una pagina di errore
+ * nel caso in cui qualche richiesta non rispecchia dei contratti oppure ci sia
+ * qualche errore interno
+ */
+
 public class ErrorServlet extends MasterServlet {
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -9,6 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * ChiSiamoServlet è una entità di control per reinderizzare l'utente nella pagina ChiSiamo
+ * con una pagina personalizzata per l'utente
+ */
+
 public class ChiSiamoServlet extends MasterServlet {
     @Override
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {

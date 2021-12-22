@@ -14,7 +14,20 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * ProfileServlet è una sservel di controllo che permette la visita del profilo di un
+ * utente con relativa lista dei suoi blog
+ */
+
 public class ProfileServlet extends MasterServlet {
+
+    /**
+     * Ottiene le informazioni su quale profilo caricare
+     * @param session
+     * @param req
+     * @return
+     * @throws SQLException
+     */
 
     private Utente fetchUser(Session session, HttpServletRequest req) throws SQLException {
         Utente userLogged = session.getUtente();

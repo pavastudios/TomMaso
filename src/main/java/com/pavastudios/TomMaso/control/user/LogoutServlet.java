@@ -7,6 +7,11 @@ import com.pavastudios.TomMaso.utility.Utility;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * LogoutServlet è una entità di controllo che si occupa di far effettuare il
+ * logout dalla piattaforma ed invalidare la sessione dell'utente
+ */
+
 public class LogoutServlet extends MasterServlet {
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) {

@@ -15,7 +15,28 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
 
+/**
+ * ViewerServlet è una entità di controllo che ci permette di visualizzare il contenuto
+ * dei blog con gli opportuni commenti oppure di scaricare il file nel caso in cui
+ * il contenuto sia un file
+ */
+
 public class ViewerServlet extends MasterServlet {
+
+    /**
+     * manageMarkdown prende in input una sessione per settare il blog visitato,
+     * una richiesta per ottenete il path del contenuto da caricare, la risposta
+     * per costruire la risposta con gli opportuni parametri e un file per caricare
+     * un eventuale file
+     *
+     * @param session per settare il blog visitato
+     * @param req per ottenete il path del contenuto da caricare
+     * @param resp per costruire la risposta con gli opportuni parametri
+     * @param file per caricare un eventuale file
+     * @throws IOException
+     * @throws ServletException
+     * @throws SQLException
+     */
 
     private void manageMarkdown(Session session, HttpServletRequest req, HttpServletResponse resp, File file) throws IOException, ServletException, SQLException {
         Blog blog = Blog.fromPathInfo(req.getPathInfo());
@@ -25,6 +46,16 @@ public class ViewerServlet extends MasterServlet {
         req.setAttribute("comments", CommentQueries.fetchCommentsFromPage(req.getPathInfo()));
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/blog/markdownViewer.jsp").forward(req, resp);
     }
+
+    /**
+     * Attraverso il mime si può capire quale tipo di file deve essere elaborato
+     * e costruire l'opportuna risposta
+     *
+     * @param resp per costruire la risposta con gli oppoeruni parametri
+     * @param file per capire quale tipo di file deve essere elaborato
+     * @throws IOException
+     * @throws ServletException
+     */
 
     private void manageFile(HttpServletResponse resp, File file) throws IOException {
         OutputStream out = resp.getOutputStream();

@@ -11,6 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * LoginServlet è una entità di controllo che permette all'utente di effettuare il login
+ * nella piattaforma ed imposta la sessione all'utente. Inoltre vengono
+ * controllati i permessi dell'utente per vedere de può effettuare il login
+ * dopo un eventuale ban
+ */
+
 public class LoginServlet extends MasterServlet {
 
     private static final boolean PASSWORD_BYPASS = false;
@@ -30,7 +37,7 @@ public class LoginServlet extends MasterServlet {
             return;
         }
         if (!u.getPermessi().hasPermissions(Utente.Permessi.CAN_LOGIN)) {
-            resp.sendError(HttpServletResponse.SC_FORBIDDEN); //password errata
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN); //l'utente non ha il permesso di loggare
             return;
         }
         session.setUtente(u);

@@ -13,7 +13,16 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * ChatListServlet è un entità di controllo che fornisce all'utente che ne fa richiesta
+ * una lista delle chat a cui un utente partecipa, che siano esse cominciate dall'utente
+ * stesso oppure cominciate da terzi.
+ *
+ */
+
 public class ChatListServlet extends MasterServlet {
+
+
 
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {

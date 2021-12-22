@@ -11,6 +11,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Locale;
 
+/**
+ * MasterServlet è la classe padre di tutte le servlet e serve ad impostare
+ * le richieste e le risposte con gli opportuni parametri
+ */
+
 public abstract class MasterServlet extends HttpServlet {
 
     private static final String METHOD_DELETE = "DELETE";
@@ -20,6 +25,15 @@ public abstract class MasterServlet extends HttpServlet {
     private static final String METHOD_POST = "POST";
     private static final String METHOD_PUT = "PUT";
     private static final String METHOD_TRACE = "TRACE";
+
+    /**
+     * hasSessionCookie controlla se tra i cookie ce n'è uno con che corrisponde
+     * al jsession id
+     * @param req sere ad ottere un eventuale jsession id attraverso cookie
+     *            se sono abilitati
+     * @return boolean value (True o False) che corrispondono rispoettivamente
+     * al caso se il cookie corrisponde al jession id oppure no
+     */
 
     private static boolean hasSessionCookie(HttpServletRequest req) {
         Cookie[] cookies = req.getCookies();
@@ -57,13 +71,22 @@ public abstract class MasterServlet extends HttpServlet {
         }
     }
 
+    /**
+     *  Impostati l'attributo rewrite al corrispettivo jsession id se i cookie sono disabilitati
+     *  oppure imposta l'attributo rewrite ad una string vuota
+     * @param req ottiene informazioni riguardo la presenza di cookie
+     */
+
     private void setRewriteAttribute(HttpServletRequest req){
         if (!hasSessionCookie(req))
             req.setAttribute("rewrite", ";jsessionid=" + req.getSession().getId());
         else
             req.setAttribute("rewrite", "");
     }
-
+    /**
+     * setDefaultHeader imposta un header standard per tutte le risposte
+     * @param resp serve ad ottenere la risposta sulla quale settare l'header di default
+     */
     private void setDefaultHeader(HttpServletResponse resp) {
         resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Content-Type", "text/html; charset=UTF-8");
