@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+/**
+ * Classe che modella il concetto di Commento nel database
+ */
 public class Commento implements GenericModel {
     private int idCommento;
     @Nullable
@@ -17,6 +20,12 @@ public class Commento implements GenericModel {
     private String testo;
     private Date dataInvio;
 
+    /**
+     * Metodo per ottenere un commento partendo da un oggetto ResultSet
+     * @param rs set di risultati del database
+     * @return istanza del commento
+     * @throws SQLException Problemi con il resul set del database
+     */
     public static Commento fromResultSet(ResultSet rs) throws SQLException {
         Commento c = new Commento();
         c.setIdCommento(rs.getInt("id_commento"));

@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Classe che mostra agli utenti con permessi da moderatore
+ * i report senza review e consente loro di gestirli
+ */
 public class ReportServlet extends MasterServlet {
 
     @Override

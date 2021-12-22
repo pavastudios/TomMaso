@@ -13,6 +13,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 
+/**
+ * Classe che consente di gestire la rimozione, l'aggiunta e la modifica dei file dei blog
+ * consentendo all'utente proprietario di accedere alla relativa pagina per la gestione
+ */
 public class BlogManagerServlet extends MasterServlet {
 
     private void manageFolder(HttpServletRequest req, HttpServletResponse resp, File file) throws ServletException, IOException {

@@ -13,27 +13,53 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe per metodi di utilità sui file
+ */
 public class FileUtility {
     private static final File TOMMASO_FOLDER = new File(PersonalFileDir.TOMMASO_DATA_FOLDER).getAbsoluteFile();
+    /**
+     * Costante indicante il path in cui verranno conservati i blog sul server
+     */
     public static final File BLOG_FILES_FOLDER = new File(TOMMASO_FOLDER, "blogs").getAbsoluteFile();
     private static final int PATH_LENGTH = BLOG_FILES_FOLDER.getAbsolutePath().length();
-    public static final File USER_FILES_FOLDER = new File(TOMMASO_FOLDER, "users").getAbsoluteFile();
+    /**
+     * Costante indicante il path in cui verranno conservati i blog sul server
+     */
     public static final File TMP_FOLDER = new File(TOMMASO_FOLDER, "tmp").getAbsoluteFile();
+    private static final int BUFFER_SIZE = 4096;
 
+    /**
+     * Metodo per scrivere su un OutputStream partendo da un InputStream
+     * @param input istanza di InputStream
+     * @param output istanza di OutputStream
+     * @throws IOException Problemi con la scrittura del file
+     */
     public static void writeFile(InputStream input, OutputStream output) throws IOException {
-        byte[] buffer = new byte[4096];
+        byte[] buffer = new byte[BUFFER_SIZE];
         int len;
         while ((len = input.read(buffer)) != -1) {
             output.write(buffer, 0, len);
         }
     }
 
+    /**
+     * Metodo per ottenere l'URL relativo di un file
+     * @param file File di cui si vuole ottenere l'URL
+     * @return stringa contenente l'URL relativo del file
+     */
     public static String relativeUrl(File file) {
         String name = file.getAbsolutePath();
         name = name.replace('\\', '/');//c'è gente che non conosce linux
         return name.substring(PATH_LENGTH);
     }
 
+    /**
+     * Metodo che effettua l'escape dei caratteri in una stringa
+     * per essere compatibili con la libreria di rendering del MarkDown
+     * @param s stringa su cui effetturare l'escape
+     * @return stringa su cui è stato effettuato l'escape
+     */
     public static String escapeForMarked(String s) {
         return s.replace("\\", "\\\\")
                 .replace("\n", "\\n")
@@ -41,6 +67,13 @@ public class FileUtility {
                 .replace("\"", "\\\"");
     }
 
+    /**
+     * Metodo che preleva le prime n righe da un file
+     * @param file file da cui prelevare le righe
+     * @param numRows numero di righe da prelevare
+     * @return stringa contenente le prime n righe
+     * @throws IOException Problemi con la lettura del file
+     */
     public static String headFile(File file, int numRows) throws IOException {
         List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
         if (lines.size() >= numRows) {
@@ -51,6 +84,12 @@ public class FileUtility {
         return builder.toString();
     }
 
+    /**
+     * Metodo per ottenere la lista di file appartenenti ad un blog
+     * @param context contesto della servlet
+     * @param blog blog da cui prelevare i file
+     * @return lista contenente la lista dei file
+     */
     public static List<File> getPages(ServletContext context, Blog blog) {
         if (blog == null) return null;
         File main = blog.getRootPath();
@@ -71,6 +110,12 @@ public class FileUtility {
         return files;
     }
 
+    /**
+     * Metodo che inserisce ricorsivamente tutti i file Markdown in una lista
+     * @param list lista in cui inserire i file
+     * @param context contesto della servlet
+     * @param file file attuale
+     */
     private static void findMarkdownFiles(ArrayList<File> list, ServletContext context, File file) {
         if (file.isFile()) {
             if (getFileType(context, file) == FileType.MARKDOWN) {
@@ -84,6 +129,12 @@ public class FileUtility {
             findMarkdownFiles(list, context, f);
     }
 
+    /**
+     * Metodo per ottenere il tipo di un file
+     * @param cont contesto della servlet
+     * @param file file da ispezionare
+     * @return
+     */
     public static FileType getFileType(ServletContext cont, File file) {
         if (file == null || cont == null) return null;
         if (!file.exists()) return null;
@@ -100,7 +151,10 @@ public class FileUtility {
     }
 
     /**
-     * Converte un pathInfo in un file, non controlla l'esistenza del file
+     * Metodo che concatena due path controllandone la correttezza (non verifica l'effettiva presenza del file)
+     * @param base directory di partenza
+     * @param pathInfo pathInfo della richiesta
+     * @return File presente nel path costruito
      */
     private static File pathToFile(File base, String pathInfo) {
         if (pathInfo == null) return null;
@@ -117,14 +171,19 @@ public class FileUtility {
         return file;
     }
 
-    public static File userPathToFile(String pathInfo) {
-        return pathToFile(FileUtility.USER_FILES_FOLDER, pathInfo);
-    }
-
+    /**
+     * Metodo che cerca un blog in una directory dato un path di partenza
+     * @param pathInfo path di partenza
+     * @return File trovato
+     */
     public static File blogPathToFile(String pathInfo) {
         return pathToFile(FileUtility.BLOG_FILES_FOLDER, pathInfo);
     }
 
+    /**
+     * Metodo che elimina ricorsivamente una directory
+     * @param file directory da eliminare
+     */
     public static void recursiveDelete(@Nullable File file) {
         if (file == null) {
             return;
@@ -141,6 +200,12 @@ public class FileUtility {
         file.delete();
     }
 
+    /**
+     * Metodo che effettua l'escape dei caratteri su un file Markdown
+     * @param file file su cui effettuare l'escape
+     * @return contenuto del file dopo aver effettuato l'escape
+     * @throws IOException Problemi con la lettura del file
+     */
     public static String escapeMDFile(File file) throws IOException {
         BufferedInputStream fis = new BufferedInputStream(new FileInputStream(file));
         StringBuilder content = new StringBuilder();
@@ -167,5 +232,8 @@ public class FileUtility {
         return content.toString();
     }
 
+    /**
+     * Enumerazione indicante i tipi di file
+     */
     public enum FileType {TEXT, MARKDOWN, AUDIO, DIRECTORY, VIDEO, IMAGE, UNKNOWN}
 }

@@ -11,16 +11,22 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.sql.SQLException;
 
+/**
+ * Classe per l'inizializzazione e distruzione del context
+ */
 @WebListener
 public class MainListener implements ServletContextListener {
     public static ServletContext CONTEXT;
     public static final String ADMIN_PASSWORD = "admin";
     public static final String ADMIN_USERNAME = "admin";
 
+    /**
+     * Metodo per l'inizializzazione del contesto
+     * @param sce oggetto ServletContextEvent
+     */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         CONTEXT = sce.getServletContext();
-        FileUtility.USER_FILES_FOLDER.mkdirs();
         FileUtility.BLOG_FILES_FOLDER.mkdir();
         FileUtility.TMP_FOLDER.mkdir();
         try {
@@ -35,6 +41,10 @@ public class MainListener implements ServletContextListener {
 
     }
 
+    /**
+     * Metodo per la creazione dell'account admin del sito
+     * @throws SQLException
+     */
     private void createAdminAccount() throws SQLException {
         Utente u = UserQueries.findUserByUsername(ADMIN_USERNAME);
         if (u == null) {
@@ -43,6 +53,10 @@ public class MainListener implements ServletContextListener {
         }
     }
 
+    /**
+     * Metodo per la distruzione del contesto
+     * @param sce oggetto ServletContextEvent
+     */
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         try {

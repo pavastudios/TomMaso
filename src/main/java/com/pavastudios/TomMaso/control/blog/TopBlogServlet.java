@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Classe per l'ottenimento e la visualizzazione dei blog più popolari
+ */
 public class TopBlogServlet extends MasterServlet {
     public static final int TOP_COUNT = 15;
 

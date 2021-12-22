@@ -12,6 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+/**
+ * Classe che modella il concetto di Report nel database
+ */
 public class Report implements GenericModel {
 
     private int idReport;
@@ -132,6 +135,10 @@ public class Report implements GenericModel {
                 '}';
     }
 
+    /**
+     * Metodo che cancella dal database il report in questione
+     * @throws SQLException Problemi con l'eliminazione delle informazioni dal database
+     */
     public void deleteContent() throws SQLException {
         switch (this.getType()) {
             case COMMENT:
@@ -153,7 +160,13 @@ public class Report implements GenericModel {
         }
     }
 
+    /**
+     * Enumerazione per identificare il tipo di report
+     */
     public enum Type {COMMENT, CHAT, POST}
 
+    /**
+     * Enumerazione per identificare lo stato in cui si trova il report
+     */
     public enum Status {NOT_REVIEWED, ACCEPTED, REJECTED}
 }

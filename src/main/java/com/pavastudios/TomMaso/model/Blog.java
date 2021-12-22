@@ -10,13 +10,25 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Classe che modella il concetto di Blog nel database
+ */
 public class Blog implements GenericModel {
+    /**
+     * Costante che indica la lunghezza minima per il nome del blog
+     */
     public static final int MINIMUM_NAME_LENGTH = 4;
     private int idBlog;
     private Utente proprietario;
     private String nome;
     private int visite;
 
+    /**
+     * Metodo per ottenere un blog partendo da un oggetto ResultSet
+     * @param rs set di risultati del database
+     * @return istanza del blog
+     * @throws SQLException Problemi con il result set
+     */
     public static Blog fromResultSet(ResultSet rs) throws SQLException {
         Blog b = new Blog();
         b.setIdBlog(rs.getInt("id_blog"));
@@ -26,6 +38,12 @@ public class Blog implements GenericModel {
         return b;
     }
 
+    /**
+     * Metodo per ottenere un blog partendo dal percorso
+     * @param pathInfo path del blog
+     * @return istanza del blog
+     * @throws SQLException Problemi con il result set del database
+     */
     public static Blog fromPathInfo(String pathInfo) throws SQLException {
         if (pathInfo == null) return null;
         String[] parts = pathInfo.split("/", 3);
@@ -100,6 +118,11 @@ public class Blog implements GenericModel {
         return new File(FileUtility.BLOG_FILES_FOLDER, getNome());
     }
 
+    /**
+     * Metodo per ottenere il grado di accesso di un utente al blog
+     * @param user utente di cui si vuole conoscere il grado di accesso
+     * @return booleano che indica se l'utente può accedere al blog
+     */
     public boolean hasAccess(Utente user) {
         if (user == null) return false;
         if (user.getPermessi().hasPermissions(Utente.Permessi.MOD_BLOG)) return true;

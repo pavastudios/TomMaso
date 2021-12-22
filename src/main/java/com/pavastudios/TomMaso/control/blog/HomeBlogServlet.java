@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * CLasse che preleva i file di un blog e li renderizza in una homepage
+ */
 public class HomeBlogServlet extends MasterServlet {
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {

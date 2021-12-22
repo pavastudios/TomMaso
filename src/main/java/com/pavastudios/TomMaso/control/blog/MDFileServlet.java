@@ -15,6 +15,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Classe che consente il salvataggio dei file markdown a seguito di modifiche.
+ * Se il file già esiste, viene salvato in esso il nuovo contenuto, altrimenti un nuovo
+ * file è creato sul server scrivendo al suo interno il contenuto scritto nell'editor
+ */
 @MultipartConfig()
 public class MDFileServlet extends MasterServlet {
 

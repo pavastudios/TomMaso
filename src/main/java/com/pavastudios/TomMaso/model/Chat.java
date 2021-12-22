@@ -8,10 +8,19 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Classe che modella il concetto di Blog nel database
+ */
 public class Chat implements GenericModel {
     private int idChat;
     private Utente utente1, utente2;
 
+    /**
+     * Metodo per ottenere una chat partendo da un oggetto ResultSet
+     * @param rs set di risultati del database
+     * @return istanza della chat
+     * @throws SQLException Problemi con il result set del database
+     */
     public static Chat fromResultSet(ResultSet rs) throws SQLException {
         Chat c = new Chat();
         c.setIdChat(rs.getInt("id_chat"));
@@ -65,6 +74,11 @@ public class Chat implements GenericModel {
         return isPartecipant(user);
     }
 
+    /**
+     * Metodo per ottenere informazioni sulla partecipazione di un utente alla chat
+     * @param user utente di cui si vogliono ottenere le informazioni sulla partecipazione
+     * @return booleano che indica se l'utente partecipa alla chat
+     */
     public boolean isPartecipant(Utente user) {
         return utente1.equals(user) || utente2.equals(user);
     }
@@ -90,6 +104,11 @@ public class Chat implements GenericModel {
     }
 
 
+    /**
+     * Metodo per ottenere l'altro partecipante alla chat partendo da uno degli utenti
+     * @param user utente di partenza
+     * @return istanza della classe User indicante l'altro partecipante alla chat
+     */
     public Utente otherUser(@Nullable Utente user) {
         if (utente1.equals(user)) return utente2;
         return utente1;

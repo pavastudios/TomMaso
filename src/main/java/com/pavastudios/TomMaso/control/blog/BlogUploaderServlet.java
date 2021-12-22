@@ -16,13 +16,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 
-
+/**
+ * Classe che consente l'uploading dei file sul server
+ */
 @MultipartConfig()
 public class BlogUploaderServlet extends MasterServlet {
 
     private boolean createFileOnServer(Part part, String url) throws IOException {
         String submitted = part.getSubmittedFileName();
-        if (submitted.contains("/") || submitted.contains("\\")) //l'utente è brutto e cattivo
+        if (submitted.contains("/") || submitted.contains("\\"))
             return false;
         File file = FileUtility.blogPathToFile(url);
         if (file == null) return false;

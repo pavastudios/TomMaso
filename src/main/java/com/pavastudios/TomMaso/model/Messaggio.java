@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+/**
+ * Classe che modella il concetto di Messaggio nel database
+ */
 public class Messaggio implements GenericModel {
     private int idMessaggio;
     private Utente mittente;
