@@ -9,6 +9,7 @@ import com.pavastudios.TomMaso.model.Utente;
 
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 @SuppressWarnings("unused")
 public class UserEndpoint {
@@ -51,7 +52,7 @@ public class UserEndpoint {
         }
         int permessi = 0;
         for (Field field : Utente.Permessi.class.getFields()) {
-            if (!field.getName().equals("permessi")) {
+            if (Modifier.isStatic(field.getModifiers())) {
                 if (parser.getValueBool(field.getName())) {
                     try {
                         permessi |= field.getInt(null);

@@ -21,7 +21,6 @@ public class BlogQueries {
     static MasterPreparedStatement FIND_BLOGS_OWNED_BY;
     static MasterPreparedStatement FIND_BLOG_BY_NAME;
     static MasterPreparedStatement DELETE_BLOG;
-    static MasterPreparedStatement UPDATE_BLOG_NAME;
     static MasterPreparedStatement BLOG_INCREMENT;
     static MasterPreparedStatement TOP_BLOG;
 
@@ -34,7 +33,6 @@ public class BlogQueries {
         BLOG_INCREMENT = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Blog` SET `visite`=`visite`+1 WHERE `id_blog`=?");
         FIND_BLOG_BY_NAME = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` WHERE `nome`=?");
         DELETE_BLOG = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `Blog` WHERE `id_blog`=?");
-        UPDATE_BLOG_NAME = GlobalConnection.CONNECTION.prepareStatement("UPDATE `Blog` SET `nome`=? WHERE `id_blog`=?");
     }
 
     public static List<Blog> topBlogs(int count) throws SQLException {

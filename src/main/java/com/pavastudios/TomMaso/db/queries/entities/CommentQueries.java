@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class CommentQueries {
     public static MasterPreparedStatement FIND_COMMENT_BY_ID;
     static MasterPreparedStatement FETCH_COMMENT_FOR_PAGE;

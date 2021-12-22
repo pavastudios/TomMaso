@@ -26,12 +26,10 @@ public class ViewerServlet extends MasterServlet {
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/blog/markdownViewer.jsp").forward(req, resp);
     }
 
-    private void manageFile(HttpServletRequest req, HttpServletResponse resp, File file) throws IOException, ServletException {
-
+    private void manageFile(HttpServletResponse resp, File file) throws IOException {
         OutputStream out = resp.getOutputStream();
         FileInputStream fr = new FileInputStream(file);
         resp.setContentType(getServletContext().getMimeType(file.getAbsolutePath()));
-        //resp.setHeader("Content-Disposition", "attachment;filename="+file.getName());
         FileUtility.writeFile(fr, out);
     }
 
@@ -64,7 +62,7 @@ public class ViewerServlet extends MasterServlet {
         if (type == FileUtility.FileType.MARKDOWN)
             manageMarkdown(session, req, resp, file);
         else
-            manageFile(req, resp, file);
+            manageFile(resp, file);
     }
 
     @Override

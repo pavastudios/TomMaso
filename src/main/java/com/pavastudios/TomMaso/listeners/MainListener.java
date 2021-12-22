@@ -14,8 +14,8 @@ import java.sql.SQLException;
 @WebListener
 public class MainListener implements ServletContextListener {
     public static ServletContext CONTEXT;
-    public static String ADMIN_PASSWORD = "admin";
-    public static String ADMIN_USERNAME = "admin";
+    public static final String ADMIN_PASSWORD = "admin";
+    public static final String ADMIN_USERNAME = "admin";
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {

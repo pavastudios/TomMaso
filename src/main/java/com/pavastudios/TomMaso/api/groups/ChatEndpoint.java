@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @SuppressWarnings("unused")
+
 public class ChatEndpoint {
     @Endpoint(url = "/chat/send-message", requireLogin = true, params = {
             @ApiParameter(name = "chat-id", type = ApiParameter.Type.INT),

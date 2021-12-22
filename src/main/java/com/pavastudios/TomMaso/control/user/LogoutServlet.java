@@ -6,17 +6,16 @@ import com.pavastudios.TomMaso.utility.Utility;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 
 public class LogoutServlet extends MasterServlet {
     @Override
-    protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+    protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) {
         req.getSession().invalidate();
         Utility.returnHome(req, resp);
     }
 
     @Override
-    protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+    protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) {
         doGet(session, req, resp);
     }
 }

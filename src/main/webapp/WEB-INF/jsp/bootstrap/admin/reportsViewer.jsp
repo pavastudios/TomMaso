@@ -34,6 +34,7 @@
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Riportato da
                     <a href="${pageContext.request.contextPath}/user/<%=report.getReporter().getUsername()%>"><%=report.getReporter().getUsername()%></a>
+                     (<%=report.getType()%>)
                 </h5>
                 <small><%=Utility.DATE_FORMAT.format(report.getReportDate())%></small>
 

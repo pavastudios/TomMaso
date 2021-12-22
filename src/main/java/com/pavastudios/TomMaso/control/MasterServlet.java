@@ -44,23 +44,8 @@ public abstract class MasterServlet extends HttpServlet {
                 case METHOD_GET:
                     doGet(session, req, resp);
                     break;
-                case METHOD_HEAD:
-                    doHead(session, req, resp);
-                    break;
                 case METHOD_POST:
                     doPost(session, req, resp);
-                    break;
-                case METHOD_PUT:
-                    doPut(session, req, resp);
-                    break;
-                case METHOD_DELETE:
-                    doDelete(session, req, resp);
-                    break;
-                case METHOD_OPTIONS:
-                    doOptions(session, req, resp);
-                    break;
-                case METHOD_TRACE:
-                    doTrace(session, req, resp);
                     break;
                 default:
                     String errMsg = String.format(Locale.US, "The method '%s' was not implemented", method);
@@ -79,30 +64,9 @@ public abstract class MasterServlet extends HttpServlet {
             req.setAttribute("rewrite", "");
     }
 
-
     private void setDefaultHeader(HttpServletResponse resp) {
         resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Content-Type", "text/html; charset=UTF-8");
-    }
-
-    protected void doTrace(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        doTrace(req, resp);
-    }
-
-    protected void doOptions(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        doOptions(req, resp);
-    }
-
-    protected void doDelete(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        doDelete(req, resp);
-    }
-
-    protected void doHead(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        doHead(req, resp);
-    }
-
-    protected void doPut(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
-        doPut(req, resp);
     }
 
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {

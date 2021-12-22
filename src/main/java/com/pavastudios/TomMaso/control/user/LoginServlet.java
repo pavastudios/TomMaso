@@ -6,7 +6,6 @@ import com.pavastudios.TomMaso.model.Utente;
 import com.pavastudios.TomMaso.utility.Session;
 import com.pavastudios.TomMaso.utility.Utility;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -17,7 +16,7 @@ public class LoginServlet extends MasterServlet {
     private static final boolean PASSWORD_BYPASS = false;
 
     @Override
-    protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 

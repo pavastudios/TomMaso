@@ -30,6 +30,5 @@ public class ChatListServlet extends MasterServlet {
         List<Chat> chats = ChatQueries.findUserChat(login);
         req.setAttribute("chats", chats);
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/chat/chatsList.jsp").forward(req, resp);
-        return;
     }
 }

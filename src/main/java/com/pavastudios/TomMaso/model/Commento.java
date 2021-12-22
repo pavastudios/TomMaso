@@ -47,7 +47,7 @@ public class Commento implements GenericModel {
         return mittente;
     }
 
-    public void setMittente(Utente mittente) {
+    public void setMittente(@Nullable Utente mittente) {
         this.mittente = mittente;
     }
 

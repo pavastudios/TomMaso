@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class ErrorServlet extends MasterServlet {
     @Override
-    protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/global/error.jsp").forward(req, resp);
     }
 

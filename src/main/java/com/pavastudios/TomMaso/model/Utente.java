@@ -9,6 +9,7 @@ import org.intellij.lang.annotations.MagicConstant;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -130,14 +131,6 @@ public class Utente implements GenericModel {
             this.permessi = permessi;
         }
 
-        public void addPermission(@MagicConstant(flagsFromClass = Permessi.class) int permission) {
-            permessi |= permission;
-        }
-
-        public void removePermissions(@MagicConstant(flagsFromClass = Permessi.class) int permission) {
-            permessi &= (~permission);
-        }
-
         public boolean hasPermissions(@MagicConstant(flagsFromClass = Permessi.class) int permission) {
             return (permessi & permission) == permission;
         }
@@ -149,12 +142,10 @@ public class Utente implements GenericModel {
         public ArrayList<Tuple2<String, Boolean>> getAsArray() {
             ArrayList<Tuple2<String, Boolean>> list = new ArrayList<>();
             Field[] fields = Permessi.class.getFields();
-            int i = 0;
             for (Field field : fields) {
-                String name = field.getName();
-                if (!name.equals("permessi")) {
+                if (Modifier.isStatic(field.getModifiers())) {
                     try {
-                        list.add(new Tuple2<>(name, hasPermissions(field.getInt(null))));
+                        list.add(new Tuple2<>(field.getName(), hasPermissions(field.getInt(null))));
                     } catch (IllegalAccessException e) {
                     }
                 }

@@ -15,9 +15,6 @@ public class ApiEndpoint {
         this.endpoint = ann;
     }
 
-    public String getEndpoint() {
-        return endpoint.url();
-    }
 
     public boolean requireLogin() {
         return endpoint.requireLogin();
@@ -25,11 +22,6 @@ public class ApiEndpoint {
 
     public ApiParameter[] getParams() {
         return endpoint.params();
-    }
-
-    public ApiParameter getFromName(String s) {
-        for (ApiParameter api : getParams()) if (api.name().equals(s)) return api;
-        return null;
     }
 
     public void manage(ApiParser parser, ApiWriter writer, Utente user) throws SQLException, IOException {

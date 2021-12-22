@@ -17,7 +17,7 @@ public class PersonalFileDirTest {
     static void setUp() {
         driver = new FirefoxDriver();
         js = (JavascriptExecutor) driver;
-        vars = new HashMap<String, Object>();
+        vars = new HashMap<>();
     }
     @AfterAll
     static void tearDown() {

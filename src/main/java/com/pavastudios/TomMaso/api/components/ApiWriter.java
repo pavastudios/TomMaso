@@ -5,7 +5,6 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 
-@SuppressWarnings("unused")
 
 public class ApiWriter extends JsonWriter {
     public static final String ERROR_PROP = "error";

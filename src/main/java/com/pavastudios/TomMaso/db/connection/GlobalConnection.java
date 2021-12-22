@@ -10,7 +10,6 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@SuppressWarnings("unused")
 public class GlobalConnection {
     @NotNull
     public final static MasterConnection CONNECTION;

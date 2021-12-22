@@ -24,7 +24,6 @@
         }
     %>
     <%
-        Utente user=ses.getUtente();
         File[] files = (File[])request.getAttribute("files");
         String parent = (String)request.getAttribute("parentUrl");
         String pathInfo= (String)request.getAttribute("pathInfo");
@@ -38,7 +37,6 @@
 <%@include file="../general/navbar.jsp"%>
 <%
     List<String>parts= Arrays.asList(pathInfo.split("/"));
-    List<Blog> blogs= (List<Blog>) request.getAttribute("blogs");
 %>
 
 <div class="container-fluid">

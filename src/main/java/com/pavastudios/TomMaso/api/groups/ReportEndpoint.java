@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.Locale;
 
+@SuppressWarnings("unused")
 public class ReportEndpoint {
     @Endpoint(url = "/report/comment", params = {
             @ApiParameter(name = "id-comment", type = ApiParameter.Type.INT),

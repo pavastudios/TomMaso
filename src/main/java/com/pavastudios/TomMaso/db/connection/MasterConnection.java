@@ -24,15 +24,4 @@ public class MasterConnection {
         this.connection.close();
     }
 
-    public void setAutoCommit(boolean autoCommit) throws SQLException {
-        this.connection.setAutoCommit(autoCommit);
-    }
-
-    public void rollback() throws SQLException {
-        this.connection.rollback();
-    }
-
-    public void commit() throws SQLException {
-        this.connection.commit();
-    }
 }

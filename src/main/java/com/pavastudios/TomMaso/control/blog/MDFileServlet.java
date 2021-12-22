@@ -18,7 +18,7 @@ import java.sql.SQLException;
 @MultipartConfig()
 public class MDFileServlet extends MasterServlet {
 
-    private void manageExistingFile(Session session, HttpServletRequest req, HttpServletResponse resp, File file) throws IOException, ServletException {
+    private void manageExistingFile(HttpServletRequest req, File file) throws IOException, ServletException {
         FileOutputStream out = new FileOutputStream(file);
         Part part = req.getPart("content");
         FileUtility.writeFile(part.getInputStream(), out);
@@ -41,7 +41,7 @@ public class MDFileServlet extends MasterServlet {
         if (!path.endsWith(".md")) {
             file = new File(file.getParentFile(), file.getName() + ".md");
         }
-        manageExistingFile(session, req, resp, file);
+        manageExistingFile(req, file);
     }
 
     @Override

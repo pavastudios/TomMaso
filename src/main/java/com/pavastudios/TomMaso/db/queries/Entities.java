@@ -15,8 +15,8 @@ public enum Entities {
     UTENTE(Utente.class, UserQueries.FIND_USER_BY_ID),
     REPORT(Report.class, ReportQueries.FIND_REPORT_BY_ID);
 
-    Class entityClass;
-    MasterPreparedStatement findByIdStmt;
+    final Class entityClass;
+    final MasterPreparedStatement findByIdStmt;
 
     Entities(Class entityClass, MasterPreparedStatement findByIdStmt) {
         this.entityClass = entityClass;

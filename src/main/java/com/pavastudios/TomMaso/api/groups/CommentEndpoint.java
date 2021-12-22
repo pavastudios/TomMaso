@@ -12,8 +12,8 @@ import com.pavastudios.TomMaso.utility.FileUtility;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.net.URLDecoder;
-
 @SuppressWarnings("unused")
+
 public class CommentEndpoint {
     @Endpoint(url = "/comment/send-comment", requireLogin = true, params = {
             @ApiParameter(name = "comment", type = ApiParameter.Type.STRING),

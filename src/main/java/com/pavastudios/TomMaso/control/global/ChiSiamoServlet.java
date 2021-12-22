@@ -16,8 +16,7 @@ public class ChiSiamoServlet extends MasterServlet {
     }
 
     @Override
-    protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/global/chiSiamo.jsp").forward(req, resp);
-        return;
     }
 }
