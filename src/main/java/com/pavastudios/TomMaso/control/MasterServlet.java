@@ -18,13 +18,8 @@ import java.util.Locale;
 
 public abstract class MasterServlet extends HttpServlet {
 
-    private static final String METHOD_DELETE = "DELETE";
-    private static final String METHOD_HEAD = "HEAD";
     private static final String METHOD_GET = "GET";
-    private static final String METHOD_OPTIONS = "OPTIONS";
     private static final String METHOD_POST = "POST";
-    private static final String METHOD_PUT = "PUT";
-    private static final String METHOD_TRACE = "TRACE";
 
     /**
      * hasSessionCookie controlla se tra i cookie ce n'è uno con che corrisponde

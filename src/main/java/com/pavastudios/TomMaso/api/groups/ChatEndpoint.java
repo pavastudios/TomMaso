@@ -21,7 +21,7 @@ public class ChatEndpoint {
             @ApiParameter(name = "chat-id", type = ApiParameter.Type.INT),
             @ApiParameter(name = "message", type = ApiParameter.Type.STRING),
     })
-    public static final ApiEndpoint.Manage SEND_ACTION = (parser, writer, user) -> {
+    private static final ApiEndpoint.Manage SEND_ACTION = (parser, writer, user) -> {
         int chatId = parser.getValueInt("chat-id");
         String message = parser.getValueString("message");
         Chat chat = ChatQueries.findChatById(chatId);
@@ -37,7 +37,7 @@ public class ChatEndpoint {
     @Endpoint(url = "/chat/create-chat", requireLogin = true, params = {
             @ApiParameter(name = "with", type = ApiParameter.Type.STRING)
     })
-    public static final ApiEndpoint.Manage CREATE_ACTION = (parser, writer, user) -> {
+    private static final ApiEndpoint.Manage CREATE_ACTION = (parser, writer, user) -> {
         String otherUsername = parser.getValueString("with");
         Utente other = UserQueries.findUserByUsername(otherUsername);
         Chat chat;
@@ -55,7 +55,7 @@ public class ChatEndpoint {
             @ApiParameter(name = "chat-id", type = ApiParameter.Type.INT),
             @ApiParameter(name = "from-id", type = ApiParameter.Type.INT),
     })
-    public static final ApiEndpoint.Manage FETCH_FROM_ID_ACTION = (parser, writer, user) -> {
+    private static final ApiEndpoint.Manage FETCH_FROM_ID_ACTION = (parser, writer, user) -> {
         int chatId = parser.getValueInt("chat-id");
         int fromId = parser.getValueInt("from-id");
         Chat chat = ChatQueries.findChatById(chatId);
@@ -74,7 +74,7 @@ public class ChatEndpoint {
             @ApiParameter(name = "count", type = ApiParameter.Type.INT),
             @ApiParameter(name = "offset", type = ApiParameter.Type.INT),
     })
-    public static final ApiEndpoint.Manage FETCH_ACTION = (parser, writer, user) -> {
+    private static final ApiEndpoint.Manage FETCH_ACTION = (parser, writer, user) -> {
         int chatId = parser.getValueInt("chat-id");
         int count = parser.getValueInt("count");
         int offset = parser.getValueInt("offset");

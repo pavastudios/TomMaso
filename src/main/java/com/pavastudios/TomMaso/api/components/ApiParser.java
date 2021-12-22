@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ *
+ */
 public class ApiParser {
     private final ApiEndpoint endpoint;
     private final HashMap<String, Object> params = new HashMap<>();
@@ -69,9 +72,7 @@ public class ApiParser {
     }
 
     public boolean getValueBool(String s) {
-        String ss = getValueFromName(s).toString();
-        System.out.println("BOOL: " + ss);
-        return ss.equals("true");
+        return getValueString(s).equals("true");
     }
 
     private Object getValueFromName(String s) {

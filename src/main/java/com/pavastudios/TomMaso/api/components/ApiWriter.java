@@ -5,7 +5,9 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 
-
+/**
+ * Rappresenta un oggetto in cui è possibile scrivere elementi JSON, ed ottenere la rappresentazione finale
+ */
 public class ApiWriter extends JsonWriter {
     public static final String ERROR_PROP = "error";
     public static final String ERROR_CODE_PROP = "error-code";
@@ -15,9 +17,8 @@ public class ApiWriter extends JsonWriter {
     private final JsonWriter writer = new JsonWriter(stringWriter);
 
     /**
-     * JsonWriter implementation written to create API responses, it automatically wrap the written json inside an object
-     * and it doesn't need to catch IOException because underlying it uses a StringWriter which allows the retrieve
-     * of the written JSON
+     * Crea un nuovo ApiWriter, generando automaticamente il campo 'ok' all'interno di un oggetto JSON,
+     * l'intero contenuto della risposta deve essere contenuto in questo campo
      */
     public ApiWriter() {
         super(new StringWriter());
@@ -26,10 +27,11 @@ public class ApiWriter extends JsonWriter {
     }
 
     /**
-     * This method indicates that the JSON generation has been completed and no further operation
-     * will be made on this instance, using this method will close the writer
      *
-     * @return The generated JSON until this point
+     * Questo metodo indica che la generazione del JSON è stata completata e non ci saranno ulteriori oeprazioni
+     * su quest'istanza, il writer verrà chiuso dopo l'invocazione di questo metodo
+     *
+     * @return una stringa rappresentante il JSON generato fino a questo momento
      */
     public String commit() {
         try {

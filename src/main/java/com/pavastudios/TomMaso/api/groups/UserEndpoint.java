@@ -16,7 +16,7 @@ public class UserEndpoint {
     @Endpoint(url = "/user/add-admin", requireLogin = true, params = {
             @ApiParameter(name = "username", type = ApiParameter.Type.STRING)
     })
-    public static final ApiEndpoint.Manage ADMIN_ADD_ACTION = (parser, writer, user) -> {
+    private static final ApiEndpoint.Manage ADMIN_ADD_ACTION = (parser, writer, user) -> {
         String username = parser.getValueString("username");
         Utente u = UserQueries.findUserByUsername(username);
         if (u == null) {
@@ -28,7 +28,7 @@ public class UserEndpoint {
     @Endpoint(url = "/user/remove-admin", requireLogin = true, params = {
             @ApiParameter(name = "username", type = ApiParameter.Type.STRING)
     })
-    public static final ApiEndpoint.Manage ADMIN_DEL_ACTION = (parser, writer, user) -> {
+    private static final ApiEndpoint.Manage ADMIN_DEL_ACTION = (parser, writer, user) -> {
         String username = parser.getValueString("username");
         Utente u = UserQueries.findUserByUsername(username);
         if (u == null) {
@@ -41,7 +41,7 @@ public class UserEndpoint {
     @Endpoint(url = "/user/change-permissions", requireLogin = true, params = {
             @ApiParameter(name = "id-user", type = ApiParameter.Type.INT)
     })
-    public static final ApiEndpoint.Manage USER_CHANGE_PERMISSIONS = (parser, writer, user) -> {
+    private static final ApiEndpoint.Manage USER_CHANGE_PERMISSIONS = (parser, writer, user) -> {
         if (!user.getPermessi().hasPermissions(Utente.Permessi.MANAGE_USER)) {
             throw new ApiException(HttpServletResponse.SC_FORBIDDEN, "Utente non autorizzato");
         }

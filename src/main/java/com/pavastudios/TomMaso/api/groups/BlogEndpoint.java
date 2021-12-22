@@ -20,7 +20,7 @@ public class BlogEndpoint {
     @Endpoint(url = "/blog/delete-blog", requireLogin = true, params = {
             @ApiParameter(name = "blog-name", type = ApiParameter.Type.STRING)
     })
-    public static final ApiEndpoint.Manage DELETE_BLOG_ACTION = (parser, writer, user) -> {
+    private static final ApiEndpoint.Manage DELETE_BLOG_ACTION = (parser, writer, user) -> {
         String name = parser.getValueString("blog-name");
         Blog blog = BlogQueries.findBlogByName(name);
         if (blog == null || !blog.hasAccess(user)) {
@@ -36,7 +36,7 @@ public class BlogEndpoint {
     @Endpoint(url = "/blog/delete-file", requireLogin = true, params = {
             @ApiParameter(name = "url", type = ApiParameter.Type.STRING)
     })
-    public static final ApiEndpoint.Manage DELETE_FILE_ACTION = (parser, writer, user) -> {
+    private static final ApiEndpoint.Manage DELETE_FILE_ACTION = (parser, writer, user) -> {
         String url = parser.getValueString("url");
         Blog blog = Blog.fromPathInfo(url);
 
@@ -55,7 +55,7 @@ public class BlogEndpoint {
     @Endpoint(url = "/blog/create", requireLogin = true, params = {
             @ApiParameter(name = "name", type = ApiParameter.Type.STRING)
     })
-    public static final ApiEndpoint.Manage CREATE_ACTION = (parser, writer, user) -> {
+    private static final ApiEndpoint.Manage CREATE_ACTION = (parser, writer, user) -> {
         String name = parser.getValueString("name");
         if (name.length() < Blog.MINIMUM_NAME_LENGTH || !Utility.useOnlyNormalChars(name)) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Nome blog non valido");

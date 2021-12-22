@@ -17,6 +17,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Set;
 
+/**
+ * Classe che permette di eseguire richieste al servizio di API del sito
+ */
 public class ApiManager {
     private static final HashMap<String, ApiEndpoint> API = new HashMap<>();
 
@@ -28,18 +31,24 @@ public class ApiManager {
         }
     }
 
+    /**
+     * Trova tutte i campi annotati con Endpoint e genera un ApiEndpoint per ognuno di essi
+     * @see ApiEndpoint
+     * @see com.pavastudios.TomMaso.api.components.ApiEndpoint.Manage
+     * @see Endpoint
+     */
     private static void loadApiEndpoints() throws IllegalAccessException {
         Reflections reflections = new Reflections("com.pavastudios.TomMaso", Scanners.FieldsAnnotated);
         Set<Field> apiEndpoints = reflections.getFieldsAnnotatedWith(Endpoint.class);
         for (Field field : apiEndpoints) {
             Endpoint ann = field.getAnnotation(Endpoint.class);
             ApiEndpoint.Manage manage = (ApiEndpoint.Manage) field.get(null);
-            ApiEndpoint endpoint = new ApiEndpoint(manage, ann);
+            ApiEndpoint endpoint = new ApiEndpoint(ann, manage);
             ApiManager.API.put(ann.url(), endpoint);
         }
     }
 
-    public static @Nullable ApiEndpoint getEndpoint(HttpServletRequest req) {
+    private static @Nullable ApiEndpoint getEndpoint(HttpServletRequest req) {
         return API.get(req.getPathInfo());
     }
 
@@ -56,6 +65,16 @@ public class ApiManager {
         return stringWriter.toString();
     }
 
+    /**
+     * Esegue una chiamata al servizio di API del sito, se durante l'esecuzione di un endpoint viene lanciata
+     * una ApiException la risposta diventerà di errore
+     * @param session sessione dell'utente che esegue la richiesta
+     * @param req richiesta HTTP dell'utente
+     * @return una tupla in cui il primo elemento è un intero contenente lo status code della risposta HTTP,
+     * mentre il secondo è una stringa contenente il body in formato JSON del della risposta HTTP
+     * @see Tuple2
+     * @see ApiException
+     */
     public static Tuple2<Integer, String> apiCall(Session session, HttpServletRequest req) {
         try {
             return tryApiCall(session, req);

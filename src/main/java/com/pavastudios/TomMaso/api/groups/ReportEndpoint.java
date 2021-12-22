@@ -19,7 +19,7 @@ public class ReportEndpoint {
             @ApiParameter(name = "id-comment", type = ApiParameter.Type.INT),
             @ApiParameter(name = "reason", type = ApiParameter.Type.STRING),
     }, requireLogin = true)
-    public static final ApiEndpoint.Manage COMMENT_REPORT = (parser, writer, user) -> {
+    private static final ApiEndpoint.Manage COMMENT_REPORT = (parser, writer, user) -> {
         int idCommento = parser.getValueInt("id-comment");
         String reason = parser.getValueString("reason");
 
@@ -43,7 +43,7 @@ public class ReportEndpoint {
             @ApiParameter(name = "url-post", type = ApiParameter.Type.STRING),
             @ApiParameter(name = "reason", type = ApiParameter.Type.STRING),
     }, requireLogin = true)
-    public static final ApiEndpoint.Manage POST_REPORT = (parser, writer, user) -> {
+    private static final ApiEndpoint.Manage POST_REPORT = (parser, writer, user) -> {
         String post = parser.getValueString("url-post");
         String reason = parser.getValueString("reason");
         String pathInfo = post.substring(6);
@@ -67,7 +67,7 @@ public class ReportEndpoint {
             @ApiParameter(name = "id-report", type = ApiParameter.Type.INT),
             @ApiParameter(name = "approved", type = ApiParameter.Type.BOOL),
     }, requireLogin = true)
-    public static final ApiEndpoint.Manage REPORT_REVIEWED = (parser, writer, user) -> {
+    private static final ApiEndpoint.Manage REPORT_REVIEWED = (parser, writer, user) -> {
         Report report = ReportQueries.findReportById(parser.getValueInt("id-report"));
         Report.Status approved = parser.getValueBool("approved") ? Report.Status.ACCEPTED : Report.Status.REJECTED;
         boolean chatReport = report.getType() == Report.Type.CHAT;
@@ -88,7 +88,7 @@ public class ReportEndpoint {
             @ApiParameter(name = "id-message", type = ApiParameter.Type.INT),
             @ApiParameter(name = "reason", type = ApiParameter.Type.STRING),
     }, requireLogin = true)
-    public static final ApiEndpoint.Manage MESSAGE_REPORT = (parser, writer, user) -> {
+    private static final ApiEndpoint.Manage MESSAGE_REPORT = (parser, writer, user) -> {
         int idMessage = parser.getValueInt("id-message");
         String reason = parser.getValueString("reason");
 

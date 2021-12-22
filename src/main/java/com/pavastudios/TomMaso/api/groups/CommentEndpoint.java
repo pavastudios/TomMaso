@@ -19,7 +19,7 @@ public class CommentEndpoint {
             @ApiParameter(name = "comment", type = ApiParameter.Type.STRING),
             @ApiParameter(name = "page", type = ApiParameter.Type.STRING)
     })
-    public static final ApiEndpoint.Manage SEND_ACTION = (parser, writer, user) -> {
+    private static final ApiEndpoint.Manage SEND_ACTION = (parser, writer, user) -> {
         String comment = parser.getValueString("comment");
         String page = URLDecoder.decode(parser.getValueString("page"), "UTF-8");
         String contextPath = MainListener.CONTEXT.getContextPath() + "/blogs";
