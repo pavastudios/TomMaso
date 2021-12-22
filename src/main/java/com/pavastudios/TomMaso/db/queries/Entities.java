@@ -6,6 +6,9 @@ import com.pavastudios.TomMaso.model.*;
 
 
 @SuppressWarnings("rawtypes")
+/**
+ * L'enumerazione Entities raggruppa i vari model e li collega ai metodi per trovare un'istanza tramite id
+ */
 public enum Entities {
 
     BLOG(Blog.class, BlogQueries.FIND_BLOG_BY_ID),

@@ -17,6 +17,9 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * La classe ChatQueries contiene i metodi per l'interazione con il database relativi alle Chat
+ */
 public class ChatQueries {
     public static MasterPreparedStatement FIND_MESSAGE_BY_ID;
     public static MasterPreparedStatement FIND_CHAT_BY_ID;
@@ -28,7 +31,10 @@ public class ChatQueries {
     static MasterPreparedStatement FETCH_MESSAGE_FROM_ID;
     static MasterPreparedStatement DELETE_MESSAGE;
 
-
+    /**
+     * Inizializza le prepared statements contenenti le query relative alle chat
+     * @throws SQLException Problemi con il database
+     */
     public static void initQueries() throws SQLException {
         FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? ORDER BY `data_invio` DESC LIMIT ? OFFSET ?");
         FETCH_MESSAGE_FROM_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? AND `id_messaggio`>? ORDER BY `data_invio`");
@@ -41,6 +47,14 @@ public class ChatQueries {
         SEND_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Messaggio`(`id_chat`,`mittente`,`testo`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
     }
 
+    /**
+     * Esegue la query che recupera i messaggi di una chat
+     * @param chat Chat di cui recuperare i messaggi
+     * @param amount Numero di messaggi da recuparare
+     * @param offset Offset dei messaggi da recuperare
+     * @return Lista di messaggi recuperati
+     * @throws SQLException Problemi con il database
+     */
     public static List<Messaggio> fetchMessages(Chat chat, int amount, int offset) throws SQLException {
         FETCH_CHAT_MESSAGE.setInt(1, chat.getIdChat());
         FETCH_CHAT_MESSAGE.setInt(2, amount);
@@ -52,6 +66,14 @@ public class ChatQueries {
         return messages;
     }
 
+    /**
+     * Esegue la query che invia un messaggio in una chat
+     * @param chat Chat in cui inviare il messaggio
+     * @param mittente Mittente del messaggio
+     * @param testo Contenuto del messaggio
+     * @return Messaggio inviato
+     * @throws SQLException Problemi con il database
+     */
     public static @Nullable Messaggio sendTextToChat(Chat chat, Utente mittente, String testo) throws SQLException {
         if (chat == null || mittente == null || testo == null) return null;
         SEND_MESSAGE.setInt(1, chat.getIdChat());
@@ -62,6 +84,13 @@ public class ChatQueries {
         return CommentQueries.findMessageById(id);
     }
 
+    /**
+     * Esegue la query che crea una chat tra due utenti
+     * @param u1 Primo utente
+     * @param u2 Secondo utente
+     * @return Chat appena creata
+     * @throws SQLException Problemi con il database
+     */
     public static Chat createChat(Utente u1, Utente u2) throws SQLException {
         Utente tmp;
         if (u1 == null || u2 == null) return null;
@@ -79,16 +108,32 @@ public class ChatQueries {
         return findChatById(id);
     }
 
-    //Query Chat
+    /**
+     * Esegue la query che trova una chat tramite id
+     * @param idChat Id da cercare
+     * @return Chat trovata
+     * @throws SQLException Problemi con il database
+     */
     public static @Nullable Chat findChatById(int idChat) throws SQLException {
         return Queries.findById(Entities.CHAT, idChat);
     }
 
-    //Query Message
+    /**
+     * Esegue la query che trova un messaggio tramite id
+     * @param idMessaggio Id da cercare
+     * @return Messaggio trovato
+     * @throws SQLException Problemi con il database
+     */
     public static @Nullable Messaggio findMessageById(int idMessaggio) throws SQLException {
         return Queries.findById(Entities.MESSAGGIO, idMessaggio);
     }
 
+    /**
+     * Esegue la query che recupera le chat appartenenti ad un utente
+     * @param u1
+     * @return
+     * @throws SQLException Problemi con il database
+     */
     public static @NotNull List<Chat> findUserChat(Utente u1) throws SQLException {
         FIND_USER_CHAT.setInt(1, u1.getIdUtente());
         FIND_USER_CHAT.setInt(2, u1.getIdUtente());
@@ -98,6 +143,13 @@ public class ChatQueries {
         return chats;
     }
 
+    /**
+     * Esegue la query che recupera la chat tra due utenti
+     * @param u1 Primo utente
+     * @param u2 Secondo utente
+     * @return Chat tra i due utenti
+     * @throws SQLException Problema con il database
+     */
     public static @Nullable Chat findChatByUsers(@Nullable Utente u1, @Nullable Utente u2) throws SQLException {
         if (u1 == null || u2 == null) return null;
         if (u1.getIdUtente() > u2.getIdUtente()) {
@@ -114,6 +166,13 @@ public class ChatQueries {
         return chat;
     }
 
+    /**
+     * Esegue la query che recupera i messaggi di un chat a partire da un certo messaggio
+     * @param chat Chat di cui recuperare i messaggi
+     * @param fromId Id del messaggio di cui recuperare i successivi messaggi
+     * @return Lista di messaggi recuperati
+     * @throws SQLException Problema con il database
+     */
     public static List<Messaggio> fetchMessageFromId(Chat chat, int fromId) throws SQLException {
         FETCH_MESSAGE_FROM_ID.setInt(1, chat.getIdChat());
         FETCH_MESSAGE_FROM_ID.setInt(2, fromId);
@@ -123,6 +182,11 @@ public class ChatQueries {
         return messages;
     }
 
+    /**
+     * Esegue la query che elimina un messaggio
+     * @param messaggio Messaggio da eliminare
+     * @throws SQLException Problema con il database
+     */
     public static void deleteMessage(Messaggio messaggio) throws SQLException {
         DELETE_MESSAGE.setInt(1, messaggio.getIdMessaggio());
         DELETE_MESSAGE.executeUpdate();
