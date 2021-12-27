@@ -133,7 +133,6 @@ public class FileUtility {
      * Metodo per ottenere il tipo di un file
      * @param cont contesto della servlet
      * @param file file da ispezionare
-     * @return
      */
     public static FileType getFileType(ServletContext cont, File file) {
         if (file == null || cont == null) return null;

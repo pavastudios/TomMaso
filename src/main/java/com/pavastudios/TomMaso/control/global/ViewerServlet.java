@@ -69,9 +69,6 @@ public class ViewerServlet extends MasterServlet {
         File file = null;
         String pathInfo = req.getPathInfo();
         switch (req.getServletPath()) {
-            case "/users":
-                file = FileUtility.userPathToFile(pathInfo);
-                break;
             case "/blogs":
                 file = FileUtility.blogPathToFile(pathInfo);
                 break;

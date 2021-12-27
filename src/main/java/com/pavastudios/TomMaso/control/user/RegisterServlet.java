@@ -44,7 +44,6 @@ public class RegisterServlet extends MasterServlet {
                 resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Username già esistenti");
                 return;
             }
-            utente.getUserFolder().mkdir();//crea cartella per l'utente
             session.setUtente(utente);
             Utility.returnHome(req, resp);
         } catch (SQLException throwables) {

@@ -41,6 +41,12 @@ public class MasterConnection {
      * @throws SQLException
      */
 
+    /**
+     *
+     * @param sql
+     * @return
+     * @throws SQLException
+     */
     public MasterPreparedStatement prepareStatement(@Language("sql") String sql) throws SQLException {
         return new MasterPreparedStatement(connection, sql);
     }
