@@ -1,6 +1,6 @@
 package com.pavastudios.TomMaso.report;
 
-import com.pavastudios.TomMaso.api.ApiEndpoint;
+import com.pavastudios.TomMaso.api.ApiAction;
 import com.pavastudios.TomMaso.api.ApiException;
 import com.pavastudios.TomMaso.api.Endpoint;
 import com.pavastudios.TomMaso.blog.visualization.CommentQueries;
@@ -14,7 +14,7 @@ import java.util.Locale;
 @SuppressWarnings("unused")
 public class ReportEndpoint {
     @Endpoint(url = "/report/comment", requireLogin = true)
-    private static final ApiEndpoint.Manage COMMENT_REPORT = (parser, writer, user) -> {
+    private static final ApiAction COMMENT_REPORT = (parser, writer, user) -> {
         int idCommento = parser.getValueInt("id-comment");
         String reason = parser.getValueString("reason");
 
@@ -35,7 +35,7 @@ public class ReportEndpoint {
     };
 
     @Endpoint(url = "/report/post", requireLogin = true)
-    private static final ApiEndpoint.Manage POST_REPORT = (parser, writer, user) -> {
+    private static final ApiAction POST_REPORT = (parser, writer, user) -> {
         String post = parser.getValueString("url-post");
         String reason = parser.getValueString("reason");
         String pathInfo = post.substring(6);
@@ -56,7 +56,7 @@ public class ReportEndpoint {
 
 
     @Endpoint(url = "/report/review", requireLogin = true)
-    private static final ApiEndpoint.Manage REPORT_REVIEWED = (parser, writer, user) -> {
+    private static final ApiAction REPORT_REVIEWED = (parser, writer, user) -> {
         Report report = ReportQueries.findReportById(parser.getValueInt("id-report"));
         Report.Status approved = parser.getValueBool("approved") ? Report.Status.ACCEPTED : Report.Status.REJECTED;
         boolean chatReport = report.getType() == Report.Type.CHAT;
@@ -74,7 +74,7 @@ public class ReportEndpoint {
     };
 
     @Endpoint(url = "/report/message", requireLogin = true)
-    private static final ApiEndpoint.Manage MESSAGE_REPORT = (parser, writer, user) -> {
+    private static final ApiAction MESSAGE_REPORT = (parser, writer, user) -> {
         int idMessage = parser.getValueInt("id-message");
         String reason = parser.getValueString("reason");
 

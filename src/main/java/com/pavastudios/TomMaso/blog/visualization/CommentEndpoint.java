@@ -1,6 +1,6 @@
 package com.pavastudios.TomMaso.blog.visualization;
 
-import com.pavastudios.TomMaso.api.ApiEndpoint;
+import com.pavastudios.TomMaso.api.ApiAction;
 import com.pavastudios.TomMaso.api.ApiException;
 import com.pavastudios.TomMaso.api.Endpoint;
 import com.pavastudios.TomMaso.general.MainListener;
@@ -14,7 +14,7 @@ import java.net.URLDecoder;
 
 public class CommentEndpoint {
     @Endpoint(url = "/comment/send-comment", requireLogin = true)
-    private static final ApiEndpoint.Manage SEND_ACTION = (parser, writer, user) -> {
+    private static final ApiAction SEND_ACTION = (parser, writer, user) -> {
         String comment = parser.getValueString("comment");
         String page = URLDecoder.decode(parser.getValueString("page"), "UTF-8");
         String contextPath = MainListener.CONTEXT.getContextPath() + "/blogs";

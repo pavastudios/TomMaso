@@ -21,7 +21,7 @@ import java.util.Set;
  * Classe che permette di eseguire richieste al servizio di API del sito
  */
 public class ApiManager {
-    private static final HashMap<String, ApiEndpoint> API = new HashMap<>();
+    private static final HashMap<String, Tuple2<Boolean, ApiAction>> API = new HashMap<>();
 
     static {
         try {
@@ -32,10 +32,9 @@ public class ApiManager {
     }
 
     /**
-     * Trova tutte i campi annotati con Endpoint e genera un ApiEndpoint per ognuno di essi
+     * Trova tutte i campi annotati con Endpoint e genera una mappa contenente tutte gli endpoint
      *
-     * @see ApiEndpoint
-     * @see ApiEndpoint.Manage
+     * @see ApiAction
      * @see Endpoint
      */
     private static void loadApiEndpoints() throws IllegalAccessException {
@@ -44,13 +43,12 @@ public class ApiManager {
         for (Field field : apiEndpoints) {
             field.setAccessible(true);
             Endpoint ann = field.getAnnotation(Endpoint.class);
-            ApiEndpoint.Manage manage = (ApiEndpoint.Manage) field.get(null);
-            ApiEndpoint endpoint = new ApiEndpoint(ann, manage);
-            ApiManager.API.put(ann.url(), endpoint);
+            ApiAction manage = (ApiAction) field.get(null);
+            ApiManager.API.put(ann.url(), new Tuple2<>(ann.requireLogin(), manage));
         }
     }
 
-    private static @Nullable ApiEndpoint getEndpoint(HttpServletRequest req) {
+    private static @Nullable Tuple2<Boolean, ApiAction> getEndpoint(HttpServletRequest req) {
         return API.get(req.getPathInfo());
     }
 
@@ -99,12 +97,12 @@ public class ApiManager {
     private static String manageEndpoint(Session session, HttpServletRequest req) throws ApiException, SQLException, IOException {
         ApiWriter writer = new ApiWriter();
         //Controlla esistenza endpoint
-        ApiEndpoint endpoint = getEndpoint(req);
+        Tuple2<Boolean, ApiAction> endpoint = getEndpoint(req);
         if (endpoint == null) {
             throw new ApiException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "method not implemented");
         }
         //Controlla se l'utente è loggato
-        if (endpoint.requireLogin() && !session.isLogged()) {
+        if (endpoint.get1() && !session.isLogged()) {
             throw new ApiException(HttpServletResponse.SC_UNAUTHORIZED, "user not authenticated");
         }
         //Controlla i parametri passati
@@ -112,7 +110,7 @@ public class ApiManager {
 
         //Richieta valida, esegui l'endpoint
         Utente user = session.getUtente();
-        endpoint.manage(parser, writer, user);
+        endpoint.get2().executeEndpoint(parser, writer, user);
         return writer.commit();
     }
 }

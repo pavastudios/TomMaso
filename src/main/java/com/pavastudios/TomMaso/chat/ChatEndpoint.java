@@ -1,7 +1,7 @@
 package com.pavastudios.TomMaso.chat;
 
 import com.pavastudios.TomMaso.access.UserQueries;
-import com.pavastudios.TomMaso.api.ApiEndpoint;
+import com.pavastudios.TomMaso.api.ApiAction;
 import com.pavastudios.TomMaso.api.ApiException;
 import com.pavastudios.TomMaso.api.Endpoint;
 import com.pavastudios.TomMaso.storage.model.Chat;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ChatEndpoint {
     @Endpoint(url = "/chat/send-message", requireLogin = true)
-    private static final ApiEndpoint.Manage SEND_ACTION = (parser, writer, user) -> {
+    private static final ApiAction SEND_ACTION = (parser, writer, user) -> {
         int chatId = parser.getValueInt("chat-id");
         String message = parser.getValueString("message");
         Chat chat = ChatQueries.findChatById(chatId);
@@ -30,7 +30,7 @@ public class ChatEndpoint {
         m.writeJson(writer);
     };
     @Endpoint(url = "/chat/create-chat", requireLogin = true)
-    private static final ApiEndpoint.Manage CREATE_ACTION = (parser, writer, user) -> {
+    private static final ApiAction CREATE_ACTION = (parser, writer, user) -> {
         String otherUsername = parser.getValueString("with");
         Utente other = UserQueries.findUserByUsername(otherUsername);
         Chat chat;
@@ -45,7 +45,7 @@ public class ChatEndpoint {
         chat.writeJson(writer);
     };
     @Endpoint(url = "/chat/fetch-from-id", requireLogin = true)
-    private static final ApiEndpoint.Manage FETCH_FROM_ID_ACTION = (parser, writer, user) -> {
+    private static final ApiAction FETCH_FROM_ID_ACTION = (parser, writer, user) -> {
         int chatId = parser.getValueInt("chat-id");
         int fromId = parser.getValueInt("from-id");
         Chat chat = ChatQueries.findChatById(chatId);
@@ -60,7 +60,7 @@ public class ChatEndpoint {
         writer.endArray();
     };
     @Endpoint(url = "/chat/fetch-chat", requireLogin = true)
-    private static final ApiEndpoint.Manage FETCH_ACTION = (parser, writer, user) -> {
+    private static final ApiAction FETCH_ACTION = (parser, writer, user) -> {
         int chatId = parser.getValueInt("chat-id");
         int count = parser.getValueInt("count");
         int offset = parser.getValueInt("offset");
