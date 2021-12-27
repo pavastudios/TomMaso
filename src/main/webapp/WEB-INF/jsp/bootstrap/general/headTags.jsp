@@ -1,4 +1,4 @@
-<%@ page import="com.pavastudios.TomMaso.accesssystem.Session" %><%--
+<%@ page import="com.pavastudios.TomMaso.access.Session" %><%--
   Created by IntelliJ IDEA.
   User: dar9586
   Date: 02/05/21

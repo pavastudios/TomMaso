@@ -7,7 +7,7 @@
     <!--Blog-->
     <servlet>
         <servlet-name>TopBlogServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.blogsystem.blogvisualization.servlet.TopBlogServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.blog.visualization.servlet.TopBlogServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>TopBlogServlet</servlet-name>
@@ -15,7 +15,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>HomeBlogServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.blogsystem.blogvisualization.servlet.HomeBlogServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.blog.visualization.servlet.HomeBlogServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeBlogServlet</servlet-name>
@@ -23,7 +23,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>BlogManagerServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.blogsystem.blogvisualization.servlet.BlogManagerServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.blog.visualization.servlet.BlogManagerServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>BlogManagerServlet</servlet-name>
@@ -31,7 +31,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>BlogUploaderServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.blogsystem.blogmanagement.servlet.BlogUploaderServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.blog.management.servlet.BlogUploaderServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>BlogUploaderServlet</servlet-name>
@@ -41,7 +41,7 @@
     <!--Admin-->
     <servlet>
         <servlet-name>ReportsServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.reportsystem.servlet.ReportServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.report.servlet.ReportServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ReportsServlet</servlet-name>
@@ -50,7 +50,7 @@
     <!--User-->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.accesssystem.servlet.LoginServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.access.servlet.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -58,7 +58,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.accesssystem.servlet.LogoutServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.access.servlet.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
@@ -66,7 +66,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ProfileServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.accesssystem.servlet.ProfileServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.access.servlet.ProfileServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ProfileServlet</servlet-name>
@@ -76,7 +76,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.accesssystem.servlet.RegisterServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.access.servlet.RegisterServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
@@ -86,7 +86,7 @@
     <!--General-->
     <servlet>
         <servlet-name>ErrorServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.defaultservlets.ErrorServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.general.ErrorServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ErrorServlet</servlet-name>
@@ -94,7 +94,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ApiServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.apisystem.ApiServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.api.ApiServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ApiServlet</servlet-name>
@@ -102,7 +102,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>IndexServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.defaultservlets.IndexServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.general.IndexServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
@@ -110,7 +110,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>MarkdownFileServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.blogsystem.blogmanagement.servlet.MDFileServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.blog.management.servlet.MDFileServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MarkdownFileServlet</servlet-name>
@@ -118,7 +118,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>MDEditorServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.blogsystem.blogmanagement.servlet.MDEditorServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.blog.management.servlet.MDEditorServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MDEditorServlet</servlet-name>
@@ -126,7 +126,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ViewerServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.blogsystem.blogvisualization.servlet.ViewerServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.blog.visualization.servlet.ViewerServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ViewerServlet</servlet-name>
@@ -135,7 +135,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ChiSiamoServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.defaultservlets.ChiSiamoServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.general.ChiSiamoServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChiSiamoServlet</servlet-name>
@@ -143,7 +143,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ChatListServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.chatsystem.servlet.ChatListServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.chat.servlet.ChatListServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChatListServlet</servlet-name>
@@ -151,7 +151,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ChatServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.chatsystem.servlet.ChatServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.chat.servlet.ChatServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChatServlet</servlet-name>

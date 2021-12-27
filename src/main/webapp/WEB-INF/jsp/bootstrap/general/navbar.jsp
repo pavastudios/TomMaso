@@ -1,4 +1,4 @@
-<%@ page import="com.pavastudios.TomMaso.storagesystem.model.Utente" %>
+<%@ page import="com.pavastudios.TomMaso.storage.model.Utente" %>
 
 
 <!-- Barra di navigazione -->

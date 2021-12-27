@@ -1,10 +1,10 @@
 <%@ page import="java.io.File" %>
-<%@ page import="com.pavastudios.TomMaso.storagesystem.model.Commento" %>
+<%@ page import="com.pavastudios.TomMaso.storage.model.Commento" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.pavastudios.TomMaso.utility.Utility" %>
-<%@ page import="com.pavastudios.TomMaso.storagesystem.FileUtility" %>
+<%@ page import="com.pavastudios.TomMaso.storage.FileUtility" %>
 <%@ page import="org.jsoup.nodes.Entities" %>
-<%@ page import="com.pavastudios.TomMaso.storagesystem.model.Blog" %><%--
+<%@ page import="com.pavastudios.TomMaso.storage.model.Blog" %><%--
   Created by IntelliJ IDEA.
   User: pasqu
   Date: 17/05/2021

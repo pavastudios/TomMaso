@@ -1,6 +1,6 @@
 package com.pavastudios.TomMaso.utility;
 
-import com.pavastudios.TomMaso.accesssystem.Session;
+import com.pavastudios.TomMaso.access.Session;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;

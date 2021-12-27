@@ -1,6 +1,6 @@
-<%@ page import="com.pavastudios.TomMaso.storagesystem.model.Chat" %>
+<%@ page import="com.pavastudios.TomMaso.storage.model.Chat" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.pavastudios.TomMaso.storagesystem.model.Utente" %><%--
+<%@ page import="com.pavastudios.TomMaso.storage.model.Utente" %><%--
   Created by IntelliJ IDEA.
   User: pasqu
   Date: 21/05/2021

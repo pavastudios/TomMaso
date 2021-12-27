@@ -1,4 +1,4 @@
-<%@ page import="com.pavastudios.TomMaso.storagesystem.model.Blog" %>
+<%@ page import="com.pavastudios.TomMaso.storage.model.Blog" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.jsoup.nodes.Entities" %>
 <%@ page import="com.pavastudios.TomMaso.utility.Tuple2" %>
