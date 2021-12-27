@@ -252,6 +252,27 @@
         $("#formUpdateUser").submit();
     });
 
+    //Create blog code
+    $("#createBlogNavbar").click(function () {
+        const blogname = $("#blognameNavbar").val();
+        if (!isStandardName(blogname)) {
+            showError("Nome non valido!");
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/api/blog/create<%=request.getAttribute("rewrite")%>',
+            data: {name: blogname},
+            success: function (data) {
+                if (data["error"] !== undefined) {
+                    showError(data["error"]);
+                    return;
+                }
+                location.reload();
+            }
+        });
+    });
+
     //Delete blog code
     $(".del-btn").click(function(){
         $("#deleteBlogHid").text($(this).attr("blog-name"))

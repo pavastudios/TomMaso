@@ -19,21 +19,24 @@ import java.sql.SQLException;
 
 public class RegisterServlet extends MasterServlet {
 
-
     @Override
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String username = req.getParameter("username");
         String password1 = req.getParameter("password1");
         String password2 = req.getParameter("password2");
         if (username == null || password1 == null || password2 == null) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parametri mancanti");
             return;
         }
         if (!password1.equals(password2)) {
             resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Password non uguali");
             return;
         }
-        if (username.length() < Utente.MINIMUM_USERNAME_LENGTH || !Utility.useOnlyNormalChars(username)) {
+        if (password1.length() < Utente.PASSWORD_MIN_LENGTH) {
+            resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Password troppo corta");
+            return;
+        }
+        if (!Utility.isStandardName(username)) {
             resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Nome utente non valido");
             return;
         }
@@ -45,10 +48,9 @@ public class RegisterServlet extends MasterServlet {
                 return;
             }
             session.setUtente(utente);
-            Utility.returnHome(req, resp);
+            resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath()));
         } catch (SQLException throwables) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, throwables.getErrorCode() + ": " + throwables.getLocalizedMessage());
-
             throwables.printStackTrace();
         }
     }

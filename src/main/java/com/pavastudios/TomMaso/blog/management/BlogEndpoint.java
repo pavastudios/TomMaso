@@ -50,7 +50,7 @@ public class BlogEndpoint {
     @Endpoint(url = "/blog/create", requireLogin = true)
     private static final ApiAction CREATE_ACTION = (parser, writer, user) -> {
         String name = parser.getValueString("name");
-        if (name.length() < Blog.MINIMUM_NAME_LENGTH || !Utility.useOnlyNormalChars(name)) {
+        if (name.length() < Blog.MINIMUM_NAME_LENGTH || !Utility.isStandardName(name)) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Nome blog non valido");
         }
         try {

@@ -17,10 +17,9 @@ import java.util.Date;
  * Classe che modella il concetto di User nel database
  */
 public class Utente implements GenericModel {
-    /**
-     * Costante che indica la lunghezza minima dello username dell'utente
-     */
-    public static final int MINIMUM_USERNAME_LENGTH = 4;
+
+    public final static int PASSWORD_MIN_LENGTH = 8;
+
     private int idUtente;
     private Permessi permessi;
     private String password;

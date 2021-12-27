@@ -1,14 +1,15 @@
 package com.pavastudios.TomMaso.access;
 
-import com.pavastudios.TomMaso.utility.Utility;
 import org.apache.commons.codec.digest.Sha2Crypt;
 
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 
 public class Security {
+    public static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     public static String crypt(String pwd) {
-        return Sha2Crypt.sha512Crypt(pwd.getBytes(StandardCharsets.UTF_8), null, Utility.SECURE_RANDOM);
+        return Sha2Crypt.sha512Crypt(pwd.getBytes(StandardCharsets.UTF_8), null, SECURE_RANDOM);
     }
 
     public static boolean verify(String cryped, String pwd) {

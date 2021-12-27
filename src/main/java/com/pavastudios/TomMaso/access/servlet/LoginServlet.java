@@ -4,7 +4,6 @@ import com.pavastudios.TomMaso.access.Session;
 import com.pavastudios.TomMaso.access.UserQueries;
 import com.pavastudios.TomMaso.storage.model.Utente;
 import com.pavastudios.TomMaso.utility.MasterServlet;
-import com.pavastudios.TomMaso.utility.Utility;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,7 +40,6 @@ public class LoginServlet extends MasterServlet {
             return;
         }
         session.setUtente(u);
-        Utility.returnHome(req, resp);
-
+        resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath()));
     }
 }

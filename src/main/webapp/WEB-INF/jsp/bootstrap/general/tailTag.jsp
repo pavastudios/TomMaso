@@ -7,6 +7,7 @@
 <script src="${pageContext.request.contextPath}/js/purify.js"></script>
 <script src="${pageContext.request.contextPath}/js/aos.js"></script>
 <script src="${pageContext.request.contextPath}/js/highlight.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/personal.js"></script>
 
 <script>
     function urlRewriteTag(tagName){
@@ -35,26 +36,7 @@
             $("#navbarSearchForm").attr("action","${pageContext.request.contextPath}/home/"+query+"<%=request.getAttribute("rewrite")%>");
         }
     }
-    //Create blog code
-    $("#createBlogNavbar").click(function () {
-        const blogname = $("#blognameNavbar").val();
-        if (!blogname.match(/^[a-zA-Z0-9-\\._]+$/)) {
-            showError("Nome non valido!");
-            return;
-        }
-        $.ajax({
-            type: 'POST',
-            url: '${pageContext.request.contextPath}/api/blog/create<%=request.getAttribute("rewrite")%>',
-            data: {name: blogname},
-            success: function (data) {
-                if (data["error"] !== undefined) {
-                    showError(data["error"]);
-                    return;
-                }
-                location.reload();
-            }
-        });
-    });
+
     const navbarLogin = new bootstrap.Modal(document.getElementById('navbarLogin'));
     //Create blog code
     $("#navbarLoginSubmit").click(function () {
@@ -95,12 +77,12 @@
             showError("Le password non corrispondono!");
             return;
         }
-        if(password1.length<5){
-            showError("La password deve contenere almeno 5 caratteri!");
+        if(password1.length<<%=Utente.PASSWORD_MIN_LENGTH%>){
+            showError("La password deve contenere almeno <%=Utente.PASSWORD_MIN_LENGTH%> caratteri!");
             return;
         }
-        if(username.length<5){
-            showError("L'username deve contenere almeno 5 caratteri!");
+        if(!isStandardName(username)){
+            showError("L'username non valido!");
             return;
         }
         $.ajax({
@@ -121,5 +103,3 @@
         });
     });
 </script>
-
-<script src="${pageContext.request.contextPath}/js/personal.js"></script>

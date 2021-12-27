@@ -19,6 +19,10 @@ $("#navbarSearchUser").click(function () {
     isUser = true;
     updateActionSearch();
 });
-navbarSearchText.change(function () {
+$("#navbarSearchText").change(function () {
     updateActionSearch();
 });
+
+function isStandardName(str) {
+    return str.match(/^[a-zA-Z_][a-zA-Z0-9-._]{7,19}$/);
+}

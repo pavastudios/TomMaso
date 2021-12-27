@@ -14,14 +14,11 @@ import java.util.Map;
 public class ApiParser {
     private final HashMap<String, Object> params = new HashMap<>();
 
-    public ApiParser(HttpServletRequest req) throws ApiException {
+    public ApiParser(HttpServletRequest req) {
         parse(req.getParameterMap());
     }
 
-    /**
-     * @throws ApiException if parameter is missing or the wrong type
-     */
-    private void parse(Map<String, String[]> req) throws ApiException {
+    private void parse(Map<String, String[]> req) {
         for (String s : req.keySet()) {
             params.put(s, req.get(s)[0]);
         }
