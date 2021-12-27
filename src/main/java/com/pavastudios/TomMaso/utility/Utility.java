@@ -1,6 +1,6 @@
 package com.pavastudios.TomMaso.utility;
 
-import com.pavastudios.TomMaso.db.connection.MasterPreparedStatement;
+import com.pavastudios.TomMaso.storagesystem.MasterPreparedStatement;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,12 +40,4 @@ public class Utility {
         }
     }
 
-    public static int tryParseInt(String str, int defValue, int radix) {
-        if (str == null) return defValue;
-        try {
-            return Integer.parseInt(str, radix);
-        } catch (NumberFormatException ignore) {
-            return defValue;
-        }
-    }
 }

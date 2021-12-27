@@ -1,7 +1,7 @@
-<%@ page import="com.pavastudios.TomMaso.model.Blog" %>
+<%@ page import="com.pavastudios.TomMaso.storagesystem.model.Blog" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.jsoup.nodes.Entities" %>
-<%@ page import="com.pavastudios.TomMaso.utility.tuple.Tuple2" %>
+<%@ page import="com.pavastudios.TomMaso.utility.Tuple2" %>
 <%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,4 +1,4 @@
-<%@ page import="com.pavastudios.TomMaso.model.Blog" %>
+<%@ page import="com.pavastudios.TomMaso.storagesystem.model.Blog" %>
 <%@ page import="java.util.List" %>
 <html>
 <head>
