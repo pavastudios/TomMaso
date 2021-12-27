@@ -1,4 +1,4 @@
-package com.pavastudios.TomMaso.defaultsystem;
+package com.pavastudios.TomMaso.defaultservlets;
 
 import com.pavastudios.TomMaso.accesssystem.Session;
 import com.pavastudios.TomMaso.utility.MasterServlet;

@@ -1,6 +1,7 @@
-package com.pavastudios.TomMaso.reportsystem;
+package com.pavastudios.TomMaso.reportsystem.servlet;
 
 import com.pavastudios.TomMaso.accesssystem.Session;
+import com.pavastudios.TomMaso.reportsystem.ReportQueries;
 import com.pavastudios.TomMaso.storagesystem.model.Report;
 import com.pavastudios.TomMaso.storagesystem.model.Utente;
 import com.pavastudios.TomMaso.utility.MasterServlet;

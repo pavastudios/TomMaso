@@ -1,4 +1,4 @@
-package com.pavastudios.TomMaso.blogsystem.blogmanagement;
+package com.pavastudios.TomMaso.blogsystem.blogmanagement.servlet;
 
 import com.pavastudios.TomMaso.accesssystem.Session;
 import com.pavastudios.TomMaso.storagesystem.FileUtility;

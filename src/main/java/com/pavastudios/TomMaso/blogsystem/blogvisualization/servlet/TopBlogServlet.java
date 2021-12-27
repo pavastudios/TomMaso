@@ -1,4 +1,4 @@
-package com.pavastudios.TomMaso.blogsystem.blogvisualization;
+package com.pavastudios.TomMaso.blogsystem.blogvisualization.servlet;
 
 import com.pavastudios.TomMaso.accesssystem.Session;
 import com.pavastudios.TomMaso.blogsystem.BlogQueries;

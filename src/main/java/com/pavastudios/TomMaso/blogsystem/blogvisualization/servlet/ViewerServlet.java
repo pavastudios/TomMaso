@@ -1,6 +1,7 @@
-package com.pavastudios.TomMaso.blogsystem.blogvisualization;
+package com.pavastudios.TomMaso.blogsystem.blogvisualization.servlet;
 
 import com.pavastudios.TomMaso.accesssystem.Session;
+import com.pavastudios.TomMaso.blogsystem.blogvisualization.CommentQueries;
 import com.pavastudios.TomMaso.storagesystem.FileUtility;
 import com.pavastudios.TomMaso.storagesystem.model.Blog;
 import com.pavastudios.TomMaso.utility.MasterServlet;

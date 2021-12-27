@@ -1,6 +1,7 @@
-package com.pavastudios.TomMaso.chatsystem;
+package com.pavastudios.TomMaso.chatsystem.servlet;
 
 import com.pavastudios.TomMaso.accesssystem.Session;
+import com.pavastudios.TomMaso.chatsystem.ChatQueries;
 import com.pavastudios.TomMaso.storagesystem.model.Chat;
 import com.pavastudios.TomMaso.storagesystem.model.Utente;
 import com.pavastudios.TomMaso.utility.MasterServlet;

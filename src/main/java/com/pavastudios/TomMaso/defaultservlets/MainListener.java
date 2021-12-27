@@ -1,4 +1,4 @@
-package com.pavastudios.TomMaso.defaultsystem;
+package com.pavastudios.TomMaso.defaultservlets;
 
 import com.pavastudios.TomMaso.accesssystem.UserQueries;
 import com.pavastudios.TomMaso.storagesystem.FileUtility;

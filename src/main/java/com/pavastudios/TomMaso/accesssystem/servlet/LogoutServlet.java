@@ -1,5 +1,6 @@
-package com.pavastudios.TomMaso.accesssystem;
+package com.pavastudios.TomMaso.accesssystem.servlet;
 
+import com.pavastudios.TomMaso.accesssystem.Session;
 import com.pavastudios.TomMaso.utility.MasterServlet;
 import com.pavastudios.TomMaso.utility.Utility;
 

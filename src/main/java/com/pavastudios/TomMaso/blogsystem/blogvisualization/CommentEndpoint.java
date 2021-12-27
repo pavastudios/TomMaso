@@ -4,7 +4,7 @@ import com.pavastudios.TomMaso.apisystem.ApiEndpoint;
 import com.pavastudios.TomMaso.apisystem.ApiException;
 import com.pavastudios.TomMaso.apisystem.ApiParameter;
 import com.pavastudios.TomMaso.apisystem.Endpoint;
-import com.pavastudios.TomMaso.defaultsystem.MainListener;
+import com.pavastudios.TomMaso.defaultservlets.MainListener;
 import com.pavastudios.TomMaso.storagesystem.FileUtility;
 import com.pavastudios.TomMaso.storagesystem.model.Commento;
 

@@ -1,5 +1,7 @@
-package com.pavastudios.TomMaso.accesssystem;
+package com.pavastudios.TomMaso.accesssystem.servlet;
 
+import com.pavastudios.TomMaso.accesssystem.Session;
+import com.pavastudios.TomMaso.accesssystem.UserQueries;
 import com.pavastudios.TomMaso.blogsystem.BlogQueries;
 import com.pavastudios.TomMaso.storagesystem.model.Blog;
 import com.pavastudios.TomMaso.storagesystem.model.Utente;
