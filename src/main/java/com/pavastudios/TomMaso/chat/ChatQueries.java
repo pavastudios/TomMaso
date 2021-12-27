@@ -130,13 +130,13 @@ public class ChatQueries {
 
     /**
      * Esegue la query che recupera le chat appartenenti ad un utente
-     * @param u1
+     * @param user
      * @return
      * @throws SQLException Problemi con il database
      */
-    public static @NotNull List<Chat> findUserChat(Utente u1) throws SQLException {
-        FIND_USER_CHAT.setInt(1, u1.getIdUtente());
-        FIND_USER_CHAT.setInt(2, u1.getIdUtente());
+    public static @NotNull List<Chat> findUserChats(Utente user) throws SQLException {
+        FIND_USER_CHAT.setInt(1, user.getIdUtente());
+        FIND_USER_CHAT.setInt(2, user.getIdUtente());
         ResultSet rs = FIND_USER_CHAT.executeQuery();
         List<Chat> chats = Queries.resultSetToList(Entities.CHAT, rs);
         rs.close();

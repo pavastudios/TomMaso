@@ -34,7 +34,7 @@ public class ChatListServlet extends MasterServlet {
             resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Utente non autorizzato");
             return;
         }
-        List<Chat> chats = ChatQueries.findUserChat(login);
+        List<Chat> chats = ChatQueries.findUserChats(login);
         req.setAttribute("chats", chats);
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/bootstrap/chat/chatsList.jsp").forward(req, resp);
     }

@@ -1,6 +1,7 @@
-package com.pavastudios.TomMaso.api;
+package com.pavastudios.TomMaso.api.servlet;
 
 import com.pavastudios.TomMaso.access.Session;
+import com.pavastudios.TomMaso.api.ApiManager;
 import com.pavastudios.TomMaso.utility.MasterServlet;
 import com.pavastudios.TomMaso.utility.Tuple2;
 

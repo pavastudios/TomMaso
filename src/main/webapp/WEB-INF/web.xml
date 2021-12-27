@@ -94,7 +94,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ApiServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.api.ApiServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.api.servlet.ApiServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ApiServlet</servlet-name>

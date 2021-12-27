@@ -79,23 +79,11 @@ public class UserQueries {
      * @param permessi Nuovi permessi
      * @throws SQLException Problemi con il database
      */
-    public static void changeRole(Utente u, Utente.Permessi permessi) throws SQLException {
+    public static void changePermissions(Utente u, Utente.Permessi permessi) throws SQLException {
         if (u == null) return;
         CHANGE_ROLE_USER.setInt(1, permessi.getPermessi());
         CHANGE_ROLE_USER.setInt(2, u.getIdUtente());
         CHANGE_ROLE_USER.executeUpdate();
     }
 
-    /**
-     * Esegue la query che rende un gestore degli utenti
-     * @param u Utente di cui cambiare i permessi
-     * @param admin Valore booleano per impostare velocemente un amministratore
-     * @throws SQLException Problemi con il database
-     */
-    public static void changeRole2(Utente u, boolean admin) throws SQLException {
-        if (u == null) return;
-        CHANGE_ROLE_USER.setInt(1, admin ? 1 : 0);
-        CHANGE_ROLE_USER.setInt(2, u.getIdUtente());
-        CHANGE_ROLE_USER.executeUpdate();
-    }
 }

@@ -12,31 +12,6 @@ import java.lang.reflect.Modifier;
 
 @SuppressWarnings("unused")
 public class UserEndpoint {
-    @Endpoint(url = "/user/add-admin", requireLogin = true, params = {
-            @ApiParameter(name = "username", type = ApiParameter.Type.STRING)
-    })
-    private static final ApiEndpoint.Manage ADMIN_ADD_ACTION = (parser, writer, user) -> {
-        String username = parser.getValueString("username");
-        Utente u = UserQueries.findUserByUsername(username);
-        if (u == null) {
-            throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Utente non trovato");
-        }
-        UserQueries.changeRole2(u, true);
-        writer.value("ok");
-    };
-    @Endpoint(url = "/user/remove-admin", requireLogin = true, params = {
-            @ApiParameter(name = "username", type = ApiParameter.Type.STRING)
-    })
-    private static final ApiEndpoint.Manage ADMIN_DEL_ACTION = (parser, writer, user) -> {
-        String username = parser.getValueString("username");
-        Utente u = UserQueries.findUserByUsername(username);
-        if (u == null) {
-            throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Utente non trovato");
-        }
-        UserQueries.changeRole2(u, false);
-        writer.value("ok");
-    };
-
     @Endpoint(url = "/user/change-permissions", requireLogin = true, params = {
             @ApiParameter(name = "id-user", type = ApiParameter.Type.INT)
     })
@@ -55,13 +30,13 @@ public class UserEndpoint {
                 if (parser.getValueBool(field.getName())) {
                     try {
                         permessi |= field.getInt(null);
-                    } catch (IllegalAccessException e) {
+                    } catch (IllegalAccessException ignored) {
                     }
                 }
             }
         }
         Utente.Permessi newPermissions = new Utente.Permessi(permessi);
-        UserQueries.changeRole(u, newPermissions);
+        UserQueries.changePermissions(u, newPermissions);
         writer.value("ok");
     };
 

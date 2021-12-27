@@ -49,7 +49,7 @@ public class MainListener implements ServletContextListener {
         Utente u = UserQueries.findUserByUsername(ADMIN_USERNAME);
         if (u == null) {
             Utente admin = UserQueries.registerUser(ADMIN_PASSWORD, ADMIN_USERNAME);
-            UserQueries.changeRole(admin, new Utente.Permessi(Utente.Permessi.MANAGE_USER));
+            UserQueries.changePermissions(admin, new Utente.Permessi(Utente.Permessi.MANAGE_USER));
         }
     }
 

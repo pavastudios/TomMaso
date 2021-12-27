@@ -45,7 +45,7 @@ public class Session {
         setUtente(newUtente);
     }
 
-    public boolean hasVisitedBlog(Blog blog) {
+    private boolean hasVisitedBlog(Blog blog) {
         if (blog == null) return false;
         return blogs.contains(blog.getIdBlog());
     }
