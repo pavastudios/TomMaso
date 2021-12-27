@@ -18,12 +18,6 @@ public @interface Endpoint {
     String url();
 
     /**
-     * Lista dei parametri obbligatori da passare all'endpoint
-     * @see ApiEndpoint
-     */
-    ApiParameter[] params();
-
-    /**
      * Richiede che questo endpoint può essere gestito solo per richieste da utenti che hanno eseguito
      */
     boolean requireLogin();

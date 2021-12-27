@@ -31,14 +31,6 @@ public class ApiEndpoint {
     }
 
     /**
-     * @return lista dei parametri obbligatori da passare all'endpoint
-     * @see ApiParameter
-     */
-    public ApiParameter[] getParams() {
-        return endpoint.params();
-    }
-
-    /**
      * Esegui l'azione definita per questo endpoint
      *
      * @see Endpoint
@@ -57,7 +49,6 @@ public class ApiEndpoint {
      * inoltre eseguendo <i>getValueFromName(param)</i> con <i>param</i> contenuto nei parametri dell'Endpoint collegato
      * garantisce che la chiamata non ritorni <i>null</i>
      *
-     * @see ApiParameter
      * @see Endpoint
      */
     public interface Manage {

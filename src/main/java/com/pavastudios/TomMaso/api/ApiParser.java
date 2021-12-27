@@ -1,5 +1,7 @@
 package com.pavastudios.TomMaso.api;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -10,11 +12,9 @@ import java.util.Map;
  *
  */
 public class ApiParser {
-    private final ApiEndpoint endpoint;
     private final HashMap<String, Object> params = new HashMap<>();
 
-    public ApiParser(ApiEndpoint endpoint, HttpServletRequest req) throws ApiException {
-        this.endpoint = endpoint;
+    public ApiParser(HttpServletRequest req) throws ApiException {
         parse(req.getParameterMap());
     }
 
@@ -25,58 +25,41 @@ public class ApiParser {
         for (String s : req.keySet()) {
             params.put(s, req.get(s)[0]);
         }
-        for (ApiParameter param : endpoint.getParams()) {
-            params.put(param.name(), parseParam(req, param));
-        }
     }
 
-    private Object parseParam(Map<String, String[]> req, ApiParameter param) throws ApiException {
+    private ApiException invalidType(String param) {
+        String errorString = String.format(Locale.US, "invalid value for param '%s'", param);
+        return new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
+    }
 
-        if (!req.containsKey(param.name())) { //handle param not found
-            String errorString = String.format(Locale.US, "missing param '%s'", param.name());
-            throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
-        }
+    @NotNull
+    public String getValueString(String param) {
+        return getValueFromName(param).toString();
+    }
 
-        String value = req.get(param.name())[0];
+    public int getValueInt(String param) {
         try {
-            switch (param.type()) {//prova ad associare il valore
-                case INT:
-                    return Long.parseLong(value);
-                case FLOAT:
-                    return Double.parseDouble(value);
-                case STRING:
-                    return value;
-                case BOOL:
-                    if (!value.equals("false") && !value.equals("true")) {
-                        throw new NumberFormatException();
-                    }
-                    return value.equals("true");
-            }
+            return Integer.parseInt(getValueString(param));
         } catch (NumberFormatException ignore) {
-            String errorString = String.format(Locale.US, "invalid value for param '%s'", param.name());
+            throw invalidType(param);
+        }
+    }
+
+    public boolean getValueBool(String param) {
+        String val = getValueString(param);
+        if (!val.equals("true") && !val.equals("false")) {
+            throw invalidType(param);
+        }
+        return getValueString(param).equals("true");
+    }
+
+    @NotNull
+    private Object getValueFromName(String param) {
+        if (!params.containsKey(param)) {
+            String errorString = String.format(Locale.US, "missing param '%s'", param);
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
         }
-        return null;
-    }
-
-    public String getValueString(String s) {
-        return getValueFromName(s).toString();
-    }
-
-    public long getValueLong(String s) {
-        return (long) getValueFromName(s);
-    }
-
-    public int getValueInt(String s) {
-        return (int) getValueLong(s);
-    }
-
-    public boolean getValueBool(String s) {
-        return getValueString(s).equals("true");
-    }
-
-    private Object getValueFromName(String s) {
-        return params.get(s);
+        return params.get(param);
     }
 
 }

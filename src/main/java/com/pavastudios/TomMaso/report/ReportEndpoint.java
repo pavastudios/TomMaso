@@ -2,7 +2,6 @@ package com.pavastudios.TomMaso.report;
 
 import com.pavastudios.TomMaso.api.ApiEndpoint;
 import com.pavastudios.TomMaso.api.ApiException;
-import com.pavastudios.TomMaso.api.ApiParameter;
 import com.pavastudios.TomMaso.api.Endpoint;
 import com.pavastudios.TomMaso.blog.visualization.CommentQueries;
 import com.pavastudios.TomMaso.storage.FileUtility;
@@ -14,10 +13,7 @@ import java.util.Locale;
 
 @SuppressWarnings("unused")
 public class ReportEndpoint {
-    @Endpoint(url = "/report/comment", params = {
-            @ApiParameter(name = "id-comment", type = ApiParameter.Type.INT),
-            @ApiParameter(name = "reason", type = ApiParameter.Type.STRING),
-    }, requireLogin = true)
+    @Endpoint(url = "/report/comment", requireLogin = true)
     private static final ApiEndpoint.Manage COMMENT_REPORT = (parser, writer, user) -> {
         int idCommento = parser.getValueInt("id-comment");
         String reason = parser.getValueString("reason");
@@ -38,10 +34,7 @@ public class ReportEndpoint {
         report.writeJson(writer);
     };
 
-    @Endpoint(url = "/report/post", params = {
-            @ApiParameter(name = "url-post", type = ApiParameter.Type.STRING),
-            @ApiParameter(name = "reason", type = ApiParameter.Type.STRING),
-    }, requireLogin = true)
+    @Endpoint(url = "/report/post", requireLogin = true)
     private static final ApiEndpoint.Manage POST_REPORT = (parser, writer, user) -> {
         String post = parser.getValueString("url-post");
         String reason = parser.getValueString("reason");
@@ -62,10 +55,7 @@ public class ReportEndpoint {
     };
 
 
-    @Endpoint(url = "/report/review", params = {
-            @ApiParameter(name = "id-report", type = ApiParameter.Type.INT),
-            @ApiParameter(name = "approved", type = ApiParameter.Type.BOOL),
-    }, requireLogin = true)
+    @Endpoint(url = "/report/review", requireLogin = true)
     private static final ApiEndpoint.Manage REPORT_REVIEWED = (parser, writer, user) -> {
         Report report = ReportQueries.findReportById(parser.getValueInt("id-report"));
         Report.Status approved = parser.getValueBool("approved") ? Report.Status.ACCEPTED : Report.Status.REJECTED;
@@ -83,10 +73,7 @@ public class ReportEndpoint {
         writer.value("ok");
     };
 
-    @Endpoint(url = "/report/message", params = {
-            @ApiParameter(name = "id-message", type = ApiParameter.Type.INT),
-            @ApiParameter(name = "reason", type = ApiParameter.Type.STRING),
-    }, requireLogin = true)
+    @Endpoint(url = "/report/message", requireLogin = true)
     private static final ApiEndpoint.Manage MESSAGE_REPORT = (parser, writer, user) -> {
         int idMessage = parser.getValueInt("id-message");
         String reason = parser.getValueString("reason");

@@ -108,7 +108,7 @@ public class ApiManager {
             throw new ApiException(HttpServletResponse.SC_UNAUTHORIZED, "user not authenticated");
         }
         //Controlla i parametri passati
-        ApiParser parser = new ApiParser(endpoint, req);
+        ApiParser parser = new ApiParser(req);
 
         //Richieta valida, esegui l'endpoint
         Utente user = session.getUtente();

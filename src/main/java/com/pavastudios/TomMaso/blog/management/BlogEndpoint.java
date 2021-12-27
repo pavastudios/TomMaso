@@ -2,7 +2,6 @@ package com.pavastudios.TomMaso.blog.management;
 
 import com.pavastudios.TomMaso.api.ApiEndpoint;
 import com.pavastudios.TomMaso.api.ApiException;
-import com.pavastudios.TomMaso.api.ApiParameter;
 import com.pavastudios.TomMaso.api.Endpoint;
 import com.pavastudios.TomMaso.blog.BlogQueries;
 import com.pavastudios.TomMaso.blog.visualization.CommentQueries;
@@ -17,9 +16,7 @@ import java.sql.SQLException;
 @SuppressWarnings("unused")
 public class BlogEndpoint {
 
-    @Endpoint(url = "/blog/delete-blog", requireLogin = true, params = {
-            @ApiParameter(name = "blog-name", type = ApiParameter.Type.STRING)
-    })
+    @Endpoint(url = "/blog/delete-blog", requireLogin = true)
     private static final ApiEndpoint.Manage DELETE_BLOG_ACTION = (parser, writer, user) -> {
         String name = parser.getValueString("blog-name");
         Blog blog = BlogQueries.findBlogByName(name);
@@ -33,9 +30,7 @@ public class BlogEndpoint {
         writer.value("ok");
     };
 
-    @Endpoint(url = "/blog/delete-file", requireLogin = true, params = {
-            @ApiParameter(name = "url", type = ApiParameter.Type.STRING)
-    })
+    @Endpoint(url = "/blog/delete-file", requireLogin = true)
     private static final ApiEndpoint.Manage DELETE_FILE_ACTION = (parser, writer, user) -> {
         String url = parser.getValueString("url");
         Blog blog = Blog.fromPathInfo(url);
@@ -52,9 +47,7 @@ public class BlogEndpoint {
         CommentQueries.deleteCommentsForBlog(url);
         writer.value("ok");
     };
-    @Endpoint(url = "/blog/create", requireLogin = true, params = {
-            @ApiParameter(name = "name", type = ApiParameter.Type.STRING)
-    })
+    @Endpoint(url = "/blog/create", requireLogin = true)
     private static final ApiEndpoint.Manage CREATE_ACTION = (parser, writer, user) -> {
         String name = parser.getValueString("name");
         if (name.length() < Blog.MINIMUM_NAME_LENGTH || !Utility.useOnlyNormalChars(name)) {
