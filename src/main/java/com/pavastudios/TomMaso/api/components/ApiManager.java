@@ -41,6 +41,7 @@ public class ApiManager {
         Reflections reflections = new Reflections("com.pavastudios.TomMaso", Scanners.FieldsAnnotated);
         Set<Field> apiEndpoints = reflections.getFieldsAnnotatedWith(Endpoint.class);
         for (Field field : apiEndpoints) {
+            field.setAccessible(true);
             Endpoint ann = field.getAnnotation(Endpoint.class);
             ApiEndpoint.Manage manage = (ApiEndpoint.Manage) field.get(null);
             ApiEndpoint endpoint = new ApiEndpoint(ann, manage);

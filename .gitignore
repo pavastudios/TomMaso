@@ -7,3 +7,4 @@ getP
 /visual_paradigm/.vpprefdata
 *.bak*
 /visual_paradigm/.lock
+/javadoc
