@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * @see Endpoint
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target(ElementType.METHOD)
 public @interface Endpoint {
     /**
      * L'url a cui deve rispondere queste endpoint

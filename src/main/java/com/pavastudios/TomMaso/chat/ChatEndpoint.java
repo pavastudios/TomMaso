@@ -1,8 +1,9 @@
 package com.pavastudios.TomMaso.chat;
 
 import com.pavastudios.TomMaso.access.UserQueries;
-import com.pavastudios.TomMaso.api.ApiAction;
 import com.pavastudios.TomMaso.api.ApiException;
+import com.pavastudios.TomMaso.api.ApiParser;
+import com.pavastudios.TomMaso.api.ApiWriter;
 import com.pavastudios.TomMaso.api.Endpoint;
 import com.pavastudios.TomMaso.storage.model.Chat;
 import com.pavastudios.TomMaso.storage.model.Messaggio;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class ChatEndpoint {
     @Endpoint(url = "/chat/send-message", requireLogin = true)
-    private static final ApiAction SEND_ACTION = (parser, writer, user) -> {
+    private static void sendMessage(ApiParser parser, ApiWriter writer, Utente user) throws Exception {
         int chatId = parser.getValueInt("chat-id");
         String message = parser.getValueString("message");
         Chat chat = ChatQueries.findChatById(chatId);
@@ -29,8 +30,9 @@ public class ChatEndpoint {
         }
         m.writeJson(writer);
     };
+
     @Endpoint(url = "/chat/create-chat", requireLogin = true)
-    private static final ApiAction CREATE_ACTION = (parser, writer, user) -> {
+    private static void createChat(ApiParser parser, ApiWriter writer, Utente user) throws Exception {
         String otherUsername = parser.getValueString("with");
         Utente other = UserQueries.findUserByUsername(otherUsername);
         Chat chat;
@@ -44,8 +46,9 @@ public class ChatEndpoint {
         }
         chat.writeJson(writer);
     };
+
     @Endpoint(url = "/chat/fetch-from-id", requireLogin = true)
-    private static final ApiAction FETCH_FROM_ID_ACTION = (parser, writer, user) -> {
+    private static void fetchMessagesFromId(ApiParser parser, ApiWriter writer, Utente user) throws Exception {
         int chatId = parser.getValueInt("chat-id");
         int fromId = parser.getValueInt("from-id");
         Chat chat = ChatQueries.findChatById(chatId);
@@ -59,18 +62,17 @@ public class ChatEndpoint {
             m.writeJson(writer);
         writer.endArray();
     };
+
     @Endpoint(url = "/chat/fetch-chat", requireLogin = true)
-    private static final ApiAction FETCH_ACTION = (parser, writer, user) -> {
+    private static void getAllChatMessages(ApiParser parser, ApiWriter writer, Utente user) throws Exception {
         int chatId = parser.getValueInt("chat-id");
-        int count = parser.getValueInt("count");
-        int offset = parser.getValueInt("offset");
 
         Chat chat = ChatQueries.findChatById(chatId);
         if (chat == null || !chat.hasAccess(user)) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "invalid chat-id");
         }
 
-        List<Messaggio> messaggi = ChatQueries.fetchMessages(chat, count, offset);
+        List<Messaggio> messaggi = ChatQueries.fetchMessageFromId(chat, 0);
         writer.beginArray();
         for (Messaggio m : messaggi)
             m.writeJson(writer);

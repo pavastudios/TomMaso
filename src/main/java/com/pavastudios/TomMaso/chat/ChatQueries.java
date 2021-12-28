@@ -1,10 +1,7 @@
 package com.pavastudios.TomMaso.chat;
 
 import com.pavastudios.TomMaso.blog.visualization.CommentQueries;
-import com.pavastudios.TomMaso.storage.Entities;
-import com.pavastudios.TomMaso.storage.GlobalConnection;
-import com.pavastudios.TomMaso.storage.MasterPreparedStatement;
-import com.pavastudios.TomMaso.storage.Queries;
+import com.pavastudios.TomMaso.storage.*;
 import com.pavastudios.TomMaso.storage.model.Chat;
 import com.pavastudios.TomMaso.storage.model.Messaggio;
 import com.pavastudios.TomMaso.storage.model.Utente;
@@ -14,7 +11,6 @@ import org.jetbrains.annotations.Nullable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,7 +21,6 @@ public class ChatQueries {
     public static MasterPreparedStatement FIND_CHAT_BY_ID;
     static MasterPreparedStatement CREATE_CHAT;
     static MasterPreparedStatement SEND_MESSAGE;
-    static MasterPreparedStatement FETCH_CHAT_MESSAGE;
     static MasterPreparedStatement FIND_USER_CHAT;
     static MasterPreparedStatement FIND_CHAT_BY_USERS;
     static MasterPreparedStatement FETCH_MESSAGE_FROM_ID;
@@ -35,8 +30,8 @@ public class ChatQueries {
      * Inizializza le prepared statements contenenti le query relative alle chat
      * @throws SQLException Problemi con il database
      */
+    @QueryInitializer
     public static void initQueries() throws SQLException {
-        FETCH_CHAT_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? ORDER BY `data_invio` DESC LIMIT ? OFFSET ?");
         FETCH_MESSAGE_FROM_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_chat`=? AND `id_messaggio`>? ORDER BY `data_invio`");
         FIND_USER_CHAT = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Chat` WHERE `utente1`=? OR `utente2`=?");
         FIND_MESSAGE_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Messaggio` WHERE `id_messaggio`=?");
@@ -45,25 +40,6 @@ public class ChatQueries {
         DELETE_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("DELETE FROM `Messaggio` WHERE `id_messaggio` =?");
         CREATE_CHAT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Chat`(`utente1`,`utente2`) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
         SEND_MESSAGE = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Messaggio`(`id_chat`,`mittente`,`testo`) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
-    }
-
-    /**
-     * Esegue la query che recupera i messaggi di una chat
-     * @param chat Chat di cui recuperare i messaggi
-     * @param amount Numero di messaggi da recuparare
-     * @param offset Offset dei messaggi da recuperare
-     * @return Lista di messaggi recuperati
-     * @throws SQLException Problemi con il database
-     */
-    public static List<Messaggio> fetchMessages(Chat chat, int amount, int offset) throws SQLException {
-        FETCH_CHAT_MESSAGE.setInt(1, chat.getIdChat());
-        FETCH_CHAT_MESSAGE.setInt(2, amount);
-        FETCH_CHAT_MESSAGE.setInt(3, offset);
-        ResultSet rs = FETCH_CHAT_MESSAGE.executeQuery();
-        List<Messaggio> messages = Queries.resultSetToList(Entities.MESSAGGIO, rs);
-        Collections.reverse(messages);
-        rs.close();
-        return messages;
     }
 
     /**

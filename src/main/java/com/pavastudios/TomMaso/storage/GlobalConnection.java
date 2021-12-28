@@ -1,18 +1,18 @@
 package com.pavastudios.TomMaso.storage;
 
-import com.pavastudios.TomMaso.access.UserQueries;
-import com.pavastudios.TomMaso.blog.BlogQueries;
-import com.pavastudios.TomMaso.blog.visualization.CommentQueries;
-import com.pavastudios.TomMaso.chat.ChatQueries;
-import com.pavastudios.TomMaso.report.ReportQueries;
 import org.jetbrains.annotations.NotNull;
+import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Set;
 
 public class GlobalConnection {
     @NotNull
@@ -35,16 +35,18 @@ public class GlobalConnection {
 
     /**
      * questo metodo inizializza le queries
+     *
      * @throws SQLException
      */
 
-    public static void init() throws SQLException {
+    public static void init() throws SQLException, InvocationTargetException, IllegalAccessException {
         if (initialized) return;
-        CommentQueries.initQueries();
-        BlogQueries.initQueries();
-        ChatQueries.initQueries();
-        ReportQueries.initQueries();
-        UserQueries.initQueries();
+        Reflections reflections = new Reflections("com.pavastudios.TomMaso", Scanners.MethodsAnnotated);
+        Set<Method> apiEndpoints = reflections.getMethodsAnnotatedWith(QueryInitializer.class);
+        for (Method method : apiEndpoints) {
+            method.setAccessible(true);
+            method.invoke(null);
+        }
         initialized = true;
     }
 

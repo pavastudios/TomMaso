@@ -1,9 +1,6 @@
 package com.pavastudios.TomMaso.report;
 
-import com.pavastudios.TomMaso.storage.Entities;
-import com.pavastudios.TomMaso.storage.GlobalConnection;
-import com.pavastudios.TomMaso.storage.MasterPreparedStatement;
-import com.pavastudios.TomMaso.storage.Queries;
+import com.pavastudios.TomMaso.storage.*;
 import com.pavastudios.TomMaso.storage.model.Report;
 import com.pavastudios.TomMaso.storage.model.Utente;
 import org.jetbrains.annotations.NotNull;
@@ -29,6 +26,7 @@ public class ReportQueries {
      * Inizializza le prepared statements contenenti le query relative ai commenti
      * @throws SQLException Problemi con il database
      */
+    @QueryInitializer
     public static void initQueries() throws SQLException {
         FIND_REPORT_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Report` WHERE `id_report`=?", Statement.RETURN_GENERATED_KEYS);
         CREATE_REPORT = GlobalConnection.CONNECTION.prepareStatement("INSERT INTO `Report`(`tipo`,`url`,`motivo`,`reporter`,`target`) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);

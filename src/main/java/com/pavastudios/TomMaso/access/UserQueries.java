@@ -1,9 +1,6 @@
 package com.pavastudios.TomMaso.access;
 
-import com.pavastudios.TomMaso.storage.Entities;
-import com.pavastudios.TomMaso.storage.GlobalConnection;
-import com.pavastudios.TomMaso.storage.MasterPreparedStatement;
-import com.pavastudios.TomMaso.storage.Queries;
+import com.pavastudios.TomMaso.storage.*;
 import com.pavastudios.TomMaso.storage.model.Utente;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,6 +22,7 @@ public class UserQueries {
      * Inizializza le prepared statements contenenti le query relative ai commenti
      * @throws SQLException Problemi con il database
      */
+    @QueryInitializer
     public static void initQueries() throws SQLException {
         FIND_USER_BY_USERNAME = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `username`=?");
         FIND_USER_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Utente` WHERE `id_utente`=?");

@@ -1,11 +1,13 @@
 package com.pavastudios.TomMaso.blog.visualization;
 
-import com.pavastudios.TomMaso.api.ApiAction;
 import com.pavastudios.TomMaso.api.ApiException;
+import com.pavastudios.TomMaso.api.ApiParser;
+import com.pavastudios.TomMaso.api.ApiWriter;
 import com.pavastudios.TomMaso.api.Endpoint;
 import com.pavastudios.TomMaso.general.MainListener;
 import com.pavastudios.TomMaso.storage.FileUtility;
 import com.pavastudios.TomMaso.storage.model.Commento;
+import com.pavastudios.TomMaso.storage.model.Utente;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -14,7 +16,7 @@ import java.net.URLDecoder;
 
 public class CommentEndpoint {
     @Endpoint(url = "/comment/send-comment", requireLogin = true)
-    private static final ApiAction SEND_ACTION = (parser, writer, user) -> {
+    private static void sendComment(ApiParser parser, ApiWriter writer, Utente user) throws Exception {
         String comment = parser.getValueString("comment");
         String page = URLDecoder.decode(parser.getValueString("page"), "UTF-8");
         String contextPath = MainListener.CONTEXT.getContextPath() + "/blogs";
@@ -35,6 +37,6 @@ public class CommentEndpoint {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Problema invio messaggio");
         }
         com.writeJson(writer);
-    };
+    }
 
 }

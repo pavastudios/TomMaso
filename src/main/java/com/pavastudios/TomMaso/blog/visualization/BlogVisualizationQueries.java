@@ -1,9 +1,6 @@
 package com.pavastudios.TomMaso.blog.visualization;
 
-import com.pavastudios.TomMaso.storage.Entities;
-import com.pavastudios.TomMaso.storage.GlobalConnection;
-import com.pavastudios.TomMaso.storage.MasterPreparedStatement;
-import com.pavastudios.TomMaso.storage.Queries;
+import com.pavastudios.TomMaso.storage.*;
 import com.pavastudios.TomMaso.storage.model.Blog;
 import com.pavastudios.TomMaso.storage.model.Utente;
 
@@ -21,6 +18,7 @@ public class BlogVisualizationQueries {
      *
      * @throws SQLException Problemi con il database
      */
+    @QueryInitializer
     public static void initQueries() throws SQLException {
         TOP_BLOG = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` ORDER BY `visite` DESC LIMIT ?");
         FIND_BLOGS_OWNED_BY = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Blog` WHERE `proprietario`=? ORDER BY `nome`");

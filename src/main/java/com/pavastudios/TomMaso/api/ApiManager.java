@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.lang.reflect.Field;
-import java.sql.SQLException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -21,7 +20,7 @@ import java.util.Set;
  * Classe che permette di eseguire richieste al servizio di API del sito
  */
 public class ApiManager {
-    private static final HashMap<String, Tuple2<Boolean, ApiAction>> API = new HashMap<>();
+    private static final HashMap<String, Tuple2<Boolean, Method>> API = new HashMap<>();
 
     static {
         try {
@@ -38,17 +37,16 @@ public class ApiManager {
      * @see Endpoint
      */
     private static void loadApiEndpoints() throws IllegalAccessException {
-        Reflections reflections = new Reflections("com.pavastudios.TomMaso", Scanners.FieldsAnnotated);
-        Set<Field> apiEndpoints = reflections.getFieldsAnnotatedWith(Endpoint.class);
-        for (Field field : apiEndpoints) {
-            field.setAccessible(true);
-            Endpoint ann = field.getAnnotation(Endpoint.class);
-            ApiAction manage = (ApiAction) field.get(null);
-            ApiManager.API.put(ann.url(), new Tuple2<>(ann.requireLogin(), manage));
+        Reflections reflections = new Reflections("com.pavastudios.TomMaso", Scanners.MethodsAnnotated);
+        Set<Method> apiEndpoints = reflections.getMethodsAnnotatedWith(Endpoint.class);
+        for (Method method : apiEndpoints) {
+            method.setAccessible(true);
+            Endpoint ann = method.getAnnotation(Endpoint.class);
+            ApiManager.API.put(ann.url(), new Tuple2<>(ann.requireLogin(), method));
         }
     }
 
-    private static @Nullable Tuple2<Boolean, ApiAction> getEndpoint(HttpServletRequest req) {
+    private static @Nullable Tuple2<Boolean, Method> getEndpoint(HttpServletRequest req) {
         return API.get(req.getPathInfo());
     }
 
@@ -94,10 +92,10 @@ public class ApiManager {
         }
     }
 
-    private static String manageEndpoint(Session session, HttpServletRequest req) throws ApiException, SQLException, IOException {
+    private static String manageEndpoint(Session session, HttpServletRequest req) throws Exception {
         ApiWriter writer = new ApiWriter();
         //Controlla esistenza endpoint
-        Tuple2<Boolean, ApiAction> endpoint = getEndpoint(req);
+        Tuple2<Boolean, Method> endpoint = getEndpoint(req);
         if (endpoint == null) {
             throw new ApiException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "method not implemented");
         }
@@ -110,7 +108,7 @@ public class ApiManager {
 
         //Richieta valida, esegui l'endpoint
         Utente user = session.getUtente();
-        endpoint.get2().executeEndpoint(parser, writer, user);
+        endpoint.get2().invoke(null, parser, writer, user);
         return writer.commit();
     }
 }

@@ -1,7 +1,8 @@
 package com.pavastudios.TomMaso.access;
 
-import com.pavastudios.TomMaso.api.ApiAction;
 import com.pavastudios.TomMaso.api.ApiException;
+import com.pavastudios.TomMaso.api.ApiParser;
+import com.pavastudios.TomMaso.api.ApiWriter;
 import com.pavastudios.TomMaso.api.Endpoint;
 import com.pavastudios.TomMaso.storage.model.Utente;
 
@@ -12,7 +13,7 @@ import java.lang.reflect.Modifier;
 @SuppressWarnings("unused")
 public class UserEndpoint {
     @Endpoint(url = "/user/change-permissions", requireLogin = true)
-    private static final ApiAction USER_CHANGE_PERMISSIONS = (parser, writer, user) -> {
+    private static void changePermissions(ApiParser parser, ApiWriter writer, Utente user) throws Exception {
         if (!user.getPermessi().hasPermissions(Utente.Permessi.MANAGE_USER)) {
             throw new ApiException(HttpServletResponse.SC_FORBIDDEN, "Utente non autorizzato");
         }
@@ -36,6 +37,5 @@ public class UserEndpoint {
         UserQueries.changePermissions(u, newPermissions);
         u.setPermessi(newPermissions);
         writer.value("ok");
-    };
-
+    }
 }

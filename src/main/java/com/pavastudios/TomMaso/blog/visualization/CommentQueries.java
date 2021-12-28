@@ -1,9 +1,6 @@
 package com.pavastudios.TomMaso.blog.visualization;
 
-import com.pavastudios.TomMaso.storage.Entities;
-import com.pavastudios.TomMaso.storage.GlobalConnection;
-import com.pavastudios.TomMaso.storage.MasterPreparedStatement;
-import com.pavastudios.TomMaso.storage.Queries;
+import com.pavastudios.TomMaso.storage.*;
 import com.pavastudios.TomMaso.storage.model.Commento;
 import com.pavastudios.TomMaso.storage.model.Messaggio;
 import com.pavastudios.TomMaso.storage.model.Utente;
@@ -31,6 +28,7 @@ public class CommentQueries {
      * Inizializza le prepared statements contenenti le query relative ai commenti
      * @throws SQLException Problemi con il database
      */
+    @QueryInitializer
     public static void initQueries() throws SQLException {
         FETCH_COMMENT_FOR_PAGE = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Commento` WHERE `url_pagina`=? ORDER BY `data_invio`");
         FIND_COMMENT_BY_ID = GlobalConnection.CONNECTION.prepareStatement("SELECT * FROM `Commento` WHERE `id_commento`=?");
