@@ -23,7 +23,7 @@ public class BlogEndpoint {
         if (blog == null || !blog.hasAccess(user)) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Blog invalido");
         }
-        BlogQueries.deleteBlog(blog);
+        BlogManagementQueries.deleteBlog(blog);
         CommentQueries.deleteCommentsForBlog("/" + blog.getNome() + "/");
         File rootBlog = new File(FileUtility.BLOG_FILES_FOLDER, blog.getNome());
         FileUtility.recursiveDelete(rootBlog);
@@ -54,7 +54,7 @@ public class BlogEndpoint {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Nome blog non valido");
         }
         try {
-            Blog blog = BlogQueries.createBlog(user, name);
+            Blog blog = BlogManagementQueries.createBlog(user, name);
             blog.writeJson(writer);
             File file = new File(FileUtility.BLOG_FILES_FOLDER, blog.getNome());
             file.mkdir();

@@ -4,6 +4,7 @@ import com.pavastudios.TomMaso.access.Session;
 import com.pavastudios.TomMaso.access.UserQueries;
 import com.pavastudios.TomMaso.storage.model.Utente;
 import com.pavastudios.TomMaso.utility.MasterServlet;
+import org.jetbrains.annotations.Nullable;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,22 +22,28 @@ public class LoginServlet extends MasterServlet {
 
     private static final boolean PASSWORD_BYPASS = false;
 
+    private String fetchUser(@Nullable Utente u, @Nullable String password) {
+        if (u == null) {
+            return "Username non trovato";
+        }
+        if (!PASSWORD_BYPASS && !u.userVerifyLogin(password)) {
+            return "Password errata";
+        }
+        if (!u.getPermessi().hasPermissions(Utente.Permessi.CAN_LOGIN)) {
+            return "Utente bananto";
+        }
+        return null;
+    }
+
     @Override
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
         Utente u = UserQueries.findUserByUsername(username);
-        if (u == null) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //username non trovato
-            return;
-        }
-        if (!PASSWORD_BYPASS && !u.userVerifyLogin(password)) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST); //password errata
-            return;
-        }
-        if (!u.getPermessi().hasPermissions(Utente.Permessi.CAN_LOGIN)) {
-            resp.sendError(HttpServletResponse.SC_FORBIDDEN); //l'utente non ha il permesso di loggare
+        String errorString = fetchUser(u, password);
+        if (errorString != null) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, errorString);
             return;
         }
         session.setUtente(u);

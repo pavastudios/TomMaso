@@ -1,6 +1,6 @@
 package com.pavastudios.TomMaso.access;
 
-import com.pavastudios.TomMaso.blog.BlogQueries;
+import com.pavastudios.TomMaso.blog.visualization.BlogVisualizationQueries;
 import com.pavastudios.TomMaso.storage.model.Blog;
 import com.pavastudios.TomMaso.storage.model.Utente;
 
@@ -48,7 +48,7 @@ public class Session {
     public void visitedBlog(Blog blog) throws SQLException {
         if (blog == null) return;
         if (!hasVisitedBlog(blog))
-            BlogQueries.incrementVisit(blog);
+            BlogVisualizationQueries.incrementVisit(blog);
         visitedBlogs.add(blog.getIdBlog());
     }
 

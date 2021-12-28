@@ -34,6 +34,7 @@ public class UserEndpoint {
         }
         Utente.Permessi newPermissions = new Utente.Permessi(permessi);
         UserQueries.changePermissions(u, newPermissions);
+        u.setPermessi(newPermissions);
         writer.value("ok");
     };
 

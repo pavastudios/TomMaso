@@ -16,6 +16,7 @@ import java.sql.SQLException;
  * Classe per la modifica dei file attraverso l'editor Markdown
  */
 public class MDEditorServlet extends MasterServlet {
+
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
         String pathInfo = req.getPathInfo();
