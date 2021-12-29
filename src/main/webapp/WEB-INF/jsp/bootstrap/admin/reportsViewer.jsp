@@ -44,7 +44,7 @@
                 <button id="disapprove-<%=report.getIdReport()%>" type="button" class="disapprove btn btn-danger"><i class="fas fa-trash"></i></button>
             </div>
             <p class="mb-1"> <%=Entities.escape(report.getReason())%></p>
-            <small><a href="<%=report.getUrl()%>"> <%=report.getUrl()%></a></small>
+            <small><a href="${pageContext.request.contextPath}<%=report.getUrl()%>"><%=report.getUrl()%></a></small>
         </div>
 
 <%}%>
