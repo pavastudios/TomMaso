@@ -1,10 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.pavastudios.TomMaso.storage.model.Report" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="com.pavastudios.TomMaso.utility.Utility" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="com.pavastudios.TomMaso.access.UserQueries" %>
-<%@ page import="java.sql.SQLException" %>
 <%@ page import="org.jsoup.nodes.Entities" %><%--
   Created by IntelliJ IDEA.
   User: dar9586

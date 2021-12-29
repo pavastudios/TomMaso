@@ -15,12 +15,10 @@ import java.sql.SQLException;
 import java.util.Set;
 
 public class GlobalConnection {
-    @NotNull
-    public final static MasterConnection CONNECTION;
+    public static MasterConnection CONNECTION;
     private static boolean initialized = false;
 
-    static {
-
+    private static void startConnection(){
         Connection conn = null;
         try {
             Context initCtx = new InitialContext();
@@ -31,23 +29,23 @@ public class GlobalConnection {
             e.printStackTrace();
         }
         CONNECTION = new MasterConnection(conn);
+        initialized = true;
     }
 
     /**
      * questo metodo inizializza le queries
      *
-     * @throws SQLException
      */
 
     public static void init() throws SQLException, InvocationTargetException, IllegalAccessException {
         if (initialized) return;
+        startConnection();
         Reflections reflections = new Reflections("com.pavastudios.TomMaso", Scanners.MethodsAnnotated);
         Set<Method> apiEndpoints = reflections.getMethodsAnnotatedWith(QueryInitializer.class);
         for (Method method : apiEndpoints) {
             method.setAccessible(true);
             method.invoke(null);
         }
-        initialized = true;
     }
 
 

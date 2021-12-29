@@ -21,14 +21,7 @@ import java.util.Set;
  */
 public class ApiManager {
     private static final HashMap<String, Tuple2<Boolean, Method>> API = new HashMap<>();
-
-    static {
-        try {
-            loadApiEndpoints();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
+    private static boolean initialized=false;
 
     /**
      * Trova tutte i campi annotati con Endpoint e genera una mappa contenente tutte gli endpoint
@@ -36,7 +29,7 @@ public class ApiManager {
      * @see ApiAction
      * @see Endpoint
      */
-    private static void loadApiEndpoints() throws IllegalAccessException {
+    private static void loadApiEndpoints() {
         Reflections reflections = new Reflections("com.pavastudios.TomMaso", Scanners.MethodsAnnotated);
         Set<Method> apiEndpoints = reflections.getMethodsAnnotatedWith(Endpoint.class);
         for (Method method : apiEndpoints) {
@@ -44,6 +37,7 @@ public class ApiManager {
             Endpoint ann = method.getAnnotation(Endpoint.class);
             ApiManager.API.put(ann.url(), new Tuple2<>(ann.requireLogin(), method));
         }
+        initialized=true;
     }
 
     private static @Nullable Tuple2<Boolean, Method> getEndpoint(HttpServletRequest req) {
@@ -82,6 +76,9 @@ public class ApiManager {
     }
 
     private static Tuple2<Integer, String> tryApiCall(Session session, HttpServletRequest req) throws ApiException {
+        if(!initialized){
+            loadApiEndpoints();
+        }
         try {
             return new Tuple2<>(200, manageEndpoint(session, req));
         } catch (ApiException e) {

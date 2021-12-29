@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class Utility {
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-    public static final Pattern STANDARD_NAME_FORMAT = Pattern.compile("^[a-zA-Z_][a-zA-Z0-9-._]{7,19}$");
+    private static final Pattern STANDARD_NAME_FORMAT = Pattern.compile("^[a-zA-Z_][a-zA-Z0-9-._]{7,19}$");
 
     public static boolean isStandardName(String str) {
         if (str == null) return false;
