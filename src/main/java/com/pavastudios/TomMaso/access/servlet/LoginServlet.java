@@ -30,7 +30,7 @@ public class LoginServlet extends MasterServlet {
             return "Password errata";
         }
         if (!u.getPermessi().hasPermissions(Utente.Permessi.CAN_LOGIN)) {
-            return "Utente bananto";
+            return "Utente bannato";
         }
         return null;
     }

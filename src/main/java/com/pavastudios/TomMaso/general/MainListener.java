@@ -43,13 +43,12 @@ public class MainListener implements ServletContextListener {
 
     /**
      * Metodo per la creazione dell'account admin del sito
-     * @throws SQLException
      */
     private void createAdminAccount() throws SQLException {
         Utente u = UserQueries.findUserByUsername(ADMIN_USERNAME);
         if (u == null) {
             Utente admin = UserQueries.registerUser(ADMIN_PASSWORD, ADMIN_USERNAME);
-            UserQueries.changePermissions(admin, new Utente.Permessi(Utente.Permessi.MANAGE_USER));
+            UserQueries.changePermissions(admin, new Utente.Permessi(Utente.Permessi.MANAGE_USER|Utente.Permessi.CAN_LOGIN));
         }
     }
 
