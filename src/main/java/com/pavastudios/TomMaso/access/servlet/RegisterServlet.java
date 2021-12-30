@@ -48,14 +48,13 @@ public class RegisterServlet extends MasterServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, errorString);
             return;
         }
-        Utente utente = UserQueries.registerUser(password1, username);
-        if (utente == null) {
+        try {
+            Utente utente = UserQueries.registerUser(password1, username);
+            session.setUtente(utente);
+            resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath()));
+        }catch (SQLException e){
             resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Username già esistenti");
-            return;
         }
-        session.setUtente(utente);
-        resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath()));
-
     }
 
 }
