@@ -42,14 +42,6 @@
     $("#navbarLoginSubmit").click(function () {
         const username = $("#username-login").val();
         const password = $("#password-login").val();
-        if(password.length<5){
-            showError("La password deve contenere almeno 5 caratteri!");
-            return;
-        }
-        if(username.length<5){
-            showError("L'username deve contenere almeno 5 caratteri!");
-            return;
-        }
         $.ajax({
             type: 'POST',
             url: '${pageContext.request.contextPath}/login<%=request.getAttribute("rewrite")%>',
@@ -82,7 +74,7 @@
             return;
         }
         if(!isStandardName(username)){
-            showError("L'username non valido!");
+            showError("L'username non è valido!");
             return;
         }
         $.ajax({
