@@ -18,15 +18,17 @@ public class GlobalConnection {
     public static MasterConnection CONNECTION;
     private static boolean initialized = false;
 
-    private static void startConnection(){
-        Connection conn = null;
-        try {
-            Context initCtx = new InitialContext();
-            Context encCtx = (Context) initCtx.lookup("java:comp/env");
-            DataSource ds = (DataSource) encCtx.lookup("jdbc/tommaso");
-            conn = ds.getConnection();
-        } catch (SQLException | NamingException e) {
-            e.printStackTrace();
+    private static void startConnection(Connection fakeDB){
+        Connection conn = fakeDB;
+        if(conn==null) {
+            try {
+                Context initCtx = new InitialContext();
+                Context encCtx = (Context) initCtx.lookup("java:comp/env");
+                DataSource ds = (DataSource) encCtx.lookup("jdbc/tommaso");
+                conn = ds.getConnection();
+            } catch (SQLException | NamingException e) {
+                e.printStackTrace();
+            }
         }
         CONNECTION = new MasterConnection(conn);
         initialized = true;
@@ -37,9 +39,9 @@ public class GlobalConnection {
      *
      */
 
-    public static void init() throws SQLException, InvocationTargetException, IllegalAccessException {
+    public static void init(Connection fakeDB) throws SQLException, InvocationTargetException, IllegalAccessException {
         if (initialized) return;
-        startConnection();
+        startConnection(fakeDB);
         Reflections reflections = new Reflections("com.pavastudios.TomMaso", Scanners.MethodsAnnotated);
         Set<Method> apiEndpoints = reflections.getMethodsAnnotatedWith(QueryInitializer.class);
         for (Method method : apiEndpoints) {

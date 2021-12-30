@@ -32,7 +32,7 @@ public class MainListener implements ServletContextListener {
         try {
             System.out.println("Connecting to DB...");
             Class.forName("org.mariadb.jdbc.Driver");
-            GlobalConnection.init();
+            GlobalConnection.init(null);
             createAdminAccount();
             System.out.println("Successfully connected to DB");
         } catch (Exception throwables) {
