@@ -1,0 +1,1214 @@
+{
+  "id": "54cf1540-063b-4edf-8f79-237b3a56c51d",
+  "version": "2.0",
+  "name": "TomMASO",
+  "url": "http://localhost:8080",
+  "tests": [{
+    "id": "37190b7e-c5d6-4978-9ed5-4b2271fb57d8",
+    "name": "UC1. TC2",
+    "commands": [{
+      "id": "fb40d3f6-ad2b-4a13-9265-f16b723d5977",
+      "comment": "",
+      "command": "open",
+      "target": "/TomMaso_war_exploded/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "03b3a245-455d-4f71-a7b3-6642f943a951",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1042x639",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "dd2332bd-195b-42c7-a113-70d7a2c00c60",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Registrati",
+      "targets": [
+        ["linkText=Registrati", "linkText"],
+        ["css=.nav-item:nth-child(2) > .ms-md-2", "css:finder"],
+        ["xpath=//a[contains(text(),'Registrati')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[4]", "xpath:href"],
+        ["xpath=//div/div/div/ul/li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9a566711-8fc7-45b8-8631-be4208ba3111",
+      "comment": "",
+      "command": "click",
+      "target": "id=username-register",
+      "targets": [
+        ["id=username-register", "id"],
+        ["name=username-register", "name"],
+        ["css=#username-register", "css:finder"],
+        ["xpath=//input[@id='username-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dbafe846-1a4f-432c-8b2b-52b0fa8f43bf",
+      "comment": "",
+      "command": "type",
+      "target": "id=username-register",
+      "targets": [
+        ["id=username-register", "id"],
+        ["name=username-register", "name"],
+        ["css=#username-register", "css:finder"],
+        ["xpath=//input[@id='username-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": "AAAAAAA!"
+    }, {
+      "id": "d188023f-5cb9-437e-8eed-48fa292fbf34",
+      "comment": "",
+      "command": "click",
+      "target": "id=password1-register",
+      "targets": [
+        ["id=password1-register", "id"],
+        ["name=psw1-register", "name"],
+        ["css=#password1-register", "css:finder"],
+        ["xpath=//input[@id='password1-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3eb985a3-6acb-4bc7-9ea1-4556e5f94b42",
+      "comment": "",
+      "command": "type",
+      "target": "id=password1-register",
+      "targets": [
+        ["id=password1-register", "id"],
+        ["name=psw1-register", "name"],
+        ["css=#password1-register", "css:finder"],
+        ["xpath=//input[@id='password1-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "BBBBBBBB"
+    }, {
+      "id": "58b741c9-7506-4e40-bc19-bc5447c6940d",
+      "comment": "",
+      "command": "click",
+      "target": "id=formNavbarRegister",
+      "targets": [
+        ["id=formNavbarRegister", "id"],
+        ["css=#formNavbarRegister", "css:finder"],
+        ["xpath=//form[@id='formNavbarRegister']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarRegister']/div/div/div[2]/form", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "418eca3b-d582-446b-a15c-a2c430c26e57",
+      "comment": "",
+      "command": "click",
+      "target": "id=password2-register",
+      "targets": [
+        ["id=password2-register", "id"],
+        ["name=psw2-register", "name"],
+        ["css=#password2-register", "css:finder"],
+        ["xpath=//input[@id='password2-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9de777e3-fb4f-4e36-8a8f-95e7d8427d03",
+      "comment": "",
+      "command": "type",
+      "target": "id=password2-register",
+      "targets": [
+        ["id=password2-register", "id"],
+        ["name=psw2-register", "name"],
+        ["css=#password2-register", "css:finder"],
+        ["xpath=//input[@id='password2-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "BBBBBBBB"
+    }, {
+      "id": "268d2540-1331-411a-b8e1-e747c293d19a",
+      "comment": "",
+      "command": "click",
+      "target": "id=navbarRegisterSubmit",
+      "targets": [
+        ["id=navbarRegisterSubmit", "id"],
+        ["css=#navbarRegisterSubmit", "css:finder"],
+        ["xpath=//button[@id='navbarRegisterSubmit']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarRegister']/div/div/div[3]/button[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[3]/button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "08980fcb-cc44-495e-ae6d-9a64d4aac827",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=#navbarRegister .modal-error",
+      "targets": [
+        ["css=#navbarRegister .modal-body", "css:finder"],
+        ["xpath=//div[@id='navbarRegister']/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "L'username non è valido!"
+    }]
+  }, {
+    "id": "0c6b7d0e-5abb-4c34-9dd8-98c2b12b3477",
+    "name": "UC1. TC3",
+    "commands": [{
+      "id": "b5469a59-3e6b-4e39-be7b-eb3b9e1eeb6b",
+      "comment": "",
+      "command": "open",
+      "target": "/TomMaso_war_exploded/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "93ca2ee4-ca3a-4756-acb9-2f420b9b996a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1042x639",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "323332bf-4696-47df-a12c-c0f20381a26a",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Registrati",
+      "targets": [
+        ["linkText=Registrati", "linkText"],
+        ["css=.nav-item:nth-child(2) > .ms-md-2", "css:finder"],
+        ["xpath=//a[contains(text(),'Registrati')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[4]", "xpath:href"],
+        ["xpath=//div/div/div/ul/li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e331015c-530e-4f95-b8c7-8a64be0f3460",
+      "comment": "",
+      "command": "click",
+      "target": "id=username-register",
+      "targets": [
+        ["id=username-register", "id"],
+        ["name=username-register", "name"],
+        ["css=#username-register", "css:finder"],
+        ["xpath=//input[@id='username-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ce40d08d-a45f-45ed-a6e2-c925f98128c3",
+      "comment": "",
+      "command": "type",
+      "target": "id=username-register",
+      "targets": [
+        ["id=username-register", "id"],
+        ["name=username-register", "name"],
+        ["css=#username-register", "css:finder"],
+        ["xpath=//input[@id='username-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": "AAAAAAAA"
+    }, {
+      "id": "7f5a002d-123a-4c3a-acb1-9266e3bac9f9",
+      "comment": "",
+      "command": "click",
+      "target": "id=password1-register",
+      "targets": [
+        ["id=password1-register", "id"],
+        ["name=psw1-register", "name"],
+        ["css=#password1-register", "css:finder"],
+        ["xpath=//input[@id='password1-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5bc645dc-37e8-4b3d-b5b2-c42ed35f9ef9",
+      "comment": "",
+      "command": "type",
+      "target": "id=password1-register",
+      "targets": [
+        ["id=password1-register", "id"],
+        ["name=psw1-register", "name"],
+        ["css=#password1-register", "css:finder"],
+        ["xpath=//input[@id='password1-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "BBBBBBBB"
+    }, {
+      "id": "b8cb33cc-cfc3-4651-94e3-a2945baa2255",
+      "comment": "",
+      "command": "click",
+      "target": "id=formNavbarRegister",
+      "targets": [
+        ["id=formNavbarRegister", "id"],
+        ["css=#formNavbarRegister", "css:finder"],
+        ["xpath=//form[@id='formNavbarRegister']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarRegister']/div/div/div[2]/form", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9c624ccb-f82b-4615-9660-0a29f10d03b1",
+      "comment": "",
+      "command": "click",
+      "target": "id=password2-register",
+      "targets": [
+        ["id=password2-register", "id"],
+        ["name=psw2-register", "name"],
+        ["css=#password2-register", "css:finder"],
+        ["xpath=//input[@id='password2-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "45639ba8-db79-41c6-a714-44e3442980c3",
+      "comment": "",
+      "command": "type",
+      "target": "id=password2-register",
+      "targets": [
+        ["id=password2-register", "id"],
+        ["name=psw2-register", "name"],
+        ["css=#password2-register", "css:finder"],
+        ["xpath=//input[@id='password2-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "BBBBBBBB"
+    }, {
+      "id": "6c599d1c-939f-42b9-814a-a0fb0dd49056",
+      "comment": "",
+      "command": "click",
+      "target": "id=navbarRegisterSubmit",
+      "targets": [
+        ["id=navbarRegisterSubmit", "id"],
+        ["css=#navbarRegisterSubmit", "css:finder"],
+        ["xpath=//button[@id='navbarRegisterSubmit']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarRegister']/div/div/div[3]/button[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[3]/button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7906d75b-36e6-4823-97a6-1aa3612aa22d",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=#navbarRegister .modal-error",
+      "targets": [
+        ["css=#navbarRegister .modal-body", "css:finder"],
+        ["xpath=//div[@id='navbarRegister']/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "Impossibile registrare l'account"
+    }]
+  }, {
+    "id": "3cd3c28b-53da-4e7d-b2d3-66f11bc15151",
+    "name": "UC1. TC4",
+    "commands": [{
+      "id": "2a5675e6-89ce-4a87-a225-88faae4a3fd7",
+      "comment": "",
+      "command": "open",
+      "target": "/TomMaso_war_exploded/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ab60782e-6aae-4080-ba35-9e954fa22a32",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1042x639",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a3ddb305-5bba-43ce-8e76-3caa7127575d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Registrati",
+      "targets": [
+        ["linkText=Registrati", "linkText"],
+        ["css=.nav-item:nth-child(2) > .ms-md-2", "css:finder"],
+        ["xpath=//a[contains(text(),'Registrati')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[4]", "xpath:href"],
+        ["xpath=//div/div/div/ul/li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "afe51ea9-b698-497c-9e58-10d4baf52065",
+      "comment": "",
+      "command": "click",
+      "target": "id=username-register",
+      "targets": [
+        ["id=username-register", "id"],
+        ["name=username-register", "name"],
+        ["css=#username-register", "css:finder"],
+        ["xpath=//input[@id='username-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1801eebf-6fb3-4157-8f71-722bd57f0a0e",
+      "comment": "",
+      "command": "type",
+      "target": "id=username-register",
+      "targets": [
+        ["id=username-register", "id"],
+        ["name=username-register", "name"],
+        ["css=#username-register", "css:finder"],
+        ["xpath=//input[@id='username-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": "XXXXXXX"
+    }, {
+      "id": "da33556e-1fe6-4a69-92e1-9fd82fc54fa6",
+      "comment": "",
+      "command": "click",
+      "target": "id=password1-register",
+      "targets": [
+        ["id=password1-register", "id"],
+        ["name=psw1-register", "name"],
+        ["css=#password1-register", "css:finder"],
+        ["xpath=//input[@id='password1-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7d6d6452-7888-4c92-88ed-bda3613926b1",
+      "comment": "",
+      "command": "type",
+      "target": "id=password1-register",
+      "targets": [
+        ["id=password1-register", "id"],
+        ["name=psw1-register", "name"],
+        ["css=#password1-register", "css:finder"],
+        ["xpath=//input[@id='password1-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "BBBBBBB"
+    }, {
+      "id": "a095e95e-8d90-4090-9357-2a5027658f44",
+      "comment": "",
+      "command": "click",
+      "target": "id=formNavbarRegister",
+      "targets": [
+        ["id=formNavbarRegister", "id"],
+        ["css=#formNavbarRegister", "css:finder"],
+        ["xpath=//form[@id='formNavbarRegister']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarRegister']/div/div/div[2]/form", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e525c3b1-d707-4591-b9f1-bb7de3a44322",
+      "comment": "",
+      "command": "click",
+      "target": "id=password2-register",
+      "targets": [
+        ["id=password2-register", "id"],
+        ["name=psw2-register", "name"],
+        ["css=#password2-register", "css:finder"],
+        ["xpath=//input[@id='password2-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c39ca7ec-e91f-42d6-b5a1-b09218cf615d",
+      "comment": "",
+      "command": "type",
+      "target": "id=password2-register",
+      "targets": [
+        ["id=password2-register", "id"],
+        ["name=psw2-register", "name"],
+        ["css=#password2-register", "css:finder"],
+        ["xpath=//input[@id='password2-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "BBBBBBB"
+    }, {
+      "id": "10a44158-5c79-4514-a0e3-9503e1d4780d",
+      "comment": "",
+      "command": "click",
+      "target": "id=navbarRegisterSubmit",
+      "targets": [
+        ["id=navbarRegisterSubmit", "id"],
+        ["css=#navbarRegisterSubmit", "css:finder"],
+        ["xpath=//button[@id='navbarRegisterSubmit']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarRegister']/div/div/div[3]/button[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[3]/button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "43c0a663-321d-4c67-8797-33da560925d7",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=#navbarRegister .modal-error",
+      "targets": [
+        ["css=#navbarRegister .modal-body", "css:finder"],
+        ["xpath=//div[@id='navbarRegister']/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "La password deve contenere almeno 8 caratteri"
+    }]
+  }, {
+    "id": "5447af9a-99a7-4e81-807c-966d84642498",
+    "name": "UC1. TC1",
+    "commands": [{
+      "id": "99cef088-f83e-4da8-b16f-18f6788dd422",
+      "comment": "",
+      "command": "open",
+      "target": "/TomMaso_war_exploded/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a90dba4c-b66c-47b9-b3e1-22a13edcadd9",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1042x639",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b19fd7a9-88a8-4fce-82b6-16f386202ffc",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Registrati",
+      "targets": [
+        ["linkText=Registrati", "linkText"],
+        ["css=.nav-item:nth-child(2) > .ms-md-2", "css:finder"],
+        ["xpath=//a[contains(text(),'Registrati')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[4]", "xpath:href"],
+        ["xpath=//div/div/div/ul/li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "14358852-9257-4e1d-9c88-966a412684cc",
+      "comment": "",
+      "command": "click",
+      "target": "id=username-register",
+      "targets": [
+        ["id=username-register", "id"],
+        ["name=username-register", "name"],
+        ["css=#username-register", "css:finder"],
+        ["xpath=//input[@id='username-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c62529f0-5c09-493f-bc06-061901156eb3",
+      "comment": "",
+      "command": "type",
+      "target": "id=username-register",
+      "targets": [
+        ["id=username-register", "id"],
+        ["name=username-register", "name"],
+        ["css=#username-register", "css:finder"],
+        ["xpath=//input[@id='username-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": "AAAAAAAA"
+    }, {
+      "id": "75b73ad3-91e0-40e9-8282-feaa829f4e81",
+      "comment": "",
+      "command": "click",
+      "target": "id=password1-register",
+      "targets": [
+        ["id=password1-register", "id"],
+        ["name=psw1-register", "name"],
+        ["css=#password1-register", "css:finder"],
+        ["xpath=//input[@id='password1-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "58e7601e-d402-49a4-9828-01cbbdf9b8cd",
+      "comment": "",
+      "command": "type",
+      "target": "id=password1-register",
+      "targets": [
+        ["id=password1-register", "id"],
+        ["name=psw1-register", "name"],
+        ["css=#password1-register", "css:finder"],
+        ["xpath=//input[@id='password1-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "BBBBBBBBB"
+    }, {
+      "id": "fd96af60-a5d7-49b4-84e4-9e5aad7de992",
+      "comment": "",
+      "command": "click",
+      "target": "id=formNavbarRegister",
+      "targets": [
+        ["id=formNavbarRegister", "id"],
+        ["css=#formNavbarRegister", "css:finder"],
+        ["xpath=//form[@id='formNavbarRegister']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarRegister']/div/div/div[2]/form", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "74602da6-6526-4090-a2d6-d2425fdac5a9",
+      "comment": "",
+      "command": "click",
+      "target": "id=password2-register",
+      "targets": [
+        ["id=password2-register", "id"],
+        ["name=psw2-register", "name"],
+        ["css=#password2-register", "css:finder"],
+        ["xpath=//input[@id='password2-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a81e95f5-a342-43af-872d-0ff9eb0a64cf",
+      "comment": "",
+      "command": "type",
+      "target": "id=password2-register",
+      "targets": [
+        ["id=password2-register", "id"],
+        ["name=psw2-register", "name"],
+        ["css=#password2-register", "css:finder"],
+        ["xpath=//input[@id='password2-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "BBBBBBBBB"
+    }, {
+      "id": "a11ebd1c-3097-4f1e-beee-4d37e6097fd2",
+      "comment": "",
+      "command": "click",
+      "target": "id=navbarRegisterSubmit",
+      "targets": [
+        ["id=navbarRegisterSubmit", "id"],
+        ["css=#navbarRegisterSubmit", "css:finder"],
+        ["xpath=//button[@id='navbarRegisterSubmit']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarRegister']/div/div/div[3]/button[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[3]/button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "05261c6a-986a-474b-a235-cb7a21feb50a",
+      "comment": "",
+      "command": "waitForElementPresent",
+      "target": "id=nav-svg-user",
+      "targets": [],
+      "value": "30000"
+    }]
+  }, {
+    "id": "fd46cf7c-a57b-4c47-b06f-535e7f329a58",
+    "name": "UC1. TC5",
+    "commands": [{
+      "id": "6d6667e6-7b5c-4ccf-af0d-60925952792d",
+      "comment": "",
+      "command": "open",
+      "target": "/TomMaso_war_exploded/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f3db0656-7b7b-462e-8901-bfc5642a2f2c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1042x639",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1180055e-803d-4ccd-b5ea-205cf38bf6b9",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Registrati",
+      "targets": [
+        ["linkText=Registrati", "linkText"],
+        ["css=.nav-item:nth-child(2) > .ms-md-2", "css:finder"],
+        ["xpath=//a[contains(text(),'Registrati')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[4]", "xpath:href"],
+        ["xpath=//div/div/div/ul/li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "23ca2060-217a-4d88-8ee8-d9dc16ca6679",
+      "comment": "",
+      "command": "click",
+      "target": "id=username-register",
+      "targets": [
+        ["id=username-register", "id"],
+        ["name=username-register", "name"],
+        ["css=#username-register", "css:finder"],
+        ["xpath=//input[@id='username-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8cfc9dd3-4629-434a-8f46-aa128a28824d",
+      "comment": "",
+      "command": "type",
+      "target": "id=username-register",
+      "targets": [
+        ["id=username-register", "id"],
+        ["name=username-register", "name"],
+        ["css=#username-register", "css:finder"],
+        ["xpath=//input[@id='username-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": "XXXXXXXX"
+    }, {
+      "id": "6d8a5cf2-52d4-422f-a9d2-cc53f9fcaabd",
+      "comment": "",
+      "command": "click",
+      "target": "id=password1-register",
+      "targets": [
+        ["id=password1-register", "id"],
+        ["name=psw1-register", "name"],
+        ["css=#password1-register", "css:finder"],
+        ["xpath=//input[@id='password1-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cac11267-e6af-4afe-8d00-1b973073de89",
+      "comment": "",
+      "command": "type",
+      "target": "id=password1-register",
+      "targets": [
+        ["id=password1-register", "id"],
+        ["name=psw1-register", "name"],
+        ["css=#password1-register", "css:finder"],
+        ["xpath=//input[@id='password1-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "BBBBBBBBB"
+    }, {
+      "id": "7861bc89-ff81-47c9-80fa-bbbc3157429a",
+      "comment": "",
+      "command": "click",
+      "target": "id=formNavbarRegister",
+      "targets": [
+        ["id=formNavbarRegister", "id"],
+        ["css=#formNavbarRegister", "css:finder"],
+        ["xpath=//form[@id='formNavbarRegister']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarRegister']/div/div/div[2]/form", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]/form", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "777437f9-1fd1-4228-a8fc-98a71b670393",
+      "comment": "",
+      "command": "click",
+      "target": "id=password2-register",
+      "targets": [
+        ["id=password2-register", "id"],
+        ["name=psw2-register", "name"],
+        ["css=#password2-register", "css:finder"],
+        ["xpath=//input[@id='password2-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9eeee07d-f56e-49a7-842e-275fbfa918e5",
+      "comment": "",
+      "command": "type",
+      "target": "id=password2-register",
+      "targets": [
+        ["id=password2-register", "id"],
+        ["name=psw2-register", "name"],
+        ["css=#password2-register", "css:finder"],
+        ["xpath=//input[@id='password2-register']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarRegister']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "BBBBBBBB"
+    }, {
+      "id": "03bbdc83-6a02-4f48-8bcb-e5d731fbe857",
+      "comment": "",
+      "command": "click",
+      "target": "id=navbarRegisterSubmit",
+      "targets": [
+        ["id=navbarRegisterSubmit", "id"],
+        ["css=#navbarRegisterSubmit", "css:finder"],
+        ["xpath=//button[@id='navbarRegisterSubmit']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarRegister']/div/div/div[3]/button[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[3]/button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7865eb24-d48b-4ba3-8e46-5acaf1fdb0e9",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=#navbarRegister .modal-error",
+      "targets": [
+        ["css=#navbarRegister .modal-body", "css:finder"],
+        ["xpath=//div[@id='navbarRegister']/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div[2]", "xpath:position"]
+      ],
+      "value": "Le password non corrispondono"
+    }, {
+      "id": "f47b04bc-cfc4-411c-bd2f-6e3c69cd88d5",
+      "comment": "",
+      "command": "",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "8e0d41c5-6ae2-4ad3-9a74-3686b2bcd14f",
+    "name": "UC2. TC1",
+    "commands": [{
+      "id": "c582a1c9-bdb9-4248-8c01-f43eaf8d1d00",
+      "comment": "",
+      "command": "open",
+      "target": "/TomMaso_war_exploded/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fca3ad7b-6be1-4da2-a434-7ce7ecc2a9a7",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav-item > .me-md-2", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/ul/li/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[3]", "xpath:href"],
+        ["xpath=//div/div/div/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c89cb905-d67d-4ee3-9710-0e5959dee95b",
+      "comment": "",
+      "command": "click",
+      "target": "id=username-login",
+      "targets": [
+        ["id=username-login", "id"],
+        ["name=username", "name"],
+        ["css=#username-login", "css:finder"],
+        ["xpath=//input[@id='username-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4e502008-dcdf-4ea9-ab2a-0f7e5149dc1e",
+      "comment": "",
+      "command": "type",
+      "target": "id=username-login",
+      "targets": [
+        ["id=username-login", "id"],
+        ["name=username", "name"],
+        ["css=#username-login", "css:finder"],
+        ["xpath=//input[@id='username-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": "a.allocca"
+    }, {
+      "id": "e9bdcbf1-a88a-4285-8142-891758b6ae6c",
+      "comment": "",
+      "command": "click",
+      "target": "id=password-login",
+      "targets": [
+        ["id=password-login", "id"],
+        ["name=password", "name"],
+        ["css=#password-login", "css:finder"],
+        ["xpath=//input[@id='password-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ffb286cd-cf0b-4e3b-9a9d-71dd32817a78",
+      "comment": "",
+      "command": "type",
+      "target": "id=password-login",
+      "targets": [
+        ["id=password-login", "id"],
+        ["name=password", "name"],
+        ["css=#password-login", "css:finder"],
+        ["xpath=//input[@id='password-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Allocca123"
+    }, {
+      "id": "45c776bc-cbce-46b1-ab16-f8c2a74caa85",
+      "comment": "",
+      "command": "click",
+      "target": "id=navbarLoginSubmit",
+      "targets": [
+        ["id=navbarLoginSubmit", "id"],
+        ["css=#navbarLoginSubmit", "css:finder"],
+        ["xpath=//button[@id='navbarLoginSubmit']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarLogin']/div/div/div[3]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Entra')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "46b5139c-5983-4050-9289-b7bd0913ceb9",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "id=nav-svg-user",
+      "targets": [],
+      "value": "30000"
+    }]
+  }, {
+    "id": "f1cc2ffa-d17f-4bfe-ab10-e656f8febb73",
+    "name": "UC2. TC2",
+    "commands": [{
+      "id": "1f8df05d-2cff-4f0f-b677-33e1ca00d31a",
+      "comment": "",
+      "command": "open",
+      "target": "/TomMaso_war_exploded/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "de87ab90-1c37-42a6-8d7c-6cf423efad65",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav-item > .me-md-2", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/ul/li/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[3]", "xpath:href"],
+        ["xpath=//div/div/div/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "507da2cf-1d29-4a94-a79c-069ca0ea3f2b",
+      "comment": "",
+      "command": "click",
+      "target": "id=username-login",
+      "targets": [
+        ["id=username-login", "id"],
+        ["name=username", "name"],
+        ["css=#username-login", "css:finder"],
+        ["xpath=//input[@id='username-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c4efa985-bf48-4742-963d-f4fc249bdd48",
+      "comment": "",
+      "command": "type",
+      "target": "id=username-login",
+      "targets": [
+        ["id=username-login", "id"],
+        ["name=username", "name"],
+        ["css=#username-login", "css:finder"],
+        ["xpath=//input[@id='username-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": "a.allocca"
+    }, {
+      "id": "d396d09f-abb4-4bdf-82c1-c648b200db9d",
+      "comment": "",
+      "command": "click",
+      "target": "id=password-login",
+      "targets": [
+        ["id=password-login", "id"],
+        ["name=password", "name"],
+        ["css=#password-login", "css:finder"],
+        ["xpath=//input[@id='password-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ff0a3ce5-a1cc-407d-ab71-98a53b9b0055",
+      "comment": "",
+      "command": "type",
+      "target": "id=password-login",
+      "targets": [
+        ["id=password-login", "id"],
+        ["name=password", "name"],
+        ["css=#password-login", "css:finder"],
+        ["xpath=//input[@id='password-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "DiCostanzo321"
+    }, {
+      "id": "ddd9cb19-e708-4193-b494-cd1f37209ddb",
+      "comment": "",
+      "command": "click",
+      "target": "id=navbarLoginSubmit",
+      "targets": [
+        ["id=navbarLoginSubmit", "id"],
+        ["css=#navbarLoginSubmit", "css:finder"],
+        ["xpath=//button[@id='navbarLoginSubmit']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarLogin']/div/div/div[3]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Entra')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a64207d4-5d3b-4277-86b5-ff105a10f70e",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=#navbarLogin .modal-error",
+      "targets": [],
+      "value": "Impossibile eseguire login!"
+    }]
+  }, {
+    "id": "a93dde21-4232-4fed-8c76-818253291997",
+    "name": "UC2. TC3",
+    "commands": [{
+      "id": "155b57e4-5658-48ee-b87a-acaa5b76e7f1",
+      "comment": "",
+      "command": "open",
+      "target": "/TomMaso_war_exploded/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a1f07b37-7554-4b73-a7d7-eded7ba781f6",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav-item > .me-md-2", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/ul/li/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[3]", "xpath:href"],
+        ["xpath=//div/div/div/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c3ba51fd-25a9-4ca7-88dd-d0bce8a0b03b",
+      "comment": "",
+      "command": "click",
+      "target": "id=username-login",
+      "targets": [
+        ["id=username-login", "id"],
+        ["name=username", "name"],
+        ["css=#username-login", "css:finder"],
+        ["xpath=//input[@id='username-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "566299df-0db1-4a78-afd4-f5dc2ccf0b2e",
+      "comment": "",
+      "command": "type",
+      "target": "id=username-login",
+      "targets": [
+        ["id=username-login", "id"],
+        ["name=username", "name"],
+        ["css=#username-login", "css:finder"],
+        ["xpath=//input[@id='username-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": "a.delucia"
+    }, {
+      "id": "78552b90-5af0-4931-b785-abc7e5614f62",
+      "comment": "",
+      "command": "click",
+      "target": "id=password-login",
+      "targets": [
+        ["id=password-login", "id"],
+        ["name=password", "name"],
+        ["css=#password-login", "css:finder"],
+        ["xpath=//input[@id='password-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a8478420-031e-4272-bef5-5ea36fc41313",
+      "comment": "",
+      "command": "type",
+      "target": "id=password-login",
+      "targets": [
+        ["id=password-login", "id"],
+        ["name=password", "name"],
+        ["css=#password-login", "css:finder"],
+        ["xpath=//input[@id='password-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "AAAAAAAAA"
+    }, {
+      "id": "be6efe8f-2e3e-43ca-9a86-dbb9be475479",
+      "comment": "",
+      "command": "click",
+      "target": "id=navbarLoginSubmit",
+      "targets": [
+        ["id=navbarLoginSubmit", "id"],
+        ["css=#navbarLoginSubmit", "css:finder"],
+        ["xpath=//button[@id='navbarLoginSubmit']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarLogin']/div/div/div[3]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Entra')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6d7b61c9-9a73-4a81-a018-0fc6bf7e7076",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=#navbarLogin .modal-error",
+      "targets": [],
+      "value": "Impossibile eseguire login!"
+    }]
+  }, {
+    "id": "ecb5ecc0-4f17-4b4d-a4c0-de93c021d546",
+    "name": "UC2. TC4",
+    "commands": [{
+      "id": "7363d60f-dae5-4f9b-a47c-d36228b0b43f",
+      "comment": "",
+      "command": "open",
+      "target": "/TomMaso_war_exploded/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0887366a-3daa-491f-a58f-ada8d592b5fb",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav-item > .me-md-2", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/ul/li/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[3]", "xpath:href"],
+        ["xpath=//div/div/div/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7f611e3a-a793-4c3b-a178-c5bb590a9965",
+      "comment": "",
+      "command": "click",
+      "target": "id=username-login",
+      "targets": [
+        ["id=username-login", "id"],
+        ["name=username", "name"],
+        ["css=#username-login", "css:finder"],
+        ["xpath=//input[@id='username-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9c786dca-3e44-460a-b15d-bc8a639caede",
+      "comment": "",
+      "command": "type",
+      "target": "id=username-login",
+      "targets": [
+        ["id=username-login", "id"],
+        ["name=username", "name"],
+        ["css=#username-login", "css:finder"],
+        ["xpath=//input[@id='username-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/form/div/input", "xpath:position"]
+      ],
+      "value": "utenteBannato"
+    }, {
+      "id": "17788bf4-9f08-41f2-9501-a24e516654f3",
+      "comment": "",
+      "command": "click",
+      "target": "id=password-login",
+      "targets": [
+        ["id=password-login", "id"],
+        ["name=password", "name"],
+        ["css=#password-login", "css:finder"],
+        ["xpath=//input[@id='password-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "de0197be-2191-4ea1-8caf-8811bd9eed65",
+      "comment": "",
+      "command": "type",
+      "target": "id=password-login",
+      "targets": [
+        ["id=password-login", "id"],
+        ["name=password", "name"],
+        ["css=#password-login", "css:finder"],
+        ["xpath=//input[@id='password-login']", "xpath:attributes"],
+        ["xpath=//form[@id='formNavbarLogin']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "bannato12"
+    }, {
+      "id": "ad64b441-f35e-4079-a089-a84de74e1407",
+      "comment": "",
+      "command": "click",
+      "target": "id=navbarLoginSubmit",
+      "targets": [
+        ["id=navbarLoginSubmit", "id"],
+        ["css=#navbarLoginSubmit", "css:finder"],
+        ["xpath=//button[@id='navbarLoginSubmit']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarLogin']/div/div/div[3]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Entra')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "21dd6a69-e181-4868-9c38-6fffb47dbe5b",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=#navbarLogin .modal-error",
+      "targets": [],
+      "value": "Impossibile eseguire login!"
+    }]
+  }],
+  "suites": [{
+    "id": "6c889d59-d0a8-4350-aee1-feffe54f2a25",
+    "name": "UserSignUp",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["fd46cf7c-a57b-4c47-b06f-535e7f329a58", "37190b7e-c5d6-4978-9ed5-4b2271fb57d8", "0c6b7d0e-5abb-4c34-9dd8-98c2b12b3477", "3cd3c28b-53da-4e7d-b2d3-66f11bc15151", "5447af9a-99a7-4e81-807c-966d84642498"]
+  }, {
+    "id": "e8a09ef2-cde1-4fb8-913c-f7c956346246",
+    "name": "Login",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["8e0d41c5-6ae2-4ad3-9a74-3686b2bcd14f", "f1cc2ffa-d17f-4bfe-ab10-e656f8febb73", "a93dde21-4232-4fed-8c76-818253291997", "ecb5ecc0-4f17-4b4d-a4c0-de93c021d546"]
+  }],
+  "urls": ["http://localhost:8080/"],
+  "plugins": []
+}
