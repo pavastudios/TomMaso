@@ -41,13 +41,17 @@
     <orderEntry type="library" name="junit.jupiter.engine" level="project" />
     <orderEntry type="library" name="seleniumhq.selenium.java" level="project" />
     <orderEntry type="library" name="jetbrains.annotations" level="project" />
+    <orderEntry type="library" name="mockito.core" level="project" />
+    <orderEntry type="library" name="dbunit" level="project" />
+    <orderEntry type="library" name="h2database.h2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-params:5.8.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apiguardian:apiguardian-api:1.1.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.8.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.2.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.8.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:4.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains:annotations:22.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.6.2" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
-    <orderEntry type="library" name="mockito.core" level="project" />
-    <orderEntry type="library" name="dbunit" level="project" />
-    <orderEntry type="library" name="h2database.h2" level="project" />
-    <orderEntry type="library" name="junit.jupiter.params" level="project" />
   </component>
 </module>
