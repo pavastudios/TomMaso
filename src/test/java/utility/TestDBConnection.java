@@ -30,11 +30,11 @@ public class TestDBConnection {
                         .getResourceAsStream("db/dbData.xml"));
         t.setSetUpOperation(DatabaseOperation.REFRESH);
         t.setTearDownOperation(DatabaseOperation.DELETE_ALL);
-
         t.setDataSet(initialState);
 
         connection = t.getConnection().getConnection();
         GlobalConnection.init(connection);
+        t.onSetup();
     }
 
     @BeforeEach

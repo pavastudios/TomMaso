@@ -20,6 +20,10 @@ public class Session {
     private Session() {
     }
 
+    public Session(Utente u) {
+        loggedUser = u;
+    }
+
     public static Session loadSession(HttpServletRequest req) throws SQLException {
         HttpSession session = req.getSession(true);
         Session s = (Session) session.getAttribute(SESSION_FIELD);

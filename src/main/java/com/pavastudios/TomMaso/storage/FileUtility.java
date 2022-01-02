@@ -34,13 +34,18 @@ public class FileUtility {
      * @param input istanza di InputStream
      * @param output istanza di OutputStream
      * @throws IOException Problemi con la scrittura del file
+     * @return booleano che indica se la funziona ha scritto o meno
      */
-    public static void writeFile(InputStream input, OutputStream output) throws IOException {
+    public static boolean writeFile(InputStream input, OutputStream output) throws IOException {
+        if (input == null || output == null) {
+            return false;
+        }
         byte[] buffer = new byte[BUFFER_SIZE];
         int len;
         while ((len = input.read(buffer)) != -1) {
             output.write(buffer, 0, len);
         }
+        return true;
     }
 
     /**
