@@ -19,7 +19,7 @@
         File file = (File) request.getAttribute("file");
         Blog blog=(Blog)request.getAttribute("blog");
         List<Commento> comments = (List<Commento>) request.getAttribute("comments");
-        String content = FileUtility.escapeMDFile(file);
+        String content = Entities.escape(FileUtility.escapeMDFile(file)).replace("&gt;",">");
     %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/comments.css">
     <title><%=file.getName()%></title>
