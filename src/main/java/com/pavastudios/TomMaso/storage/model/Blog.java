@@ -114,6 +114,10 @@ public class Blog implements GenericModel {
         writer.endObject();
     }
 
+    /**
+     * Metodo per ottenere il percorso della root del blog
+     * @return directory di root del blog
+     */
     public File getRootPath() {
         return new File(FileUtility.BLOG_FILES_FOLDER, getNome());
     }

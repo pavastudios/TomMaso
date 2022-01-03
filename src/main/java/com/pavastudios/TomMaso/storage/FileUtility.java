@@ -2,6 +2,7 @@ package com.pavastudios.TomMaso.storage;
 
 import com.pavastudios.TomMaso.storage.model.Blog;
 import com.pavastudios.TomMaso.test.PersonalFileDir;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.servlet.ServletContext;
@@ -11,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -54,6 +56,7 @@ public class FileUtility {
      * @return stringa contenente l'URL relativo del file
      */
     public static String relativeUrl(File file) {
+        if (file == null) return null;
         String name = file.getAbsolutePath();
         name = name.replace('\\', '/');//c'è gente che non conosce linux
         return name.substring(PATH_LENGTH);
@@ -65,7 +68,7 @@ public class FileUtility {
      * @param s stringa su cui effetturare l'escape
      * @return stringa su cui è stato effettuato l'escape
      */
-    public static String escapeForMarked(String s) {
+    public static String escapeForMarked(@NotNull String s) {
         return s.replace("\\", "\\\\")
                 .replace("\n", "\\n")
                 .replace("\r", "")
@@ -80,7 +83,11 @@ public class FileUtility {
      * @throws IOException Problemi con la lettura del file
      */
     public static String headFile(File file, int numRows) throws IOException {
+        if (file == null) return null;
+        if (numRows <= 0) return null;
+
         List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
+
         if (lines.size() >= numRows) {
             lines = lines.subList(0, numRows);
         }
@@ -90,7 +97,7 @@ public class FileUtility {
     }
 
     /**
-     * Metodo per ottenere la lista di file appartenenti ad un blog
+     * Metodo per ottenere la lista di file appartenenti ad un blog ordinati per data di creazione
      * @param context contesto della servlet
      * @param blog blog da cui prelevare i file
      * @return lista contenente la lista dei file
@@ -98,10 +105,9 @@ public class FileUtility {
     public static List<File> getPages(ServletContext context, Blog blog) {
         if (blog == null) return null;
         File main = blog.getRootPath();
-        ArrayList<File> files = new ArrayList<>();
+        List<File> files = new ArrayList<>();
         if (main.exists())
-            findMarkdownFiles(files, context, main);
-        files.trimToSize();
+            files = findMarkdownFiles(context, main);
         //Ordina per data di creazione
         files.sort((o1, o2) -> {
             try {
@@ -117,21 +123,20 @@ public class FileUtility {
 
     /**
      * Metodo che inserisce ricorsivamente tutti i file Markdown in una lista
-     * @param list lista in cui inserire i file
      * @param context contesto della servlet
      * @param file file attuale
      */
-    private static void findMarkdownFiles(ArrayList<File> list, ServletContext context, File file) {
-        if (file.isFile()) {
-            if (getFileType(context, file) == FileType.MARKDOWN) {
-                list.add(file);
-            }
-            return;
-        }
+    private static List<File> findMarkdownFiles(ServletContext context, File file) {
+        ArrayList<File> list = new ArrayList<>();
         File[] listFiles = file.listFiles();
-        if (listFiles == null) return;
-        for (File f : listFiles)
-            findMarkdownFiles(list, context, f);
+        if (listFiles == null) return Collections.emptyList();
+        for (File f : listFiles) {
+            if (getFileType(context, f) == FileType.MARKDOWN) {
+                list.add(f);
+            }
+        }
+        list.trimToSize();
+        return list;
     }
 
     /**
@@ -144,7 +149,7 @@ public class FileUtility {
         if (!file.exists()) return null;
         if (file.isDirectory()) return FileType.DIRECTORY;
         String mime = cont.getMimeType(file.getAbsolutePath());
-        System.out.println(file + ": " + mime);
+        //System.out.println(file + ": " + mime);
         if (mime == null) return FileType.UNKNOWN;
         if (mime.startsWith("image/")) return FileType.IMAGE;
         if (mime.startsWith("video/")) return FileType.VIDEO;
