@@ -282,6 +282,9 @@
             type: 'POST',
             url: '${pageContext.request.contextPath}/api/blog/delete-blog<%=request.getAttribute("rewrite")%>',
             data: { "blog-name": $("#deleteBlogHid").text() },
+            error: function (req,data,xxx){
+                showError(data["error"]);
+            },
             success: function (data) {
                 if (data["error"] !== undefined){
                     showError(data["error"]);
