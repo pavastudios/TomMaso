@@ -28,7 +28,7 @@
 
         <div  class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Riportato da
+                <h5 class="mb-1">Segnalato da
                     <a href="${pageContext.request.contextPath}/user/<%=report.getReporter().getUsername()%>"><%=report.getReporter().getUsername()%></a>
                      (<%=report.getType()%>)
                 </h5>
