@@ -14,6 +14,7 @@ public class SearchTest {
 
   @BeforeAll
   public static void setUp() {
+    System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver");
     driver = new FirefoxDriver();
     js = (JavascriptExecutor) driver;
   }
@@ -81,7 +82,6 @@ public class SearchTest {
     driver.findElement(By.id("navbarSearchType")).click();
     driver.findElement(By.id("navbarSearchBlog")).click();
     driver.findElement(By.id("navbarSearchText")).click();
-    driver.findElement(By.id("navbarSearchText")).sendKeys("DDDDDDDD");
     driver.findElement(By.id("navbarSearchText")).sendKeys("BBBBBBBB");
     driver.findElement(By.cssSelector(".btn:nth-child(4)")).click();
     Assertions.assertEquals(driver.getTitle(), ("Ultimi post - BBBBBBBB"));

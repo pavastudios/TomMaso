@@ -4,8 +4,10 @@
     <Utente id_utente="2" password="$6$Y3qbBoYp$ZT0KbgKtJy2Mq6paaYHc9VWccuYf/McTrLjLc75EkbRTaup5vN.xrqSBharH4Ba1OuDfaedjLtxPSf/kHv1G30" permessi="15" username="pollicino" />
     <Utente id_utente="3" password="$6$Y3qbBoYp$ZT0KbgKtJy2Mq6paaYHc9VWccuYf/McTrLjLc75EkbRTaup5vN.xrqSBharH4Ba1OuDfaedjLtxPSf/kHv1G30" permessi="15" username="briciole" />
 
-    <Blog id_blog="1" proprietario="2" nome="pitagora" visite="10" />
+    <Blog id_blog="1" proprietario="2" nome="pitagora" visite="30" />
     <Blog id_blog="2" proprietario="3" nome="toporagno" visite="10" />
+    <Blog id_blog="3" proprietario="2" nome="pita1" visite="20" />
+
     <Commento id_commento="1" mittente="3" testo="Io amo pitagora!" url_pagina="/pitagora/TeoremaDiPitagora.md" />
     <Commento id_commento="2" mittente="2" testo="Inquietante!" url_pagina="/toporagno/Toporagno.md" />
 
