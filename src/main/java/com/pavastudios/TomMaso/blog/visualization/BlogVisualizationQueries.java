@@ -6,6 +6,7 @@ import com.pavastudios.TomMaso.storage.model.Utente;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 public class BlogVisualizationQueries {
@@ -33,6 +34,7 @@ public class BlogVisualizationQueries {
      * @throws SQLException Problemi con il database
      */
     public static List<Blog> topBlogs(int count) throws SQLException {
+        count = Math.max(0, count);
         TOP_BLOG.setInt(1, count);
         ResultSet rs = TOP_BLOG.executeQuery();
         List<Blog> blogs = Queries.resultSetToList(Entities.BLOG, rs);
@@ -48,6 +50,7 @@ public class BlogVisualizationQueries {
      * @throws SQLException Problemi con il database
      */
     public static List<Blog> getBlogsUser(Utente u) throws SQLException {
+        if (u == null) return Collections.emptyList();
         FIND_BLOGS_OWNED_BY.setInt(1, u.getIdUtente());
         ResultSet rs = FIND_BLOGS_OWNED_BY.executeQuery();
         List<Blog> blogList = Queries.resultSetToList(Entities.BLOG, rs);

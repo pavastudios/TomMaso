@@ -51,6 +51,10 @@ public class Blog implements GenericModel {
         return BlogQueries.findBlogByName(parts[1]);
     }
 
+    public int getVisite() {
+        return visite;
+    }
+
     public Blog setVisite(int visite) {
         this.visite = visite;
         return this;
