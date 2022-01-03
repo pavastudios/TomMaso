@@ -3,6 +3,7 @@
     <Utente id_utente="1" password="$6$Y3qbBoYp$ZT0KbgKtJy2Mq6paaYHc9VWccuYf/McTrLjLc75EkbRTaup5vN.xrqSBharH4Ba1OuDfaedjLtxPSf/kHv1G30" permessi="15" username="admin" />
     <Utente id_utente="2" password="$6$Y3qbBoYp$ZT0KbgKtJy2Mq6paaYHc9VWccuYf/McTrLjLc75EkbRTaup5vN.xrqSBharH4Ba1OuDfaedjLtxPSf/kHv1G30" permessi="15" username="pollicino" />
     <Utente id_utente="3" password="$6$Y3qbBoYp$ZT0KbgKtJy2Mq6paaYHc9VWccuYf/McTrLjLc75EkbRTaup5vN.xrqSBharH4Ba1OuDfaedjLtxPSf/kHv1G30" permessi="15" username="briciole" />
+    <Utente id_utente="4" password="$6$Y3qbBoYp$ZT0KbgKtJy2Mq6paaYHc9VWccuYf/McTrLjLc75EkbRTaup5vN.xrqSBharH4Ba1OuDfaedjLtxPSf/kHv1G30" permessi="15" username="nochat" />
 
     <Blog id_blog="1" proprietario="2" nome="pitagora" visite="30" />
     <Blog id_blog="2" proprietario="3" nome="toporagno" visite="10" />
@@ -11,10 +12,10 @@
     <Commento id_commento="1" mittente="3" testo="Io amo pitagora!" url_pagina="/pitagora/TeoremaDiPitagora.md" />
     <Commento id_commento="2" mittente="2" testo="Inquietante!" url_pagina="/toporagno/Toporagno.md" />
 
-    <Chat id_chat="1" utente1="1" utente2="2" />
-    <Chat id_chat="2" utente1="2" utente2="3" />
-    <Messaggio id_messaggio="1" id_chat="1" mittente="1" testo="Sono un admin!" />
-    <Messaggio id_messaggio="2" id_chat="2" mittente="2" testo="Ti seguirò pure in capo al mondo" />
+    <Chat id_chat="10" utente1="1" utente2="2" />
+    <Chat id_chat="11" utente1="2" utente2="3" />
+    <Messaggio id_messaggio="9" id_chat="10" mittente="1" testo="Sono un admin!" />
+    <Messaggio id_messaggio="10" id_chat="11" mittente="2" testo="Ti seguirò pure in capo al mondo" />
 
     <Report id_report="1" tipo="0" url="/blogs/pitagora/TeoremaDiPitagora.md#comment-1" motivo="Ama Pitagora" reporter="2" target="3" />
     <Report id_report="2" tipo="1" url="/chat/admin/pollicino#m-2" motivo="Abuso di potere" reporter="2" target="1" />

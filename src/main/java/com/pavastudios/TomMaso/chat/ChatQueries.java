@@ -52,6 +52,7 @@ public class ChatQueries {
      */
     public static @Nullable Messaggio sendTextToChat(Chat chat, Utente mittente, String testo) throws SQLException {
         if (chat == null || mittente == null || testo == null) return null;
+        if (!chat.isPartecipant(mittente)) return null;
         SEND_MESSAGE.setInt(1, chat.getIdChat());
         SEND_MESSAGE.setInt(2, mittente.getIdUtente());
         SEND_MESSAGE.setString(3, testo);
