@@ -12,20 +12,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class UserSignUpTest {
   static JavascriptExecutor js;
   private static WebDriver driver;
-  private static Map<String, Object> vars;
 
   @BeforeAll
   public static void setUp() {
     System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver");
     driver = new FirefoxDriver();
     js = (JavascriptExecutor) driver;
-    vars = new HashMap<>();
   }
 
   @AfterAll
