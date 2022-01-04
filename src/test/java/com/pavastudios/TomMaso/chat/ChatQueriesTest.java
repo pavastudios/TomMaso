@@ -34,6 +34,7 @@ class ChatQueriesTest  extends TestDBConnection {
                 Arguments.of(ChatQueries.findChatById(10), UserQueries.findUserById(3), null ,false),
                 Arguments.of(ChatQueries.findChatById(10), null, "Chat_testing_is_awesome!" ,false),
                 Arguments.of(null, UserQueries.findUserById(3), "Chat_testing_is_awesome!" ,false),
+                Arguments.of(ChatQueries.findChatById(10), UserQueries.findUserById(1), "" ,false),
                 Arguments.of(ChatQueries.findChatById(10), UserQueries.findUserById(1), "Chat_testing_is_awesome!" ,true)
         );
     }
