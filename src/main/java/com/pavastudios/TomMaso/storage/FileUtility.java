@@ -141,14 +141,14 @@ public class FileUtility {
 
     /**
      * Metodo per ottenere il tipo di un file
-     * @param cont contesto della servlet
+     * @param ctx contesto della servlet
      * @param file file da ispezionare
      */
-    public static FileType getFileType(ServletContext cont, File file) {
-        if (file == null || cont == null) return null;
+    public static FileType getFileType(ServletContext ctx, File file) {
+        if (file == null || ctx == null) return null;
         if (!file.exists()) return null;
         if (file.isDirectory()) return FileType.DIRECTORY;
-        String mime = cont.getMimeType(file.getAbsolutePath());
+        String mime = ctx.getMimeType(file.getAbsolutePath());
         //System.out.println(file + ": " + mime);
         if (mime == null) return FileType.UNKNOWN;
         if (mime.startsWith("image/")) return FileType.IMAGE;
@@ -165,9 +165,10 @@ public class FileUtility {
      * @param pathInfo pathInfo della richiesta
      * @return File presente nel path costruito
      */
-    private static File pathToFile(File base, String pathInfo) {
+    public static File pathToFile(File base, String pathInfo) {
         if (pathInfo == null) return null;
         String[] parts = pathInfo.split("/");
+        if (parts.length == 0) return null;
         File file = base;
         for (int i = 1; i < parts.length; i++) {
             if (parts[i].equals("..")) return null;
@@ -181,7 +182,7 @@ public class FileUtility {
     }
 
     /**
-     * Metodo che cerca un blog in una directory dato un path di partenza
+     * Metodo che cerca un file in un blog dato un path di partenza
      * @param pathInfo path di partenza
      * @return File trovato
      */
@@ -216,6 +217,7 @@ public class FileUtility {
      * @throws IOException Problemi con la lettura del file
      */
     public static String escapeMDFile(File file) throws IOException {
+        assert file.exists();
         BufferedInputStream fis = new BufferedInputStream(new FileInputStream(file));
         StringBuilder content = new StringBuilder();
         int readChar;

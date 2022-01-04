@@ -138,16 +138,6 @@ class FileUtilityTest {
         );
     }
 
-    @ParameterizedTest(name = "{index} - {0}")
-    @MethodSource("notWorkingHeadFile")
-    @DisplayName("Not working headFile")
-    void headFileNotWorking(String content, int numrows) throws IOException {
-        File f = File.createTempFile("tmp","file");
-        f.deleteOnExit();
-        FileUtility.writeFile(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)), new FileOutputStream(f));
-        Assertions.assertNull(FileUtility.headFile(f, numrows));
-    }
-
     private static Stream<Arguments> workingGetPages () {
         ArrayList<String> l1 = new ArrayList<>();
         l1.add("file.md");
@@ -178,6 +168,16 @@ class FileUtilityTest {
     }
 
     @ParameterizedTest(name = "{index} - {0}")
+    @MethodSource("notWorkingHeadFile")
+    @DisplayName("Not working headFile")
+    void headFileNotWorking(String content, int numrows) throws IOException {
+        File f = File.createTempFile("tmp","file");
+        f.deleteOnExit();
+        FileUtility.writeFile(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)), new FileOutputStream(f));
+        Assertions.assertNull(FileUtility.headFile(f, numrows));
+    }
+
+    @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("workingGetPages")
     @DisplayName("Working getPages")
     void getPages(List<String> files, List<String> results) throws IOException {
@@ -204,19 +204,107 @@ class FileUtilityTest {
 
     }
 
-    @Test
-    void getFileType() {
-    }
 
     @Test
     void blogPathToFile() {
     }
 
-    @Test
-    void recursiveDelete() {
+    private static Stream<String> recursiveDelete () {
+        return Stream.of(
+                "file1.txt",
+                "file2.md",
+                "file3.mp3",
+                "file4.pdf",
+                "file5.png"
+        );
     }
 
-    @Test
-    void escapeMDFile() {
+    @ParameterizedTest(name = "{index} - {0}")
+    @MethodSource("recursiveDelete")
+    @DisplayName("Recursive delete")
+    void recursiveDelete(String file) throws IOException {
+        File f = new File("blog/files/");
+        f.mkdirs();
+
+        File tmp = new File(f, file);
+        tmp.createNewFile();
+
+        FileUtility.recursiveDelete(f.getParentFile());
+
+        Assertions.assertTrue(!f.exists() && !tmp.exists());
+    }
+
+    private static Stream<Arguments> escapeMD () {
+        return Stream.of(
+                Arguments.of(
+                        "test\rtest", "testtest"
+                ),
+                Arguments.of(
+                        "test\ntest", "test\\ntest"
+                ),
+                Arguments.of(
+                        "test\\test", "test\\\\test"
+                ),
+                Arguments.of(
+                        "test\"test", "test\\\"test"
+                )
+        );
+    }
+
+    @ParameterizedTest(name = "{index} - {0}")
+    @MethodSource("escapeMD")
+    @DisplayName("Escape MD File")
+    void escapeMDFile(String content, String result) throws IOException {
+        File f = File.createTempFile("tmp",".md");
+        f.deleteOnExit();
+        FileUtility.writeFile(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)), new FileOutputStream(f));
+
+        Assertions.assertEquals(result, FileUtility.escapeMDFile(f));
+    }
+
+    private static Stream<Arguments> workingPathToFile () {
+        return Stream.of(
+                Arguments.of(
+                        "/file.txt", "file.txt"
+                ),
+                Arguments.of(
+                        "/files/file.txt", "files/file.txt"
+                ),
+                Arguments.of(
+                        "/dir/subdir/file.txt", "dir/subdir/file.txt"
+                )
+        );
+    }
+
+    @ParameterizedTest(name = "{index} - {0}")
+    @MethodSource("workingPathToFile")
+    @DisplayName("Working pathToFile")
+    void pathToFileWorking(String input, String result) throws IOException {
+        File f = new File("blogs/files/");
+        f.mkdirs();
+        File resultFile = new File(f,result).getAbsoluteFile();
+
+        Assertions.assertEquals(resultFile, FileUtility.pathToFile(f, input));
+        FileUtility.recursiveDelete(f.getParentFile());
+    }
+
+    private static Stream<String> notWorkingPathToFile () {
+        return Stream.of(
+                "/..",
+                "/",
+                "///x",
+                null
+        );
+    }
+
+    @ParameterizedTest(name = "{index} - {0}")
+    @MethodSource("notWorkingPathToFile")
+    @DisplayName("Not working pathToFile")
+    void pathToFileNotWorking(String input) throws IOException {
+        File f = new File("blogs/files/");
+        f.mkdirs();
+
+        Assertions.assertNull(FileUtility.pathToFile(f, input));
+        FileUtility.recursiveDelete(f.getParentFile());
     }
 }
