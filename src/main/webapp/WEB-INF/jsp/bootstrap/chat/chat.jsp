@@ -33,6 +33,7 @@
   <div class="row justify-content-center mt-5">
     <textarea class="col-12 form-control" placeholder="Invia messaggio" id="messaggio"></textarea>
     <button class="col-12 btn btn-primary" id="invia">Invia <i class="fas fa-paper-plane me-4"></i></button>
+    <p class="text-danger modal-error"></p>
   </div>
   <%}%>
 </div>
@@ -191,6 +192,8 @@
       data: {
         "chat-id": $("#chat-id").val(),
         "message": $("#messaggio").val(),
+      }, error: function () {
+        showError("Impossibile inviare messaggio!");
       },
       success: function (data) {
         if (data["error"] !== undefined){

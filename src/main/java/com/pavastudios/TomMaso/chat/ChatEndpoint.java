@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @SuppressWarnings("unused")
-
 public class ChatEndpoint {
     @Endpoint(url = "/chat/send-message", requireLogin = true)
     private static void sendMessage(ApiParser parser, ApiWriter writer, Utente user) throws Exception {
@@ -32,7 +31,7 @@ public class ChatEndpoint {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "impossibile inviare messaggio");
         }
         m.writeJson(writer);
-    };
+    }
 
     @Endpoint(url = "/chat/create-chat", requireLogin = true)
     private static void createChat(ApiParser parser, ApiWriter writer, Utente user) throws Exception {
@@ -48,7 +47,7 @@ public class ChatEndpoint {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Chat già esistente");
         }
         chat.writeJson(writer);
-    };
+    }
 
     @Endpoint(url = "/chat/fetch-from-id", requireLogin = true)
     private static void fetchMessagesFromId(ApiParser parser, ApiWriter writer, Utente user) throws Exception {
@@ -64,7 +63,7 @@ public class ChatEndpoint {
         for (Messaggio m : messaggi)
             m.writeJson(writer);
         writer.endArray();
-    };
+    }
 
     @Endpoint(url = "/chat/fetch-chat", requireLogin = true)
     private static void getAllChatMessages(ApiParser parser, ApiWriter writer, Utente user) throws Exception {
@@ -80,6 +79,6 @@ public class ChatEndpoint {
         for (Messaggio m : messaggi)
             m.writeJson(writer);
         writer.endArray();
-    };
+    }
 
 }
