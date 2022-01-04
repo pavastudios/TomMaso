@@ -64,7 +64,7 @@ public class ChatTestingTest {
             builder.moveToElement(element, 0, 0).perform();
         }
         driver.findElement(By.id("messaggio")).click();
-        driver.findElement(By.id("messaggio")).sendKeys("DEVE-ESSERE_VUOTO");
+        driver.findElement(By.id("messaggio")).sendKeys("");
         driver.findElement(By.id("messaggio")).click();
         driver.findElement(By.id("invia")).click();
         {
