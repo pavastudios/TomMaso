@@ -12,33 +12,36 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 
 public class ChatTestingTest {
-    private static WebDriver driver;
     static JavascriptExecutor js;
+    private static WebDriver driver;
+
     @BeforeAll
     public static void setUp() {
         System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver");
         driver = new FirefoxDriver();
         js = (JavascriptExecutor) driver;
-        Utility.login(driver,"provaaaa","prova123");
+        Utility.login(driver, "provaaaa", "prova123");
     }
+
     @AfterAll
     public static void tearDown() {
         driver.quit();
     }
+
     @Test
     public void chatTest() throws InterruptedException {
         driver.get("http://localhost:8080/TomMaso_war_exploded/chat/admin");
         driver.manage().window().setSize(new Dimension(1550, 830));
         Thread.sleep(500);
-        int oldLength=driver.findElements(By.cssSelector(".msg-card")).size();
+        int oldLength = driver.findElements(By.cssSelector(".msg-card")).size();
         driver.findElement(By.id("messaggio")).click();
         driver.findElement(By.id("messaggio")).sendKeys("ciao");
         driver.findElement(By.id("invia")).click();
-        Assertions.assertEquals(oldLength+1,driver.findElements(By.cssSelector(".msg-card")).size());
+        Assertions.assertEquals(oldLength + 1, driver.findElements(By.cssSelector(".msg-card")).size());
         driver.findElement(By.id("messaggio")).click();
         driver.findElement(By.id("messaggio")).clear();
         driver.findElement(By.id("invia")).click();
-        List<WebElement>elements=driver.findElements(By.cssSelector(".modal-error"));
-        new WebDriverWait(driver,2).until(ExpectedConditions.visibilityOf(elements.get(elements.size()-2)));
+        List<WebElement> elements = driver.findElements(By.cssSelector(".modal-error"));
+        new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(elements.get(elements.size() - 2)));
     }
 }

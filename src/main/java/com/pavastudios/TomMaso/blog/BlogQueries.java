@@ -17,6 +17,7 @@ public class BlogQueries {
 
     /**
      * Inizializza le prepared statements contenenti le query relative ai blog
+     *
      * @throws SQLException Problemi con il database
      */
     @QueryInitializer
@@ -28,6 +29,7 @@ public class BlogQueries {
 
     /**
      * Esegue la query che recupera un blog tramite nome
+     *
      * @param name Nome da cercare
      * @return Blog trovato
      * @throws SQLException Problemi con il database
@@ -44,6 +46,7 @@ public class BlogQueries {
 
     /**
      * Esegue la query che recupera il blog tramite id dato in input
+     *
      * @param idBlog Id da cercare
      * @return Blog trovato
      * @throws SQLException Problemi con il database

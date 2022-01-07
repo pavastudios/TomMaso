@@ -17,10 +17,8 @@ import java.sql.SQLException;
  * ChatServlet è una entità di controllo che permette di leggere i messaggi presenti in una chat
  * ed offer un controllo sui permessi per valutare la possibilità di un moderatore
  * di visualizzare chat non sue.
- *
  */
 public class ChatServlet extends MasterServlet {
-
 
 
     @Override

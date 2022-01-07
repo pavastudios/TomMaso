@@ -33,10 +33,11 @@ public class FileUtility {
 
     /**
      * Metodo per scrivere su un OutputStream partendo da un InputStream
-     * @param input istanza di InputStream
+     *
+     * @param input  istanza di InputStream
      * @param output istanza di OutputStream
-     * @throws IOException Problemi con la scrittura del file
      * @return booleano che indica se la funziona ha scritto o meno
+     * @throws IOException Problemi con la scrittura del file
      */
     public static boolean writeFile(InputStream input, OutputStream output) throws IOException {
         if (input == null || output == null) {
@@ -52,6 +53,7 @@ public class FileUtility {
 
     /**
      * Metodo per ottenere l'URL relativo di un file
+     *
      * @param file File di cui si vuole ottenere l'URL
      * @return stringa contenente l'URL relativo del file
      */
@@ -65,6 +67,7 @@ public class FileUtility {
     /**
      * Metodo che effettua l'escape dei caratteri in una stringa
      * per essere compatibili con la libreria di rendering del MarkDown
+     *
      * @param s stringa su cui effetturare l'escape
      * @return stringa su cui è stato effettuato l'escape
      */
@@ -77,7 +80,8 @@ public class FileUtility {
 
     /**
      * Metodo che preleva le prime n righe da un file
-     * @param file file da cui prelevare le righe
+     *
+     * @param file    file da cui prelevare le righe
      * @param numRows numero di righe da prelevare
      * @return stringa contenente le prime n righe
      * @throws IOException Problemi con la lettura del file
@@ -98,8 +102,9 @@ public class FileUtility {
 
     /**
      * Metodo per ottenere la lista di file appartenenti ad un blog ordinati per data di creazione
+     *
      * @param context contesto della servlet
-     * @param blog blog da cui prelevare i file
+     * @param blog    blog da cui prelevare i file
      * @return lista contenente la lista dei file
      */
     public static List<File> getPages(ServletContext context, Blog blog) {
@@ -123,8 +128,9 @@ public class FileUtility {
 
     /**
      * Metodo che inserisce ricorsivamente tutti i file Markdown in una lista
+     *
      * @param context contesto della servlet
-     * @param file file attuale
+     * @param file    file attuale
      */
     private static List<File> findMarkdownFiles(ServletContext context, File file) {
         ArrayList<File> list = new ArrayList<>();
@@ -141,7 +147,8 @@ public class FileUtility {
 
     /**
      * Metodo per ottenere il tipo di un file
-     * @param ctx contesto della servlet
+     *
+     * @param ctx  contesto della servlet
      * @param file file da ispezionare
      */
     public static FileType getFileType(ServletContext ctx, File file) {
@@ -161,7 +168,8 @@ public class FileUtility {
 
     /**
      * Metodo che concatena due path controllandone la correttezza (non verifica l'effettiva presenza del file)
-     * @param base directory di partenza
+     *
+     * @param base     directory di partenza
      * @param pathInfo pathInfo della richiesta
      * @return File presente nel path costruito
      */
@@ -183,6 +191,7 @@ public class FileUtility {
 
     /**
      * Metodo che cerca un file in un blog dato un path di partenza
+     *
      * @param pathInfo path di partenza
      * @return File trovato
      */
@@ -192,6 +201,7 @@ public class FileUtility {
 
     /**
      * Metodo che elimina ricorsivamente una directory
+     *
      * @param file directory da eliminare
      */
     public static void recursiveDelete(@Nullable File file) {
@@ -212,6 +222,7 @@ public class FileUtility {
 
     /**
      * Metodo che effettua l'escape dei caratteri su un file Markdown
+     *
      * @param file file su cui effettuare l'escape
      * @return contenuto del file dopo aver effettuato l'escape
      * @throws IOException Problemi con la lettura del file

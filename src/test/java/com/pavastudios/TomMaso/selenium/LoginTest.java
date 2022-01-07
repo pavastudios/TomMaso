@@ -12,76 +12,76 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginTest {
-  static JavascriptExecutor js;
-  private static WebDriver driver;
-  private static Map<String, Object> vars;
+    static JavascriptExecutor js;
+    private static WebDriver driver;
+    private static Map<String, Object> vars;
 
-  @BeforeAll
-  public static void setUp() {
-    System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver");
-    driver = new FirefoxDriver();
-    js = (JavascriptExecutor) driver;
-    vars = new HashMap<>();
-  }
-
-  @AfterAll
-  public static void tearDown() {
-    driver.quit();
-  }
-
-  @AfterEach
-  public void logout() {
-    driver.get("http://localhost:8080/TomMaso_war_exploded/logout");
-  }
-
-  @Test
-  public void uC2TC1() {
-    driver.get("http://localhost:8080/TomMaso_war_exploded/");
-    driver.findElement(By.linkText("Login")).click();
-    driver.findElement(By.id("username-login")).click();
-    driver.findElement(By.id("username-login")).sendKeys("a.allocca");
-    driver.findElement(By.id("password-login")).click();
-    driver.findElement(By.id("password-login")).sendKeys("Allocca123");
-    driver.findElement(By.id("navbarLoginSubmit")).click();
-    {
-      WebDriverWait wait = new WebDriverWait(driver, 2);
-      wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-svg-user")));
+    @BeforeAll
+    public static void setUp() {
+        System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver");
+        driver = new FirefoxDriver();
+        js = (JavascriptExecutor) driver;
+        vars = new HashMap<>();
     }
-  }
 
-  @Test
-  public void uC2TC2() {
-    driver.get("http://localhost:8080/TomMaso_war_exploded/");
-    driver.findElement(By.linkText("Login")).click();
-    driver.findElement(By.id("username-login")).click();
-    driver.findElement(By.id("username-login")).sendKeys("a.allocca");
-    driver.findElement(By.id("password-login")).click();
-    driver.findElement(By.id("password-login")).sendKeys("DiCostanzo321");
-    driver.findElement(By.id("navbarLoginSubmit")).click();
-    Assertions.assertEquals(driver.findElement(By.cssSelector("#navbarLogin .modal-error")).getText(), "Impossibile eseguire login!");
-  }
+    @AfterAll
+    public static void tearDown() {
+        driver.quit();
+    }
 
-  @Test
-  public void uC2TC3() {
-    driver.get("http://localhost:8080/TomMaso_war_exploded/");
-    driver.findElement(By.linkText("Login")).click();
-    driver.findElement(By.id("username-login")).click();
-    driver.findElement(By.id("username-login")).sendKeys("a.delucia");
-    driver.findElement(By.id("password-login")).click();
-    driver.findElement(By.id("password-login")).sendKeys("AAAAAAAAA");
-    driver.findElement(By.id("navbarLoginSubmit")).click();
-    Assertions.assertEquals(driver.findElement(By.cssSelector("#navbarLogin .modal-error")).getText(), "Impossibile eseguire login!");
-  }
+    @AfterEach
+    public void logout() {
+        driver.get("http://localhost:8080/TomMaso_war_exploded/logout");
+    }
 
-  @Test
-  public void uC2TC4() {
-    driver.get("http://localhost:8080/TomMaso_war_exploded/");
-    driver.findElement(By.linkText("Login")).click();
-    driver.findElement(By.id("username-login")).click();
-    driver.findElement(By.id("username-login")).sendKeys("utenteBannato");
-    driver.findElement(By.id("password-login")).click();
-    driver.findElement(By.id("password-login")).sendKeys("bannato12");
-    driver.findElement(By.id("navbarLoginSubmit")).click();
-    Assertions.assertEquals(driver.findElement(By.cssSelector("#navbarLogin .modal-error")).getText(), "Impossibile eseguire login!");
-  }
+    @Test
+    public void uC2TC1() {
+        driver.get("http://localhost:8080/TomMaso_war_exploded/");
+        driver.findElement(By.linkText("Login")).click();
+        driver.findElement(By.id("username-login")).click();
+        driver.findElement(By.id("username-login")).sendKeys("a.allocca");
+        driver.findElement(By.id("password-login")).click();
+        driver.findElement(By.id("password-login")).sendKeys("Allocca123");
+        driver.findElement(By.id("navbarLoginSubmit")).click();
+        {
+            WebDriverWait wait = new WebDriverWait(driver, 2);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-svg-user")));
+        }
+    }
+
+    @Test
+    public void uC2TC2() {
+        driver.get("http://localhost:8080/TomMaso_war_exploded/");
+        driver.findElement(By.linkText("Login")).click();
+        driver.findElement(By.id("username-login")).click();
+        driver.findElement(By.id("username-login")).sendKeys("a.allocca");
+        driver.findElement(By.id("password-login")).click();
+        driver.findElement(By.id("password-login")).sendKeys("DiCostanzo321");
+        driver.findElement(By.id("navbarLoginSubmit")).click();
+        Assertions.assertEquals(driver.findElement(By.cssSelector("#navbarLogin .modal-error")).getText(), "Impossibile eseguire login!");
+    }
+
+    @Test
+    public void uC2TC3() {
+        driver.get("http://localhost:8080/TomMaso_war_exploded/");
+        driver.findElement(By.linkText("Login")).click();
+        driver.findElement(By.id("username-login")).click();
+        driver.findElement(By.id("username-login")).sendKeys("a.delucia");
+        driver.findElement(By.id("password-login")).click();
+        driver.findElement(By.id("password-login")).sendKeys("AAAAAAAAA");
+        driver.findElement(By.id("navbarLoginSubmit")).click();
+        Assertions.assertEquals(driver.findElement(By.cssSelector("#navbarLogin .modal-error")).getText(), "Impossibile eseguire login!");
+    }
+
+    @Test
+    public void uC2TC4() {
+        driver.get("http://localhost:8080/TomMaso_war_exploded/");
+        driver.findElement(By.linkText("Login")).click();
+        driver.findElement(By.id("username-login")).click();
+        driver.findElement(By.id("username-login")).sendKeys("utenteBannato");
+        driver.findElement(By.id("password-login")).click();
+        driver.findElement(By.id("password-login")).sendKeys("bannato12");
+        driver.findElement(By.id("navbarLoginSubmit")).click();
+        Assertions.assertEquals(driver.findElement(By.cssSelector("#navbarLogin .modal-error")).getText(), "Impossibile eseguire login!");
+    }
 }

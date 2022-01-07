@@ -22,6 +22,7 @@ public class Commento implements GenericModel {
 
     /**
      * Metodo per ottenere un commento partendo da un oggetto ResultSet
+     *
      * @param rs set di risultati del database
      * @return istanza del commento
      * @throws SQLException Problemi con il resul set del database

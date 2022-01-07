@@ -30,9 +30,9 @@ public class ViewerServlet extends MasterServlet {
      * un eventuale file
      *
      * @param session per settare il blog visitato
-     * @param req per ottenete il path del contenuto da caricare
-     * @param resp per costruire la risposta con gli opportuni parametri
-     * @param file per caricare un eventuale file
+     * @param req     per ottenete il path del contenuto da caricare
+     * @param resp    per costruire la risposta con gli opportuni parametri
+     * @param file    per caricare un eventuale file
      */
 
     private void manageMarkdown(Session session, HttpServletRequest req, HttpServletResponse resp, File file) throws IOException, ServletException, SQLException {

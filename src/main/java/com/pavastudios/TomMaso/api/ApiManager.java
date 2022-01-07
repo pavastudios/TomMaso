@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Set;
@@ -21,7 +22,7 @@ import java.util.Set;
  */
 public class ApiManager {
     private static final HashMap<String, Tuple2<Boolean, Method>> API = new HashMap<>();
-    private static boolean initialized=false;
+    private static boolean initialized = false;
 
     /**
      * Trova tutte i campi annotati con Endpoint e genera una mappa contenente tutte gli endpoint
@@ -37,7 +38,7 @@ public class ApiManager {
             Endpoint ann = method.getAnnotation(Endpoint.class);
             ApiManager.API.put(ann.url(), new Tuple2<>(ann.requireLogin(), method));
         }
-        initialized=true;
+        initialized = true;
     }
 
     private static @Nullable Tuple2<Boolean, Method> getEndpoint(HttpServletRequest req) {
@@ -60,8 +61,9 @@ public class ApiManager {
     /**
      * Esegue una chiamata al servizio di API del sito, se durante l'esecuzione di un endpoint viene lanciata
      * una ApiException la risposta diventerà di errore
+     *
      * @param session sessione dell'utente che esegue la richiesta
-     * @param req richiesta HTTP dell'utente
+     * @param req     richiesta HTTP dell'utente
      * @return una tupla in cui il primo elemento è un intero contenente lo status code della risposta HTTP,
      * mentre il secondo è una stringa contenente il body in formato JSON del della risposta HTTP
      * @see Tuple2
@@ -76,20 +78,20 @@ public class ApiManager {
     }
 
     private static Tuple2<Integer, String> tryApiCall(Session session, HttpServletRequest req) throws ApiException {
-        if(!initialized){
+        if (!initialized) {
             loadApiEndpoints();
         }
         try {
             return new Tuple2<>(200, manageEndpoint(session, req));
         } catch (ApiException e) {
             throw e;
-        } catch (Exception e) {
+        } catch (Throwable e) {
             e.printStackTrace();
             throw new ApiException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 
-    private static String manageEndpoint(Session session, HttpServletRequest req) throws Exception {
+    private static String manageEndpoint(Session session, HttpServletRequest req) throws Throwable {
         ApiWriter writer = new ApiWriter();
         //Controlla esistenza endpoint
         Tuple2<Boolean, Method> endpoint = getEndpoint(req);
@@ -105,7 +107,11 @@ public class ApiManager {
 
         //Richieta valida, esegui l'endpoint
         Utente user = session.getUtente();
-        endpoint.get2().invoke(null, parser, writer, user);
-        return writer.commit();
+        try {
+            endpoint.get2().invoke(null, parser, writer, user);
+            return writer.commit();
+        } catch (InvocationTargetException e) {
+            throw e.getCause();
+        }
     }
 }

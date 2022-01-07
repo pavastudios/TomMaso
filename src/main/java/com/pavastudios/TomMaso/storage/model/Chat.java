@@ -17,6 +17,7 @@ public class Chat implements GenericModel {
 
     /**
      * Metodo per ottenere una chat partendo da un oggetto ResultSet
+     *
      * @param rs set di risultati del database
      * @return istanza della chat
      * @throws SQLException Problemi con il result set del database
@@ -76,6 +77,7 @@ public class Chat implements GenericModel {
 
     /**
      * Metodo per ottenere informazioni sulla partecipazione di un utente alla chat
+     *
      * @param user utente di cui si vogliono ottenere le informazioni sulla partecipazione
      * @return booleano che indica se l'utente partecipa alla chat
      */
@@ -106,6 +108,7 @@ public class Chat implements GenericModel {
 
     /**
      * Metodo per ottenere l'altro partecipante alla chat partendo da uno degli utenti
+     *
      * @param user utente di partenza
      * @return istanza della classe User indicante l'altro partecipante alla chat
      */

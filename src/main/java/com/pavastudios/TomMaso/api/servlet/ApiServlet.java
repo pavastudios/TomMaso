@@ -17,7 +17,6 @@ import java.io.IOException;
 public class ApiServlet extends MasterServlet {
 
 
-
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);

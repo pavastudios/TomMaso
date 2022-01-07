@@ -20,6 +20,7 @@ public class UserQueries {
 
     /**
      * Inizializza le prepared statements contenenti le query relative ai commenti
+     *
      * @throws SQLException Problemi con il database
      */
     @QueryInitializer
@@ -32,6 +33,7 @@ public class UserQueries {
 
     /**
      * Esegue la query che recupera un utente tramite l'username
+     *
      * @param username Username da cercare
      * @return Utente trovato
      * @throws SQLException Problemi con il database
@@ -48,6 +50,7 @@ public class UserQueries {
 
     /**
      * Esegue la query che recupera un utente tramite l'id
+     *
      * @param idUtente Id da cercare
      * @return Utente trovato
      * @throws SQLException Problemi con il database
@@ -58,6 +61,7 @@ public class UserQueries {
 
     /**
      * Esegue la query che registra un utente
+     *
      * @param password Password del nuovo utente
      * @param username Username del password
      * @return Utente creato
@@ -73,7 +77,8 @@ public class UserQueries {
 
     /**
      * Esegue la query che cambia i permessi di un utente
-     * @param u Utente di cui cambiare i permessi
+     *
+     * @param u        Utente di cui cambiare i permessi
      * @param permessi Nuovi permessi
      * @throws SQLException Problemi con il database
      */

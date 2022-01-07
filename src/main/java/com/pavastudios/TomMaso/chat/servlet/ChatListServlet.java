@@ -21,7 +21,6 @@ import java.util.List;
 public class ChatListServlet extends MasterServlet {
 
 
-
     @Override
     protected void doGet(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         doPost(session, req, resp);

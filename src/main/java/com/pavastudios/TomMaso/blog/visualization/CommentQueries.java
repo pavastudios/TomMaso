@@ -26,6 +26,7 @@ public class CommentQueries {
 
     /**
      * Inizializza le prepared statements contenenti le query relative ai commenti
+     *
      * @throws SQLException Problemi con il database
      */
     @QueryInitializer
@@ -41,6 +42,7 @@ public class CommentQueries {
 
     /**
      * Esegue la query che elimina i commenti di una pagina
+     *
      * @param postUrl Url della pagina (del tipo /NOMEBLOG/...)
      * @throws SQLException Problemi con il database
      */
@@ -53,6 +55,7 @@ public class CommentQueries {
 
     /**
      * Esegue la query che recupera i commenti per una determinata pagina
+     *
      * @param page Pagina di cui recuperare i commenti
      * @return Lista di commenti recuperata
      * @throws SQLException Problemi con il database
@@ -67,9 +70,10 @@ public class CommentQueries {
 
     /**
      * Esegue la query che invia un commento
-     * @param utente Utente autore del commento
+     *
+     * @param utente    Utente autore del commento
      * @param messaggio Contenuto del commento
-     * @param pagina Pagina da commentare
+     * @param pagina    Pagina da commentare
      * @return Commento appena creato
      * @throws SQLException Problemi con il database
      */
@@ -85,6 +89,7 @@ public class CommentQueries {
 
     /**
      * Esegue la query che trova un commento tramite id
+     *
      * @param idCommento Id da cercare
      * @return Commento trovato
      * @throws SQLException Problemi con il database
@@ -95,6 +100,7 @@ public class CommentQueries {
 
     /**
      * Esegue la query che trova un messaggio tramite id
+     *
      * @param idMessaggio Id da cercare
      * @return Messaggio trovato
      * @throws SQLException Problemi con il database
@@ -105,6 +111,7 @@ public class CommentQueries {
 
     /**
      * Esegue la query che elimina un commento
+     *
      * @param commento Commento da eliminare
      * @throws SQLException Problemi con il database
      */

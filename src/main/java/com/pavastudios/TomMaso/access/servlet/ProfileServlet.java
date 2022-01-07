@@ -23,6 +23,7 @@ public class ProfileServlet extends MasterServlet {
 
     /**
      * Ottiene le informazioni su quale profilo caricare
+     *
      * @param session
      * @param req
      * @return

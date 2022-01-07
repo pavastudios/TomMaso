@@ -263,6 +263,9 @@
             type: 'POST',
             url: '${pageContext.request.contextPath}/api/blog/create<%=request.getAttribute("rewrite")%>',
             data: {name: blogname},
+            error:function (a,data,c) {
+                showError(data["error"]);
+            },
             success: function (data) {
                 if (data["error"] !== undefined) {
                     showError(data["error"]);

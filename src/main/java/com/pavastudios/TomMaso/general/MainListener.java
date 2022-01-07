@@ -16,12 +16,13 @@ import java.sql.SQLException;
  */
 @WebListener
 public class MainListener implements ServletContextListener {
-    public static ServletContext CONTEXT;
     public static final String ADMIN_PASSWORD = "admin";
     public static final String ADMIN_USERNAME = "admin";
+    public static ServletContext CONTEXT;
 
     /**
      * Metodo per l'inizializzazione del contesto
+     *
      * @param sce oggetto ServletContextEvent
      */
     @Override
@@ -48,12 +49,13 @@ public class MainListener implements ServletContextListener {
         Utente u = UserQueries.findUserByUsername(ADMIN_USERNAME);
         if (u == null) {
             Utente admin = UserQueries.registerUser(ADMIN_PASSWORD, ADMIN_USERNAME);
-            UserQueries.changePermissions(admin, new Utente.Permessi(Utente.Permessi.MANAGE_USER|Utente.Permessi.CAN_LOGIN));
+            UserQueries.changePermissions(admin, new Utente.Permessi(Utente.Permessi.MANAGE_USER | Utente.Permessi.CAN_LOGIN));
         }
     }
 
     /**
      * Metodo per la distruzione del contesto
+     *
      * @param sce oggetto ServletContextEvent
      */
     @Override

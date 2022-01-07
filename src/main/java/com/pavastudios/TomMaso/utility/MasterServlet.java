@@ -24,6 +24,7 @@ public abstract class MasterServlet extends HttpServlet {
     /**
      * hasSessionCookie controlla se tra i cookie ce n'è uno con che corrisponde
      * al jsession id
+     *
      * @param req sere ad ottere un eventuale jsession id attraverso cookie
      *            se sono abilitati
      * @return boolean value (True o False) che corrispondono rispoettivamente
@@ -66,11 +67,12 @@ public abstract class MasterServlet extends HttpServlet {
     }
 
     /**
-     *  Impostati l'attributo rewrite al corrispettivo jsession id se i cookie sono disabilitati
-     *  oppure imposta l'attributo rewrite ad una string vuota
+     * Impostati l'attributo rewrite al corrispettivo jsession id se i cookie sono disabilitati
+     * oppure imposta l'attributo rewrite ad una string vuota
+     *
      * @param req ottiene informazioni riguardo la presenza di cookie
      */
-    private void setRewriteAttribute(HttpServletRequest req){
+    private void setRewriteAttribute(HttpServletRequest req) {
         if (!hasSessionCookie(req))
             req.setAttribute("rewrite", ";jsessionid=" + req.getSession().getId());
         else
@@ -79,6 +81,7 @@ public abstract class MasterServlet extends HttpServlet {
 
     /**
      * setDefaultHeader imposta un header standard per tutte le risposte
+     *
      * @param resp serve ad ottenere la risposta sulla quale settare l'header di default
      */
     private void setDefaultHeader(HttpServletResponse resp) {

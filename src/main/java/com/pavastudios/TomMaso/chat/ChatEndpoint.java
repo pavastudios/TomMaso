@@ -23,7 +23,7 @@ public class ChatEndpoint {
         if (chat == null || !chat.isPartecipant(user)) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "invalid chat-id");
         }
-        if(message.isEmpty()){
+        if (message.isEmpty()) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "messages can't be empty");
         }
         Messaggio m = ChatQueries.sendTextToChat(chat, user, message);

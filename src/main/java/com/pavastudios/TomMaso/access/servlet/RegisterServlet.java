@@ -52,7 +52,7 @@ public class RegisterServlet extends MasterServlet {
             Utente utente = UserQueries.registerUser(password1, username);
             session.setUtente(utente);
             resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath()));
-        }catch (SQLException e){
+        } catch (SQLException e) {
             resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "Username già esistenti");
         }
     }

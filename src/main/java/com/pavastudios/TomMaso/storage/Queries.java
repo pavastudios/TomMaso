@@ -16,6 +16,7 @@ public class Queries {
 
     /**
      * Modifica la query aggiungendo caratteri di escape
+     *
      * @param toEscape Query iniziale
      * @return Query sanificata
      */
@@ -29,9 +30,10 @@ public class Queries {
 
     /**
      * Crea un'istanza del model richiesto tramite un ResultSet
+     *
      * @param entity Enumerazione contenente le associazioni
-     * @param rs Risultato di una query
-     * @param <T> Tipo del model chiesto
+     * @param rs     Risultato di una query
+     * @param <T>    Tipo del model chiesto
      * @return Istanza del model creata
      */
     @SuppressWarnings("all")
@@ -46,9 +48,10 @@ public class Queries {
 
     /**
      * Metodo generico per trovare un'istanza da un id
+     *
      * @param entity Enumerazione contenente le associazioni
-     * @param id Id da cercare
-     * @param <T> Tipo dell'istanza da cercare
+     * @param id     Id da cercare
+     * @param <T>    Tipo dell'istanza da cercare
      * @return Istanza trovata
      * @throws SQLException Problema con il database
      */
@@ -65,9 +68,10 @@ public class Queries {
 
     /**
      * Crea una lista di istanze del model richiesto tramite un ResultSet
+     *
      * @param entity Enumerazione contenente le associazioni
-     * @param rs Risultato di una query
-     * @param <T> Tipo del model chiesto
+     * @param rs     Risultato di una query
+     * @param <T>    Tipo del model chiesto
      * @return Lista di istanze del model creata
      * @throws SQLException Problema con il database
      */

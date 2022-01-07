@@ -68,7 +68,7 @@
     <div class="row mt-5">
         <textarea class="col-12 form-control" name="commento" id="comment" cols="30" rows="5"></textarea>
         <button class="btn btn-primary" id="sendComment">Invia commento</button>
-        <p class="modal-error" id="error"></p>
+        <p class="text-danger modal-error" id="error"></p>
     </div>
     <%}%>
 </div>

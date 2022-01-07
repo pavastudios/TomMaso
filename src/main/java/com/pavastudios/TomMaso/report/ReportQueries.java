@@ -24,6 +24,7 @@ public class ReportQueries {
 
     /**
      * Inizializza le prepared statements contenenti le query relative ai commenti
+     *
      * @throws SQLException Problemi con il database
      */
     @QueryInitializer
@@ -36,11 +37,12 @@ public class ReportQueries {
 
     /**
      * Esegue la query che crea un report
+     *
      * @param comment Tipo di segnalazione
-     * @param user Utente che effettua la segnalazione
-     * @param url Url del contenuto della segnalazione
-     * @param reason Motivazione della segnalazione
-     * @param target Utente segnalato
+     * @param user    Utente che effettua la segnalazione
+     * @param url     Url del contenuto della segnalazione
+     * @param reason  Motivazione della segnalazione
+     * @param target  Utente segnalato
      * @return Report creato
      * @throws SQLException Problemi con il database
      */
@@ -57,6 +59,7 @@ public class ReportQueries {
 
     /**
      * Esegue la query che recupera un report da id
+     *
      * @param idReport Id della segnalazione
      * @return Report trovato
      * @throws SQLException Problemi con il database
@@ -67,6 +70,7 @@ public class ReportQueries {
 
     /**
      * Esegue la query che recupera la lista di segnalazione non controllate di un determinato tipo
+     *
      * @param type Tipo della segnalazione
      * @return Lista delle segnalazioni trovate
      * @throws SQLException Problemi con il database
@@ -81,7 +85,8 @@ public class ReportQueries {
 
     /**
      * Esegue la query che memorizza l'esito di un report
-     * @param report Report analizzato
+     *
+     * @param report   Report analizzato
      * @param approved Esito del report
      * @throws SQLException Problemi con il database
      */

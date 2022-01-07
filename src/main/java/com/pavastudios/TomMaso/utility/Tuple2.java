@@ -4,6 +4,7 @@ import java.util.Objects;
 
 /**
  * Classe che modella il concetto di coppia
+ *
  * @param <T1>
  * @param <T2>
  */
@@ -13,6 +14,7 @@ public class Tuple2<T1, T2> {
 
     /**
      * Metodo costruttore della classe Tuple2
+     *
      * @param t1 primo valore della coppia
      * @param t2 secondo valore della coppia
      */

@@ -15,6 +15,7 @@ public class MasterConnection {
 
     /**
      * MasterConnection imposta la connessione da utilizzare
+     *
      * @param connection la connessione da utilizzare
      */
 
@@ -24,7 +25,8 @@ public class MasterConnection {
 
     /**
      * Acquisisce una richiesta e la inoltra alla connessione che è in utilizzo
-     * @param sql è la richiesta effettuata al database
+     *
+     * @param sql                 è la richiesta effettuata al database
      * @param returnGeneratedKeys è un valore di ritorno ottenuto da un'operazione su database
      * @return una master prepared statement
      * @throws SQLException
@@ -42,7 +44,6 @@ public class MasterConnection {
      */
 
     /**
-     *
      * @param sql
      * @return
      * @throws SQLException
@@ -53,6 +54,7 @@ public class MasterConnection {
 
     /**
      * Chiude la connessione attualmente in utilizzo
+     *
      * @throws SQLException
      */
 

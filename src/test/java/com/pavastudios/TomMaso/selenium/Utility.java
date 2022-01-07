@@ -18,4 +18,6 @@ public class Utility {
         driver.findElement(By.id("password-login")).sendKeys(password);
         driver.findElement(By.id("navbarLoginSubmit")).click();
     }
+
+
 }

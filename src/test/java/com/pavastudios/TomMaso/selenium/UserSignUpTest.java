@@ -14,110 +14,110 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class UserSignUpTest {
-  static JavascriptExecutor js;
-  private static WebDriver driver;
+    static JavascriptExecutor js;
+    private static WebDriver driver;
 
-  @BeforeAll
-  public static void setUp() {
-    System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver");
-    driver = new FirefoxDriver();
-    js = (JavascriptExecutor) driver;
-  }
-
-  @AfterAll
-  public static void tearDown() throws SQLException {
-    driver.quit();
-    Connection connection = new Driver().connect("jdbc:mysql://localhost:3306/tommaso?user=root&amp;pass=", null);
-    connection.prepareStatement("DELETE FROM Utente WHERE username='AAAAAAAA'").executeUpdate();
-    connection.close();
-  }
-
-  @AfterEach
-  public void logout() {
-    driver.manage().deleteAllCookies();
-  }
-
-  @Test
-  @Order(1)
-  public void uC1TC5() {
-    driver.get("http://localhost:8080/TomMaso_war_exploded/");
-    driver.manage().window().setSize(new Dimension(1042, 639));
-    driver.findElement(By.linkText("Registrati")).click();
-    driver.findElement(By.id("username-register")).click();
-    driver.findElement(By.id("username-register")).sendKeys("XXXXXXXX");
-    driver.findElement(By.id("password1-register")).click();
-    driver.findElement(By.id("password1-register")).sendKeys("BBBBBBBBB");
-    driver.findElement(By.id("formNavbarRegister")).click();
-    driver.findElement(By.id("password2-register")).click();
-    driver.findElement(By.id("password2-register")).sendKeys("BBBBBBBB");
-    driver.findElement(By.id("navbarRegisterSubmit")).click();
-    Assertions.assertEquals(driver.findElement(By.cssSelector("#navbarRegister .modal-error")).getText(), "Le password non corrispondono!");
-  }
-
-  @Test
-  public void uC1TC2() {
-    driver.get("http://localhost:8080/TomMaso_war_exploded/");
-    driver.manage().window().setSize(new Dimension(1042, 639));
-    driver.findElement(By.linkText("Registrati")).click();
-    driver.findElement(By.id("username-register")).click();
-    driver.findElement(By.id("username-register")).sendKeys("AAAAAAA!");
-    driver.findElement(By.id("password1-register")).click();
-    driver.findElement(By.id("password1-register")).sendKeys("BBBBBBBB");
-    driver.findElement(By.id("formNavbarRegister")).click();
-    driver.findElement(By.id("password2-register")).click();
-    driver.findElement(By.id("password2-register")).sendKeys("BBBBBBBB");
-    driver.findElement(By.id("navbarRegisterSubmit")).click();
-    Assertions.assertEquals(driver.findElement(By.cssSelector("#navbarRegister .modal-error")).getText(), "L'username non è valido!");
-  }
-
-  @Test
-  public void uC1TC3() {
-    driver.get("http://localhost:8080/TomMaso_war_exploded/");
-    driver.manage().window().setSize(new Dimension(1042, 639));
-    driver.findElement(By.linkText("Registrati")).click();
-    driver.findElement(By.id("username-register")).click();
-    driver.findElement(By.id("username-register")).sendKeys("AAAAAAAA");
-    driver.findElement(By.id("password1-register")).click();
-    driver.findElement(By.id("password1-register")).sendKeys("BBBBBBBB");
-    driver.findElement(By.id("formNavbarRegister")).click();
-    driver.findElement(By.id("password2-register")).click();
-    driver.findElement(By.id("password2-register")).sendKeys("BBBBBBBB");
-    driver.findElement(By.id("navbarRegisterSubmit")).click();
-    Assertions.assertEquals(driver.findElement(By.cssSelector("#navbarRegister .modal-error")).getText(), "Impossibile registrare l'account");
-  }
-
-  @Test
-  public void uC1TC4() {
-    driver.get("http://localhost:8080/TomMaso_war_exploded/");
-    driver.manage().window().setSize(new Dimension(1042, 639));
-    driver.findElement(By.linkText("Registrati")).click();
-    driver.findElement(By.id("username-register")).click();
-    driver.findElement(By.id("username-register")).sendKeys("XXXXXXX");
-    driver.findElement(By.id("password1-register")).click();
-    driver.findElement(By.id("password1-register")).sendKeys("BBBBBBB");
-    driver.findElement(By.id("formNavbarRegister")).click();
-    driver.findElement(By.id("password2-register")).click();
-    driver.findElement(By.id("password2-register")).sendKeys("BBBBBBB");
-    driver.findElement(By.id("navbarRegisterSubmit")).click();
-    Assertions.assertEquals(driver.findElement(By.cssSelector("#navbarRegister .modal-error")).getText(), "La password deve contenere almeno 8 caratteri!");
-  }
-
-  @Test
-  public void uC1TC1() {
-    driver.get("http://localhost:8080/TomMaso_war_exploded/");
-    driver.manage().window().setSize(new Dimension(1042, 639));
-    driver.findElement(By.linkText("Registrati")).click();
-    driver.findElement(By.id("username-register")).click();
-    driver.findElement(By.id("username-register")).sendKeys("AAAAAAAA");
-    driver.findElement(By.id("password1-register")).click();
-    driver.findElement(By.id("password1-register")).sendKeys("BBBBBBBBB");
-    driver.findElement(By.id("formNavbarRegister")).click();
-    driver.findElement(By.id("password2-register")).click();
-    driver.findElement(By.id("password2-register")).sendKeys("BBBBBBBBB");
-    driver.findElement(By.id("navbarRegisterSubmit")).click();
-    {
-      WebDriverWait wait = new WebDriverWait(driver, 2);
-      wait.until(ExpectedConditions.presenceOfElementLocated(By.id("nav-svg-user")));
+    @BeforeAll
+    public static void setUp() {
+        System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver");
+        driver = new FirefoxDriver();
+        js = (JavascriptExecutor) driver;
     }
-  }
+
+    @AfterAll
+    public static void tearDown() throws SQLException {
+        driver.quit();
+        Connection connection = new Driver().connect("jdbc:mysql://localhost:3306/tommaso?user=root&amp;pass=", null);
+        connection.prepareStatement("DELETE FROM Utente WHERE username='AAAAAAAA'").executeUpdate();
+        connection.close();
+    }
+
+    @AfterEach
+    public void logout() {
+        driver.manage().deleteAllCookies();
+    }
+
+    @Test
+    @Order(1)
+    public void uC1TC5() {
+        driver.get("http://localhost:8080/TomMaso_war_exploded/");
+        driver.manage().window().setSize(new Dimension(1042, 639));
+        driver.findElement(By.linkText("Registrati")).click();
+        driver.findElement(By.id("username-register")).click();
+        driver.findElement(By.id("username-register")).sendKeys("XXXXXXXX");
+        driver.findElement(By.id("password1-register")).click();
+        driver.findElement(By.id("password1-register")).sendKeys("BBBBBBBBB");
+        driver.findElement(By.id("formNavbarRegister")).click();
+        driver.findElement(By.id("password2-register")).click();
+        driver.findElement(By.id("password2-register")).sendKeys("BBBBBBBB");
+        driver.findElement(By.id("navbarRegisterSubmit")).click();
+        Assertions.assertEquals(driver.findElement(By.cssSelector("#navbarRegister .modal-error")).getText(), "Le password non corrispondono!");
+    }
+
+    @Test
+    public void uC1TC2() {
+        driver.get("http://localhost:8080/TomMaso_war_exploded/");
+        driver.manage().window().setSize(new Dimension(1042, 639));
+        driver.findElement(By.linkText("Registrati")).click();
+        driver.findElement(By.id("username-register")).click();
+        driver.findElement(By.id("username-register")).sendKeys("AAAAAAA!");
+        driver.findElement(By.id("password1-register")).click();
+        driver.findElement(By.id("password1-register")).sendKeys("BBBBBBBB");
+        driver.findElement(By.id("formNavbarRegister")).click();
+        driver.findElement(By.id("password2-register")).click();
+        driver.findElement(By.id("password2-register")).sendKeys("BBBBBBBB");
+        driver.findElement(By.id("navbarRegisterSubmit")).click();
+        Assertions.assertEquals(driver.findElement(By.cssSelector("#navbarRegister .modal-error")).getText(), "L'username non è valido!");
+    }
+
+    @Test
+    public void uC1TC3() {
+        driver.get("http://localhost:8080/TomMaso_war_exploded/");
+        driver.manage().window().setSize(new Dimension(1042, 639));
+        driver.findElement(By.linkText("Registrati")).click();
+        driver.findElement(By.id("username-register")).click();
+        driver.findElement(By.id("username-register")).sendKeys("AAAAAAAA");
+        driver.findElement(By.id("password1-register")).click();
+        driver.findElement(By.id("password1-register")).sendKeys("BBBBBBBB");
+        driver.findElement(By.id("formNavbarRegister")).click();
+        driver.findElement(By.id("password2-register")).click();
+        driver.findElement(By.id("password2-register")).sendKeys("BBBBBBBB");
+        driver.findElement(By.id("navbarRegisterSubmit")).click();
+        Assertions.assertEquals(driver.findElement(By.cssSelector("#navbarRegister .modal-error")).getText(), "Impossibile registrare l'account");
+    }
+
+    @Test
+    public void uC1TC4() {
+        driver.get("http://localhost:8080/TomMaso_war_exploded/");
+        driver.manage().window().setSize(new Dimension(1042, 639));
+        driver.findElement(By.linkText("Registrati")).click();
+        driver.findElement(By.id("username-register")).click();
+        driver.findElement(By.id("username-register")).sendKeys("XXXXXXX");
+        driver.findElement(By.id("password1-register")).click();
+        driver.findElement(By.id("password1-register")).sendKeys("BBBBBBB");
+        driver.findElement(By.id("formNavbarRegister")).click();
+        driver.findElement(By.id("password2-register")).click();
+        driver.findElement(By.id("password2-register")).sendKeys("BBBBBBB");
+        driver.findElement(By.id("navbarRegisterSubmit")).click();
+        Assertions.assertEquals(driver.findElement(By.cssSelector("#navbarRegister .modal-error")).getText(), "La password deve contenere almeno 8 caratteri!");
+    }
+
+    @Test
+    public void uC1TC1() {
+        driver.get("http://localhost:8080/TomMaso_war_exploded/");
+        driver.manage().window().setSize(new Dimension(1042, 639));
+        driver.findElement(By.linkText("Registrati")).click();
+        driver.findElement(By.id("username-register")).click();
+        driver.findElement(By.id("username-register")).sendKeys("AAAAAAAA");
+        driver.findElement(By.id("password1-register")).click();
+        driver.findElement(By.id("password1-register")).sendKeys("BBBBBBBBB");
+        driver.findElement(By.id("formNavbarRegister")).click();
+        driver.findElement(By.id("password2-register")).click();
+        driver.findElement(By.id("password2-register")).sendKeys("BBBBBBBBB");
+        driver.findElement(By.id("navbarRegisterSubmit")).click();
+        {
+            WebDriverWait wait = new WebDriverWait(driver, 2);
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.id("nav-svg-user")));
+        }
+    }
 }

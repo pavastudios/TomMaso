@@ -115,6 +115,7 @@ public class Utente implements GenericModel {
 
     /**
      * Metodo per verificare il login di un utente data la password
+     *
      * @param password password dell'utente
      * @return booleano che rappresenta la riuscita del login
      */
@@ -150,6 +151,7 @@ public class Utente implements GenericModel {
 
         /**
          * Costruttore per inizializzare i permessi di cui l'utente dispone
+         *
          * @param permessi permessi dell'utente
          */
         public Permessi(@MagicConstant(flagsFromClass = Permessi.class) int permessi) {
@@ -158,6 +160,7 @@ public class Utente implements GenericModel {
 
         /**
          * Metodo per la verifica della disposizione di un permesso di un utente
+         *
          * @param permission permesso da verificare
          * @return booleano che rappresenta la presenza o assenza del permesso passato come parametro
          */
@@ -171,6 +174,7 @@ public class Utente implements GenericModel {
 
         /**
          * Metodo per ottenere la lista di permessi sottoforma di ArrayList
+         *
          * @return ArrayList contenente i permessi dell'utente
          */
         public ArrayList<Tuple2<String, Boolean>> getAsArray() {

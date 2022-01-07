@@ -27,7 +27,6 @@ public class ApiWriter extends JsonWriter {
     }
 
     /**
-     *
      * Questo metodo indica che la generazione del JSON è stata completata e non ci saranno ulteriori oeprazioni
      * su quest'istanza, il writer verrà chiuso dopo l'invocazione di questo metodo
      *

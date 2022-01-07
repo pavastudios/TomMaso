@@ -28,6 +28,7 @@ public class ChatQueries {
 
     /**
      * Inizializza le prepared statements contenenti le query relative alle chat
+     *
      * @throws SQLException Problemi con il database
      */
     @QueryInitializer
@@ -44,9 +45,10 @@ public class ChatQueries {
 
     /**
      * Esegue la query che invia un messaggio in una chat
-     * @param chat Chat in cui inviare il messaggio
+     *
+     * @param chat     Chat in cui inviare il messaggio
      * @param mittente Mittente del messaggio
-     * @param testo Contenuto del messaggio
+     * @param testo    Contenuto del messaggio
      * @return Messaggio inviato
      * @throws SQLException Problemi con il database
      */
@@ -64,6 +66,7 @@ public class ChatQueries {
 
     /**
      * Esegue la query che crea una chat tra due utenti
+     *
      * @param u1 Primo utente
      * @param u2 Secondo utente
      * @return Chat appena creata
@@ -88,6 +91,7 @@ public class ChatQueries {
 
     /**
      * Esegue la query che trova una chat tramite id
+     *
      * @param idChat Id da cercare
      * @return Chat trovata
      * @throws SQLException Problemi con il database
@@ -98,6 +102,7 @@ public class ChatQueries {
 
     /**
      * Esegue la query che trova un messaggio tramite id
+     *
      * @param idMessaggio Id da cercare
      * @return Messaggio trovato
      * @throws SQLException Problemi con il database
@@ -108,6 +113,7 @@ public class ChatQueries {
 
     /**
      * Esegue la query che recupera le chat appartenenti ad un utente
+     *
      * @param user
      * @return
      * @throws SQLException Problemi con il database
@@ -123,6 +129,7 @@ public class ChatQueries {
 
     /**
      * Esegue la query che recupera la chat tra due utenti
+     *
      * @param u1 Primo utente
      * @param u2 Secondo utente
      * @return Chat tra i due utenti
@@ -146,7 +153,8 @@ public class ChatQueries {
 
     /**
      * Esegue la query che recupera i messaggi di un chat a partire da un certo messaggio
-     * @param chat Chat di cui recuperare i messaggi
+     *
+     * @param chat   Chat di cui recuperare i messaggi
      * @param fromId Id del messaggio di cui recuperare i successivi messaggi
      * @return Lista di messaggi recuperati
      * @throws SQLException Problema con il database
@@ -162,6 +170,7 @@ public class ChatQueries {
 
     /**
      * Esegue la query che elimina un messaggio
+     *
      * @param messaggio Messaggio da eliminare
      * @throws SQLException Problema con il database
      */

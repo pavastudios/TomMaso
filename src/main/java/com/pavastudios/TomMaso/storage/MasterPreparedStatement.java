@@ -139,6 +139,7 @@ public class MasterPreparedStatement {
 
     /**
      * Scrive la query effettuata nella console
+     *
      * @param isQuery cotrolla se la richiest è una query o una update
      * @throws SQLException
      */
@@ -153,6 +154,7 @@ public class MasterPreparedStatement {
 
     /**
      * conta le righe della risposta di un result set
+     *
      * @param rs result set del quale vogliamo contare le righe
      * @return
      */

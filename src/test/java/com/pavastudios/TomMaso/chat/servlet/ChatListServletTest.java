@@ -4,7 +4,6 @@ import com.pavastudios.TomMaso.access.Session;
 import com.pavastudios.TomMaso.access.UserQueries;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Named;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
@@ -21,13 +20,13 @@ import java.util.stream.Stream;
 
 class ChatListServletTest extends TestDBConnection {
 
-    private static Stream<Named<Session>> working () throws SQLException {
+    private static Stream<Named<Session>> working() throws SQLException {
         return Stream.of(
                 Named.of("Utente esistente", new Session(UserQueries.findUserById(1)))
         );
     }
 
-    private static Stream<Named<Session>> not_working () throws SQLException {
+    private static Stream<Named<Session>> not_working() throws SQLException {
         return Stream.of(
                 Named.of("Utente non esistente", new Session(UserQueries.findUserById(2))),
                 Named.of("Utente null", new Session(null))

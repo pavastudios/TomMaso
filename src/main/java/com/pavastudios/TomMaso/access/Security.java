@@ -9,7 +9,7 @@ public class Security {
     public static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     public static String crypt(String pwd) {
-        if(pwd == null) {
+        if (pwd == null) {
             return null;
         }
         return Sha2Crypt.sha512Crypt(pwd.getBytes(StandardCharsets.UTF_8), null, SECURE_RANDOM);

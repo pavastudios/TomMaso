@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Annota le informazioni dell'Endpoint
+ *
  * @see Endpoint
  */
 @Retention(RetentionPolicy.RUNTIME)

@@ -25,6 +25,7 @@ public class Blog implements GenericModel {
 
     /**
      * Metodo per ottenere un blog partendo da un oggetto ResultSet
+     *
      * @param rs set di risultati del database
      * @return istanza del blog
      * @throws SQLException Problemi con il result set
@@ -40,6 +41,7 @@ public class Blog implements GenericModel {
 
     /**
      * Metodo per ottenere un blog partendo dal percorso
+     *
      * @param pathInfo path del blog
      * @return istanza del blog
      * @throws SQLException Problemi con il result set del database
@@ -120,6 +122,7 @@ public class Blog implements GenericModel {
 
     /**
      * Metodo per ottenere il percorso della root del blog
+     *
      * @return directory di root del blog
      */
     public File getRootPath() {
@@ -128,6 +131,7 @@ public class Blog implements GenericModel {
 
     /**
      * Metodo per ottenere il grado di accesso di un utente al blog
+     *
      * @param user utente di cui si vuole conoscere il grado di accesso
      * @return booleano che indica se l'utente può accedere al blog
      */

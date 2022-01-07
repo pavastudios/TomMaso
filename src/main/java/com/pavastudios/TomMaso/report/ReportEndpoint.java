@@ -33,7 +33,7 @@ public class ReportEndpoint {
         );
         Report report = ReportQueries.report(Report.Type.COMMENT, user, url, reason, commento.getMittente());
         report.writeJson(writer);
-    };
+    }
 
     @Endpoint(url = "/report/post", requireLogin = true)
     private static void reportPost(ApiParser parser, ApiWriter writer, Utente user) throws Exception {
@@ -53,7 +53,7 @@ public class ReportEndpoint {
         }
         Report report = ReportQueries.report(Report.Type.POST, user, post, reason, blog.getProprietario());
         report.writeJson(writer);
-    };
+    }
 
 
     @Endpoint(url = "/report/review", requireLogin = true)
@@ -72,7 +72,7 @@ public class ReportEndpoint {
         }
         ReportQueries.reviewReport(report, approved);
         writer.value("ok");
-    };
+    }
 
     @Endpoint(url = "/report/message", requireLogin = true)
     private static void reportMessage(ApiParser parser, ApiWriter writer, Utente user) throws Exception {
@@ -97,5 +97,6 @@ public class ReportEndpoint {
         );
         Report report = ReportQueries.report(Report.Type.CHAT, user, url, reason, messaggio.getMittente());
         report.writeJson(writer);
-    };
+    }
+
 }

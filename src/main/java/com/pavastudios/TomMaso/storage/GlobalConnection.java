@@ -1,6 +1,5 @@
 package com.pavastudios.TomMaso.storage;
 
-import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 
@@ -18,9 +17,9 @@ public class GlobalConnection {
     public static MasterConnection CONNECTION;
     private static boolean initialized = false;
 
-    private static void startConnection(Connection fakeDB){
+    private static void startConnection(Connection fakeDB) {
         Connection conn = fakeDB;
-        if(conn==null) {
+        if (conn == null) {
             try {
                 Context initCtx = new InitialContext();
                 Context encCtx = (Context) initCtx.lookup("java:comp/env");
@@ -36,7 +35,6 @@ public class GlobalConnection {
 
     /**
      * questo metodo inizializza le queries
-     *
      */
 
     public static void init(Connection fakeDB) throws SQLException, InvocationTargetException, IllegalAccessException {
@@ -53,6 +51,7 @@ public class GlobalConnection {
 
     /**
      * chiede la connesisone al database
+     *
      * @throws SQLException
      */
 

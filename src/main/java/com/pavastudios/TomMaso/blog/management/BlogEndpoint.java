@@ -30,7 +30,7 @@ public class BlogEndpoint {
         File rootBlog = new File(FileUtility.BLOG_FILES_FOLDER, blog.getNome());
         FileUtility.recursiveDelete(rootBlog);
         writer.value("ok");
-    };
+    }
 
     @Endpoint(url = "/blog/delete-file", requireLogin = true)
     private static void deleteFile(ApiParser parser, ApiWriter writer, Utente user) throws Exception {
@@ -48,7 +48,7 @@ public class BlogEndpoint {
         FileUtility.recursiveDelete(file);
         CommentQueries.deleteCommentsForBlog(url);
         writer.value("ok");
-    };
+    }
 
     @Endpoint(url = "/blog/create", requireLogin = true)
     private static void createBlog(ApiParser parser, ApiWriter writer, Utente user) throws Exception {
@@ -64,6 +64,6 @@ public class BlogEndpoint {
         } catch (SQLException ignore) {
             throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, "Nome blog duplicato");
         }
-    };
+    }
 
 }

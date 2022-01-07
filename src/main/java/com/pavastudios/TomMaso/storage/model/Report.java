@@ -137,6 +137,7 @@ public class Report implements GenericModel {
 
     /**
      * Metodo che cancella dal database il report in questione
+     *
      * @throws SQLException Problemi con l'eliminazione delle informazioni dal database
      */
     public void deleteContent() throws SQLException {
