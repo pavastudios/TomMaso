@@ -8,26 +8,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginTest {
-    static JavascriptExecutor js;
-    private static WebDriver driver;
-    private static Map<String, Object> vars;
-
-    @BeforeAll
-    public static void setUp() {
-        System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver");
-        driver = new FirefoxDriver();
-        js = (JavascriptExecutor) driver;
-        vars = new HashMap<>();
-    }
-
-    @AfterAll
-    public static void tearDown() {
-        driver.quit();
-    }
+public class LoginTest extends SeleniumTest{
 
     @AfterEach
     public void logout() {
@@ -44,7 +29,7 @@ public class LoginTest {
         driver.findElement(By.id("password-login")).sendKeys("Allocca123");
         driver.findElement(By.id("navbarLoginSubmit")).click();
         {
-            WebDriverWait wait = new WebDriverWait(driver, 2);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-svg-user")));
         }
     }

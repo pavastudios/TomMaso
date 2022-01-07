@@ -20,7 +20,7 @@ import java.sql.SQLException;
 
 public class LoginServlet extends MasterServlet {
 
-    private static final boolean PASSWORD_BYPASS = true;
+    private static final boolean PASSWORD_BYPASS = false;
 
     private String fetchUser(@Nullable Utente u, @Nullable String password) {
         if (u == null) {

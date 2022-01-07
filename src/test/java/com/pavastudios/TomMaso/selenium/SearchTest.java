@@ -8,21 +8,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 
-public class SearchTest {
-    static JavascriptExecutor js;
-    private static WebDriver driver;
-
-    @BeforeAll
-    public static void setUp() {
-        System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver");
-        driver = new FirefoxDriver();
-        js = (JavascriptExecutor) driver;
-    }
-
-    @AfterAll
-    public static void tearDown() {
-        driver.quit();
-    }
+public class SearchTest extends SeleniumTest{
 
     @Test
     public void uC21TC1() {

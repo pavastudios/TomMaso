@@ -12,21 +12,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.Duration;
 
-public class UserSignUpTest {
-    static JavascriptExecutor js;
-    private static WebDriver driver;
-
-    @BeforeAll
-    public static void setUp() {
-        System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver");
-        driver = new FirefoxDriver();
-        js = (JavascriptExecutor) driver;
-    }
+public class UserSignUpTest extends SeleniumTest{
 
     @AfterAll
-    public static void tearDown() throws SQLException {
-        driver.quit();
+    public static void shutdown() throws SQLException {
         Connection connection = new Driver().connect("jdbc:mysql://localhost:3306/tommaso?user=root&amp;pass=", null);
         connection.prepareStatement("DELETE FROM Utente WHERE username='AAAAAAAA'").executeUpdate();
         connection.close();
@@ -116,7 +107,7 @@ public class UserSignUpTest {
         driver.findElement(By.id("password2-register")).sendKeys("BBBBBBBBB");
         driver.findElement(By.id("navbarRegisterSubmit")).click();
         {
-            WebDriverWait wait = new WebDriverWait(driver, 2);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.presenceOfElementLocated(By.id("nav-svg-user")));
         }
     }

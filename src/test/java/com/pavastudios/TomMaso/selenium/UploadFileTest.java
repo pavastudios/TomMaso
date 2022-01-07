@@ -12,31 +12,20 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class UploadFileTest {
-    static JavascriptExecutor js;
-    private static WebDriver driver;
+import java.time.Duration;
+
+public class UploadFileTest extends SeleniumTest{
 
     @BeforeAll
     public static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "./drivers/chromedriver");
-        System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver");
-        driver = new FirefoxDriver();
-        js = (JavascriptExecutor) driver;
         Utility.login(driver, "admin", "admin");
     }
 
-    @AfterAll
-    public static void tearDown() {
-        driver.quit();
-    }
 
     private static void wait(By selector) {
-        new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(driver.findElement(selector)));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(driver.findElement(selector)));
     }
 
-    private static void waitPresence(By selector) {
-        new WebDriverWait(driver, 2).until(ExpectedConditions.presenceOfElementLocated(selector));
-    }
 
     @Test
     public void uC6UploadFileFilePresente() {

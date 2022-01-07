@@ -12,21 +12,11 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class UC7EditMarkDownFileTest {
-    static JavascriptExecutor js;
-    private static WebDriver driver;
+public class UC7EditMarkDownFileTest extends SeleniumTest{
 
     @BeforeAll
     public static void setUp() {
-        System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver");
-        driver = new FirefoxDriver();
-        js = (JavascriptExecutor) driver;
         Utility.login(driver, "admin", "admin");
-    }
-
-    @AfterAll
-    public static void tearDown() {
-        driver.quit();
     }
 
     @Test

@@ -1,7 +1,6 @@
 package com.pavastudios.TomMaso.storage;
 
 import com.pavastudios.TomMaso.storage.model.Blog;
-import com.pavastudios.TomMaso.test.PersonalFileDir;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,7 +18,8 @@ import java.util.List;
  * Classe per metodi di utilità sui file
  */
 public class FileUtility {
-    private static final File TOMMASO_FOLDER = new File(PersonalFileDir.TOMMASO_DATA_FOLDER).getAbsoluteFile();
+    public static final String TOMMASO_DATA_FOLDER = System.getenv("dataPath");
+    private static final File TOMMASO_FOLDER = new File(TOMMASO_DATA_FOLDER).getAbsoluteFile();
     /**
      * Costante indicante il path in cui verranno conservati i blog sul server
      */

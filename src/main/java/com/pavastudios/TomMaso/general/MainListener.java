@@ -16,8 +16,8 @@ import java.sql.SQLException;
  */
 @WebListener
 public class MainListener implements ServletContextListener {
-    public static final String ADMIN_PASSWORD = "admin";
-    public static final String ADMIN_USERNAME = "admin";
+    public static final String ADMIN_PASSWORD = System.getenv("adminPassword");
+    public static final String ADMIN_USERNAME = System.getenv("adminUsername");
     public static ServletContext CONTEXT;
 
     /**
@@ -27,6 +27,9 @@ public class MainListener implements ServletContextListener {
      */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        if(ADMIN_PASSWORD==null||ADMIN_USERNAME==null||FileUtility.TOMMASO_DATA_FOLDER==null){
+            throw new RuntimeException("Missing environment variables");
+        }
         CONTEXT = sce.getServletContext();
         FileUtility.BLOG_FILES_FOLDER.mkdir();
         FileUtility.TMP_FOLDER.mkdir();

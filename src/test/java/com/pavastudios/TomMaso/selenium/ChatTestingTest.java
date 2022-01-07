@@ -9,23 +9,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
-public class ChatTestingTest {
-    static JavascriptExecutor js;
-    private static WebDriver driver;
-
+public class ChatTestingTest extends SeleniumTest{
     @BeforeAll
     public static void setUp() {
-        System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver");
-        driver = new FirefoxDriver();
-        js = (JavascriptExecutor) driver;
         Utility.login(driver, "provaaaa", "prova123");
-    }
-
-    @AfterAll
-    public static void tearDown() {
-        driver.quit();
     }
 
     @Test
@@ -42,6 +32,6 @@ public class ChatTestingTest {
         driver.findElement(By.id("messaggio")).clear();
         driver.findElement(By.id("invia")).click();
         List<WebElement> elements = driver.findElements(By.cssSelector(".modal-error"));
-        new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(elements.get(elements.size() - 2)));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(elements.get(elements.size() - 2)));
     }
 }

@@ -35,6 +35,10 @@ services:
       context: tomcat-docker
       dockerfile: Dockerfile
     restart: always
+    environment:
+      adminPassword: admin
+      adminUsername: admin
+      dataPath: /data
     ports:
       - "8080:8080"
     volumes:

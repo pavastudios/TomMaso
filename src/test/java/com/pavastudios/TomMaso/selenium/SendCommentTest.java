@@ -11,21 +11,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class SendCommentTest {
-    static JavascriptExecutor js;
-    private static WebDriver driver;
+import java.time.Duration;
+
+public class SendCommentTest extends SeleniumTest{
 
     @BeforeAll
     public static void setUp() {
-        System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver");
-        driver = new FirefoxDriver();
-        js = (JavascriptExecutor) driver;
         Utility.login(driver, "admin", "admin");
-    }
-
-    @AfterAll
-    public static void tearDown() {
-        driver.quit();
     }
 
     @Test
@@ -45,6 +37,6 @@ public class SendCommentTest {
         driver.findElement(By.id("comment")).click();
         driver.findElement(By.id("comment")).sendKeys("ab");
         driver.findElement(By.id("sendComment")).click();
-        new WebDriverWait(driver, 2).until(ExpectedConditions.textToBe(By.id("error"), "Commento invalido"));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.textToBe(By.id("error"), "Commento invalido"));
     }
 }
