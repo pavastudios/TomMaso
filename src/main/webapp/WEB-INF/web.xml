@@ -31,7 +31,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>BlogUploaderServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.blog.management.servlet.BlogUploaderServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.blog.management.servlet.BlogFileUploaderServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>BlogUploaderServlet</servlet-name>
@@ -110,7 +110,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>MarkdownFileServlet</servlet-name>
-        <servlet-class>com.pavastudios.TomMaso.blog.management.servlet.MDFileServlet</servlet-class>
+        <servlet-class>com.pavastudios.TomMaso.blog.management.servlet.BlogMDUploaderServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MarkdownFileServlet</servlet-name>

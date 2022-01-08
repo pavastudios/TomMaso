@@ -1,6 +1,7 @@
 package com.pavastudios.TomMaso.blog.management.servlet;
 
 import com.pavastudios.TomMaso.access.Session;
+import com.pavastudios.TomMaso.blog.management.BlogManagement;
 import com.pavastudios.TomMaso.storage.FileUtility;
 import com.pavastudios.TomMaso.storage.model.Blog;
 import com.pavastudios.TomMaso.storage.model.Utente;
@@ -20,20 +21,9 @@ import java.sql.SQLException;
  * Classe che consente l'uploading dei file sul server
  */
 @MultipartConfig()
-public class BlogUploaderServlet extends MasterServlet {
+public class BlogFileUploaderServlet extends MasterServlet {
 
-    private boolean createFileOnServer(Part part, String url) throws IOException {
-        String submitted = part.getSubmittedFileName();
-        if (submitted.contains("/") || submitted.contains("\\"))
-            return false;
-        File file = FileUtility.blogPathToFile(url);
-        if (file == null) return false;
-        file = new File(file, submitted);
-        FileOutputStream out = new FileOutputStream(file);
-        FileUtility.writeFile(part.getInputStream(), out);
-        out.close();
-        return true;
-    }
+
 
 
     protected void doPost(Session session, HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
@@ -50,7 +40,7 @@ public class BlogUploaderServlet extends MasterServlet {
             return;
         }
 
-        if (!createFileOnServer(part, url)) {
+        if (!BlogManagement.uploadFileOnServlet(part, url)) {
             resp.sendError(HttpServletResponse.SC_EXPECTATION_FAILED, "Path traversal rilevato");
             return;
         }
