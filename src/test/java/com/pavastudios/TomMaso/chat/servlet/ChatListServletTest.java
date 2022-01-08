@@ -2,6 +2,7 @@ package com.pavastudios.TomMaso.chat.servlet;
 
 import com.pavastudios.TomMaso.access.Session;
 import com.pavastudios.TomMaso.access.UserQueries;
+import com.pavastudios.TomMaso.storage.model.Utente;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Named;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,9 +21,9 @@ import java.util.stream.Stream;
 
 class ChatListServletTest extends TestDBConnection {
 
-    private static Stream<Named<Session>> working() throws SQLException {
+    private static Stream<Named<Integer>> working() {
         return Stream.of(
-                Named.of("Utente esistente", new Session(UserQueries.findUserById(1)))
+                Named.of("Utente esistente", 1)
         );
     }
 
@@ -35,7 +36,9 @@ class ChatListServletTest extends TestDBConnection {
 
     @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("working")
-    void doGet(Session s) throws SQLException, ServletException, IOException {
+    void doGet(int id) throws SQLException {
+        Utente u = UserQueries.findUserById(id);
+        Session s = new Session(u);
         HttpServletRequest r = Mockito.mock(HttpServletRequest.class);
         HttpSession httpS = Mockito.mock(HttpSession.class);
         HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
@@ -71,7 +74,9 @@ class ChatListServletTest extends TestDBConnection {
 
     @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("working")
-    void doPost(Session s) {
+    void doPost(int id) throws SQLException {
+        Utente u = UserQueries.findUserById(id);
+        Session s = new Session(u);
         HttpServletRequest r = Mockito.mock(HttpServletRequest.class);
         HttpSession httpS = Mockito.mock(HttpSession.class);
         HttpServletResponse response = Mockito.mock(HttpServletResponse.class);

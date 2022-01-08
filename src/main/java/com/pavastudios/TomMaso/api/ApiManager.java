@@ -27,7 +27,6 @@ public class ApiManager {
     /**
      * Trova tutte i campi annotati con Endpoint e genera una mappa contenente tutte gli endpoint
      *
-     * @see ApiAction
      * @see Endpoint
      */
     private static void loadApiEndpoints() {

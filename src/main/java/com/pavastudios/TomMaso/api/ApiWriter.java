@@ -39,7 +39,6 @@ public class ApiWriter extends JsonWriter {
             throw new RuntimeException();
         }
         String result = stringWriter.toString();
-        System.out.println(result);
         this.close();
         return result;
     }

@@ -12,7 +12,7 @@ import java.util.Map;
  *
  */
 public class ApiParser {
-    private final HashMap<String, Object> params = new HashMap<>();
+    private final HashMap<String, String> params = new HashMap<>();
 
     public ApiParser(HttpServletRequest req) {
         parse(req.getParameterMap());
@@ -31,7 +31,11 @@ public class ApiParser {
 
     @NotNull
     public String getValueString(String param) {
-        return getValueFromName(param).toString();
+        if (!params.containsKey(param)) {
+            String errorString = String.format(Locale.US, "missing param '%s'", param);
+            throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
+        }
+        return params.get(param);
     }
 
     public int getValueInt(String param) {
@@ -48,15 +52,6 @@ public class ApiParser {
             throw invalidType(param);
         }
         return getValueString(param).equals("true");
-    }
-
-    @NotNull
-    private Object getValueFromName(String param) {
-        if (!params.containsKey(param)) {
-            String errorString = String.format(Locale.US, "missing param '%s'", param);
-            throw new ApiException(HttpServletResponse.SC_BAD_REQUEST, errorString);
-        }
-        return params.get(param);
     }
 
 }
