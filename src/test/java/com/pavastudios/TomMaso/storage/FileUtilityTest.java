@@ -247,7 +247,6 @@ class FileUtilityTest {
         for (String s : files) {
             File tmp = new File(f, s);
             tmp.createNewFile();
-            //System.out.println(URLConnection.guessContentTypeFromName(s));
         }
 
         Assertions.assertEquals(results, FileUtility.getPages(ctx, b).stream().map(File::getName).sorted().collect(Collectors.toList()));

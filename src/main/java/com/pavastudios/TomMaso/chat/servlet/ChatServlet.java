@@ -36,7 +36,6 @@ public class ChatServlet extends MasterServlet {
             u1 = UserQueries.findUserByUsername(pathInfo[1]);
             u2 = UserQueries.findUserByUsername(pathInfo[2]);
         }
-        System.out.println(req.getPathInfo());
         Chat chat = ChatQueries.findChatByUsers(u1, u2);
         if (chat == null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid chat");

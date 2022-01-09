@@ -156,7 +156,6 @@ public class FileUtility {
         if (!file.exists()) return null;
         if (file.isDirectory()) return FileType.DIRECTORY;
         String mime = ctx.getMimeType(file.getAbsolutePath());
-        //System.out.println(file + ": " + mime);
         if (mime == null) return FileType.UNKNOWN;
         if (mime.startsWith("image/")) return FileType.IMAGE;
         if (mime.startsWith("video/")) return FileType.VIDEO;
