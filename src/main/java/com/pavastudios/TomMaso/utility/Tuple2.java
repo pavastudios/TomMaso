@@ -43,4 +43,12 @@ public class Tuple2<T1, T2> {
     public T2 get2() {
         return t2;
     }
+
+    @Override
+    public String toString() {
+        return "Tuple2{" +
+                "t1=" + t1 +
+                ", t2=" + t2 +
+                '}';
+    }
 }
