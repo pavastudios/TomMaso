@@ -21,8 +21,8 @@
 Process finished with exit code 0
 </output>
     </root>
-    <suite duration="3133" locationUrl="java:suite://com.pavastudios.TomMaso.selenium.ChatTestingTest" name="ChatTestingTest" status="passed">
-        <test duration="3133" locationUrl="java:test://com.pavastudios.TomMaso.selenium.ChatTestingTest/chatTest" name="chatTest()" metainfo="" status="passed"/>
+    <suite duration="3133" locationUrl="java:suite://com.pavastudios.TomMaso.selenium.ChatMessageTest" name="ChatTestingTest" status="passed">
+        <test duration="3133" locationUrl="java:test://com.pavastudios.TomMaso.selenium.ChatMessageTest/chatTest" name="chatTest()" metainfo="" status="passed"/>
     </suite>
     <suite duration="649" locationUrl="java:suite://com.pavastudios.TomMaso.storage.FileUtilityTest" name="FileUtilityTest" status="passed">
         <suite duration="16" locationUrl="java:test://com.pavastudios.TomMaso.storage.FileUtilityTest/writeFile" name="Working writeFile" metainfo="[B" status="passed">
