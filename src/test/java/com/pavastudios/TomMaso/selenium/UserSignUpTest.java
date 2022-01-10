@@ -62,7 +62,7 @@ public class UserSignUpTest extends SeleniumTest{
     }
 
     @Test
-    public void uC1TC3() {
+    public void uC1TC3() throws InterruptedException {
         driver.get("http://localhost:8080/TomMaso_war_exploded/");
         driver.manage().window().setSize(new Dimension(1042, 639));
         driver.findElement(By.linkText("Registrati")).click();
@@ -74,6 +74,7 @@ public class UserSignUpTest extends SeleniumTest{
         driver.findElement(By.id("password2-register")).click();
         driver.findElement(By.id("password2-register")).sendKeys("BBBBBBBB");
         driver.findElement(By.id("navbarRegisterSubmit")).click();
+        Thread.sleep(1000);
         Assertions.assertEquals(driver.findElement(By.cssSelector("#navbarRegister .modal-error")).getText(), "Impossibile registrare l'account");
     }
 

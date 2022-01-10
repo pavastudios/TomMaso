@@ -27,6 +27,7 @@ public class ChatTestingTest extends SeleniumTest{
         driver.findElement(By.id("messaggio")).click();
         driver.findElement(By.id("messaggio")).sendKeys("ciao");
         driver.findElement(By.id("invia")).click();
+        Thread.sleep(1000);
         Assertions.assertEquals(oldLength + 1, driver.findElements(By.cssSelector(".msg-card")).size());
         driver.findElement(By.id("messaggio")).click();
         driver.findElement(By.id("messaggio")).clear();

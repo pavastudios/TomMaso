@@ -41,11 +41,6 @@ public class BlogCreateTest extends SeleniumTest{
     public void createBlogWrongName() {
         driver.get("http://localhost:8080/TomMaso_war_exploded/profile");
         driver.manage().window().setSize(new Dimension(1000, 916));
-        {
-            WebElement element = driver.findElement(By.id("navbarSearchType"));
-            Actions builder = new Actions(driver);
-            builder.moveToElement(element).perform();
-        }
         driver.findElement(By.cssSelector(".fa-plus > path")).click();
         driver.findElement(By.id("blognameNavbar")).click();
         driver.findElement(By.id("blognameNavbar")).clear();
