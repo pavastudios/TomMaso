@@ -13,16 +13,16 @@ class Tuple2Test {
     private static Stream<Named<Arguments>> results1() {
         return Stream.of(
                 Named.of("<Integer, String>", Arguments.arguments(new Tuple2<>(1, "test1"), 1)),
-                Named.of("<Tuple2, Tuple2>", Arguments.arguments(new Tuple2<>(new Tuple2("inner", "tuple1"),
-                        new Tuple2("inner", "tuple2")), new Tuple2("inner", "tuple1")))
+                Named.of("<Tuple2, Tuple2>", Arguments.arguments(new Tuple2<>(new Tuple2<>("inner", "tuple1"),
+                        new Tuple2<>("inner", "tuple2")), new Tuple2<>("inner", "tuple1")))
         );
     }
 
     private static Stream<Named<Arguments>> results2() {
         return Stream.of(
                 Named.of("<Integer, String>", Arguments.arguments(new Tuple2<>(1, "test2"), "test2")),
-                Named.of("<Tuple2, Tuple2>", Arguments.arguments(new Tuple2<>(new Tuple2("inner", "tuple1"),
-                        new Tuple2("inner", "tuple2")), new Tuple2("inner", "tuple2")))
+                Named.of("<Tuple2, Tuple2>", Arguments.arguments(new Tuple2<>(new Tuple2<>("inner", "tuple1"),
+                        new Tuple2<>("inner", "tuple2")), new Tuple2<>("inner", "tuple2")))
         );
     }
 

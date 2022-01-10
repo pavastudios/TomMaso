@@ -11,7 +11,7 @@ public abstract class SeleniumTest {
     static WebDriver driver;
     @BeforeAll
     public static void setupDriver(){
-        System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver");
+        System.setProperty("webdriver.gecko.driver", System.getenv("webDriverDir"));
         driver = new FirefoxDriver();
         js = (JavascriptExecutor) driver;
 
