@@ -1,7 +1,7 @@
 function showError(text) {
     $(".modal-error").show();
     $(".modal-error").text(text);
-    setInterval(function () {
+    setTimeout(function () {
         $(".modal-error").hide();
     }, 5000);
 }
