@@ -25,10 +25,13 @@
     <!-- url: The JDBC connection url for connecting to your MySQL database.
          -->
 
-  <Resource name="jdbc/tommaso" auth="Container" type="javax.sql.DataSource"
+  <Resource name="jdbc/tommasoDocker" auth="Container" type="javax.sql.DataSource"
                maxTotal="10" maxIdle="3" maxWaitMillis="10000"
                username="root" password="" driverClassName="org.mariadb.jdbc.Driver"
-               url="jdbc:mysql://localhost:3306/tommaso?user=root&amp;pass="/>
-
+               url="jdbc:mysql://db:3306/tommaso?user=root&amp;pass="/>
+    <Resource name="jdbc/tommasoLocal" auth="Container" type="javax.sql.DataSource"
+              maxTotal="10" maxIdle="3" maxWaitMillis="10000"
+              username="root" password="" driverClassName="org.mariadb.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/tommaso?user=root&amp;pass="/>
 </Context>
 

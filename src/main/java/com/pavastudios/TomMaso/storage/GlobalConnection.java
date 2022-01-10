@@ -16,17 +16,20 @@ import java.util.Set;
 public class GlobalConnection {
     public static MasterConnection CONNECTION;
     private static boolean initialized = false;
-
+    private static final String[]CONNECTIONS=new String[]{"jdbc/tommasoDocker","jdbc/tommasoLocal"};
     private static void startConnection(Connection fakeDB) {
         Connection conn = fakeDB;
+
         if (conn == null) {
-            try {
-                Context initCtx = new InitialContext();
-                Context encCtx = (Context) initCtx.lookup("java:comp/env");
-                DataSource ds = (DataSource) encCtx.lookup("jdbc/tommaso");
-                conn = ds.getConnection();
-            } catch (SQLException | NamingException e) {
-                e.printStackTrace();
+            for(String c:CONNECTIONS) {
+                try {
+                    Context initCtx = new InitialContext();
+                    Context encCtx = (Context) initCtx.lookup("java:comp/env");
+                    DataSource ds = (DataSource) encCtx.lookup(c);
+                    conn = ds.getConnection();
+                } catch (SQLException | NamingException e) {
+                    e.printStackTrace();
+                }
             }
         }
         CONNECTION = new MasterConnection(conn);

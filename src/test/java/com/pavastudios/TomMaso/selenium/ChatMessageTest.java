@@ -1,18 +1,16 @@
 package com.pavastudios.TomMaso.selenium;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
 
-public class ChatTestingTest extends SeleniumTest{
+public class ChatMessageTest extends SeleniumTest{
     @BeforeAll
     public static void setUp() {
         Utility.login(driver, "provaaaa", "prova123");
